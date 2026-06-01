@@ -74,7 +74,7 @@ function AdminEditor() {
         week_label: data.week,
         start_date: "2026-06-01",
         is_current: true,
-        data: data as unknown as object,
+        data: data as any,
       })
       .select("id")
       .single();
@@ -94,7 +94,7 @@ function AdminEditor() {
         week_label: label,
         start_date: date,
         is_current: false,
-        data: blankSchedule(label) as unknown as object,
+        data: blankSchedule(label) as any,
       })
       .select("id")
       .single();
@@ -115,7 +115,7 @@ function AdminEditor() {
         week_label: label,
         start_date: date,
         is_current: false,
-        data: newData as unknown as object,
+        data: newData as any,
       })
       .select("id")
       .single();
@@ -319,7 +319,7 @@ function WeekEditor({ row, onSaved }: { row: ScheduleRow; onSaved: () => void })
     next.days = deriveDays(next);
     const { error } = await supabase
       .from("schedules")
-      .update({ data: next as unknown as object })
+      .update({ data: next as any })
       .eq("id", row.id);
     setSaving(false);
     if (error) return alert(error.message);
