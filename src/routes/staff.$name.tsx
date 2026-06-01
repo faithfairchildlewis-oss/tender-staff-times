@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, Coffee } from "lucide-react";
-import { schedule, DAYS, blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
+import { schedule, blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
 
 export const Route = createFileRoute("/staff/$name")({
   head: ({ params }) => ({
