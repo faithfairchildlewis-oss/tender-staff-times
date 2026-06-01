@@ -1,15 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
-import { schedule } from "@/data/schedule";
+import { useCurrentSchedule } from "@/hooks/use-schedule";
 
 export const Route = createFileRoute("/schedule")({
-  head: () => ({ meta: [{ title: "Full Schedule — Admin" }] }),
-  component: AdminPage,
+  head: () => ({ meta: [{ title: "Full Schedule" }] }),
+  component: SchedulePage,
 });
 
-function AdminPage() {
+function SchedulePage() {
   const [dayIdx, setDayIdx] = useState(0);
+  const { data: schedule, isLoading } = useCurrentSchedule();
+  if (isLoading || !schedule) {
+    return (
+      <div className="min-h-dvh bg-background p-6 text-muted-foreground">Loading…</div>
+    );
+  }
   const day = schedule.days[dayIdx];
   const rooms = schedule.rooms;
 
