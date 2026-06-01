@@ -14,34 +14,46 @@ function AdminPage() {
   const rooms = schedule.rooms;
 
   return (
-    <div className="min-h-screen bg-background pb-10">
+    <div className="min-h-dvh bg-background pb-10">
       <header className="bg-primary text-primary-foreground px-5 pt-8 pb-6 shadow-md">
         <Link
           to="/"
-          className="inline-flex items-center gap-1 text-primary-foreground/90 mb-3"
+          aria-label="Back to name picker"
+          className="inline-flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground mb-3 min-h-11 -ml-2 px-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="w-5 h-5" aria-hidden="true" />
           <span className="text-sm">Back</span>
         </Link>
         <h1 className="text-xl font-bold">Full schedule</h1>
         <p className="text-sm opacity-90">Week of {schedule.week}</p>
       </header>
 
-      <div className="bg-primary px-2 pb-3 sticky top-0 z-10 shadow">
+      <div
+        role="tablist"
+        aria-label="Select day"
+        className="bg-primary px-2 pb-3 sticky top-0 z-10 shadow"
+      >
         <div className="flex gap-1 bg-primary-foreground/10 rounded-xl p-1">
-          {schedule.days.map((d, i) => (
-            <button
-              key={d.day}
-              onClick={() => setDayIdx(i)}
-              className={`flex-1 text-sm font-semibold py-2 rounded-lg transition ${
-                i === dayIdx
-                  ? "bg-primary-foreground text-primary"
-                  : "text-primary-foreground/80"
-              }`}
-            >
-              {d.day.slice(0, 3)}
-            </button>
-          ))}
+          {schedule.days.map((d, i) => {
+            const active = i === dayIdx;
+            return (
+              <button
+                key={d.day}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                aria-label={`Show ${d.day}'s schedule`}
+                onClick={() => setDayIdx(i)}
+                className={`flex-1 text-sm font-semibold min-h-11 rounded-lg transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground ${
+                  active
+                    ? "bg-primary-foreground text-primary"
+                    : "text-primary-foreground/80 hover:text-primary-foreground"
+                }`}
+              >
+                {d.day.slice(0, 3)}
+              </button>
+            );
+          })}
         </div>
       </div>
 
