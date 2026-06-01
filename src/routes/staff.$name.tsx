@@ -33,7 +33,7 @@ function StaffPage() {
       </header>
 
       <main className="px-4 -mt-6 max-w-md mx-auto">
-        <div className="bg-primary text-primary-foreground rounded-2xl p-5 shadow-sm text-center">
+        <div className="bg-lilac text-lilac-foreground rounded-2xl p-5 shadow-sm text-center">
           <div className="text-4xl font-bold">{hours.toFixed(1)}</div>
           <div className="text-sm opacity-90 mt-1">hours this week</div>
         </div>
