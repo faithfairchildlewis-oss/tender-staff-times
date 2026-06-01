@@ -1,0 +1,7804 @@
+{
+  "center": "Tender Years of Deale",
+  "week": "June 1-5, 2026",
+  "rooms": [
+    "M.O.D.",
+    "Room F",
+    "Room I",
+    "G/H",
+    "J/K",
+    "SAC"
+  ],
+  "days": [
+    {
+      "day": "Monday",
+      "date": "June 1",
+      "slots": [
+        {
+          "time": "7:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Mitzi"
+            ],
+            "G/H": [
+              "Adriana"
+            ],
+            "J/K": [],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Mitzi"
+            ],
+            "G/H": [
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Mitzi"
+            ],
+            "G/H": [
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "9:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly",
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "9:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly",
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "10:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly",
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "10:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly",
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "11:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "11:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "12:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Lilly"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "12:30 PM",
+          "assignments": {
+            "M.O.D.": [],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Adriana"
+            ],
+            "J/K": [
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "M.O.D.",
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "assignments": {
+            "M.O.D.": [],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Adriana"
+            ],
+            "J/K": [
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa",
+              "Tori"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "2:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa",
+              "Tori"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "2:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Michelle"
+            ],
+            "J/K": [
+              "Melissa",
+              "Tori"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "3:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Michelle"
+            ],
+            "J/K": [
+              "Melissa",
+              "Tori"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "3:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Michelle"
+            ],
+            "J/K": [
+              "Melissa",
+              "Tori"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "4:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Faith"
+            ],
+            "Room F": [],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Baylee"
+            ],
+            "J/K": [
+              "Melissa",
+              "Tori"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room F",
+            "G/H"
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Faith"
+            ],
+            "Room F": [],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Baylee"
+            ],
+            "J/K": [
+              "Tori"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room F",
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "5:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Faith"
+            ],
+            "Room F": [],
+            "Room I": [],
+            "G/H": [],
+            "J/K": [
+              "Tori"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room F",
+            "Room I",
+            "G/H"
+          ]
+        },
+        {
+          "time": "5:30 PM",
+          "assignments": {
+            "M.O.D.": [],
+            "Room F": [],
+            "Room I": [],
+            "G/H": [],
+            "J/K": [],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "M.O.D.",
+            "Room F",
+            "Room I",
+            "G/H",
+            "J/K"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "Tuesday",
+      "date": "June 2",
+      "slots": [
+        {
+          "time": "7:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Mitzi"
+            ],
+            "G/H": [
+              "Tori"
+            ],
+            "J/K": [],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Mitzi"
+            ],
+            "G/H": [
+              "Tori"
+            ],
+            "J/K": [
+              "Melissa"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Mitzi"
+            ],
+            "G/H": [
+              "Tori"
+            ],
+            "J/K": [
+              "Melissa"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "9:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly",
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "9:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly",
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "10:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly",
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "10:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly",
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "11:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "11:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Adriana"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "12:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Lilly"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "assignments": {
+            "M.O.D.": [],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Lilly"
+            ],
+            "J/K": [
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "M.O.D.",
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "assignments": {
+            "M.O.D.": [],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Lilly",
+              "Adriana"
+            ],
+            "J/K": [
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Adriana"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "2:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Christy"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Adriana"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "2:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Christy"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Christy"
+            ],
+            "J/K": [
+              "Melissa",
+              "Adriana"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "3:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Christy"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Christy"
+            ],
+            "J/K": [
+              "Melissa",
+              "Adriana"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "3:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Christy"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Christy"
+            ],
+            "J/K": [
+              "Melissa",
+              "Adriana"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "4:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Christy"
+            ],
+            "Room F": [],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Baylee"
+            ],
+            "J/K": [
+              "Melissa",
+              "Adriana"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room F",
+            "G/H"
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Christy"
+            ],
+            "Room F": [],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Baylee"
+            ],
+            "J/K": [
+              "Adriana"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room F",
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "5:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Christy"
+            ],
+            "Room F": [],
+            "Room I": [],
+            "G/H": [],
+            "J/K": [
+              "Adriana"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room F",
+            "Room I",
+            "G/H"
+          ]
+        },
+        {
+          "time": "5:30 PM",
+          "assignments": {
+            "M.O.D.": [],
+            "Room F": [],
+            "Room I": [],
+            "G/H": [],
+            "J/K": [],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "M.O.D.",
+            "Room F",
+            "Room I",
+            "G/H",
+            "J/K"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "Wednesday",
+      "date": "June 3",
+      "slots": [
+        {
+          "time": "7:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Faith"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Michelle"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Faith"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Michelle"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Faith"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Michelle"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "9:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "10:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "10:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "11:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Michelle"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "11:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Michelle"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "12:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Lilly"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Michelle"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "12:30 PM",
+          "assignments": {
+            "M.O.D.": [],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Lilly"
+            ],
+            "J/K": [
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "M.O.D.",
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "assignments": {
+            "M.O.D.": [],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Lilly"
+            ],
+            "J/K": [
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Christy"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Tori"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "2:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Christy"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Tori"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "2:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Christy"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Christy"
+            ],
+            "J/K": [
+              "Melissa",
+              "Tori"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "3:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Christy"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Christy"
+            ],
+            "J/K": [
+              "Melissa",
+              "Tori"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "3:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Christy"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Christy"
+            ],
+            "J/K": [
+              "Melissa",
+              "Tori"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "4:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Christy"
+            ],
+            "Room F": [],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Baylee"
+            ],
+            "J/K": [
+              "Melissa",
+              "Tori"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room F",
+            "G/H"
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Christy"
+            ],
+            "Room F": [],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Baylee"
+            ],
+            "J/K": [
+              "Tori"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room F",
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "5:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Christy"
+            ],
+            "Room F": [],
+            "Room I": [],
+            "G/H": [],
+            "J/K": [
+              "Tori"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room F",
+            "Room I",
+            "G/H"
+          ]
+        },
+        {
+          "time": "5:30 PM",
+          "assignments": {
+            "M.O.D.": [],
+            "Room F": [],
+            "Room I": [],
+            "G/H": [],
+            "J/K": [],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "M.O.D.",
+            "Room F",
+            "Room I",
+            "G/H",
+            "J/K"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "Thursday",
+      "date": "June 4",
+      "slots": [
+        {
+          "time": "7:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room I",
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room I",
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room I",
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "9:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "10:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "10:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "11:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Lilly",
+              "Samantha"
+            ],
+            "Room I": [
+              "Lilly"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "12:30 PM",
+          "assignments": {
+            "M.O.D.": [],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Lilly"
+            ],
+            "J/K": [
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "M.O.D.",
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "assignments": {
+            "M.O.D.": [],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Lilly",
+              "Baylee"
+            ],
+            "G/H": [],
+            "J/K": [
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "M.O.D.",
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Lilly",
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "2:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Lilly",
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "2:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Michelle",
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Christy",
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Christy",
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Christy"
+            ],
+            "Room F": [],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [],
+            "J/K": [
+              "Melissa",
+              "Christy"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room F",
+            "G/H"
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Christy"
+            ],
+            "Room F": [],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [],
+            "J/K": [
+              "Christy"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room F",
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "5:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Christy"
+            ],
+            "Room F": [],
+            "Room I": [],
+            "G/H": [],
+            "J/K": [
+              "Christy"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room F",
+            "Room I",
+            "G/H"
+          ]
+        },
+        {
+          "time": "5:30 PM",
+          "assignments": {
+            "M.O.D.": [],
+            "Room F": [],
+            "Room I": [],
+            "G/H": [],
+            "J/K": [],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "M.O.D.",
+            "Room F",
+            "Room I",
+            "G/H",
+            "J/K"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "Friday",
+      "date": "June 5",
+      "slots": [
+        {
+          "time": "7:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Michelle",
+              "Lilly"
+            ],
+            "Room I": [
+              "Lilly"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Michelle",
+              "Lilly"
+            ],
+            "Room I": [
+              "Lilly"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Michelle",
+              "Lilly"
+            ],
+            "Room I": [
+              "Lilly"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Michelle",
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "9:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha",
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "9:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha",
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "10:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha",
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "10:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha",
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "11:00 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Faith",
+              "Michelle"
+            ],
+            "Room F": [
+              "Samantha",
+              "Lilly"
+            ],
+            "Room I": [
+              "Lilly"
+            ],
+            "G/H": [
+              "Mitzi"
+            ],
+            "J/K": [
+              "Melissa",
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "assignments": {
+            "M.O.D.": [],
+            "Room F": [
+              "Samantha",
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Lilly",
+              "Tori"
+            ],
+            "J/K": [
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "M.O.D.",
+            "J/K"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "assignments": {
+            "M.O.D.": [],
+            "Room F": [
+              "Samantha",
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Lilly",
+              "Tori"
+            ],
+            "J/K": [
+              "Marbie"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Samantha",
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Tori"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "2:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Samantha",
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Lilly"
+            ],
+            "J/K": [
+              "Melissa",
+              "Tori"
+            ],
+            "SAC": null
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "2:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Tori"
+            ],
+            "J/K": [
+              "Melissa",
+              "Michelle"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "3:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Tori"
+            ],
+            "J/K": [
+              "Melissa",
+              "Michelle"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "3:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Michelle",
+              "Faith"
+            ],
+            "Room F": [
+              "Lilly"
+            ],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Mitzi",
+              "Tori"
+            ],
+            "J/K": [
+              "Melissa",
+              "Michelle"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": []
+        },
+        {
+          "time": "4:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Faith"
+            ],
+            "Room F": [],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Baylee"
+            ],
+            "J/K": [
+              "Melissa",
+              "Tori"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room F",
+            "G/H"
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Faith"
+            ],
+            "Room F": [],
+            "Room I": [
+              "Baylee"
+            ],
+            "G/H": [
+              "Baylee"
+            ],
+            "J/K": [
+              "Tori"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 2,
+            "J/K": 2,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room F",
+            "G/H",
+            "J/K"
+          ]
+        },
+        {
+          "time": "5:00 PM",
+          "assignments": {
+            "M.O.D.": [
+              "Faith"
+            ],
+            "Room F": [],
+            "Room I": [],
+            "G/H": [],
+            "J/K": [
+              "Tori"
+            ],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "Room F",
+            "Room I",
+            "G/H"
+          ]
+        },
+        {
+          "time": "5:30 PM",
+          "assignments": {
+            "M.O.D.": [],
+            "Room F": [],
+            "Room I": [],
+            "G/H": [],
+            "J/K": [],
+            "SAC": []
+          },
+          "minimums": {
+            "M.O.D.": 1,
+            "Room F": 1,
+            "Room I": 1,
+            "G/H": 1,
+            "J/K": 1,
+            "SAC": 0
+          },
+          "understaffed": [
+            "M.O.D.",
+            "Room F",
+            "Room I",
+            "G/H",
+            "J/K"
+          ]
+        }
+      ]
+    }
+  ],
+  "staff": {
+    "Michelle": {
+      "rate": 25.5,
+      "hours": 40.0,
+      "lunch": {
+        "type": "fixed",
+        "time": "1:30 PM \u2013 2:30 PM"
+      },
+      "daily_breaks": {
+        "Monday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "1:30 PM \u2013 2:30 PM"
+        },
+        "Tuesday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "1:30 PM \u2013 2:30 PM"
+        },
+        "Wednesday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "1:30 PM \u2013 2:30 PM"
+        },
+        "Thursday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "1:30 PM \u2013 2:30 PM"
+        },
+        "Friday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "1:30 PM \u2013 2:30 PM"
+        }
+      }
+    },
+    "Lilly": {
+      "rate": 15.0,
+      "hours": 40.0,
+      "lunch": {
+        "type": "fixed",
+        "time": "11:00 AM \u2013 12:00 PM"
+      },
+      "daily_breaks": {
+        "Monday": {
+          "type": "break",
+          "duration": "30 min",
+          "time": "11:00 AM \u2013 12:00 PM"
+        },
+        "Tuesday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "11:00 AM \u2013 12:00 PM"
+        },
+        "Wednesday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "11:00 AM \u2013 12:00 PM"
+        },
+        "Thursday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "11:00 AM \u2013 12:00 PM"
+        },
+        "Friday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "11:00 AM \u2013 12:00 PM"
+        }
+      }
+    },
+    "Baylee": {
+      "rate": 19.0,
+      "hours": 40.0,
+      "lunch": {
+        "type": "fixed",
+        "time": "12:00 PM \u2013 12:30 PM"
+      },
+      "daily_breaks": {
+        "Monday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "12:00 PM \u2013 12:30 PM"
+        },
+        "Tuesday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "12:00 PM \u2013 12:30 PM"
+        },
+        "Wednesday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "12:00 PM \u2013 12:30 PM"
+        },
+        "Thursday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "12:00 PM \u2013 12:30 PM"
+        },
+        "Friday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "12:00 PM \u2013 12:30 PM"
+        }
+      }
+    },
+    "Mitzi": {
+      "rate": 23.0,
+      "hours": 40.0,
+      "lunch": {
+        "type": "fixed",
+        "time": "12:30 PM \u2013 1:30 PM"
+      },
+      "daily_breaks": {
+        "Monday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "12:30 PM \u2013 1:30 PM"
+        },
+        "Tuesday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "12:30 PM \u2013 1:30 PM"
+        },
+        "Wednesday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "12:30 PM \u2013 1:30 PM"
+        },
+        "Thursday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "12:30 PM \u2013 1:30 PM"
+        },
+        "Friday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "12:30 PM \u2013 1:30 PM"
+        }
+      }
+    },
+    "Melissa": {
+      "rate": 23.0,
+      "hours": 40.0,
+      "lunch": {
+        "type": "fixed",
+        "time": "12:30 PM \u2013 1:30 PM"
+      },
+      "daily_breaks": {
+        "Monday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "12:30 PM \u2013 1:30 PM"
+        },
+        "Tuesday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "12:30 PM \u2013 1:30 PM"
+        },
+        "Wednesday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "12:30 PM \u2013 1:30 PM"
+        },
+        "Thursday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "12:30 PM \u2013 1:30 PM"
+        },
+        "Friday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "12:30 PM \u2013 1:30 PM"
+        }
+      }
+    },
+    "Samantha": {
+      "rate": 19.0,
+      "hours": 27.5,
+      "lunch": {
+        "type": "varies"
+      },
+      "daily_breaks": {
+        "Monday": null,
+        "Tuesday": null,
+        "Wednesday": null,
+        "Thursday": null,
+        "Friday": null
+      }
+    },
+    "Marbie": {
+      "rate": 19.0,
+      "hours": 25.0,
+      "lunch": {
+        "type": "varies"
+      },
+      "daily_breaks": {
+        "Monday": null,
+        "Tuesday": null,
+        "Wednesday": null,
+        "Thursday": null,
+        "Friday": null
+      }
+    },
+    "Faith": {
+      "rate": 15.0,
+      "hours": 17.0,
+      "lunch": {
+        "type": "varies"
+      },
+      "daily_breaks": {
+        "Monday": null,
+        "Tuesday": null,
+        "Wednesday": null,
+        "Thursday": null,
+        "Friday": null
+      }
+    },
+    "Adriana": {
+      "rate": 15.0,
+      "hours": 14.5,
+      "lunch": {
+        "type": "varies"
+      },
+      "daily_breaks": {
+        "Monday": {
+          "type": "break",
+          "duration": "30 min",
+          "time": "varies"
+        },
+        "Tuesday": {
+          "type": "lunch",
+          "duration": "60 min",
+          "time": "varies"
+        },
+        "Wednesday": null,
+        "Thursday": null,
+        "Friday": null
+      }
+    },
+    "Tori": {
+      "rate": 15.0,
+      "hours": 14.5,
+      "lunch": {
+        "type": "varies"
+      },
+      "daily_breaks": {
+        "Monday": null,
+        "Tuesday": null,
+        "Wednesday": null,
+        "Thursday": null,
+        "Friday": null
+      }
+    },
+    "Christy": {
+      "rate": 19.0,
+      "hours": 10.0,
+      "lunch": {
+        "type": "varies"
+      },
+      "daily_breaks": {
+        "Monday": null,
+        "Tuesday": null,
+        "Wednesday": null,
+        "Thursday": null,
+        "Friday": null
+      }
+    },
+    "Kyleigh": {
+      "rate": 15.0,
+      "hours": 3.0,
+      "lunch": {
+        "type": "varies"
+      },
+      "daily_breaks": {
+        "Monday": null,
+        "Tuesday": null,
+        "Wednesday": null,
+        "Thursday": null,
+        "Friday": null
+      }
+    },
+    "McKenzie": {
+      "rate": 15.0,
+      "hours": 3.0,
+      "lunch": {
+        "type": "varies"
+      },
+      "daily_breaks": {
+        "Monday": null,
+        "Tuesday": null,
+        "Wednesday": null,
+        "Thursday": null,
+        "Friday": null
+      }
+    },
+    "Juli": {
+      "rate": 15.0,
+      "hours": 0.0,
+      "lunch": {
+        "type": "varies"
+      },
+      "daily_breaks": {
+        "Monday": null,
+        "Tuesday": null,
+        "Wednesday": null,
+        "Thursday": null,
+        "Friday": null
+      }
+    }
+  },
+  "staff_daily": {
+    "Michelle": {
+      "Monday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "M.O.D.",
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "M.O.D.",
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "M.O.D.",
+            "G/H"
+          ]
+        }
+      ],
+      "Tuesday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        }
+      ],
+      "Wednesday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "M.O.D.",
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "M.O.D.",
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "M.O.D.",
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        }
+      ],
+      "Thursday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "M.O.D.",
+            "Room I"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        }
+      ],
+      "Friday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "M.O.D.",
+            "Room F"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "M.O.D.",
+            "Room F"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "M.O.D.",
+            "Room F"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "M.O.D.",
+            "Room F"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "M.O.D.",
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "M.O.D.",
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "M.O.D.",
+            "J/K"
+          ]
+        }
+      ]
+    },
+    "Lilly": {
+      "Monday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        }
+      ],
+      "Tuesday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        }
+      ],
+      "Wednesday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        }
+      ],
+      "Thursday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "Room F",
+            "Room I",
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        }
+      ],
+      "Friday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "Room F",
+            "Room I"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "Room F",
+            "Room I"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "Room F",
+            "Room I"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "Room F",
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "Room F",
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "Room F",
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "Room F",
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "Room F",
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "Room F",
+            "Room I"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "Room F",
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "Room F",
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "Room F",
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "Room F",
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        }
+      ]
+    },
+    "Baylee": {
+      "Monday": [
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "Room I",
+            "G/H"
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "rooms": [
+            "Room I",
+            "G/H"
+          ]
+        }
+      ],
+      "Tuesday": [
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "Room I",
+            "G/H"
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "rooms": [
+            "Room I",
+            "G/H"
+          ]
+        }
+      ],
+      "Wednesday": [
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "Room I",
+            "G/H"
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "rooms": [
+            "Room I",
+            "G/H"
+          ]
+        }
+      ],
+      "Thursday": [
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        }
+      ],
+      "Friday": [
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "Room I",
+            "G/H"
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "rooms": [
+            "Room I",
+            "G/H"
+          ]
+        }
+      ]
+    },
+    "Mitzi": {
+      "Monday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        }
+      ],
+      "Tuesday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        }
+      ],
+      "Wednesday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        }
+      ],
+      "Thursday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        }
+      ],
+      "Friday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        }
+      ]
+    },
+    "Melissa": {
+      "Monday": [
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        }
+      ],
+      "Tuesday": [
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        }
+      ],
+      "Wednesday": [
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        }
+      ],
+      "Thursday": [
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        }
+      ],
+      "Friday": [
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        }
+      ]
+    },
+    "Samantha": {
+      "Monday": [
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        }
+      ],
+      "Tuesday": [
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        }
+      ],
+      "Wednesday": [
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        }
+      ],
+      "Thursday": [
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        }
+      ],
+      "Friday": [
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "Room F"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "Room F"
+          ]
+        }
+      ]
+    },
+    "Marbie": {
+      "Monday": [
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        }
+      ],
+      "Tuesday": [
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        }
+      ],
+      "Wednesday": [
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        }
+      ],
+      "Thursday": [
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        }
+      ],
+      "Friday": [
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        }
+      ]
+    },
+    "Faith": {
+      "Monday": [
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "5:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        }
+      ],
+      "Tuesday": [
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        }
+      ],
+      "Wednesday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        }
+      ],
+      "Thursday": [
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        }
+      ],
+      "Friday": [
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "5:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        }
+      ]
+    },
+    "Adriana": {
+      "Monday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        }
+      ],
+      "Tuesday": [
+        {
+          "time": "8:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "9:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "10:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "11:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "5:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        }
+      ],
+      "Wednesday": [],
+      "Thursday": [],
+      "Friday": []
+    },
+    "Tori": {
+      "Monday": [
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "5:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        }
+      ],
+      "Tuesday": [
+        {
+          "time": "7:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "7:30 AM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "8:00 AM",
+          "rooms": [
+            "G/H"
+          ]
+        }
+      ],
+      "Wednesday": [
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "5:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        }
+      ],
+      "Thursday": [],
+      "Friday": [
+        {
+          "time": "12:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "G/H"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "rooms": [
+            "J/K"
+          ]
+        },
+        {
+          "time": "5:00 PM",
+          "rooms": [
+            "J/K"
+          ]
+        }
+      ]
+    },
+    "Christy": {
+      "Monday": [],
+      "Tuesday": [
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "M.O.D.",
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "M.O.D.",
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "M.O.D.",
+            "G/H"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "5:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        }
+      ],
+      "Wednesday": [
+        {
+          "time": "1:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "2:30 PM",
+          "rooms": [
+            "M.O.D.",
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "M.O.D.",
+            "G/H"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "M.O.D.",
+            "G/H"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        },
+        {
+          "time": "5:00 PM",
+          "rooms": [
+            "M.O.D."
+          ]
+        }
+      ],
+      "Thursday": [
+        {
+          "time": "3:00 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "3:30 PM",
+          "rooms": [
+            "Room I"
+          ]
+        },
+        {
+          "time": "4:00 PM",
+          "rooms": [
+            "M.O.D.",
+            "J/K"
+          ]
+        },
+        {
+          "time": "4:30 PM",
+          "rooms": [
+            "M.O.D.",
+            "J/K"
+          ]
+        },
+        {
+          "time": "5:00 PM",
+          "rooms": [
+            "M.O.D.",
+            "J/K"
+          ]
+        }
+      ],
+      "Friday": []
+    },
+    "Kyleigh": {
+      "Monday": [],
+      "Tuesday": [],
+      "Wednesday": [],
+      "Thursday": [],
+      "Friday": []
+    },
+    "McKenzie": {
+      "Monday": [],
+      "Tuesday": [],
+      "Wednesday": [],
+      "Thursday": [],
+      "Friday": []
+    },
+    "Juli": {
+      "Monday": [],
+      "Tuesday": [],
+      "Wednesday": [],
+      "Thursday": [],
+      "Friday": []
+    }
+  },
+  "staffing_rules": {
+    "G/H": {
+      "min_staff": 2,
+      "peak_hours": [
+        "7:00 AM\u201312:30 PM",
+        "2:30 PM\u20134:30 PM"
+      ],
+      "off_peak_min": 1
+    },
+    "J/K": {
+      "min_staff": 2,
+      "peak_hours": [
+        "7:30 AM\u201312:30 PM",
+        "2:30 PM\u20134:30 PM"
+      ],
+      "off_peak_min": 1
+    },
+    "M.O.D.": {
+      "min_staff": 1
+    },
+    "Room F": {
+      "min_staff": 1
+    },
+    "Room I": {
+      "min_staff": 1
+    },
+    "SAC": {
+      "min_staff": 0,
+      "max_staff": 2,
+      "hours": {
+        "june_1_week": "2:30 PM \u2013 5:30 PM",
+        "june_22_onward": "7:00 AM \u2013 5:30 PM"
+      },
+      "note": "No minimum required. Maximum 2 staff."
+    }
+  },
+  "break_rules": {
+    "under_6_hours": {
+      "break": null,
+      "label": null
+    },
+    "6_to_7_hours": {
+      "break": 30,
+      "label": "30 min break"
+    },
+    "8_plus_hours": {
+      "break": 60,
+      "label": "Lunch (60 min)"
+    }
+  }
+}
