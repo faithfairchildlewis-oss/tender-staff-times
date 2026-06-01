@@ -18,13 +18,14 @@ function StaffPage() {
   const hours = weeklyHours(name);
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-dvh bg-background pb-24">
       <header className="bg-primary text-primary-foreground px-5 pt-8 pb-10 rounded-b-3xl shadow-md">
         <Link
           to="/"
-          className="inline-flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground mb-3"
+          aria-label="Back to name picker"
+          className="inline-flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground mb-3 min-h-11 -ml-2 px-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="w-5 h-5" aria-hidden="true" />
           <span className="text-sm">Back</span>
         </Link>
         <h1 className="text-2xl font-bold">Hello, {name}!</h1>
@@ -55,19 +56,25 @@ function StaffPage() {
                     <div className="text-xs text-muted-foreground">{d.date}</div>
                   </div>
                   {off && (
-                    <span className="bg-muted text-muted-foreground text-xs font-bold px-3 py-1 rounded-full">
+                    <span
+                      aria-label="Not scheduled"
+                      className="bg-muted text-muted-foreground text-xs font-bold px-3 py-1 rounded-full"
+                    >
                       OFF
                     </span>
                   )}
                 </div>
                 {!off && (
-                  <div className="divide-y divide-border">
+                  <ul className="divide-y divide-border list-none">
                     {blocks.map((b, i) => (
-                      <div key={i} className="flex items-center justify-between px-4 py-3">
+                      <li key={i} className="flex items-center justify-between px-4 py-3">
                         <div className="text-base text-foreground">
                           {b.start} – {b.end}
                         </div>
-                        <div className="flex flex-wrap gap-1 justify-end">
+                        <div
+                          className="flex flex-wrap gap-1 justify-end"
+                          aria-label={`Rooms: ${b.rooms.join(", ")}`}
+                        >
                           {b.rooms.map((r) => (
                             <span
                               key={r}
@@ -77,11 +84,11 @@ function StaffPage() {
                             </span>
                           ))}
                         </div>
-                      </div>
+                      </li>
                     ))}
                     {hrs >= 6 && (
-                      <div className="flex items-center gap-3 px-4 py-3 bg-secondary/50">
-                        <Coffee className="w-4 h-4 text-primary" />
+                      <li className="flex items-center gap-3 px-4 py-3 bg-secondary/50">
+                        <Coffee className="w-4 h-4 text-primary" aria-hidden="true" />
                         {info.lunch.type === "fixed" ? (
                           <span className="text-sm text-foreground">
                             {brk?.type === "lunch" ? "Lunch" : "Break"}: {info.lunch.time}
@@ -91,9 +98,9 @@ function StaffPage() {
                             Check with director
                           </span>
                         )}
-                      </div>
+                      </li>
                     )}
-                  </div>
+                  </ul>
                 )}
               </div>
             );
@@ -101,11 +108,20 @@ function StaffPage() {
         </div>
       </main>
 
-      <nav className="fixed bottom-0 inset-x-0 bg-card border-t border-border px-6 py-3 flex justify-between max-w-md mx-auto">
-        <Link to="/" className="text-sm font-medium text-primary">
+      <nav
+        aria-label="Page navigation"
+        className="fixed bottom-0 inset-x-0 bg-card border-t border-border px-4 py-2 flex justify-between max-w-md mx-auto"
+      >
+        <Link
+          to="/"
+          className="text-sm font-medium text-primary inline-flex items-center min-h-11 px-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
           ← All names
         </Link>
-        <Link to="/admin" className="text-sm font-medium text-primary">
+        <Link
+          to="/admin"
+          className="text-sm font-medium text-primary inline-flex items-center min-h-11 px-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
           Full schedule →
         </Link>
       </nav>
