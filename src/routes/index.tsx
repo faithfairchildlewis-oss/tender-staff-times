@@ -19,7 +19,7 @@ function Index() {
     "Hi, I would like to request time off.\nMy name is: \nDate(s) requested: \nReason: "
   );
   return (
-    <div className="min-h-screen bg-background pb-10">
+    <div className="min-h-dvh bg-background pb-10">
       <header className="bg-primary text-primary-foreground px-5 pt-10 pb-12 rounded-b-3xl shadow-md">
         <h1 className="text-2xl font-bold tracking-tight">{schedule.center}</h1>
         <p className="text-base opacity-90 mt-1">Week of {schedule.week}</p>
@@ -34,7 +34,8 @@ function Index() {
                 key={n}
                 to="/staff/$name"
                 params={{ name: n }}
-                className="bg-secondary text-secondary-foreground hover:bg-accent active:scale-[0.98] transition text-center font-semibold py-4 rounded-xl text-base"
+                aria-label={`View ${n}'s schedule`}
+                className="bg-secondary text-secondary-foreground hover:bg-accent active:scale-[0.98] transition text-center font-semibold py-4 min-h-14 flex items-center justify-center rounded-xl text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
               >
                 {n}
               </Link>
@@ -44,9 +45,10 @@ function Index() {
 
         <a
           href={`sms:+1${phone}?&body=${smsBody}`}
-          className="mt-5 flex items-center gap-3 bg-primary text-primary-foreground rounded-2xl p-5 shadow-sm active:scale-[0.99] transition"
+          aria-label="Request time off by texting the director at 410-474-4156"
+          className="mt-5 flex items-center gap-3 bg-primary text-primary-foreground rounded-2xl p-5 min-h-16 shadow-sm active:scale-[0.99] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          <div className="bg-primary-foreground/15 rounded-xl p-3">
+          <div className="bg-primary-foreground/15 rounded-xl p-3" aria-hidden="true">
             <MessageSquare className="w-6 h-6" />
           </div>
           <div>
@@ -56,7 +58,10 @@ function Index() {
         </a>
 
         <div className="mt-8 text-center">
-          <Link to="/admin" className="text-sm text-muted-foreground underline">
+          <Link
+            to="/admin"
+            className="inline-flex items-center justify-center min-h-11 px-4 text-sm text-muted-foreground underline rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
             Full schedule (admin)
           </Link>
         </div>
