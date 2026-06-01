@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { schedule } from "@/data/schedule";
 
-export const Route = createFileRoute("/admin")({
+export const Route = createFileRoute("/schedule")({
   head: () => ({ meta: [{ title: "Full Schedule — Admin" }] }),
   component: AdminPage,
 });
