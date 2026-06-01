@@ -33,17 +33,18 @@ export type ScheduleData = {
   staff_daily: Record<string, Record<string, StaffDailyBlock[]>>;
 };
 
-export const schedule = data as unknown as ScheduleData;
+/** Bundled fallback used when no schedule has been seeded to the database yet. */
+export const fallbackSchedule = data as unknown as ScheduleData;
 
 export const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] as const;
 
-export function staffNames(): string[] {
-  return Object.keys(schedule.staff);
+export function staffNames(s: ScheduleData): string[] {
+  return Object.keys(s.staff);
 }
 
 /** Compress consecutive 30-min blocks into time ranges with rooms. */
-export function blocksForDay(name: string, day: string) {
-  const slots = schedule.staff_daily?.[name]?.[day] ?? [];
+export function blocksForDay(s: ScheduleData, name: string, day: string) {
+  const slots = s.staff_daily?.[name]?.[day] ?? [];
   if (slots.length === 0) return [] as { start: string; end: string; rooms: string[] }[];
   const out: { start: string; end: string; rooms: string[] }[] = [];
   let cur: { start: string; end: string; rooms: string[] } | null = null;
@@ -90,10 +91,10 @@ function addHalfHour(t: string): string {
   return fmtTime(parseTime(t) + 30);
 }
 
-export function dayHours(name: string, day: string): number {
-  return (schedule.staff_daily?.[name]?.[day]?.length ?? 0) * 0.5;
+export function dayHours(s: ScheduleData, name: string, day: string): number {
+  return (s.staff_daily?.[name]?.[day]?.length ?? 0) * 0.5;
 }
 
-export function weeklyHours(name: string): number {
-  return schedule.staff[name]?.hours ?? 0;
+export function weeklyHours(s: ScheduleData, name: string): number {
+  return s.staff[name]?.hours ?? 0;
 }
