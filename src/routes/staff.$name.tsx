@@ -1,21 +1,31 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Coffee } from "lucide-react";
-import { schedule, blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
+import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
+import { useCurrentSchedule } from "@/hooks/use-schedule";
 
 export const Route = createFileRoute("/staff/$name")({
   head: ({ params }) => ({
     meta: [{ title: `${params.name} — Schedule` }],
   }),
-  beforeLoad: ({ params }) => {
-    if (!schedule.staff[params.name]) throw notFound();
-  },
   component: StaffPage,
 });
 
 function StaffPage() {
   const { name } = Route.useParams();
+  const { data: schedule, isLoading } = useCurrentSchedule();
+  if (isLoading || !schedule) {
+    return <div className="min-h-dvh bg-background p-6 text-muted-foreground">Loading…</div>;
+  }
   const info = schedule.staff[name];
-  const hours = weeklyHours(name);
+  if (!info) {
+    return (
+      <div className="min-h-dvh bg-background p-6">
+        <p className="text-foreground">No schedule found for {name}.</p>
+        <Link to="/" className="text-primary underline mt-3 inline-block">Back to names</Link>
+      </div>
+    );
+  }
+  const hours = weeklyHours(schedule, name);
 
   return (
     <div className="min-h-dvh bg-background pb-24">
@@ -44,8 +54,8 @@ function StaffPage() {
 
         <div className="space-y-3">
           {schedule.days.map((d) => {
-            const blocks = blocksForDay(name, d.day);
-            const hrs = dayHours(name, d.day);
+            const blocks = blocksForDay(schedule, name, d.day);
+            const hrs = dayHours(schedule, name, d.day);
             const off = blocks.length === 0;
             const brk = info.daily_breaks?.[d.day];
             return (
@@ -119,7 +129,7 @@ function StaffPage() {
           ← All names
         </Link>
         <Link
-          to="/admin"
+          to="/schedule"
           className="text-sm font-medium text-primary inline-flex items-center min-h-11 px-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           Full schedule →

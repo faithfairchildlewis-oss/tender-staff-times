@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MessageSquare } from "lucide-react";
-import { schedule, staffNames } from "@/data/schedule";
+import { staffNames } from "@/data/schedule";
+import { useCurrentSchedule } from "@/hooks/use-schedule";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -13,7 +14,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const names = staffNames();
+  const { data: schedule } = useCurrentSchedule();
+  const names = schedule ? staffNames(schedule) : [];
   const phone = "4104744156";
   const smsBody = encodeURIComponent(
     "Hi, I would like to request time off.\nMy name is: \nDate(s) requested: \nReason: "
@@ -21,8 +23,8 @@ function Index() {
   return (
     <div className="min-h-dvh bg-background pb-10">
       <header className="bg-primary text-primary-foreground px-5 pt-10 pb-12 rounded-b-3xl shadow-md">
-        <h1 className="text-2xl font-bold tracking-tight">{schedule.center}</h1>
-        <p className="text-base opacity-90 mt-1">Week of {schedule.week}</p>
+        <h1 className="text-2xl font-bold tracking-tight">{schedule?.center ?? "Tender Years of Deale"}</h1>
+        <p className="text-base opacity-90 mt-1">Week of {schedule?.week ?? "—"}</p>
       </header>
 
       <main className="px-4 -mt-6 max-w-md mx-auto">
@@ -59,10 +61,17 @@ function Index() {
 
         <div className="mt-8 text-center">
           <Link
-            to="/admin"
+            to="/schedule"
             className="inline-flex items-center justify-center min-h-11 px-4 text-sm text-muted-foreground underline rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             Full schedule (admin)
+          </Link>
+          <span className="mx-2 text-muted-foreground">·</span>
+          <Link
+            to="/admin"
+            className="inline-flex items-center justify-center min-h-11 px-4 text-sm text-muted-foreground underline rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            Admin
           </Link>
         </div>
       </main>
