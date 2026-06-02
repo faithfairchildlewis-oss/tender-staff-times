@@ -328,6 +328,15 @@ function AdminEditor() {
                     </button>
                   )}
                   <button
+                    onClick={() => setLive(s.id, !s.is_live)}
+                    title={s.is_live ? "Hide from staff" : "Make visible to staff"}
+                    className={`p-2 min-h-11 min-w-11 rounded-lg ${
+                      s.is_live ? "text-emerald-500 bg-emerald-500/10" : "text-muted-foreground"
+                    }`}
+                  >
+                    {s.is_live ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
+                  </button>
+                  <button
                     onClick={() => duplicate(s)}
                     title="Duplicate"
                     className="p-2 min-h-11 min-w-11 rounded-lg text-muted-foreground"
