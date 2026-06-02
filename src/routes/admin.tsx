@@ -420,6 +420,14 @@ function AdminEditor() {
           />
         )}
           </>
+        ) : view === "grid" ? (
+          selected ? (
+            <ShiftGrid row={selected} />
+          ) : (
+            <section className="bg-card rounded-2xl shadow-sm p-4">
+              <p className="text-sm text-muted-foreground">Select a week above to start editing.</p>
+            </section>
+          )
         ) : view === "rooms" ? (
           <RoomView schedules={schedules ?? []} selectedId={selectedId} onSelect={setSelectedId} />
         ) : (
