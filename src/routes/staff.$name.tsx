@@ -39,7 +39,7 @@ function StaffPage() {
             <Home className="w-4 h-4" /> Home
           </Link>
           <h1 className="absolute left-1/2 -translate-x-1/2 text-xl font-bold">
-            {name}
+            Hello, {name}
           </h1>
         </div>
         <div className="flex gap-2">
