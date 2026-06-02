@@ -4,7 +4,6 @@ import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 import { formatWeekRange } from "@/lib/format-date";
 import { getDailyContent } from "@/data/daily-content";
-import { useState, useEffect } from "react";
 
 export const Route = createFileRoute("/staff/$name")({
   head: ({ params }) => ({
@@ -30,14 +29,6 @@ function StaffPage() {
   }
   const hours = weeklyHours(schedule, name);
 
-  const [timeGreeting, setTimeGreeting] = useState("");
-  useEffect(() => {
-    const hour = new Date().getHours();
-    setTimeGreeting(
-      hour < 12 ? "Good morning!" : hour < 17 ? "Good afternoon!" : "Good evening!"
-    );
-  }, []);
-
   const { verse, encouragement: subline } = getDailyContent(new Date().getDate());
 
   return (
@@ -52,7 +43,7 @@ function StaffPage() {
           </Link>
           <div className="absolute left-1/2 -translate-x-1/2 text-center">
             <h1 className="text-xl font-bold">Hello, {name}</h1>
-            <p className="text-sm opacity-90 mt-0.5">{timeGreeting}</p>
+            <p className="text-sm opacity-90 mt-0.5">{subline}</p>
           </div>
         </div>
         <div className="flex gap-2">
