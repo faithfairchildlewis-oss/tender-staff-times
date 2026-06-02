@@ -422,6 +422,10 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
                                 onChipDragStart(e, { name: n, fromTime: time, fromRoom: r })
                               }
                               onDragEnd={onDragEnd}
+                              onRemove={() =>
+                                update((d) => unassignAt(d, n, time, r))
+                              }
+                              removeLabel={`Remove ${n} from ${r} at ${time}`}
                             />
                           ))}
                           {names.length === 0 && (
@@ -459,6 +463,8 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
                             onChipDragStart(e, { name: n, fromTime: null, fromRoom: null })
                           }
                           onDragEnd={onDragEnd}
+                          onRemove={() => update((d) => clearWholeDay(d, n))}
+                          removeLabel={`Take ${n} off for ${day}`}
                         />
                       ))}
                     </div>
@@ -550,11 +556,15 @@ function Chip({
   tone,
   onDragStart,
   onDragEnd,
+  onRemove,
+  removeLabel,
 }: {
   name: string;
   tone: "default" | "danger" | "lunch" | "muted";
   onDragStart: (e: React.DragEvent) => void;
   onDragEnd: () => void;
+  onRemove?: () => void;
+  removeLabel?: string;
 }) {
   const cls =
     tone === "danger"
@@ -574,6 +584,23 @@ function Chip({
     >
       <GripVertical className="w-2.5 h-2.5 opacity-60" />
       {name}
+      {onRemove && (
+        <button
+          type="button"
+          draggable={false}
+          onClick={(e) => {
+            e.stopPropagation();
+            onRemove();
+          }}
+          onMouseDown={(e) => e.stopPropagation()}
+          onDragStart={(e) => e.stopPropagation()}
+          aria-label={removeLabel ?? `Remove ${name}`}
+          title={removeLabel ?? `Remove ${name}`}
+          className="ml-0.5 -mr-0.5 inline-flex items-center justify-center w-4 h-4 rounded hover:bg-background/60 cursor-pointer"
+        >
+          <X className="w-2.5 h-2.5" />
+        </button>
+      )}
     </span>
   );
 }
