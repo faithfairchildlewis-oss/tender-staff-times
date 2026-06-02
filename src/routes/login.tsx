@@ -5,7 +5,17 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "Sign in — Admin" }] }),
+  head: () => ({
+    meta: [
+      { title: "Sign in — Admin" },
+      { name: "description", content: "Sign in to the Tender Years of Deale admin console to manage staff schedules." },
+      { name: "robots", content: "noindex,nofollow" },
+      { property: "og:title", content: "Sign in — Admin" },
+      { property: "og:description", content: "Sign in to the Tender Years of Deale admin console to manage staff schedules." },
+      { property: "og:url", content: "/login" },
+    ],
+    links: [{ rel: "canonical", href: "/login" }],
+  }),
   component: LoginPage,
 });
 

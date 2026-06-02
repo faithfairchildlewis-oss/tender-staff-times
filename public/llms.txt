@@ -1,0 +1,8 @@
+# Tender Years of Deale Staff Schedule
+
+> Mobile-first app for Tender Years of Deale childcare staff to view the weekly schedule, room assignments, and request time off.
+
+## Pages
+
+- [Home](/): Staff name picker, verse of the day, and a link to text the director for time off.
+- [Our Rooms](/rooms): Daily classroom staffing assignments by time slot.

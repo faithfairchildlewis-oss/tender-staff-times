@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /login
+Disallow: /reset-password
+
+Sitemap: https://staff.tenderyearscenter.com/sitemap.xml
