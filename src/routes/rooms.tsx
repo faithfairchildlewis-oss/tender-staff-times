@@ -27,7 +27,14 @@ function mmddFor(startDate: string | null | undefined, dayOffset: number): strin
 
 export const Route = createFileRoute("/rooms")({
   head: () => ({
-    meta: [{ title: "Room Schedule — Tender Years of Deale" }],
+    meta: [
+      { title: "Room Schedule — Tender Years of Deale" },
+      { name: "description", content: "Daily classroom staffing assignments and coverage by time slot for Tender Years of Deale." },
+      { property: "og:title", content: "Room Schedule — Tender Years of Deale" },
+      { property: "og:description", content: "Daily classroom staffing assignments and coverage by time slot for Tender Years of Deale." },
+      { property: "og:url", content: "/rooms" },
+    ],
+    links: [{ rel: "canonical", href: "/rooms" }],
   }),
   component: RoomsPage,
 });
