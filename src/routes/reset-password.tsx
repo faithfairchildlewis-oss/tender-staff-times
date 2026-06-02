@@ -107,8 +107,30 @@ function ResetPasswordPage() {
         </p>
       </header>
 
-      <main className="px-4 -mt-6 max-w-md mx-auto">
-        {!isRecovery && !success && (
+      <main className="px-4 -mt-6 max-w-md mx-auto space-y-4">
+        {linkError && (
+          <div className="rounded-2xl border border-destructive/30 bg-destructive/10 p-5 space-y-3" role="alert">
+            <div className="flex items-start gap-3">
+              <div className="mt-0.5 w-6 h-6 rounded-full bg-destructive flex items-center justify-center shrink-0">
+                <span className="text-destructive-foreground text-xs font-bold">!</span>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-foreground">Reset link is invalid or expired</p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {linkError}
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/login"
+              className="inline-flex items-center justify-center w-full bg-primary text-primary-foreground font-semibold py-3 min-h-12 rounded-xl text-center"
+            >
+              Request a new reset link
+            </Link>
+          </div>
+        )}
+
+        {!isRecovery && !success && !linkError && (
           <div className="bg-card rounded-2xl shadow-sm p-5">
             <p className="text-sm text-muted-foreground">
               This page only works from a password-reset email link. If you already have a session, you can still change your password below.
