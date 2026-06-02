@@ -90,7 +90,7 @@ function AdminEditor() {
   const qc = useQueryClient();
   const { data: schedules, isLoading } = useAllSchedules();
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [view, setView] = useState<"edit" | "grid" | "rooms" | "payroll">("edit");
+  const [view, setView] = useState<"edit" | "grid" | "rooms" | "payroll" | "timeoff">("edit");
 
   useEffect(() => {
     if (!selectedId && schedules?.length) {
