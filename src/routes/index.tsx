@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { MessageSquare } from "lucide-react";
 import { staffNames } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
+import { formatWeekRange } from "@/lib/format-date";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,7 +25,9 @@ function Index() {
     <div className="min-h-dvh bg-background pb-10">
       <header className="bg-primary text-primary-foreground px-5 pt-10 pb-12 rounded-b-3xl shadow-md">
         <h1 className="text-2xl font-bold tracking-tight">{schedule?.center ?? "Tender Years of Deale"}</h1>
-        <p className="text-base opacity-90 mt-1">Week of {schedule?.week ?? "—"}</p>
+        <p className="text-base opacity-90 mt-1">
+          Week of {schedule?.start_date ? formatWeekRange(schedule.start_date) : schedule?.week ?? "—"}
+        </p>
       </header>
 
       <main className="px-4 -mt-6 max-w-md mx-auto">
