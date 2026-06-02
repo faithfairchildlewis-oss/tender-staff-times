@@ -30,7 +30,7 @@ function RoomsPage() {
         >
           <Home className="w-4 h-4" /> Home
         </Link>
-        <h1 className="text-xl font-bold text-foreground">Our Day</h1>
+        <h1 className="text-xl font-bold text-foreground">Our Rooms</h1>
         <p className="text-muted-foreground mt-2">
           No live schedule has been published yet. Check back once the director marks a week as Live.
         </p>
@@ -44,7 +44,7 @@ function RoomsPage() {
 
   return (
     <div className="min-h-dvh bg-background pb-6">
-      <PageBanner title="Our Day" subline={weekLabel} />
+      <PageBanner title="Our Rooms" subline={weekLabel} />
 
       <main className="px-4 mt-4 max-w-2xl mx-auto space-y-4">
         <div className="flex gap-1 bg-secondary rounded-xl p-1">
