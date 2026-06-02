@@ -335,7 +335,14 @@ function AdminEditor() {
           )}
         </section>
 
-        {selected && <WeekEditor row={selected} onSaved={refresh} />}
+        {selected && (
+          <WeekEditor
+            row={selected}
+            onSaved={refresh}
+            schedules={schedules ?? []}
+            onSelect={setSelectedId}
+          />
+        )}
           </>
         ) : view === "rooms" ? (
           <RoomView schedules={schedules ?? []} selectedId={selectedId} onSelect={setSelectedId} />
