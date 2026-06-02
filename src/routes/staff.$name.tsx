@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, Utensils } from "lucide-react";
+import { Home, CalendarDays, Building2, MessageSquare, Utensils } from "lucide-react";
 import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 
@@ -32,11 +32,11 @@ function StaffPage() {
       <header className="bg-primary text-primary-foreground px-5 pt-8 pb-10 rounded-b-3xl shadow-md">
         <Link
           to="/"
-          aria-label="Back to name picker"
+          aria-label="Home"
           className="inline-flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground mb-3 min-h-11 -ml-2 px-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground"
         >
-          <ArrowLeft className="w-5 h-5" aria-hidden="true" />
-          <span className="text-sm">Back</span>
+          <Home className="w-5 h-5" aria-hidden="true" />
+          <span className="text-sm">Home</span>
         </Link>
         <h1 className="text-2xl font-bold">Hello, {name}!</h1>
         <p className="text-base opacity-90 mt-1">Your schedule this week</p>
@@ -46,6 +46,30 @@ function StaffPage() {
         <div className="bg-lilac text-lilac-foreground rounded-2xl p-5 shadow-sm text-center">
           <div className="text-4xl font-bold">{hours.toFixed(1)}</div>
           <div className="text-sm opacity-90 mt-1">hours this week</div>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2 mt-4">
+          <Link
+            to="/schedule"
+            className="flex flex-col items-center justify-center gap-1 bg-card border border-border rounded-xl p-3 min-h-[72px] text-foreground hover:bg-accent transition active:scale-[0.98]"
+          >
+            <CalendarDays className="w-5 h-5 text-primary" aria-hidden="true" />
+            <span className="text-xs font-semibold">My Week</span>
+          </Link>
+          <Link
+            to="/rooms"
+            className="flex flex-col items-center justify-center gap-1 bg-card border border-border rounded-xl p-3 min-h-[72px] text-foreground hover:bg-accent transition active:scale-[0.98]"
+          >
+            <Building2 className="w-5 h-5 text-primary" aria-hidden="true" />
+            <span className="text-xs font-semibold">Our Day</span>
+          </Link>
+          <a
+            href={`sms:+14104744156?&body=${encodeURIComponent("Hi, I would like to request time off.\nMy name: " + name + "\nDate(s) requested: \nReason: ")}`}
+            className="flex flex-col items-center justify-center gap-1 bg-card border border-border rounded-xl p-3 min-h-[72px] text-foreground hover:bg-accent transition active:scale-[0.98]"
+          >
+            <MessageSquare className="w-5 h-5 text-primary" aria-hidden="true" />
+            <span className="text-xs font-semibold">Request Off</span>
+          </a>
         </div>
 
         <h2 className="text-base font-semibold text-foreground mt-6 mb-3 px-1">
@@ -148,23 +172,7 @@ function StaffPage() {
         </div>
       </main>
 
-      <nav
-        aria-label="Page navigation"
-        className="fixed bottom-0 inset-x-0 bg-card border-t border-border px-4 py-2 flex justify-between max-w-md mx-auto"
-      >
-        <Link
-          to="/"
-          className="text-sm font-medium text-primary inline-flex items-center min-h-11 px-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          ← All names
-        </Link>
-        <Link
-          to="/schedule"
-          className="text-sm font-medium text-primary inline-flex items-center min-h-11 px-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          Full schedule →
-        </Link>
-      </nav>
+      <div className="h-6" aria-hidden="true" />
     </div>
   );
 }
