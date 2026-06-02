@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
-import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign, Eye, EyeOff, Users } from "lucide-react";
+import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign, Eye, EyeOff, Users, Move } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -23,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ShiftGrid } from "@/components/shift-grid";
 
 export const Route = createFileRoute("/admin")({
   ssr: false,
@@ -87,7 +88,7 @@ function AdminEditor() {
   const qc = useQueryClient();
   const { data: schedules, isLoading } = useAllSchedules();
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [view, setView] = useState<"edit" | "rooms" | "payroll">("edit");
+  const [view, setView] = useState<"edit" | "grid" | "rooms" | "payroll">("edit");
 
   useEffect(() => {
     if (!selectedId && schedules?.length) {
@@ -277,6 +278,17 @@ function AdminEditor() {
             Edit Schedule
           </button>
           <button
+            onClick={() => setView("grid")}
+            className={`flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 ${
+              view === "grid"
+                ? "bg-primary-foreground text-primary"
+                : "bg-primary-foreground/15 text-primary-foreground"
+            }`}
+            title="Drag-and-drop shift editor"
+          >
+            <Move className="w-4 h-4" /> Grid
+          </button>
+          <button
             onClick={() => setView("rooms")}
             className={`flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold ${
               view === "rooms"
@@ -408,6 +420,14 @@ function AdminEditor() {
           />
         )}
           </>
+        ) : view === "grid" ? (
+          selected ? (
+            <ShiftGrid row={selected} />
+          ) : (
+            <section className="bg-card rounded-2xl shadow-sm p-4">
+              <p className="text-sm text-muted-foreground">Select a week above to start editing.</p>
+            </section>
+          )
         ) : view === "rooms" ? (
           <RoomView schedules={schedules ?? []} selectedId={selectedId} onSelect={setSelectedId} />
         ) : (
