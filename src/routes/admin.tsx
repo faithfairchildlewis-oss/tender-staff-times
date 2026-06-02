@@ -88,7 +88,7 @@ function AdminEditor() {
   const qc = useQueryClient();
   const { data: schedules, isLoading } = useAllSchedules();
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [view, setView] = useState<"edit" | "rooms" | "payroll">("edit");
+  const [view, setView] = useState<"edit" | "grid" | "rooms" | "payroll">("edit");
 
   useEffect(() => {
     if (!selectedId && schedules?.length) {
@@ -276,6 +276,17 @@ function AdminEditor() {
             }`}
           >
             Edit Schedule
+          </button>
+          <button
+            onClick={() => setView("grid")}
+            className={`flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 ${
+              view === "grid"
+                ? "bg-primary-foreground text-primary"
+                : "bg-primary-foreground/15 text-primary-foreground"
+            }`}
+            title="Drag-and-drop shift editor"
+          >
+            <Move className="w-4 h-4" /> Grid
           </button>
           <button
             onClick={() => setView("rooms")}
