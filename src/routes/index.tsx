@@ -17,7 +17,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const { data: schedule } = useCurrentSchedule();
-  const names = schedule ? staffNames(schedule) : [];
+  const names = schedule ? staffNames(schedule).sort() : [];
   const phone = "4104744156";
   const smsBody = encodeURIComponent(
     "Hi, I would like to request time off.\nMy name is: \nDate(s) requested: \nReason: "
