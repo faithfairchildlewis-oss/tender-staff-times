@@ -279,6 +279,106 @@ function AdminEditor() {
 
 type Block = { start: string; end: string; rooms: string[] };
 
+function RoomView({
+  schedules,
+  selectedId,
+  onSelect,
+}: {
+  schedules: ScheduleRow[];
+  selectedId: string | null;
+  onSelect: (id: string) => void;
+}) {
+  const selected = schedules.find((s) => s.id === selectedId) ?? schedules[0] ?? null;
+  const [dayIdx, setDayIdx] = useState(0);
+
+  if (!selected) {
+    return (
+      <section className="bg-card rounded-2xl shadow-sm p-4">
+        <p className="text-sm text-muted-foreground">No schedules yet.</p>
+      </section>
+    );
+  }
+
+  const data: ScheduleData = selected.data;
+  const derivedDays = useMemo(() => deriveDays(data), [data]);
+  const day = derivedDays[dayIdx];
+  const rooms = data.rooms?.length ? data.rooms : DEFAULT_ROOMS;
+
+  return (
+    <section className="bg-card rounded-2xl shadow-sm p-4 space-y-3">
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="font-semibold text-foreground">Rooms — {selected.week_label}</h2>
+        {schedules.length > 1 && (
+          <select
+            value={selected.id}
+            onChange={(e) => onSelect(e.target.value)}
+            className="bg-secondary rounded-lg px-2 py-2 min-h-11 text-sm max-w-[55%]"
+          >
+            {schedules.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.week_label}
+              </option>
+            ))}
+          </select>
+        )}
+      </div>
+
+      <div className="flex gap-1 bg-secondary rounded-xl p-1">
+        {DAY_NAMES.map((d, i) => (
+          <button
+            key={d}
+            onClick={() => setDayIdx(i)}
+            className={`flex-1 text-sm font-semibold min-h-11 rounded-lg ${
+              i === dayIdx ? "bg-card text-foreground shadow" : "text-muted-foreground"
+            }`}
+          >
+            {d.slice(0, 3)}
+          </button>
+        ))}
+      </div>
+
+      <div className="overflow-x-auto -mx-4 px-4">
+        <table className="w-full text-xs border-collapse">
+          <thead>
+            <tr>
+              <th className="text-left p-1 sticky left-0 bg-card">Time</th>
+              {rooms.map((r) => (
+                <th key={r} className="p-1 text-left font-semibold text-foreground">
+                  {r}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {day.slots.map((sl) => (
+              <tr key={sl.time} className="border-t border-border align-top">
+                <td className="p-1 whitespace-nowrap font-medium text-muted-foreground sticky left-0 bg-card">
+                  {sl.time}
+                </td>
+                {rooms.map((r) => {
+                  const a = sl.assignments[r];
+                  if (a === null) {
+                    return <td key={r} className="p-1 text-muted-foreground/40">—</td>;
+                  }
+                  const under = sl.understaffed.includes(r);
+                  return (
+                    <td
+                      key={r}
+                      className={`p-1 ${under ? "text-destructive" : "text-foreground"}`}
+                    >
+                      {a.length ? a.join(", ") : <span className="text-destructive">empty</span>}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
 function WeekEditor({ row, onSaved }: { row: ScheduleRow; onSaved: () => void }) {
   const [data, setData] = useState<ScheduleData>(row.data);
   const [dayIdx, setDayIdx] = useState(0);
