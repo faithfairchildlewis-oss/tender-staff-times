@@ -598,6 +598,30 @@ function WeekEditor({
     setData({ ...data, staff });
     setStaffName(name);
   }
+  function importStaffFrom(sourceId: string) {
+    const src = schedules.find((s) => s.id === sourceId);
+    if (!src) return;
+    const srcStaff = src.data.staff ?? {};
+    const names = Object.keys(srcStaff);
+    if (!names.length) return alert("That week has no staff to import.");
+    const staff = { ...(data.staff ?? {}) };
+    let added = 0;
+    for (const n of names) {
+      if (staff[n]) continue;
+      // Copy roster info (rate, lunch, daily_breaks) but reset hours;
+      // do NOT copy staff_daily — assignments stay empty for the new week.
+      staff[n] = {
+        rate: srcStaff[n].rate ?? 0,
+        hours: 0,
+        lunch: srcStaff[n].lunch ?? { type: "varies" },
+        daily_breaks: srcStaff[n].daily_breaks ?? {},
+      };
+      added++;
+    }
+    setData({ ...data, staff });
+    if (!staffName && names[0]) setStaffName(names[0]);
+    alert(`Imported ${added} staff member${added === 1 ? "" : "s"}.`);
+  }
   function removeStaff() {
     if (!staffName) return;
     if (!confirm(`Remove ${staffName}?`)) return;
