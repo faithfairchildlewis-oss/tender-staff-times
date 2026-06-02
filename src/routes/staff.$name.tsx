@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, Utensils } from "lucide-react";
+import { Home, CalendarDays, Building2, MessageSquare, Utensils } from "lucide-react";
 import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 
