@@ -128,7 +128,6 @@ function AdminEditor() {
     if (!count) return;
 
     const existing = new Set((schedules ?? []).map((s) => s.start_date));
-    const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     const start = new Date("2026-06-01T00:00:00");
     const toInsert: { week_label: string; start_date: string; is_current: boolean; is_live: boolean; data: any }[] = [];
 
@@ -690,7 +689,7 @@ function WeekEditor({
         <SelectContent position="popper" side="bottom" align="start" sideOffset={4} avoidCollisions={false}>
           {schedules.map((s) => (
             <SelectItem key={s.id} value={s.id}>
-              {s.week_label}
+              {formatWeekRange(s.start_date)}
               {s.is_current ? " · current" : ""}
             </SelectItem>
           ))}
@@ -747,7 +746,7 @@ function WeekEditor({
             .filter((s) => s.id !== row.id && Object.keys(s.data.staff ?? {}).length > 0)
             .map((s) => (
               <SelectItem key={s.id} value={s.id}>
-                {s.week_label} ({Object.keys(s.data.staff ?? {}).length})
+                {formatWeekRange(s.start_date)} ({Object.keys(s.data.staff ?? {}).length})
               </SelectItem>
             ))}
         </SelectContent>
@@ -774,7 +773,7 @@ function WeekEditor({
                   .filter((s) => s.id !== row.id && Object.keys(s.data.staff ?? {}).length > 0)
                   .map((s) => (
                     <SelectItem key={s.id} value={s.id}>
-                      {s.week_label} ({Object.keys(s.data.staff ?? {}).length})
+                      {formatWeekRange(s.start_date)} ({Object.keys(s.data.staff ?? {}).length})
                     </SelectItem>
                   ))}
               </SelectContent>
@@ -959,7 +958,7 @@ function PayrollView({
         >
           {schedules.map((s) => (
             <option key={s.id} value={s.id}>
-              {s.week_label}
+              {formatWeekRange(s.start_date)}
             </option>
           ))}
         </select>
