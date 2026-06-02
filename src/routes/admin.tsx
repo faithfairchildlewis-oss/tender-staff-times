@@ -108,14 +108,21 @@ function AdminEditor() {
     if (!label) return;
     const date = prompt("Monday's date (YYYY-MM-DD)", src.start_date);
     if (!date) return;
-    const newData = { ...src.data, week: label };
+    // Deep clone so the new row gets its own copy of staff, staff_daily
+    // (room assignments) and days — editing it later must not mutate the
+    // source week.
+    const cloned: ScheduleData = JSON.parse(JSON.stringify(src.data));
+    cloned.week = label;
+    // Rebuild days[].slots from the duplicated staff_daily so the room
+    // grid is in sync with the copied per-staff assignments.
+    cloned.days = deriveDays(cloned);
     const { data: row, error } = await supabase
       .from("schedules")
       .insert({
         week_label: label,
         start_date: date,
         is_current: false,
-        data: newData as any,
+        data: cloned as any,
       })
       .select("id")
       .single();
