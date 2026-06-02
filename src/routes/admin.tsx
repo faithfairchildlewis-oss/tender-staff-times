@@ -53,7 +53,7 @@ function AdminEditor() {
   const qc = useQueryClient();
   const { data: schedules, isLoading } = useAllSchedules();
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [view, setView] = useState<"edit" | "rooms">("edit");
+  const [view, setView] = useState<"edit" | "rooms" | "payroll">("edit");
 
   useEffect(() => {
     if (!selectedId && schedules?.length) {
@@ -193,6 +193,16 @@ function AdminEditor() {
           >
             By Room
           </button>
+          <button
+            onClick={() => setView("payroll")}
+            className={`flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold ${
+              view === "payroll"
+                ? "bg-primary-foreground text-primary"
+                : "bg-primary-foreground/15 text-primary-foreground"
+            }`}
+          >
+            Payroll
+          </button>
         </div>
       </header>
 
@@ -269,8 +279,10 @@ function AdminEditor() {
 
         {selected && <WeekEditor row={selected} onSaved={refresh} />}
           </>
-        ) : (
+        ) : view === "rooms" ? (
           <RoomView schedules={schedules ?? []} selectedId={selectedId} onSelect={setSelectedId} />
+        ) : (
+          <PayrollView schedules={schedules ?? []} selectedId={selectedId} onSelect={setSelectedId} />
         )}
       </main>
     </div>
