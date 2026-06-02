@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Home, CalendarDays } from "lucide-react";
+import { Home, CalendarDays, TreePine, Nut } from "lucide-react";
 import { useState, useMemo, useRef, useEffect } from "react";
 import { PageBanner } from "@/components/page-banner";
 import { useLiveSchedules } from "@/hooks/use-schedule";
@@ -150,11 +150,39 @@ function RoomsPage() {
   const day = week.days[active.dayIdx];
   const schedule = week.schedule;
   const rooms = schedule.rooms?.length ? schedule.rooms : DEFAULT_ROOMS;
-  const weekLabel = schedule.start_date ? formatWeekRange(schedule.start_date) : schedule.week;
-
   return (
     <div className="min-h-dvh bg-background pb-6">
-      <PageBanner title="Our Rooms" subline={weekLabel} />
+      <PageBanner
+        title={
+          <span className="inline-flex items-center gap-2">
+            <Nut className="w-4 h-4" aria-hidden="true" />
+            Our Rooms
+            <TreePine className="w-4 h-4" aria-hidden="true" />
+          </span>
+        }
+      >
+        <div className="flex gap-2">
+          <Link
+            to="/"
+            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
+          >
+            <CalendarDays className="w-4 h-4" /> My Week
+          </Link>
+          <span
+            aria-current="page"
+            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground text-primary"
+          >
+            <TreePine className="w-4 h-4" /> Our Rooms
+          </span>
+          <button
+            type="button"
+            onClick={scrollToCurrentWeek}
+            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
+          >
+            <CalendarDays className="w-4 h-4" /> This Week
+          </button>
+        </div>
+      </PageBanner>
 
       <main className="px-4 mt-4 max-w-2xl mx-auto space-y-4">
         <div className="flex items-center gap-2">
