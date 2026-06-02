@@ -40,10 +40,10 @@ function Index() {
       </header>
 
       <main className="px-4 -mt-6 max-w-md mx-auto">
-        <section className="bg-card rounded-2xl shadow-sm p-4">
-          <p className="text-xs font-semibold text-foreground uppercase tracking-wide">Verse of the Day</p>
-          <p className="text-base italic text-foreground mt-2 leading-relaxed">"{verse.text}"</p>
-          <p className="text-xs text-muted-foreground mt-2">{verse.ref}</p>
+        <section className="bg-lilac-light rounded-2xl shadow-sm p-4">
+          <p className="text-xs font-semibold text-lilac-foreground uppercase tracking-wide">Verse of the Day</p>
+          <p className="text-base italic text-lilac-foreground mt-2 leading-relaxed">"{verse.text}"</p>
+          <p className="text-xs text-lilac-foreground mt-2 opacity-70">{verse.ref}</p>
         </section>
 
         <section className="bg-card rounded-2xl shadow-sm p-5 mt-6">

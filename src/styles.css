@@ -52,6 +52,7 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
   --color-lilac: var(--lilac);
+  --color-lilac-light: var(--lilac-light);
   --color-lilac-foreground: var(--lilac-foreground);
   --color-row-stripe: var(--row-stripe);
   --color-closed: var(--closed);
@@ -87,6 +88,7 @@
   --warning: oklch(0.78 0.15 75);
   --warning-foreground: oklch(0.25 0.05 60);
   --lilac: oklch(0.88 0.06 300);
+  --lilac-light: oklch(0.94 0.035 300);
   --lilac-foreground: oklch(0.35 0.08 300);
   --row-stripe: oklch(0.94 0.04 230);
   --closed: oklch(0.78 0.15 145);
@@ -127,6 +129,7 @@
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.984 0.003 247.858);
   --lilac: oklch(0.75 0.08 300);
+  --lilac-light: oklch(0.82 0.06 300);
   --lilac-foreground: oklch(0.25 0.08 300);
   --row-stripe: oklch(0.35 0.06 230);
   --closed: oklch(0.55 0.15 145);
