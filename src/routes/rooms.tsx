@@ -26,6 +26,9 @@ function mmddFor(startDate: string | null | undefined, dayOffset: number): strin
 }
 
 export const Route = createFileRoute("/rooms")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    from: typeof search.from === "string" ? search.from : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Room Schedule — Tender Years of Deale" },
@@ -41,6 +44,7 @@ export const Route = createFileRoute("/rooms")({
 
 function RoomsPage() {
   const { data: schedules, isLoading } = useLiveSchedules();
+  const { from } = Route.useSearch();
   const router = useRouter();
   const [activeIdx, setActiveIdx] = useState(0);
   const [flashWeek, setFlashWeek] = useState<number | null>(null);
@@ -169,13 +173,23 @@ function RoomsPage() {
         }
       >
         <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => router.history.back()}
-            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
-          >
-            <CalendarDays className="w-4 h-4" /> My Week
-          </button>
+          {from ? (
+            <Link
+              to="/staff/$name"
+              params={{ name: from }}
+              className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
+            >
+              <CalendarDays className="w-4 h-4" /> My Week
+            </Link>
+          ) : (
+            <button
+              type="button"
+              onClick={() => router.history.back()}
+              className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
+            >
+              <CalendarDays className="w-4 h-4" /> My Week
+            </button>
+          )}
           <span
             aria-current="page"
             className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground text-primary"
