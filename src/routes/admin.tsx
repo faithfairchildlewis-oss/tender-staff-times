@@ -103,6 +103,7 @@ function AdminEditor() {
         week_label: label,
         start_date: date,
         is_current: false,
+        is_live: false,
         data: blankSchedule(label) as any,
       })
       .select("id")
@@ -121,7 +122,7 @@ function AdminEditor() {
     const existing = new Set((schedules ?? []).map((s) => s.start_date));
     const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     const start = new Date("2026-06-01T00:00:00");
-    const toInsert: { week_label: string; start_date: string; is_current: boolean; data: any }[] = [];
+    const toInsert: { week_label: string; start_date: string; is_current: boolean; is_live: boolean; data: any }[] = [];
 
     for (let i = 0; i < count; i++) {
       const mon = new Date(start);
@@ -138,6 +139,7 @@ function AdminEditor() {
         week_label: label,
         start_date: iso,
         is_current: false,
+        is_live: false,
         data: blankSchedule(label) as any,
       });
     }
@@ -171,6 +173,7 @@ function AdminEditor() {
         week_label: label,
         start_date: date,
         is_current: false,
+        is_live: false,
         data: cloned as any,
       })
       .select("id")
