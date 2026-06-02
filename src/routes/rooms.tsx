@@ -44,6 +44,7 @@ export const Route = createFileRoute("/rooms")({
 
 function RoomsPage() {
   const { data: schedules, isLoading } = useLiveSchedules();
+  const { from } = Route.useSearch();
   const router = useRouter();
   const [activeIdx, setActiveIdx] = useState(0);
   const [flashWeek, setFlashWeek] = useState<number | null>(null);
