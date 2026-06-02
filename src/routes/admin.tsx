@@ -442,6 +442,8 @@ function AdminEditor() {
           )
         ) : view === "rooms" ? (
           <RoomView schedules={schedules ?? []} selectedId={selectedId} onSelect={setSelectedId} />
+        ) : view === "timeoff" ? (
+          <TimeOffView />
         ) : (
           <PayrollView schedules={schedules ?? []} selectedId={selectedId} onSelect={setSelectedId} />
         )}
