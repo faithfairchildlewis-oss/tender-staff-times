@@ -598,6 +598,30 @@ function WeekEditor({
     setData({ ...data, staff });
     setStaffName(name);
   }
+  function importStaffFrom(sourceId: string) {
+    const src = schedules.find((s) => s.id === sourceId);
+    if (!src) return;
+    const srcStaff = src.data.staff ?? {};
+    const names = Object.keys(srcStaff);
+    if (!names.length) return alert("That week has no staff to import.");
+    const staff = { ...(data.staff ?? {}) };
+    let added = 0;
+    for (const n of names) {
+      if (staff[n]) continue;
+      // Copy roster info (rate, lunch, daily_breaks) but reset hours;
+      // do NOT copy staff_daily — assignments stay empty for the new week.
+      staff[n] = {
+        rate: srcStaff[n].rate ?? 0,
+        hours: 0,
+        lunch: srcStaff[n].lunch ?? { type: "varies" },
+        daily_breaks: srcStaff[n].daily_breaks ?? {},
+      };
+      added++;
+    }
+    setData({ ...data, staff });
+    if (!staffName && names[0]) setStaffName(names[0]);
+    alert(`Imported ${added} staff member${added === 1 ? "" : "s"}.`);
+  }
   function removeStaff() {
     if (!staffName) return;
     if (!confirm(`Remove ${staffName}?`)) return;
@@ -706,6 +730,21 @@ function WeekEditor({
           </button>
         )}
       </div>
+
+      <Select value="" onValueChange={importStaffFrom}>
+        <SelectTrigger className="w-full min-h-11 text-sm">
+          <SelectValue placeholder="Import staff roster from another week…" />
+        </SelectTrigger>
+        <SelectContent position="popper" side="bottom" align="start" sideOffset={4} avoidCollisions={false}>
+          {schedules
+            .filter((s) => s.id !== row.id && Object.keys(s.data.staff ?? {}).length > 0)
+            .map((s) => (
+              <SelectItem key={s.id} value={s.id}>
+                {s.week_label} ({Object.keys(s.data.staff ?? {}).length})
+              </SelectItem>
+            ))}
+        </SelectContent>
+      </Select>
 
       {info && (
         <div className="grid grid-cols-2 gap-2 text-sm">
