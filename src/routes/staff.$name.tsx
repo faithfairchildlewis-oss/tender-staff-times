@@ -39,14 +39,6 @@ function StaffPage() {
       <PageBanner
         title={`Hello, ${name}`}
         subline={subline}
-        rightSlot={
-          <Link
-            to="/rooms"
-            className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary-foreground/15"
-          >
-            <TreePine className="w-4 h-4" /> Our Rooms
-          </Link>
-        }
       >
         <div className="flex gap-2">
           <Link
@@ -56,6 +48,12 @@ function StaffPage() {
             className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground text-primary"
           >
             <CalendarDays className="w-4 h-4" /> My Week
+          </Link>
+          <Link
+            to="/rooms"
+            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
+          >
+            <TreePine className="w-4 h-4" /> Our Rooms
           </Link>
           <a
             href={`sms:+14104744156?&body=${encodeURIComponent(
