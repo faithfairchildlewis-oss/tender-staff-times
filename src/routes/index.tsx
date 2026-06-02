@@ -29,30 +29,18 @@ function Index() {
   return (
     <div className="min-h-dvh bg-background pb-10">
       <header
-        className="relative overflow-hidden text-primary-foreground px-5 pt-8 pb-7 shadow-md rounded-b-3xl"
+        className="text-primary-foreground px-5 pt-8 pb-7 shadow-md rounded-b-3xl"
         style={{
           background:
-            "linear-gradient(160deg, oklch(0.58 0.09 150) 0%, oklch(0.5 0.08 160) 100%)",
+            "linear-gradient(160deg, oklch(0.62 0.12 50) 0%, oklch(0.52 0.1 45) 100%)",
         }}
       >
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.12]"
-          style={{
-            backgroundImage:
-              "radial-gradient(ellipse 6px 10px at 20% 25%, white 60%, transparent 62%), radial-gradient(ellipse 5px 8px at 70% 40%, white 60%, transparent 62%), radial-gradient(ellipse 7px 11px at 45% 75%, white 60%, transparent 62%), radial-gradient(ellipse 4px 7px at 88% 80%, white 60%, transparent 62%), radial-gradient(ellipse 5px 9px at 10% 85%, white 60%, transparent 62%), radial-gradient(ellipse 6px 10px at 60% 15%, white 60%, transparent 62%)",
-            backgroundSize: "180px 180px",
-          }}
-        />
-        <div className="relative">
+        <div className="text-center">
           <h1 className="text-xl font-bold tracking-tight leading-none">
             {schedule?.center ?? "Tender Years of Deale"}
           </h1>
           <p className="text-sm italic mt-2 leading-tight text-[oklch(0.98_0.01_90)]/95">
             Where God's word falls like gentle rain.
-          </p>
-          <p className="text-xs font-light mt-1 leading-tight text-white/70">
-            {greeting}
           </p>
         </div>
       </header>
