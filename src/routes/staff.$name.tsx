@@ -253,7 +253,7 @@ function StaffPage() {
 
         <div className="mt-6 text-center">
           <Link to="/rooms" className="text-sm text-primary underline inline-flex items-center gap-1">
-            <Building2 className="w-4 h-4" /> Full schedule
+            <Building2 className="w-4 h-4" /> Our Rooms
           </Link>
         </div>
       </main>
