@@ -95,6 +95,12 @@ function RoomsPage() {
     return (weeks.length - 1) * 5;
   }, [schedules, weeks]);
 
+  const triggerFlash = (weekIdx: number) => {
+    if (flashTimeoutRef.current) clearTimeout(flashTimeoutRef.current);
+    setFlashWeek(weekIdx);
+    flashTimeoutRef.current = setTimeout(() => setFlashWeek(null), 1500);
+  };
+
   // Auto-scroll to current week on first load
   useEffect(() => {
     if (tabs.length === 0) return;
@@ -103,6 +109,9 @@ function RoomsPage() {
     if (btn && strip) {
       strip.scrollTo({ left: btn.offsetLeft - strip.clientWidth / 2 + btn.clientWidth / 2, behavior: "smooth" });
     }
+    const weekIdx = tabs[currentWeekStartTab]?.weekIdx;
+    if (weekIdx !== undefined) triggerFlash(weekIdx);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tabs.length, currentWeekStartTab]);
 
   const scrollToCurrentWeek = () => {
@@ -112,6 +121,8 @@ function RoomsPage() {
     if (btn && strip) {
       strip.scrollTo({ left: btn.offsetLeft - strip.clientWidth / 2 + btn.clientWidth / 2, behavior: "smooth" });
     }
+    const weekIdx = tabs[currentWeekStartTab]?.weekIdx;
+    if (weekIdx !== undefined) triggerFlash(weekIdx);
   };
 
   if (isLoading) {
