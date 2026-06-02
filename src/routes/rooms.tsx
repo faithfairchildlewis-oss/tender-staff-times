@@ -185,25 +185,42 @@ function RoomsPage() {
 
       <main className="px-4 mt-4 max-w-2xl mx-auto space-y-4">
         <div ref={stripRef} className="overflow-x-auto -mx-4 px-4">
-          <div className="flex gap-1 bg-secondary rounded-xl p-1 w-max min-w-full">
-            {tabs.map((t, i) => {
-              const isActive = i === activeIdx;
+          <div className="flex gap-3 w-max min-w-full">
+            {weeks.map((w, wi) => {
+              const weekTabs = tabs
+                .map((t, i) => ({ t, i }))
+                .filter(({ t }) => t.weekIdx === wi);
+              const weekLabel = mmddFor(w.schedule.start_date, 0);
+              const isFlashing = wi === flashWeek;
               return (
-                <button
-                  key={`${t.weekIdx}-${t.dayIdx}`}
-                  ref={(el) => { buttonRefs.current[i] = el; }}
-                  onClick={() => setActiveIdx(i)}
-                  className={`shrink-0 px-3 min-h-11 rounded-lg transition-all duration-300 flex flex-col items-center justify-center leading-tight ${
-                    weeks.length > 1 ? "min-w-[68px]" : "flex-1"
-                  } ${
-                    isActive ? "bg-card text-foreground shadow" : "text-muted-foreground"
-                  } ${
-                    t.weekIdx === flashWeek ? "ring-2 ring-primary ring-offset-2 ring-offset-secondary scale-105 animate-[pulse_0.8s_ease-in-out_2]" : ""
-                  }`}
+                <div
+                  key={wi}
+                  className={`flex flex-col gap-1 rounded-xl p-1 transition-all duration-300 ${
+                    wi % 2 === 0 ? "bg-secondary" : "bg-accent/40"
+                  } ${isFlashing ? "ring-2 ring-primary ring-offset-2 ring-offset-background" : ""}`}
                 >
-                  <span className="text-sm font-semibold">{t.shortLabel}</span>
-                  {t.mmdd && <span className="text-[10px] opacity-80">{t.mmdd}</span>}
-                </button>
+                  <div className="px-2 pt-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                    Week of {weekLabel}
+                  </div>
+                  <div className="flex gap-1">
+                    {weekTabs.map(({ t, i }) => {
+                      const isActive = i === activeIdx;
+                      return (
+                        <button
+                          key={`${t.weekIdx}-${t.dayIdx}`}
+                          ref={(el) => { buttonRefs.current[i] = el; }}
+                          onClick={() => setActiveIdx(i)}
+                          className={`shrink-0 px-3 min-h-11 min-w-[68px] rounded-lg transition-all duration-300 flex flex-col items-center justify-center leading-tight ${
+                            isActive ? "bg-card text-foreground shadow" : "text-muted-foreground"
+                          }`}
+                        >
+                          <span className="text-sm font-semibold">{t.shortLabel}</span>
+                          {t.mmdd && <span className="text-[10px] opacity-80">{t.mmdd}</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               );
             })}
           </div>
