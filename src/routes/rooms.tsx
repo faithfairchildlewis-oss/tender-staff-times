@@ -26,6 +26,9 @@ function mmddFor(startDate: string | null | undefined, dayOffset: number): strin
 }
 
 export const Route = createFileRoute("/rooms")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    from: typeof search.from === "string" ? search.from : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Room Schedule — Tender Years of Deale" },
