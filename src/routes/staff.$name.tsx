@@ -35,7 +35,6 @@ function StaffPage() {
     <div className="min-h-dvh bg-background pb-24">
       <PageBanner
         title={`Hello, ${name}`}
-        subline={subline}
       >
         <div className="flex gap-2">
           <Link
