@@ -304,6 +304,27 @@ function RoomView({
   const day = derivedDays[dayIdx];
   const rooms = data.rooms?.length ? data.rooms : DEFAULT_ROOMS;
 
+  const LILAC_ROOMS = new Set(["M.O.D.", "Room I", "J/K"]);
+  const CLOSED_AT_4 = new Set(["Room F", "Room I"]);
+
+  function parseMinutes(t: string): number {
+    const m = t.match(/(\d+):(\d+)\s*(AM|PM)/i);
+    if (!m) return 0;
+    let h = parseInt(m[1]);
+    const min = parseInt(m[2]);
+    const ap = m[3].toUpperCase();
+    if (ap === "PM" && h !== 12) h += 12;
+    if (ap === "AM" && h === 12) h = 0;
+    return h * 60 + min;
+  }
+
+  function rowStripe(time: string): string {
+    const m = parseMinutes(time);
+    if (m < 7 * 60 || m > 17 * 60 + 30) return "";
+    // 7:00 white, 7:30 light blue, 8:00 white, ...
+    return m % 60 === 30 ? "bg-row-stripe" : "";
+  }
+
   return (
     <section className="bg-card rounded-2xl shadow-sm p-4 space-y-3">
       <div className="flex items-center justify-between gap-2">
@@ -341,37 +362,74 @@ function RoomView({
         <table className="w-full text-xs border-collapse">
           <thead>
             <tr>
-              <th className="text-left p-1 sticky left-0 bg-card">Time</th>
+              <th className="text-left p-1 border border-border sticky left-0 bg-card">
+                Time
+              </th>
               {rooms.map((r) => (
-                <th key={r} className="p-1 text-left font-semibold text-foreground">
+                <th
+                  key={r}
+                  className={`p-1 text-left font-semibold text-foreground border border-border ${
+                    LILAC_ROOMS.has(r) ? "bg-lilac text-lilac-foreground" : ""
+                  }`}
+                >
                   {r}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {day.slots.map((sl) => (
-              <tr key={sl.time} className="border-t border-border align-top">
-                <td className="p-1 whitespace-nowrap font-medium text-muted-foreground sticky left-0 bg-card">
-                  {sl.time}
-                </td>
-                {rooms.map((r) => {
-                  const a = sl.assignments[r];
-                  if (a === null) {
-                    return <td key={r} className="p-1 text-muted-foreground/40">—</td>;
-                  }
-                  const under = sl.understaffed.includes(r);
-                  return (
-                    <td
-                      key={r}
-                      className={`p-1 ${under ? "text-destructive" : "text-foreground"}`}
-                    >
-                      {a.length ? a.join(", ") : <span className="text-destructive">empty</span>}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
+            {day.slots.map((sl) => {
+              const stripe = rowStripe(sl.time);
+              const mins = parseMinutes(sl.time);
+              return (
+                <tr key={sl.time} className="align-top">
+                  <td
+                    className={`p-1 whitespace-nowrap font-medium text-muted-foreground border border-border sticky left-0 ${
+                      stripe || "bg-card"
+                    }`}
+                  >
+                    {sl.time}
+                  </td>
+                  {rooms.map((r) => {
+                    const a = sl.assignments[r];
+                    const closed = CLOSED_AT_4.has(r) && mins >= 16 * 60;
+                    if (closed) {
+                      return (
+                        <td
+                          key={r}
+                          className="p-1 border border-border bg-closed text-closed-foreground text-center font-semibold"
+                        >
+                          Closed
+                        </td>
+                      );
+                    }
+                    const lilac = LILAC_ROOMS.has(r);
+                    const bg = lilac ? "bg-lilac" : stripe;
+                    if (a === null) {
+                      return (
+                        <td
+                          key={r}
+                          className={`p-1 border border-border text-muted-foreground/40 ${bg}`}
+                        >
+                          —
+                        </td>
+                      );
+                    }
+                    const under = sl.understaffed.includes(r);
+                    return (
+                      <td
+                        key={r}
+                        className={`p-1 border border-border ${bg} ${
+                          under ? "text-destructive" : lilac ? "text-lilac-foreground" : "text-foreground"
+                        }`}
+                      >
+                        {a.length ? a.join(", ") : <span className="text-destructive">empty</span>}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
