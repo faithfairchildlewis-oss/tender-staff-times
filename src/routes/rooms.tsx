@@ -36,8 +36,10 @@ export const Route = createFileRoute("/rooms")({
 function RoomsPage() {
   const { data: schedules, isLoading } = useLiveSchedules();
   const [activeIdx, setActiveIdx] = useState(0);
+  const [flashWeek, setFlashWeek] = useState<number | null>(null);
   const stripRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const flashTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const weeks = useMemo(
     () =>
@@ -93,6 +95,12 @@ function RoomsPage() {
     return (weeks.length - 1) * 5;
   }, [schedules, weeks]);
 
+  const triggerFlash = (weekIdx: number) => {
+    if (flashTimeoutRef.current) clearTimeout(flashTimeoutRef.current);
+    setFlashWeek(weekIdx);
+    flashTimeoutRef.current = setTimeout(() => setFlashWeek(null), 1500);
+  };
+
   // Auto-scroll to current week on first load
   useEffect(() => {
     if (tabs.length === 0) return;
@@ -101,6 +109,9 @@ function RoomsPage() {
     if (btn && strip) {
       strip.scrollTo({ left: btn.offsetLeft - strip.clientWidth / 2 + btn.clientWidth / 2, behavior: "smooth" });
     }
+    const weekIdx = tabs[currentWeekStartTab]?.weekIdx;
+    if (weekIdx !== undefined) triggerFlash(weekIdx);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tabs.length, currentWeekStartTab]);
 
   const scrollToCurrentWeek = () => {
@@ -110,6 +121,8 @@ function RoomsPage() {
     if (btn && strip) {
       strip.scrollTo({ left: btn.offsetLeft - strip.clientWidth / 2 + btn.clientWidth / 2, behavior: "smooth" });
     }
+    const weekIdx = tabs[currentWeekStartTab]?.weekIdx;
+    if (weekIdx !== undefined) triggerFlash(weekIdx);
   };
 
   if (isLoading) {
@@ -154,10 +167,12 @@ function RoomsPage() {
                     key={`${t.weekIdx}-${t.dayIdx}`}
                     ref={(el) => { buttonRefs.current[i] = el; }}
                     onClick={() => setActiveIdx(i)}
-                    className={`shrink-0 px-3 min-h-11 rounded-lg transition flex flex-col items-center justify-center leading-tight ${
+                    className={`shrink-0 px-3 min-h-11 rounded-lg transition-all duration-300 flex flex-col items-center justify-center leading-tight ${
                       weeks.length > 1 ? "min-w-[68px]" : "flex-1"
                     } ${
                       isActive ? "bg-card text-foreground shadow" : "text-muted-foreground"
+                    } ${
+                      t.weekIdx === flashWeek ? "ring-2 ring-primary ring-offset-2 ring-offset-secondary scale-105 animate-[pulse_0.8s_ease-in-out_2]" : ""
                     }`}
                   >
                     <span className="text-sm font-semibold">{t.shortLabel}</span>
