@@ -54,6 +54,9 @@
   --color-lilac: var(--lilac);
   --color-lilac-light: var(--lilac-light);
   --color-lilac-foreground: var(--lilac-foreground);
+  --color-teal: var(--teal);
+  --color-teal-light: var(--teal-light);
+  --color-teal-foreground: var(--teal-foreground);
   --color-row-stripe: var(--row-stripe);
   --color-closed: var(--closed);
   --color-closed-foreground: var(--closed-foreground);
