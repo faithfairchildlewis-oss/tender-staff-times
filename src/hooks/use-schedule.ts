@@ -7,6 +7,7 @@ export type ScheduleRow = {
   week_label: string;
   start_date: string;
   is_current: boolean;
+  is_live: boolean;
   data: ScheduleData;
   updated_at: string;
 };
