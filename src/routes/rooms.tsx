@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Home } from "lucide-react";
-import { useState, useMemo } from "react";
+import { Home, CalendarDays } from "lucide-react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { PageBanner } from "@/components/page-banner";
 import { useLiveSchedules } from "@/hooks/use-schedule";
 import { deriveDays, DAY_NAMES, DEFAULT_ROOMS } from "@/lib/schedule-derive";
@@ -36,6 +36,8 @@ export const Route = createFileRoute("/rooms")({
 function RoomsPage() {
   const { data: schedules, isLoading } = useLiveSchedules();
   const [activeIdx, setActiveIdx] = useState(0);
+  const stripRef = useRef<HTMLDivElement>(null);
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const weeks = useMemo(
     () =>
@@ -61,6 +63,54 @@ function RoomsPage() {
     });
     return out;
   }, [weeks]);
+
+  const currentWeekStartTab = useMemo(() => {
+    if (!schedules || schedules.length === 0) return 0;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayUTC = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+
+    for (let wi = 0; wi < weeks.length; wi++) {
+      const sd = weeks[wi].schedule.start_date;
+      if (!sd) continue;
+      const m = sd.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (!m) continue;
+      const startUTC = Date.UTC(+m[1], +m[2] - 1, +m[3]);
+      const endUTC = startUTC + 4 * 24 * 60 * 60 * 1000; // Friday
+      if (todayUTC >= startUTC && todayUTC <= endUTC) {
+        return wi * 5; // first day (Mon) of that week
+      }
+    }
+    // Fallback: nearest upcoming week, or last week if all past
+    for (let wi = 0; wi < weeks.length; wi++) {
+      const sd = weeks[wi].schedule.start_date;
+      if (!sd) continue;
+      const m = sd.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (!m) continue;
+      const startUTC = Date.UTC(+m[1], +m[2] - 1, +m[3]);
+      if (todayUTC < startUTC) return wi * 5;
+    }
+    return (weeks.length - 1) * 5;
+  }, [schedules, weeks]);
+
+  // Auto-scroll to current week on first load
+  useEffect(() => {
+    if (tabs.length === 0) return;
+    const btn = buttonRefs.current[currentWeekStartTab];
+    const strip = stripRef.current;
+    if (btn && strip) {
+      strip.scrollTo({ left: btn.offsetLeft - strip.clientWidth / 2 + btn.clientWidth / 2, behavior: "smooth" });
+    }
+  }, [tabs.length, currentWeekStartTab]);
+
+  const scrollToCurrentWeek = () => {
+    setActiveIdx(currentWeekStartTab);
+    const btn = buttonRefs.current[currentWeekStartTab];
+    const strip = stripRef.current;
+    if (btn && strip) {
+      strip.scrollTo({ left: btn.offsetLeft - strip.clientWidth / 2 + btn.clientWidth / 2, behavior: "smooth" });
+    }
+  };
 
   if (isLoading) {
     return <div className="min-h-dvh bg-background p-6 text-muted-foreground">Loading…</div>;
@@ -94,26 +144,39 @@ function RoomsPage() {
       <PageBanner title="Our Rooms" subline={weekLabel} />
 
       <main className="px-4 mt-4 max-w-2xl mx-auto space-y-4">
-        <div className="overflow-x-auto -mx-4 px-4">
-          <div className="flex gap-1 bg-secondary rounded-xl p-1 w-max min-w-full">
-            {tabs.map((t, i) => {
-              const isActive = i === activeIdx;
-              return (
-                <button
-                  key={`${t.weekIdx}-${t.dayIdx}`}
-                  onClick={() => setActiveIdx(i)}
-                  className={`shrink-0 px-3 min-h-11 rounded-lg transition flex flex-col items-center justify-center leading-tight ${
-                    weeks.length > 1 ? "min-w-[68px]" : "flex-1"
-                  } ${
-                    isActive ? "bg-card text-foreground shadow" : "text-muted-foreground"
-                  }`}
-                >
-                  <span className="text-sm font-semibold">{t.shortLabel}</span>
-                  {t.mmdd && <span className="text-[10px] opacity-80">{t.mmdd}</span>}
-                </button>
-              );
-            })}
+        <div className="flex items-center gap-2">
+          <div ref={stripRef} className="overflow-x-auto -mx-4 px-4 flex-1">
+            <div className="flex gap-1 bg-secondary rounded-xl p-1 w-max min-w-full">
+              {tabs.map((t, i) => {
+                const isActive = i === activeIdx;
+                return (
+                  <button
+                    key={`${t.weekIdx}-${t.dayIdx}`}
+                    ref={(el) => { buttonRefs.current[i] = el; }}
+                    onClick={() => setActiveIdx(i)}
+                    className={`shrink-0 px-3 min-h-11 rounded-lg transition flex flex-col items-center justify-center leading-tight ${
+                      weeks.length > 1 ? "min-w-[68px]" : "flex-1"
+                    } ${
+                      isActive ? "bg-card text-foreground shadow" : "text-muted-foreground"
+                    }`}
+                  >
+                    <span className="text-sm font-semibold">{t.shortLabel}</span>
+                    {t.mmdd && <span className="text-[10px] opacity-80">{t.mmdd}</span>}
+                  </button>
+                );
+              })}
+            </div>
           </div>
+          {weeks.length > 1 && (
+            <button
+              onClick={scrollToCurrentWeek}
+              className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium shadow hover:bg-primary/90 transition"
+              title="Jump to this week"
+            >
+              <CalendarDays className="w-4 h-4" />
+              This week
+            </button>
+          )}
         </div>
 
         <section className="bg-card rounded-2xl shadow-sm p-4 space-y-3">
