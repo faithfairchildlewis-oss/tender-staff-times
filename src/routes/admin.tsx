@@ -588,12 +588,32 @@ function WeekEditor({
   const [dayIdx, setDayIdx] = useState(0);
   const [staffName, setStaffName] = useState<string>("");
   const [saving, setSaving] = useState(false);
+  const { data: rates } = usePayrollRates(row.id);
 
   useEffect(() => {
     setData(row.data);
     const names = Object.keys(row.data.staff ?? {});
     setStaffName(names[0] ?? "");
   }, [row.id]);
+
+  // Merge admin-only pay rates from the access-controlled table back into
+  // the in-memory staff blob so the editor shows them. Saving them passes
+  // back through the trigger that re-extracts and strips.
+  useEffect(() => {
+    if (!rates) return;
+    setData((d) => {
+      const staff = { ...(d.staff ?? {}) };
+      let changed = false;
+      for (const name of Object.keys(staff)) {
+        const r = rates[name] ?? 0;
+        if ((staff[name].rate ?? 0) !== r) {
+          staff[name] = { ...staff[name], rate: r };
+          changed = true;
+        }
+      }
+      return changed ? { ...d, staff } : d;
+    });
+  }, [rates, row.id]);
 
   const day = DAY_NAMES[dayIdx];
   const staffNames = Object.keys(data.staff ?? {});
