@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Home, CalendarDays, Building2, MessageSquare, Utensils, Share2 } from "lucide-react";
+import { CalendarDays, Building2, MessageSquare, Utensils, Share2 } from "lucide-react";
 import { useState } from "react";
 import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 import { formatWeekRange } from "@/lib/format-date";
 import { getDailyContent } from "@/data/daily-content";
+import { PageBanner } from "@/components/page-banner";
 
 export const Route = createFileRoute("/staff/$name")({
   head: ({ params }) => ({
@@ -103,20 +104,11 @@ function StaffPage() {
 
   return (
     <div className="min-h-dvh bg-background pb-24">
-      <header className="bg-primary text-primary-foreground px-5 pt-8 pb-6 shadow-md">
-        <div className="relative flex items-center justify-between mb-2 min-h-11">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary-foreground/15"
-          >
-            <Home className="w-4 h-4" /> Home
-          </Link>
-          <div className="absolute left-1/2 -translate-x-1/2 text-center">
-            <h1 className="text-xl font-bold leading-none">Hello, {name}</h1>
-            <p className="text-xs opacity-90 leading-tight mt-0">{subline}</p>
-          </div>
-          <ShareButton text={buildShareText(name, schedule)} />
-        </div>
+      <PageBanner
+        title={`Hello, ${name}`}
+        subline={subline}
+        rightSlot={<ShareButton text={buildShareText(name, schedule)} />}
+      >
         <div className="flex gap-2">
           <Link
             to="/staff/$name"
@@ -145,7 +137,7 @@ function StaffPage() {
             <MessageSquare className="w-4 h-4" /> Request Off
           </a>
         </div>
-      </header>
+      </PageBanner>
 
       <main className="px-4 mt-4 max-w-md mx-auto">
         <section className="bg-card rounded-2xl shadow-sm p-5 mb-4">
