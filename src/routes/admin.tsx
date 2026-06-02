@@ -368,7 +368,7 @@ function RoomView({
               {rooms.map((r) => (
                 <th
                   key={r}
-                  className={`p-1 text-left font-semibold text-foreground border border-border ${
+                  className={`p-1 text-center font-semibold text-foreground border border-border ${
                     LILAC_ROOMS.has(r) ? "bg-lilac text-lilac-foreground" : ""
                   }`}
                 >
@@ -397,10 +397,8 @@ function RoomView({
                       return (
                         <td
                           key={r}
-                          className="p-1 border border-border bg-closed text-closed-foreground text-center font-semibold"
-                        >
-                          Closed
-                        </td>
+                          className="p-1 border border-border bg-closed text-closed-foreground"
+                        />
                       );
                     }
                     const lilac = LILAC_ROOMS.has(r);
