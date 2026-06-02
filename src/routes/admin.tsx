@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { LogOut, Plus, Trash2, Copy, Check, Home } from "lucide-react";
+import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -195,13 +195,13 @@ function AdminEditor() {
           </button>
           <button
             onClick={() => setView("payroll")}
-            className={`flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold ${
+            className={`flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 ${
               view === "payroll"
-                ? "bg-primary-foreground text-primary"
-                : "bg-primary-foreground/15 text-primary-foreground"
+                ? "bg-amber-400 text-primary shadow-lg ring-2 ring-amber-300"
+                : "bg-amber-500 text-white shadow hover:bg-amber-600"
             }`}
           >
-            Payroll
+            <DollarSign className="w-4 h-4" /> Payroll
           </button>
         </div>
       </header>
