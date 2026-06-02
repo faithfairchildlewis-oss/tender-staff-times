@@ -144,7 +144,6 @@ function StaffPage() {
           <p className="text-sm font-semibold text-foreground">Verse of Day</p>
           <p className="text-sm italic text-muted-foreground mt-1">"{verse.text}"</p>
           <p className="text-xs text-muted-foreground mt-0.5">{verse.ref}</p>
-          <p className="text-xs text-muted-foreground mt-1.5">{subline}</p>
         </section>
 
         <div className="bg-lilac text-lilac-foreground rounded-2xl p-5 shadow-sm text-center">
