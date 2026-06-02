@@ -30,39 +30,32 @@ function StaffPage() {
 
   return (
     <div className="min-h-dvh bg-background pb-24">
-      <header className="bg-primary text-primary-foreground px-5 pt-8 pb-10 rounded-b-3xl shadow-md">
-        <Link
-          to="/"
-          aria-label="Home"
-          className="inline-flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground mb-3 min-h-11 -ml-2 px-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground"
-        >
-          <Home className="w-5 h-5" aria-hidden="true" />
-          <span className="text-sm">Home</span>
-        </Link>
-        <h1 className="text-2xl font-bold">Hello, {name}!</h1>
-        <p className="text-base opacity-90 mt-1">Your schedule this week</p>
-      </header>
-
-      <main className="px-4 -mt-6 max-w-md mx-auto">
-        <div className="bg-lilac text-lilac-foreground rounded-2xl p-5 shadow-sm text-center">
-          <div className="text-4xl font-bold">{hours.toFixed(1)}</div>
-          <div className="text-sm opacity-90 mt-1">hours this week</div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-2 mt-4">
+      <header className="bg-primary text-primary-foreground px-5 pt-8 pb-6 shadow-md">
+        <div className="relative flex items-center mb-4 min-h-11">
           <Link
-            to="/schedule"
-            className="flex flex-col items-center justify-center gap-1 bg-card border border-border rounded-xl p-3 min-h-[72px] text-foreground hover:bg-accent transition active:scale-[0.98]"
+            to="/"
+            className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary-foreground/15"
           >
-            <CalendarDays className="w-5 h-5 text-primary" aria-hidden="true" />
-            <span className="text-xs font-semibold">My Week</span>
+            <Home className="w-4 h-4" /> Home
+          </Link>
+          <h1 className="absolute left-1/2 -translate-x-1/2 text-xl font-bold">
+            {name}
+          </h1>
+        </div>
+        <div className="flex gap-2">
+          <Link
+            to="/staff/$name"
+            params={{ name }}
+            activeOptions={{ exact: true }}
+            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground text-primary"
+          >
+            <CalendarDays className="w-4 h-4" /> My Week
           </Link>
           <Link
             to="/rooms"
-            className="flex flex-col items-center justify-center gap-1 bg-card border border-border rounded-xl p-3 min-h-[72px] text-foreground hover:bg-accent transition active:scale-[0.98]"
+            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
           >
-            <Building2 className="w-5 h-5 text-primary" aria-hidden="true" />
-            <span className="text-xs font-semibold">Our Day</span>
+            <Building2 className="w-4 h-4" /> Our Day
           </Link>
           <a
             href={`sms:+14104744156?&body=${encodeURIComponent(
@@ -72,11 +65,17 @@ function StaffPage() {
                 (schedule.start_date ? formatWeekRange(schedule.start_date) : schedule.week ?? "—") +
                 "\nDate(s) requested: \nReason: "
             )}`}
-            className="flex flex-col items-center justify-center gap-1 bg-card border border-border rounded-xl p-3 min-h-[72px] text-foreground hover:bg-accent transition active:scale-[0.98]"
+            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
           >
-            <MessageSquare className="w-5 h-5 text-primary" aria-hidden="true" />
-            <span className="text-xs font-semibold">Request Off</span>
+            <MessageSquare className="w-4 h-4" /> Request Off
           </a>
+        </div>
+      </header>
+
+      <main className="px-4 mt-4 max-w-md mx-auto">
+        <div className="bg-lilac text-lilac-foreground rounded-2xl p-5 shadow-sm text-center">
+          <div className="text-4xl font-bold">{hours.toFixed(1)}</div>
+          <div className="text-sm opacity-90 mt-1">hours this week</div>
         </div>
 
         <h2 className="text-base font-semibold text-foreground mt-6 mb-3 px-1">
