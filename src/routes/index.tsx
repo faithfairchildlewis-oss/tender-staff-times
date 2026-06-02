@@ -27,9 +27,9 @@ function Index() {
   const { verse, encouragement: subline } = getDailyContent(dayOfMonth);
   return (
     <div className="min-h-dvh bg-background pb-10">
-      <header className="bg-primary text-primary-foreground px-5 pt-10 pb-12 rounded-b-3xl shadow-md">
-        <h1 className="text-2xl font-bold tracking-tight">{schedule?.center ?? "Tender Years of Deale"}</h1>
-        <p className="text-base opacity-90 mt-1">
+      <header className="bg-primary text-primary-foreground px-5 pt-8 pb-6 shadow-md">
+        <h1 className="text-xl font-bold tracking-tight leading-none">{schedule?.center ?? "Tender Years of Deale"}</h1>
+        <p className="text-xs opacity-90 mt-0 leading-tight">
           Week of {schedule?.start_date ? formatWeekRange(schedule.start_date) : schedule?.week ?? "—"}
         </p>
       </header>
