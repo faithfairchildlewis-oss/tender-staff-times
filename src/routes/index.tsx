@@ -85,6 +85,13 @@ function Index() {
       </header>
 
       <main className="px-4 -mt-6 max-w-md mx-auto">
+        <section className="bg-card rounded-2xl shadow-sm p-5 mb-4">
+          <p className="text-sm font-semibold text-foreground">{greeting}</p>
+          <p className="text-sm italic text-muted-foreground mt-1">"{verse.text}"</p>
+          <p className="text-xs text-muted-foreground mt-0.5">{verse.ref}</p>
+          <p className="text-xs text-muted-foreground mt-1.5">{subline}</p>
+        </section>
+
         <section className="bg-card rounded-2xl shadow-sm p-5">
           <h2 className="text-base font-semibold text-foreground mb-3">Select your name</h2>
           <div className="grid grid-cols-2 gap-3">
