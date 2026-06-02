@@ -148,13 +148,7 @@ function AdminEditor() {
     <div className="min-h-dvh bg-background pb-20">
       <header className="bg-primary text-primary-foreground px-5 pt-8 pb-6 shadow-md">
         <div className="flex items-center justify-between mb-3">
-          <Link
-            to="/"
-            aria-label="Back to staff app"
-            className="inline-flex items-center gap-1 text-primary-foreground/90 min-h-11 -ml-2 px-2 rounded-lg"
-          >
-            <ArrowLeft className="w-5 h-5" /> <span className="text-sm">Back</span>
-          </Link>
+          <h1 className="text-xl font-bold">Admin — Schedules</h1>
           <button
             onClick={() => supabase.auth.signOut().then(() => location.reload())}
             className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary-foreground/15"
@@ -162,7 +156,6 @@ function AdminEditor() {
             <LogOut className="w-4 h-4" /> Sign out
           </button>
         </div>
-        <h1 className="text-xl font-bold">Admin — Schedules</h1>
       </header>
 
       <main className="px-4 mt-4 max-w-2xl mx-auto space-y-4">
