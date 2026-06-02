@@ -50,6 +50,34 @@ export function useCurrentSchedule() {
 }
 
 export function useAllSchedules() {
+  return useAllSchedulesQuery();
+}
+
+/** Loads the most recent schedule marked as Live. Used for the shared
+ *  "Our Day" view so every staff member sees the same room schedule. */
+export function useLiveSchedule() {
+  return useQuery({
+    queryKey: ["schedule", "live"],
+    queryFn: async (): Promise<CurrentSchedule | null> => {
+      const { data, error } = await supabase
+        .from("schedules")
+        .select("data, start_date")
+        .eq("is_live", true)
+        .order("start_date", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (error) {
+        console.error("live schedule fetch failed", error);
+        return null;
+      }
+      if (!data) return null;
+      return { ...(data.data as ScheduleData), start_date: data.start_date };
+    },
+    staleTime: 60_000,
+  });
+}
+
+function useAllSchedulesQuery() {
   return useQuery({
     queryKey: ["schedules", "all"],
     queryFn: async (): Promise<ScheduleRow[]> => {
