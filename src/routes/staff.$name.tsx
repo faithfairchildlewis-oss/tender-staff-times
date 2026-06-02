@@ -172,23 +172,7 @@ function StaffPage() {
         </div>
       </main>
 
-      <nav
-        aria-label="Page navigation"
-        className="fixed bottom-0 inset-x-0 bg-card border-t border-border px-4 py-2 flex justify-between max-w-md mx-auto"
-      >
-        <Link
-          to="/"
-          className="text-sm font-medium text-primary inline-flex items-center min-h-11 px-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          ← All names
-        </Link>
-        <Link
-          to="/schedule"
-          className="text-sm font-medium text-primary inline-flex items-center min-h-11 px-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          Full schedule →
-        </Link>
-      </nav>
+      <div className="h-6" aria-hidden="true" />
     </div>
   );
 }
