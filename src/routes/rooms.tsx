@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Home } from "lucide-react";
 import { useState, useMemo } from "react";
+import { PageBanner } from "@/components/page-banner";
 import { useLiveSchedule } from "@/hooks/use-schedule";
 import { deriveDays, DAY_NAMES, DEFAULT_ROOMS } from "@/lib/schedule-derive";
 import { formatWeekRange } from "@/lib/format-date";
@@ -43,16 +44,7 @@ function RoomsPage() {
 
   return (
     <div className="min-h-dvh bg-background pb-6">
-      <header className="bg-primary text-primary-foreground px-5 pt-8 pb-6 shadow-md">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary-foreground/15 mb-3"
-        >
-          <Home className="w-4 h-4" /> Home
-        </Link>
-        <h1 className="text-xl font-bold leading-none">Room Schedule</h1>
-        <p className="text-xs opacity-90 leading-tight mt-0">{weekLabel}</p>
-      </header>
+      <PageBanner title="Room Schedule" subline={weekLabel} />
 
       <main className="px-4 mt-4 max-w-2xl mx-auto space-y-4">
         <div className="flex gap-1 bg-secondary rounded-xl p-1">
