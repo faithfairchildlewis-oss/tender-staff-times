@@ -40,13 +40,13 @@ function Index() {
       </header>
 
       <main className="px-4 -mt-6 max-w-md mx-auto">
-        <section className="bg-card rounded-2xl shadow-sm p-5">
-          <p className="text-sm font-semibold text-foreground">Verse of the Day</p>
-          <p className="text-sm italic text-muted-foreground mt-1">"{verse.text}"</p>
-          <p className="text-xs text-muted-foreground mt-0.5">{verse.ref}</p>
+        <section className="bg-card rounded-2xl shadow-sm p-4">
+          <p className="text-xs font-semibold text-foreground uppercase tracking-wide">Verse of the Day</p>
+          <p className="text-base italic text-foreground mt-2 leading-relaxed">"{verse.text}"</p>
+          <p className="text-xs text-muted-foreground mt-2">{verse.ref}</p>
         </section>
 
-        <section className="bg-card rounded-2xl shadow-sm p-5 mt-5">
+        <section className="bg-card rounded-2xl shadow-sm p-5 mt-6">
           <h2 className="text-base font-semibold text-foreground mb-3">Select your name</h2>
           <div className="grid grid-cols-2 gap-3">
             {names.map((n) => (
