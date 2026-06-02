@@ -144,26 +144,39 @@ function RoomsPage() {
       <PageBanner title="Our Rooms" subline={weekLabel} />
 
       <main className="px-4 mt-4 max-w-2xl mx-auto space-y-4">
-        <div className="overflow-x-auto -mx-4 px-4">
-          <div className="flex gap-1 bg-secondary rounded-xl p-1 w-max min-w-full">
-            {tabs.map((t, i) => {
-              const isActive = i === activeIdx;
-              return (
-                <button
-                  key={`${t.weekIdx}-${t.dayIdx}`}
-                  onClick={() => setActiveIdx(i)}
-                  className={`shrink-0 px-3 min-h-11 rounded-lg transition flex flex-col items-center justify-center leading-tight ${
-                    weeks.length > 1 ? "min-w-[68px]" : "flex-1"
-                  } ${
-                    isActive ? "bg-card text-foreground shadow" : "text-muted-foreground"
-                  }`}
-                >
-                  <span className="text-sm font-semibold">{t.shortLabel}</span>
-                  {t.mmdd && <span className="text-[10px] opacity-80">{t.mmdd}</span>}
-                </button>
-              );
-            })}
+        <div className="flex items-center gap-2">
+          <div ref={stripRef} className="overflow-x-auto -mx-4 px-4 flex-1">
+            <div className="flex gap-1 bg-secondary rounded-xl p-1 w-max min-w-full">
+              {tabs.map((t, i) => {
+                const isActive = i === activeIdx;
+                return (
+                  <button
+                    key={`${t.weekIdx}-${t.dayIdx}`}
+                    ref={(el) => { buttonRefs.current[i] = el; }}
+                    onClick={() => setActiveIdx(i)}
+                    className={`shrink-0 px-3 min-h-11 rounded-lg transition flex flex-col items-center justify-center leading-tight ${
+                      weeks.length > 1 ? "min-w-[68px]" : "flex-1"
+                    } ${
+                      isActive ? "bg-card text-foreground shadow" : "text-muted-foreground"
+                    }`}
+                  >
+                    <span className="text-sm font-semibold">{t.shortLabel}</span>
+                    {t.mmdd && <span className="text-[10px] opacity-80">{t.mmdd}</span>}
+                  </button>
+                );
+              })}
+            </div>
           </div>
+          {weeks.length > 1 && (
+            <button
+              onClick={scrollToCurrentWeek}
+              className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium shadow hover:bg-primary/90 transition"
+              title="Jump to this week"
+            >
+              <CalendarDays className="w-4 h-4" />
+              This week
+            </button>
+          )}
         </div>
 
         <section className="bg-card rounded-2xl shadow-sm p-4 space-y-3">
