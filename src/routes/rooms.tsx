@@ -44,7 +44,7 @@ function RoomsPage() {
 
   return (
     <div className="min-h-dvh bg-background pb-6">
-      <PageBanner title="Room Schedule" subline={weekLabel} />
+      <PageBanner title="Our Day" subline={weekLabel} />
 
       <main className="px-4 mt-4 max-w-2xl mx-auto space-y-4">
         <div className="flex gap-1 bg-secondary rounded-xl p-1">
