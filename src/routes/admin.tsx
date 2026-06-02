@@ -310,6 +310,16 @@ function AdminEditor() {
           >
             <DollarSign className="w-4 h-4" /> Payroll
           </button>
+          <button
+            onClick={() => setView("timeoff")}
+            className={`flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 ${
+              view === "timeoff"
+                ? "bg-primary text-primary-foreground"
+                : "bg-primary-foreground/15 text-primary-foreground"
+            }`}
+          >
+            <CalendarX2 className="w-4 h-4" /> Time Off
+          </button>
         </div>
       </header>
 
