@@ -250,6 +250,12 @@ function StaffPage() {
             );
           })}
         </div>
+
+        <div className="mt-6 text-center">
+          <Link to="/rooms" className="text-sm text-primary underline inline-flex items-center gap-1">
+            <Building2 className="w-4 h-4" /> Full schedule
+          </Link>
+        </div>
       </main>
 
       <div className="h-6" aria-hidden="true" />
