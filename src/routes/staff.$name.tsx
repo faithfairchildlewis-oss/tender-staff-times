@@ -76,8 +76,11 @@ function StaffPage() {
                 </div>
                 {!off && (() => {
                   const showLunch = hrs >= 6;
-                  const fixed = showLunch && info.lunch.type === "fixed";
-                  const lunchStartMin = fixed ? parseClockToMin(info.lunch.time) : null;
+                  const lunchTime =
+                    showLunch && info.lunch.type === "fixed" && typeof info.lunch.time === "string"
+                      ? info.lunch.time
+                      : null;
+                  const lunchStartMin = lunchTime ? parseClockToMin(lunchTime) : null;
                   type Item =
                     | { kind: "shift"; start: string; end: string; rooms: string[]; sort: number }
                     | { kind: "lunch"; label: string; time: string; sort: number };
@@ -88,11 +91,11 @@ function StaffPage() {
                     rooms: b.rooms,
                     sort: parseClockToMin(b.start) ?? 0,
                   }));
-                  if (showLunch && fixed && lunchStartMin !== null) {
+                  if (lunchTime && lunchStartMin !== null) {
                     items.push({
                       kind: "lunch",
                       label: brk?.type === "lunch" ? "Lunch" : "Break",
-                      time: info.lunch.time,
+                      time: lunchTime,
                       sort: lunchStartMin,
                     });
                   }
@@ -128,7 +131,7 @@ function StaffPage() {
                           </li>
                         )
                       )}
-                      {showLunch && !fixed && (
+                      {showLunch && !lunchTime && (
                         <li className="flex items-center gap-3 px-4 py-3 bg-secondary/50">
                           <Utensils className="w-4 h-4 text-primary" aria-hidden="true" />
                           <span className="text-sm text-muted-foreground italic">
