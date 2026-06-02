@@ -43,7 +43,7 @@ function StaffPage() {
           </Link>
           <div className="absolute left-1/2 -translate-x-1/2 text-center">
             <h1 className="text-xl font-bold">Hello, {name}</h1>
-            <p className="text-sm opacity-90 mt-0.5">{subline}</p>
+            <p className="text-xs opacity-90 mt-0.5">{subline}</p>
           </div>
         </div>
         <div className="flex gap-2">
