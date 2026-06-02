@@ -3,6 +3,7 @@ import { Home, CalendarDays, Building2, MessageSquare, Utensils } from "lucide-r
 import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 import { formatWeekRange } from "@/lib/format-date";
+import { getDailyContent } from "@/data/daily-content";
 
 export const Route = createFileRoute("/staff/$name")({
   head: ({ params }) => ({
@@ -27,6 +28,11 @@ function StaffPage() {
     );
   }
   const hours = weeklyHours(schedule, name);
+
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12 ? `Good morning, ${name}!` : hour < 17 ? `Good afternoon, ${name}!` : `Good evening, ${name}!`;
+  const { verse, encouragement: subline } = getDailyContent(new Date().getDate());
 
   return (
     <div className="min-h-dvh bg-background pb-24">
@@ -73,6 +79,13 @@ function StaffPage() {
       </header>
 
       <main className="px-4 mt-4 max-w-md mx-auto">
+        <section className="bg-card rounded-2xl shadow-sm p-5 mb-4">
+          <p className="text-sm font-semibold text-foreground">{greeting}</p>
+          <p className="text-sm italic text-muted-foreground mt-1">"{verse.text}"</p>
+          <p className="text-xs text-muted-foreground mt-0.5">{verse.ref}</p>
+          <p className="text-xs text-muted-foreground mt-1.5">{subline}</p>
+        </section>
+
         <div className="bg-lilac text-lilac-foreground rounded-2xl p-5 shadow-sm text-center">
           <div className="text-4xl font-bold">{hours.toFixed(1)}</div>
           <div className="text-sm opacity-90 mt-1">hours this week</div>
