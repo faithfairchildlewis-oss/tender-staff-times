@@ -1227,7 +1227,7 @@ function TimeOffView() {
                 <button
                   onClick={() => handleStatus(r.id, "pending")}
                   disabled={r.status === "pending"}
-                  className="flex-1 min-h-9 rounded-lg text-xs font-semibold bg-warning text-warning-foreground disabled:opacity-40"
+                  className="flex-1 min-h-9 rounded-lg text-xs font-semibold bg-accent text-accent-foreground disabled:opacity-40"
                 >
                   Reset
                 </button>
