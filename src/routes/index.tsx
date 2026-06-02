@@ -3,6 +3,7 @@ import { MessageSquare } from "lucide-react";
 import { staffNames } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 import { formatWeekRange } from "@/lib/format-date";
+import { getDailyContent } from "@/data/daily-content";
 
 export const Route = createFileRoute("/")({
   head: () => ({
