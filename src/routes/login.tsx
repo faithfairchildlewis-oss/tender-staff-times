@@ -1,5 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
@@ -77,13 +76,6 @@ function LoginPage() {
   return (
     <div className="min-h-dvh bg-background">
       <header className="bg-primary text-primary-foreground px-5 pt-8 pb-10 rounded-b-3xl shadow-md">
-        <Link
-          to="/"
-          aria-label="Back to staff app"
-          className="inline-flex items-center gap-1 text-primary-foreground/90 mb-3 min-h-11 -ml-2 px-2 rounded-lg"
-        >
-          <ArrowLeft className="w-5 h-5" /> <span className="text-sm">Back</span>
-        </Link>
         <h1 className="text-2xl font-bold">
           {mode === "recover" ? "Reset password" : "Admin sign in"}
         </h1>
