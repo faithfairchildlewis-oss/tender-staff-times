@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign } from "lucide-react";
+import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign, Eye, EyeOff } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -82,6 +82,7 @@ function AdminEditor() {
         week_label: data.week,
         start_date: "2026-06-01",
         is_current: true,
+        is_live: true,
         data: data as any,
       })
       .select("id")
@@ -102,6 +103,7 @@ function AdminEditor() {
         week_label: label,
         start_date: date,
         is_current: false,
+        is_live: false,
         data: blankSchedule(label) as any,
       })
       .select("id")
@@ -120,7 +122,7 @@ function AdminEditor() {
     const existing = new Set((schedules ?? []).map((s) => s.start_date));
     const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     const start = new Date("2026-06-01T00:00:00");
-    const toInsert: { week_label: string; start_date: string; is_current: boolean; data: any }[] = [];
+    const toInsert: { week_label: string; start_date: string; is_current: boolean; is_live: boolean; data: any }[] = [];
 
     for (let i = 0; i < count; i++) {
       const mon = new Date(start);
@@ -137,6 +139,7 @@ function AdminEditor() {
         week_label: label,
         start_date: iso,
         is_current: false,
+        is_live: false,
         data: blankSchedule(label) as any,
       });
     }
@@ -170,6 +173,7 @@ function AdminEditor() {
         week_label: label,
         start_date: date,
         is_current: false,
+        is_live: false,
         data: cloned as any,
       })
       .select("id")
@@ -184,6 +188,15 @@ function AdminEditor() {
     const { error } = await supabase
       .from("schedules")
       .update({ is_current: true })
+      .eq("id", id);
+    if (error) return alert(error.message);
+    await refresh();
+  }
+
+  async function setLive(id: string, value: boolean) {
+    const { error } = await supabase
+      .from("schedules")
+      .update({ is_live: value })
       .eq("id", id);
     if (error) return alert(error.message);
     await refresh();
@@ -301,8 +314,13 @@ function AdminEditor() {
                     }`}
                   >
                     <div className="font-medium text-foreground">{s.week_label}</div>
-                    <div className="text-xs text-muted-foreground">
+                    <div className="text-xs text-muted-foreground flex items-center gap-1.5">
                       {s.start_date}
+                      {s.is_live && (
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-semibold">
+                          Live
+                        </span>
+                      )}
                     </div>
                   </button>
                   {s.is_current ? (
@@ -318,6 +336,15 @@ function AdminEditor() {
                       <Check className="w-5 h-5" />
                     </button>
                   )}
+                  <button
+                    onClick={() => setLive(s.id, !s.is_live)}
+                    title={s.is_live ? "Hide from staff" : "Make visible to staff"}
+                    className={`p-2 min-h-11 min-w-11 rounded-lg ${
+                      s.is_live ? "text-emerald-500 bg-emerald-500/10" : "text-muted-foreground"
+                    }`}
+                  >
+                    {s.is_live ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
+                  </button>
                   <button
                     onClick={() => duplicate(s)}
                     title="Duplicate"

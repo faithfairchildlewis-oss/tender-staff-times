@@ -20,6 +20,7 @@ export type Database = {
           data: Json
           id: string
           is_current: boolean
+          is_live: boolean
           start_date: string
           updated_at: string
           week_label: string
@@ -29,6 +30,7 @@ export type Database = {
           data: Json
           id?: string
           is_current?: boolean
+          is_live?: boolean
           start_date: string
           updated_at?: string
           week_label: string
@@ -38,6 +40,7 @@ export type Database = {
           data?: Json
           id?: string
           is_current?: boolean
+          is_live?: boolean
           start_date?: string
           updated_at?: string
           week_label?: string
