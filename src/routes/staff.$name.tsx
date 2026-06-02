@@ -30,14 +30,6 @@ function StaffPage() {
   }
   const hours = weeklyHours(schedule, name);
 
-  const [timeGreeting, setTimeGreeting] = useState("");
-  useEffect(() => {
-    const hour = new Date().getHours();
-    setTimeGreeting(
-      hour < 12 ? "Good morning!" : hour < 17 ? "Good afternoon!" : "Good evening!"
-    );
-  }, []);
-
   const { verse, encouragement: subline } = getDailyContent(new Date().getDate());
 
   return (
@@ -52,7 +44,7 @@ function StaffPage() {
           </Link>
           <div className="absolute left-1/2 -translate-x-1/2 text-center">
             <h1 className="text-xl font-bold">Hello, {name}</h1>
-            <p className="text-sm opacity-90 mt-0.5">{timeGreeting}</p>
+            <p className="text-sm opacity-90 mt-0.5">{subline}</p>
           </div>
         </div>
         <div className="flex gap-2">
