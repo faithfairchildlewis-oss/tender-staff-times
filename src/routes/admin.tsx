@@ -252,12 +252,21 @@ function AdminEditor() {
         <section className="bg-card rounded-2xl shadow-sm p-4">
           <div className="flex items-center justify-between mb-3">
             <h2 className="font-semibold text-foreground">Weeks</h2>
-            <button
-              onClick={createBlank}
-              className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary text-primary-foreground"
-            >
-              <Plus className="w-4 h-4" /> New
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={autoFillWeeks}
+                className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-secondary text-secondary-foreground border border-border"
+                title="Auto-create blank Mon–Fri weeks starting June 1, 2026"
+              >
+                Auto-fill
+              </button>
+              <button
+                onClick={createBlank}
+                className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary text-primary-foreground"
+              >
+                <Plus className="w-4 h-4" /> New
+              </button>
+            </div>
           </div>
           {isLoading ? (
             <p className="text-sm text-muted-foreground">Loading…</p>
