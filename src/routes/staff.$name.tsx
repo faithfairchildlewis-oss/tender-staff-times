@@ -181,11 +181,7 @@ function StaffPage() {
           })}
         </div>
 
-        <div className="mt-6 text-center">
-          <Link to="/rooms" className="text-sm text-primary underline inline-flex items-center gap-1">
-            <TreePine className="w-4 h-4" /> Our Rooms
-          </Link>
-        </div>
+        <div className="mt-6" />
       </main>
 
       <div className="h-6" aria-hidden="true" />
