@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign, Eye, EyeOff } from "lucide-react";
+import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign, Eye, EyeOff, Users } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -745,6 +745,36 @@ function WeekEditor({
             ))}
         </SelectContent>
       </Select>
+
+      {staffNames.length === 0 && (
+        <div className="bg-secondary/50 rounded-2xl p-6 text-center space-y-3">
+          <div className="mx-auto w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+            <Users className="w-6 h-6 text-muted-foreground" />
+          </div>
+          <div>
+            <p className="font-medium text-foreground">No staff yet</p>
+            <p className="text-sm text-muted-foreground mt-1">
+              This week doesn't have any staff. Add staff manually or import a roster from another week.
+            </p>
+          </div>
+          {schedules.some((s) => s.id !== row.id && Object.keys(s.data.staff ?? {}).length > 0) && (
+            <Select value="" onValueChange={importStaffFrom}>
+              <SelectTrigger className="w-full min-h-11 text-sm mx-auto max-w-xs">
+                <SelectValue placeholder="Import staff from another week…" />
+              </SelectTrigger>
+              <SelectContent position="popper" side="bottom" align="center" sideOffset={4} avoidCollisions={false}>
+                {schedules
+                  .filter((s) => s.id !== row.id && Object.keys(s.data.staff ?? {}).length > 0)
+                  .map((s) => (
+                    <SelectItem key={s.id} value={s.id}>
+                      {s.week_label} ({Object.keys(s.data.staff ?? {}).length})
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+          )}
+        </div>
+      )}
 
       {info && (
         <div className="grid grid-cols-2 gap-2 text-sm">
