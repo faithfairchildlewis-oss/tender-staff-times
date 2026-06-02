@@ -104,7 +104,7 @@ function StaffPage() {
   return (
     <div className="min-h-dvh bg-background pb-24">
       <header className="bg-primary text-primary-foreground px-5 pt-8 pb-6 shadow-md">
-        <div className="relative flex items-center mb-2 min-h-11">
+        <div className="relative flex items-center justify-between mb-2 min-h-11">
           <Link
             to="/"
             className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary-foreground/15"
@@ -115,6 +115,7 @@ function StaffPage() {
             <h1 className="text-xl font-bold leading-none">Hello, {name}</h1>
             <p className="text-xs opacity-90 leading-tight mt-0">{subline}</p>
           </div>
+          <ShareButton text={buildShareText(name, schedule)} />
         </div>
         <div className="flex gap-2">
           <Link
