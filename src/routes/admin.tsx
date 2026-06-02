@@ -291,27 +291,6 @@ function AdminEditor() {
             </div>
           ) : (
             <>
-            <div className="mb-3">
-              <label className="block text-xs text-muted-foreground mb-1">
-                Select week to edit
-              </label>
-              <Select
-                value={selectedId ?? undefined}
-                onValueChange={(v) => setSelectedId(v)}
-              >
-                <SelectTrigger className="w-full min-h-11">
-                  <SelectValue placeholder="Choose a week" />
-                </SelectTrigger>
-                <SelectContent position="popper" side="bottom" align="start" sideOffset={4} avoidCollisions={false}>
-                  {schedules.map((s) => (
-                    <SelectItem key={s.id} value={s.id}>
-                      {s.week_label}
-                      {s.is_current ? " · current" : ""}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
             <ul className="divide-y divide-border">
               {schedules.map((s) => (
                 <li key={s.id} className="py-2 flex items-center gap-2">
