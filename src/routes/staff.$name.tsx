@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Home, CalendarDays, Building2, MessageSquare, Utensils } from "lucide-react";
 import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
+import { formatWeekRange } from "@/lib/format-date";
 
 export const Route = createFileRoute("/staff/$name")({
   head: ({ params }) => ({
@@ -64,7 +65,13 @@ function StaffPage() {
             <span className="text-xs font-semibold">Our Day</span>
           </Link>
           <a
-            href={`sms:+14104744156?&body=${encodeURIComponent("Hi, I would like to request time off.\nMy name: " + name + "\nDate(s) requested: \nReason: ")}`}
+            href={`sms:+14104744156?&body=${encodeURIComponent(
+              "Hi, I would like to request time off.\nMy name: " +
+                name +
+                "\nWeek: " +
+                (schedule.start_date ? formatWeekRange(schedule.start_date) : schedule.week ?? "—") +
+                "\nDate(s) requested: \nReason: "
+            )}`}
             className="flex flex-col items-center justify-center gap-1 bg-card border border-border rounded-xl p-3 min-h-[72px] text-foreground hover:bg-accent transition active:scale-[0.98]"
           >
             <MessageSquare className="w-5 h-5 text-primary" aria-hidden="true" />
