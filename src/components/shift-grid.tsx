@@ -11,7 +11,7 @@ import {
   deriveDays,
   minimumFor,
 } from "@/lib/schedule-derive";
-import { formatWeekRange } from "@/lib/format-date";
+import { formatWeekRange, mmddFor } from "@/lib/format-date";
 
 type DragPayload = {
   name: string;
@@ -313,11 +313,12 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
           <button
             key={d}
             onClick={() => setDayIdx(i)}
-            className={`flex-1 text-sm font-semibold min-h-11 rounded-lg ${
+            className={`flex-1 flex flex-col items-center justify-center text-sm font-semibold min-h-11 rounded-lg ${
               i === dayIdx ? "bg-card text-foreground shadow" : "text-muted-foreground"
             }`}
           >
-            {d.slice(0, 3)}
+            <span>{d.slice(0, 3)}</span>
+            <span className="text-[10px] opacity-80 font-normal">{mmddFor(row.start_date, i)}</span>
           </button>
         ))}
       </div>
