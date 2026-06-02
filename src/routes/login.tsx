@@ -21,7 +21,7 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup" | "recover">("signin");
+  const [mode, setMode] = useState<"signin" | "recover">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -56,14 +56,7 @@ function LoginPage() {
     setSuccess(null);
     setBusy(true);
     try {
-      if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { emailRedirectTo: window.location.origin + "/admin" },
-        });
-        if (error) throw error;
-      } else if (mode === "recover") {
+      if (mode === "recover") {
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
           redirectTo: window.location.origin + "/reset-password",
         });
@@ -99,7 +92,6 @@ function LoginPage() {
         </h1>
         <p className="text-base opacity-90 mt-1">
           {mode === "signin" && "Sign in to edit schedules"}
-          {mode === "signup" && "Create your admin account"}
           {mode === "recover" && "Enter your email to receive a reset link"}
         </p>
       </header>
@@ -128,7 +120,7 @@ function LoginPage() {
                 required
                 minLength={8}
                 value={password}
-                autoComplete={mode === "signup" ? "new-password" : "current-password"}
+                autoComplete="current-password"
                 onChange={(e) => setPassword(e.target.value)}
                 className="mt-1 w-full bg-secondary text-foreground rounded-xl px-4 py-3 text-base min-h-12 focus:outline-none focus:ring-2 focus:ring-ring"
               />
@@ -149,9 +141,7 @@ function LoginPage() {
               ? "Please wait…"
               : mode === "signin"
                 ? "Sign in"
-                : mode === "signup"
-                  ? "Create account"
-                  : "Send reset link"}
+                : "Send reset link"}
           </button>
 
           {mode === "signin" && (
@@ -172,24 +162,6 @@ function LoginPage() {
             >
               Back to sign in
             </button>
-          )}
-
-          {mode !== "recover" && (
-            <button
-              type="button"
-              onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-              className="w-full text-sm text-primary underline min-h-11"
-            >
-              {mode === "signin"
-                ? "First time? Create the admin account"
-                : "Have an account? Sign in"}
-            </button>
-          )}
-
-          {mode === "signup" && (
-            <p className="text-xs text-muted-foreground text-center">
-              The first account created becomes the admin automatically.
-            </p>
           )}
 
           {mode !== "recover" && (
