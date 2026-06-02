@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth, useIsAdmin } from "@/hooks/use-auth";
-import { useAllSchedules, type ScheduleRow } from "@/hooks/use-schedule";
+import { useAllSchedules, usePayrollRates, type ScheduleRow } from "@/hooks/use-schedule";
 import { fallbackSchedule, type ScheduleData } from "@/data/schedule";
 import {
   DAY_NAMES,
@@ -73,6 +73,7 @@ function AdminEditor() {
   async function refresh() {
     await qc.invalidateQueries({ queryKey: ["schedules"] });
     await qc.invalidateQueries({ queryKey: ["schedule"] });
+    await qc.invalidateQueries({ queryKey: ["payroll_rates"] });
   }
 
   async function seedFromBundled() {
@@ -588,12 +589,32 @@ function WeekEditor({
   const [dayIdx, setDayIdx] = useState(0);
   const [staffName, setStaffName] = useState<string>("");
   const [saving, setSaving] = useState(false);
+  const { data: rates } = usePayrollRates(row.id);
 
   useEffect(() => {
     setData(row.data);
     const names = Object.keys(row.data.staff ?? {});
     setStaffName(names[0] ?? "");
   }, [row.id]);
+
+  // Merge admin-only pay rates from the access-controlled table back into
+  // the in-memory staff blob so the editor shows them. Saving them passes
+  // back through the trigger that re-extracts and strips.
+  useEffect(() => {
+    if (!rates) return;
+    setData((d) => {
+      const staff = { ...(d.staff ?? {}) };
+      let changed = false;
+      for (const name of Object.keys(staff)) {
+        const r = rates[name] ?? 0;
+        if ((staff[name].rate ?? 0) !== r) {
+          staff[name] = { ...staff[name], rate: r };
+          changed = true;
+        }
+      }
+      return changed ? { ...d, staff } : d;
+    });
+  }, [rates, row.id]);
 
   const day = DAY_NAMES[dayIdx];
   const staffNames = Object.keys(data.staff ?? {});
@@ -956,6 +977,7 @@ function PayrollView({
   const data: ScheduleData = selected.data;
   const names = Object.keys(data.staff ?? {});
 
+  const { data: rates } = usePayrollRates(selected.id);
   const rows = names.map((name) => {
     const perDay: Record<string, number> = {};
     let total = 0;
@@ -964,7 +986,7 @@ function PayrollView({
       perDay[d] = hrs;
       total += hrs;
     }
-    const rate = data.staff[name]?.rate ?? 0;
+    const rate = rates?.[name] ?? data.staff[name]?.rate ?? 0;
     return { name, perDay, total, rate, pay: total * rate };
   });
 
