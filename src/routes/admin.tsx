@@ -263,8 +263,8 @@ function AdminEditor() {
             onClick={() => setView("payroll")}
             className={`flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 ${
               view === "payroll"
-                ? "bg-amber-400 text-primary shadow-lg ring-2 ring-amber-300"
-                : "bg-amber-500 text-white shadow hover:bg-amber-600"
+                ? "bg-lilac text-lilac-foreground shadow-lg ring-2 ring-lilac-light"
+                : "bg-lilac-light text-lilac-foreground shadow hover:bg-lilac"
             }`}
           >
             <DollarSign className="w-4 h-4" /> Payroll
@@ -323,7 +323,7 @@ function AdminEditor() {
                     <div className="text-xs text-muted-foreground flex items-center gap-1.5">
                       {formatMDY(s.start_date)}
                       {s.is_live && (
-                        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-semibold">
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-lilac text-lilac-foreground text-[10px] font-semibold">
                           Live
                         </span>
                       )}
@@ -346,7 +346,7 @@ function AdminEditor() {
                     onClick={() => setLive(s.id, !s.is_live)}
                     title={s.is_live ? "Hide from staff" : "Make visible to staff"}
                     className={`p-2 min-h-11 min-w-11 rounded-lg ${
-                      s.is_live ? "text-emerald-500 bg-emerald-500/10" : "text-muted-foreground"
+                      s.is_live ? "text-lilac-foreground bg-lilac-light" : "text-muted-foreground"
                     }`}
                   >
                     {s.is_live ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
