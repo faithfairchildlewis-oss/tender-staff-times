@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { fallbackSchedule, type ScheduleData } from "@/data/schedule";
 
+export type CurrentSchedule = ScheduleData & { start_date?: string | null };
+
 export type ScheduleRow = {
   id: string;
   week_label: string;
@@ -18,25 +20,25 @@ export type ScheduleRow = {
 export function useCurrentSchedule() {
   return useQuery({
     queryKey: ["schedule", "current"],
-    queryFn: async (): Promise<ScheduleData> => {
+    queryFn: async (): Promise<CurrentSchedule> => {
       // Prefer the schedule marked current that is also live
       const { data: exact, error: err1 } = await supabase
         .from("schedules")
-        .select("data")
+        .select("data, start_date")
         .eq("is_current", true)
         .eq("is_live", true)
         .maybeSingle();
-      if (exact) return exact.data as ScheduleData;
+      if (exact) return { ...(exact.data as ScheduleData), start_date: exact.start_date };
 
       // Otherwise, the most recent live schedule
       const { data: recent, error: err2 } = await supabase
         .from("schedules")
-        .select("data")
+        .select("data, start_date")
         .eq("is_live", true)
         .order("start_date", { ascending: false })
         .limit(1)
         .maybeSingle();
-      if (recent) return recent.data as ScheduleData;
+      if (recent) return { ...(recent.data as ScheduleData), start_date: recent.start_date };
 
       if (err1 || err2) {
         console.error("schedule fetch failed", err1 || err2);

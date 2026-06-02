@@ -15,6 +15,7 @@ import {
   expandBlocks,
 } from "@/lib/schedule-derive";
 import { blocksForDay } from "@/data/schedule";
+import { formatMDY, formatWeekRange, parseMDYToIso } from "@/lib/format-date";
 import {
   Select,
   SelectContent,
@@ -76,11 +77,14 @@ function AdminEditor() {
 
   async function seedFromBundled() {
     const data = fallbackSchedule;
+    const startDate = "2026-06-01";
+    const label = formatWeekRange(startDate);
+    data.week = label;
     const { data: row, error } = await supabase
       .from("schedules")
       .insert({
-        week_label: data.week,
-        start_date: "2026-06-01",
+        week_label: label,
+        start_date: startDate,
         is_current: true,
         is_live: true,
         data: data as any,
@@ -93,10 +97,14 @@ function AdminEditor() {
   }
 
   async function createBlank() {
-    const label = prompt("Week label (e.g. June 8–12, 2026)");
-    if (!label) return;
-    const date = prompt("Monday's date (YYYY-MM-DD)");
-    if (!date) return;
+    const dateInput = prompt("Monday's date (MM-DD-YYYY)");
+    if (!dateInput) return;
+    const date = parseMDYToIso(dateInput);
+    if (!date) {
+      alert("Please enter the date as MM-DD-YYYY (e.g. 06-08-2026).");
+      return;
+    }
+    const label = formatWeekRange(date);
     const { data: row, error } = await supabase
       .from("schedules")
       .insert({
@@ -120,21 +128,15 @@ function AdminEditor() {
     if (!count) return;
 
     const existing = new Set((schedules ?? []).map((s) => s.start_date));
-    const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     const start = new Date("2026-06-01T00:00:00");
     const toInsert: { week_label: string; start_date: string; is_current: boolean; is_live: boolean; data: any }[] = [];
 
     for (let i = 0; i < count; i++) {
       const mon = new Date(start);
       mon.setDate(start.getDate() + i * 7);
-      const fri = new Date(mon);
-      fri.setDate(mon.getDate() + 4);
       const iso = `${mon.getFullYear()}-${String(mon.getMonth() + 1).padStart(2, "0")}-${String(mon.getDate()).padStart(2, "0")}`;
       if (existing.has(iso)) continue;
-      const sameMonth = mon.getMonth() === fri.getMonth();
-      const label = sameMonth
-        ? `${MONTHS[mon.getMonth()]} ${mon.getDate()}–${fri.getDate()}, ${fri.getFullYear()}`
-        : `${MONTHS[mon.getMonth()]} ${mon.getDate()} – ${MONTHS[fri.getMonth()]} ${fri.getDate()}, ${fri.getFullYear()}`;
+      const label = formatWeekRange(iso);
       toInsert.push({
         week_label: label,
         start_date: iso,
@@ -155,10 +157,14 @@ function AdminEditor() {
   }
 
   async function duplicate(src: ScheduleRow) {
-    const label = prompt("New week label", "Copy of " + src.week_label);
-    if (!label) return;
-    const date = prompt("Monday's date (YYYY-MM-DD)", src.start_date);
-    if (!date) return;
+    const dateInput = prompt("Monday's date (MM-DD-YYYY)", formatMDY(src.start_date));
+    if (!dateInput) return;
+    const date = parseMDYToIso(dateInput);
+    if (!date) {
+      alert("Please enter the date as MM-DD-YYYY (e.g. 06-08-2026).");
+      return;
+    }
+    const label = formatWeekRange(date);
     // Deep clone so the new row gets its own copy of staff, staff_daily
     // (room assignments) and days — editing it later must not mutate the
     // source week.
@@ -313,9 +319,9 @@ function AdminEditor() {
                       selectedId === s.id ? "bg-secondary" : ""
                     }`}
                   >
-                    <div className="font-medium text-foreground">{s.week_label}</div>
+                    <div className="font-medium text-foreground">{formatWeekRange(s.start_date)}</div>
                     <div className="text-xs text-muted-foreground flex items-center gap-1.5">
-                      {s.start_date}
+                      {formatMDY(s.start_date)}
                       {s.is_live && (
                         <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-semibold">
                           Live
@@ -436,7 +442,7 @@ function RoomView({
   return (
     <section className="bg-card rounded-2xl shadow-sm p-4 space-y-3">
       <div className="flex items-center justify-between gap-2">
-        <h2 className="font-semibold text-foreground">Rooms — {selected.week_label}</h2>
+        <h2 className="font-semibold text-foreground">Rooms — {formatWeekRange(selected.start_date)}</h2>
         {schedules.length > 1 && (
           <select
             value={selected.id}
@@ -445,7 +451,7 @@ function RoomView({
           >
             {schedules.map((s) => (
               <option key={s.id} value={s.id}>
-                {s.week_label}
+                {formatWeekRange(s.start_date)}
               </option>
             ))}
           </select>
@@ -683,7 +689,7 @@ function WeekEditor({
         <SelectContent position="popper" side="bottom" align="start" sideOffset={4} avoidCollisions={false}>
           {schedules.map((s) => (
             <SelectItem key={s.id} value={s.id}>
-              {s.week_label}
+              {formatWeekRange(s.start_date)}
               {s.is_current ? " · current" : ""}
             </SelectItem>
           ))}
@@ -740,7 +746,7 @@ function WeekEditor({
             .filter((s) => s.id !== row.id && Object.keys(s.data.staff ?? {}).length > 0)
             .map((s) => (
               <SelectItem key={s.id} value={s.id}>
-                {s.week_label} ({Object.keys(s.data.staff ?? {}).length})
+                {formatWeekRange(s.start_date)} ({Object.keys(s.data.staff ?? {}).length})
               </SelectItem>
             ))}
         </SelectContent>
@@ -767,7 +773,7 @@ function WeekEditor({
                   .filter((s) => s.id !== row.id && Object.keys(s.data.staff ?? {}).length > 0)
                   .map((s) => (
                     <SelectItem key={s.id} value={s.id}>
-                      {s.week_label} ({Object.keys(s.data.staff ?? {}).length})
+                      {formatWeekRange(s.start_date)} ({Object.keys(s.data.staff ?? {}).length})
                     </SelectItem>
                   ))}
               </SelectContent>
@@ -952,7 +958,7 @@ function PayrollView({
         >
           {schedules.map((s) => (
             <option key={s.id} value={s.id}>
-              {s.week_label}
+              {formatWeekRange(s.start_date)}
             </option>
           ))}
         </select>
