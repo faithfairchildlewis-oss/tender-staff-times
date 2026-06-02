@@ -93,6 +93,10 @@
   --lilac: oklch(0.88 0.06 300);
   --lilac-light: oklch(0.94 0.035 300);
   --lilac-foreground: oklch(0.35 0.08 300);
+  /* Teal scale — mirrors --primary so header, banners, and badges share one source of truth. */
+  --teal: oklch(0.45 0.06 195);
+  --teal-light: oklch(0.94 0.025 195);
+  --teal-foreground: oklch(1 0 0);
   --row-stripe: oklch(0.94 0.04 230);
   --closed: oklch(0.78 0.15 145);
   --closed-foreground: oklch(0.2 0.08 145);
