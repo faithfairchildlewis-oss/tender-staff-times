@@ -77,6 +77,13 @@ function LoginPage() {
   return (
     <div className="min-h-dvh bg-background">
       <header className="bg-primary text-primary-foreground px-5 pt-8 pb-10 rounded-b-3xl shadow-md">
+        <Link
+          to="/"
+          aria-label="Home"
+          className="inline-flex items-center gap-1 text-primary-foreground/90 mb-3 min-h-11 -ml-2 px-2 rounded-lg"
+        >
+          <Home className="w-5 h-5" /> <span className="text-sm">Home</span>
+        </Link>
         <h1 className="text-2xl font-bold">
           {mode === "recover" ? "Reset password" : "Admin sign in"}
         </h1>
