@@ -9,7 +9,32 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Tender Years of Deale — Staff Schedule" },
-      { name: "description", content: "Weekly staff schedule for Tender Years of Deale." },
+      { name: "description", content: "View the official weekly staff schedule, room assignments, and daily encouragement for Tender Years of Deale." },
+      { property: "og:title", content: "Tender Years of Deale — Staff Schedule" },
+      { property: "og:description", content: "View the official weekly staff schedule, room assignments, and daily encouragement for Tender Years of Deale." },
+      { property: "og:url", content: "/" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              name: "Tender Years of Deale Staff Schedule",
+              url: "https://staff.tenderyearscenter.com/",
+            },
+            {
+              "@type": "Organization",
+              name: "Tender Years of Deale",
+              description: "Childcare center in Deale, Maryland.",
+              url: "https://staff.tenderyearscenter.com/",
+            },
+          ],
+        }),
+      },
     ],
   }),
   component: Index,
@@ -31,7 +56,7 @@ function Index() {
       <header className="bg-primary text-primary-foreground px-5 pt-8 pb-7 shadow-md rounded-b-3xl">
         <div className="text-center">
           <h1 className="text-xl font-bold tracking-tight leading-none">
-            {schedule?.center ?? "Tender Years of Deale"}
+            {schedule?.center ? `${schedule.center} Staff Schedule` : "Tender Years of Deale Staff Schedule"}
           </h1>
           <p className="text-sm italic mt-2 leading-tight text-[oklch(0.98_0.01_90)]/95">
             Where God's word falls like gentle rain.
