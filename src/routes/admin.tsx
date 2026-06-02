@@ -1,5 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, LogOut, Plus, Trash2, Copy, Check } from "lucide-react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
