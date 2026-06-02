@@ -27,14 +27,17 @@ export function minimumFor(room: string, time: string): number | null {
   const m = parseTime(time);
   const HM = (h: number, mn: number) => h * 60 + mn;
   if (room === "SAC") {
-    return m >= HM(14, 30) && m < HM(17, 30) ? 1 : null;
+    // Active 2:30 PM through 5:30 PM inclusive.
+    return m >= HM(14, 30) && m <= HM(17, 30) ? 1 : null;
   }
   if (room === "G/H") {
-    if ((m >= HM(7, 0) && m < HM(12, 30)) || (m >= HM(14, 30) && m < HM(16, 30))) return 2;
+    // 2 staff 7:00 AM–12:30 PM and 2:30 PM–4:30 PM (inclusive), else 1.
+    if ((m >= HM(7, 0) && m <= HM(12, 30)) || (m >= HM(14, 30) && m <= HM(16, 30))) return 2;
     return 1;
   }
   if (room === "J/K") {
-    if ((m >= HM(7, 30) && m < HM(12, 30)) || (m >= HM(14, 30) && m < HM(16, 30))) return 2;
+    // 2 staff 7:30 AM–12:30 PM and 2:30 PM–4:30 PM (inclusive), else 1.
+    if ((m >= HM(7, 30) && m <= HM(12, 30)) || (m >= HM(14, 30) && m <= HM(16, 30))) return 2;
     return 1;
   }
   return 1;
