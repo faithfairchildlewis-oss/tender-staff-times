@@ -18,29 +18,49 @@ function ResetPasswordPage() {
   const [isRecovery, setIsRecovery] = useState(false);
 
   useEffect(() => {
-    // Supabase recovery links contain #access_token=...&refresh_token=...&type=recovery
-    // We need to parse the hash and let the client absorb the session.
-    const hash = window.location.hash;
-    const params = new URLSearchParams(hash.replace("#", ""));
-    const type = params.get("type");
+    // Supabase recovery links come in two formats:
+    // 1) PKCE: ?code=... in the query string -> exchangeCodeForSession
+    // 2) Legacy: #access_token=...&refresh_token=...&type=recovery -> setSession
+    const url = new URL(window.location.href);
+    const code = url.searchParams.get("code");
+    const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    const accessToken = hash.get("access_token");
+    const refreshToken = hash.get("refresh_token");
+    const hashType = hash.get("type");
 
-    if (type === "recovery") {
-      setIsRecovery(true);
+    const finish = (ok: boolean, msg?: string) => {
+      if (ok) {
+        setIsRecovery(true);
+        // Clean the URL so tokens don't linger
+        window.history.replaceState({}, "", window.location.pathname);
+      } else if (msg) {
+        setError(msg);
+      }
+    };
+
+    if (code) {
       supabase.auth
-        .exchangeCodeForSession(params.get("code") || "")
-        .then(() => {
-          // Session is now set; user can update their password
-        })
-        .catch(() => {
-          // If exchange fails, the access_token in the hash is still handled
-          // by the supabase client on subsequent calls
-        });
+        .exchangeCodeForSession(code)
+        .then(({ error }) => finish(!error, error?.message))
+        .catch((e) => finish(false, e?.message));
+    } else if (accessToken && refreshToken && hashType === "recovery") {
+      supabase.auth
+        .setSession({ access_token: accessToken, refresh_token: refreshToken })
+        .then(({ error }) => finish(!error, error?.message))
+        .catch((e) => finish(false, e?.message));
     } else {
-      // Not a recovery link — check if user already has a session
       supabase.auth.getSession().then(({ data }) => {
         if (data.session) setIsRecovery(true);
       });
     }
+
+    // Supabase also fires PASSWORD_RECOVERY when it detects a recovery link
+    const { data: sub } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN") {
+        setIsRecovery(true);
+      }
+    });
+    return () => sub.subscription.unsubscribe();
   }, []);
 
   async function onSubmit(e: React.FormEvent) {
