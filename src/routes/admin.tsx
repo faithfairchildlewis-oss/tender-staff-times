@@ -24,8 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ShiftGrid } from "@/components/shift-grid";
-import { useServerFn } from "@tanstack/react-start";
-import { getTimeOffRequests, updateTimeOffStatus } from "@/lib/time-off.functions";
+import { TimeOffView } from "@/components/time-off-view";
 
 export const Route = createFileRoute("/admin")({
   ssr: false,
