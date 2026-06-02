@@ -32,11 +32,11 @@ function StaffPage() {
       <header className="bg-primary text-primary-foreground px-5 pt-8 pb-10 rounded-b-3xl shadow-md">
         <Link
           to="/"
-          aria-label="Back to name picker"
+          aria-label="Home"
           className="inline-flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground mb-3 min-h-11 -ml-2 px-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground"
         >
-          <ArrowLeft className="w-5 h-5" aria-hidden="true" />
-          <span className="text-sm">Back</span>
+          <Home className="w-5 h-5" aria-hidden="true" />
+          <span className="text-sm">Home</span>
         </Link>
         <h1 className="text-2xl font-bold">Hello, {name}!</h1>
         <p className="text-base opacity-90 mt-1">Your schedule this week</p>
