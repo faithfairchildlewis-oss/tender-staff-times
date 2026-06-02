@@ -46,14 +46,12 @@ function RoomsPage() {
       <header className="bg-primary text-primary-foreground px-5 pt-8 pb-6 shadow-md">
         <Link
           to="/"
-          aria-label="Home"
-          className="inline-flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground mb-3 min-h-11 -ml-2 px-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground"
+          className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary-foreground/15 mb-3"
         >
-          <Home className="w-5 h-5" aria-hidden="true" />
-          <span className="text-sm">Home</span>
+          <Home className="w-4 h-4" /> Home
         </Link>
-        <h1 className="text-2xl font-bold">Room Schedule</h1>
-        <p className="text-base opacity-90 mt-1">{weekLabel}</p>
+        <h1 className="text-xl font-bold leading-none">Room Schedule</h1>
+        <p className="text-xs opacity-90 leading-tight mt-0">{weekLabel}</p>
       </header>
 
       <main className="px-4 mt-4 max-w-2xl mx-auto space-y-4">
