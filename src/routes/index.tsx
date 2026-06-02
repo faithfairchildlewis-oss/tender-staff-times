@@ -26,9 +26,6 @@ function Index() {
   const now = new Date();
   const dayOfMonth = now.getDate();
   const { verse, encouragement: subline } = getDailyContent(dayOfMonth);
-  const hour = now.getHours();
-  const greeting =
-    hour < 12 ? "Good morning, team!" : hour < 17 ? "Good afternoon, team!" : "Good evening, team!";
   return (
     <div className="min-h-dvh bg-background pb-10">
       <header
