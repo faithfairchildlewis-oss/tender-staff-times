@@ -65,9 +65,12 @@ function Index() {
           <div className="bg-primary-foreground/15 rounded-xl p-3" aria-hidden="true">
             <MessageSquare className="w-6 h-6" />
           </div>
-          <div>
+          <div className="min-w-0">
             <div className="font-semibold text-base">Request time off</div>
-            <div className="text-sm opacity-90">Text the director (410-474-4156)</div>
+            <div className="text-sm opacity-90">
+              Text the director{" "}
+              <span className="whitespace-nowrap">(410-474-4156)</span>
+            </div>
           </div>
         </a>
 
