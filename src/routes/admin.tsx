@@ -104,6 +104,46 @@ function AdminEditor() {
     await refresh();
   }
 
+  async function autoFillWeeks() {
+    const ans = prompt("How many weeks ahead to auto-fill (Mon–Fri, starting June 1, 2026)?", "12");
+    if (!ans) return;
+    const count = Math.max(1, Math.min(104, parseInt(ans, 10) || 0));
+    if (!count) return;
+
+    const existing = new Set((schedules ?? []).map((s) => s.start_date));
+    const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const start = new Date("2026-06-01T00:00:00");
+    const toInsert: { week_label: string; start_date: string; is_current: boolean; data: any }[] = [];
+
+    for (let i = 0; i < count; i++) {
+      const mon = new Date(start);
+      mon.setDate(start.getDate() + i * 7);
+      const fri = new Date(mon);
+      fri.setDate(mon.getDate() + 4);
+      const iso = `${mon.getFullYear()}-${String(mon.getMonth() + 1).padStart(2, "0")}-${String(mon.getDate()).padStart(2, "0")}`;
+      if (existing.has(iso)) continue;
+      const sameMonth = mon.getMonth() === fri.getMonth();
+      const label = sameMonth
+        ? `${MONTHS[mon.getMonth()]} ${mon.getDate()}–${fri.getDate()}, ${fri.getFullYear()}`
+        : `${MONTHS[mon.getMonth()]} ${mon.getDate()} – ${MONTHS[fri.getMonth()]} ${fri.getDate()}, ${fri.getFullYear()}`;
+      toInsert.push({
+        week_label: label,
+        start_date: iso,
+        is_current: false,
+        data: blankSchedule(label) as any,
+      });
+    }
+
+    if (!toInsert.length) {
+      alert("All weeks in that range already exist.");
+      return;
+    }
+    const { error } = await supabase.from("schedules").insert(toInsert);
+    if (error) return alert(error.message);
+    await refresh();
+    alert(`Created ${toInsert.length} blank week${toInsert.length === 1 ? "" : "s"}.`);
+  }
+
   async function duplicate(src: ScheduleRow) {
     const label = prompt("New week label", "Copy of " + src.week_label);
     if (!label) return;
