@@ -73,6 +73,7 @@ function AdminEditor() {
   async function refresh() {
     await qc.invalidateQueries({ queryKey: ["schedules"] });
     await qc.invalidateQueries({ queryKey: ["schedule"] });
+    await qc.invalidateQueries({ queryKey: ["payroll_rates"] });
   }
 
   async function seedFromBundled() {
