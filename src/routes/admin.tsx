@@ -291,27 +291,6 @@ function AdminEditor() {
             </div>
           ) : (
             <>
-            <div className="mb-3">
-              <label className="block text-xs text-muted-foreground mb-1">
-                Select week to edit
-              </label>
-              <Select
-                value={selectedId ?? undefined}
-                onValueChange={(v) => setSelectedId(v)}
-              >
-                <SelectTrigger className="w-full min-h-11">
-                  <SelectValue placeholder="Choose a week" />
-                </SelectTrigger>
-                <SelectContent position="popper" side="bottom" align="start" sideOffset={4} avoidCollisions={false}>
-                  {schedules.map((s) => (
-                    <SelectItem key={s.id} value={s.id}>
-                      {s.week_label}
-                      {s.is_current ? " · current" : ""}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
             <ul className="divide-y divide-border">
               {schedules.map((s) => (
                 <li key={s.id} className="py-2 flex items-center gap-2">
@@ -356,7 +335,14 @@ function AdminEditor() {
           )}
         </section>
 
-        {selected && <WeekEditor row={selected} onSaved={refresh} />}
+        {selected && (
+          <WeekEditor
+            row={selected}
+            onSaved={refresh}
+            schedules={schedules ?? []}
+            onSelect={setSelectedId}
+          />
+        )}
           </>
         ) : view === "rooms" ? (
           <RoomView schedules={schedules ?? []} selectedId={selectedId} onSelect={setSelectedId} />
@@ -526,7 +512,17 @@ function RoomView({
   );
 }
 
-function WeekEditor({ row, onSaved }: { row: ScheduleRow; onSaved: () => void }) {
+function WeekEditor({
+  row,
+  onSaved,
+  schedules,
+  onSelect,
+}: {
+  row: ScheduleRow;
+  onSaved: () => void;
+  schedules: ScheduleRow[];
+  onSelect: (id: string) => void;
+}) {
   const [data, setData] = useState<ScheduleData>(row.data);
   const [dayIdx, setDayIdx] = useState(0);
   const [staffName, setStaffName] = useState<string>("");
@@ -615,8 +611,8 @@ function WeekEditor({ row, onSaved }: { row: ScheduleRow; onSaved: () => void })
 
   return (
     <section className="bg-card rounded-2xl shadow-sm p-4 space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="font-semibold text-foreground">Edit “{row.week_label}”</h2>
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="font-semibold text-foreground">Edit</h2>
         <button
           onClick={save}
           disabled={saving}
@@ -625,6 +621,19 @@ function WeekEditor({ row, onSaved }: { row: ScheduleRow; onSaved: () => void })
           {saving ? "Saving…" : "Save"}
         </button>
       </div>
+      <Select value={row.id} onValueChange={(v) => onSelect(v)}>
+        <SelectTrigger className="w-full min-h-11">
+          <SelectValue placeholder="Choose a week" />
+        </SelectTrigger>
+        <SelectContent position="popper" side="bottom" align="start" sideOffset={4} avoidCollisions={false}>
+          {schedules.map((s) => (
+            <SelectItem key={s.id} value={s.id}>
+              {s.week_label}
+              {s.is_current ? " · current" : ""}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
       <div className="flex gap-1 bg-secondary rounded-xl p-1">
         {DAY_NAMES.map((d, i) => (
