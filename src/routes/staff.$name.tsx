@@ -122,7 +122,7 @@ function StaffPage() {
             to="/rooms"
             className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
           >
-            <Building2 className="w-4 h-4" /> Our Rooms
+            <TreePine className="w-4 h-4" /> Our Rooms
           </Link>
           <a
             href={`sms:+14104744156?&body=${encodeURIComponent(
@@ -252,7 +252,7 @@ function StaffPage() {
 
         <div className="mt-6 text-center">
           <Link to="/rooms" className="text-sm text-primary underline inline-flex items-center gap-1">
-            <Building2 className="w-4 h-4" /> Our Rooms
+            <TreePine className="w-4 h-4" /> Our Rooms
           </Link>
         </div>
       </main>
