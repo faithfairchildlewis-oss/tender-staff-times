@@ -189,6 +189,15 @@ function AdminEditor() {
     await refresh();
   }
 
+  async function setLive(id: string, value: boolean) {
+    const { error } = await supabase
+      .from("schedules")
+      .update({ is_live: value })
+      .eq("id", id);
+    if (error) return alert(error.message);
+    await refresh();
+  }
+
   async function remove(id: string) {
     if (!confirm("Delete this week?")) return;
     const { error } = await supabase.from("schedules").delete().eq("id", id);
