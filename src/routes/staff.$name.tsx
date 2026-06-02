@@ -54,6 +54,7 @@ function StaffPage() {
           </Link>
           <Link
             to="/rooms"
+            search={{ from: name }}
             className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
           >
             <TreePine className="w-4 h-4" /> Our Rooms
