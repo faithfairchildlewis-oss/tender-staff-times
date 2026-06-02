@@ -25,7 +25,17 @@ import {
 } from "@/components/ui/select";
 
 export const Route = createFileRoute("/admin")({
-  head: () => ({ meta: [{ title: "Admin — Edit Schedules" }] }),
+  head: () => ({
+    meta: [
+      { title: "Admin — Edit Schedules" },
+      { name: "description", content: "Director-only console to edit weekly staff schedules, room assignments, and payroll rates." },
+      { name: "robots", content: "noindex,nofollow" },
+      { property: "og:title", content: "Admin — Edit Schedules" },
+      { property: "og:description", content: "Director-only console to edit weekly staff schedules, room assignments, and payroll rates." },
+      { property: "og:url", content: "/admin" },
+    ],
+    links: [{ rel: "canonical", href: "/admin" }],
+  }),
   component: AdminPage,
 });
 
