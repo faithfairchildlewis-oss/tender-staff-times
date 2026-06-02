@@ -77,6 +77,30 @@ export function useLiveSchedule() {
   });
 }
 
+/** Loads ALL schedules marked as Live, oldest first, so the room view can
+ *  show multiple weeks side-by-side with horizontal scroll. */
+export function useLiveSchedules() {
+  return useQuery({
+    queryKey: ["schedule", "live", "all"],
+    queryFn: async (): Promise<CurrentSchedule[]> => {
+      const { data, error } = await supabase
+        .from("schedules")
+        .select("data, start_date")
+        .eq("is_live", true)
+        .order("start_date", { ascending: true });
+      if (error) {
+        console.error("live schedules fetch failed", error);
+        return [];
+      }
+      return (data ?? []).map((r) => ({
+        ...(r.data as ScheduleData),
+        start_date: r.start_date,
+      }));
+    },
+    staleTime: 60_000,
+  });
+}
+
 function useAllSchedulesQuery() {
   return useQuery({
     queryKey: ["schedules", "all"],

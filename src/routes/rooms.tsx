@@ -2,9 +2,29 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Home } from "lucide-react";
 import { useState, useMemo } from "react";
 import { PageBanner } from "@/components/page-banner";
-import { useLiveSchedule } from "@/hooks/use-schedule";
+import { useLiveSchedules } from "@/hooks/use-schedule";
 import { deriveDays, DAY_NAMES, DEFAULT_ROOMS } from "@/lib/schedule-derive";
 import { formatWeekRange } from "@/lib/format-date";
+
+type TabDay = {
+  weekIdx: number;
+  dayIdx: number;
+  dayName: string;
+  shortLabel: string; // "Mon"
+  mmdd: string;       // "06-01"
+};
+
+/** Compute MM-DD for a given day index within a week starting at start_date
+ *  (YYYY-MM-DD). Parses parts to avoid timezone shifts. */
+function mmddFor(startDate: string | null | undefined, dayOffset: number): string {
+  if (!startDate) return "";
+  const m = startDate.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return "";
+  const d = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3] + dayOffset));
+  const mm = String(d.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(d.getUTCDate()).padStart(2, "0");
+  return `${mm}-${dd}`;
+}
 
 export const Route = createFileRoute("/rooms")({
   head: () => ({
@@ -14,14 +34,38 @@ export const Route = createFileRoute("/rooms")({
 });
 
 function RoomsPage() {
-  const { data: schedule, isLoading } = useLiveSchedule();
-  const [dayIdx, setDayIdx] = useState(0);
-  const derivedDays = useMemo(() => (schedule ? deriveDays(schedule) : []), [schedule]);
+  const { data: schedules, isLoading } = useLiveSchedules();
+  const [activeIdx, setActiveIdx] = useState(0);
+
+  const weeks = useMemo(
+    () =>
+      (schedules ?? []).map((s) => ({
+        schedule: s,
+        days: deriveDays(s),
+      })),
+    [schedules],
+  );
+
+  const tabs: TabDay[] = useMemo(() => {
+    const out: TabDay[] = [];
+    weeks.forEach((w, wi) => {
+      DAY_NAMES.forEach((name, di) => {
+        out.push({
+          weekIdx: wi,
+          dayIdx: di,
+          dayName: name,
+          shortLabel: name.slice(0, 3),
+          mmdd: mmddFor(w.schedule.start_date, di),
+        });
+      });
+    });
+    return out;
+  }, [weeks]);
 
   if (isLoading) {
     return <div className="min-h-dvh bg-background p-6 text-muted-foreground">Loading…</div>;
   }
-  if (!schedule) {
+  if (!schedules || schedules.length === 0) {
     return (
       <div className="min-h-dvh bg-background p-6">
         <Link
@@ -38,7 +82,10 @@ function RoomsPage() {
     );
   }
 
-  const day = derivedDays[dayIdx];
+  const active = tabs[Math.min(activeIdx, tabs.length - 1)];
+  const week = weeks[active.weekIdx];
+  const day = week.days[active.dayIdx];
+  const schedule = week.schedule;
   const rooms = schedule.rooms?.length ? schedule.rooms : DEFAULT_ROOMS;
   const weekLabel = schedule.start_date ? formatWeekRange(schedule.start_date) : schedule.week;
 
@@ -47,18 +94,26 @@ function RoomsPage() {
       <PageBanner title="Our Rooms" subline={weekLabel} />
 
       <main className="px-4 mt-4 max-w-2xl mx-auto space-y-4">
-        <div className="flex gap-1 bg-secondary rounded-xl p-1">
-          {DAY_NAMES.map((d, i) => (
-            <button
-              key={d}
-              onClick={() => setDayIdx(i)}
-              className={`flex-1 text-sm font-semibold min-h-11 rounded-lg transition ${
-                i === dayIdx ? "bg-card text-foreground shadow" : "text-muted-foreground"
-              }`}
-            >
-              {d.slice(0, 3)}
-            </button>
-          ))}
+        <div className="overflow-x-auto -mx-4 px-4">
+          <div className="flex gap-1 bg-secondary rounded-xl p-1 w-max min-w-full">
+            {tabs.map((t, i) => {
+              const isActive = i === activeIdx;
+              return (
+                <button
+                  key={`${t.weekIdx}-${t.dayIdx}`}
+                  onClick={() => setActiveIdx(i)}
+                  className={`shrink-0 px-3 min-h-11 rounded-lg transition flex flex-col items-center justify-center leading-tight ${
+                    weeks.length > 1 ? "min-w-[68px]" : "flex-1"
+                  } ${
+                    isActive ? "bg-card text-foreground shadow" : "text-muted-foreground"
+                  }`}
+                >
+                  <span className="text-sm font-semibold">{t.shortLabel}</span>
+                  {t.mmdd && <span className="text-[10px] opacity-80">{t.mmdd}</span>}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <section className="bg-card rounded-2xl shadow-sm p-4 space-y-3">
