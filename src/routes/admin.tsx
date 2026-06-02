@@ -82,6 +82,7 @@ function AdminEditor() {
         week_label: data.week,
         start_date: "2026-06-01",
         is_current: true,
+        is_live: true,
         data: data as any,
       })
       .select("id")
