@@ -4,7 +4,6 @@ import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 import { formatWeekRange } from "@/lib/format-date";
 import { getDailyContent } from "@/data/daily-content";
-import { useState, useEffect } from "react";
 
 export const Route = createFileRoute("/staff/$name")({
   head: ({ params }) => ({
