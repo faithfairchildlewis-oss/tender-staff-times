@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, Coffee } from "lucide-react";
+import { ArrowLeft, Utensils } from "lucide-react";
 import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 
@@ -49,7 +49,7 @@ function StaffPage() {
         </div>
 
         <h2 className="text-base font-semibold text-foreground mt-6 mb-3 px-1">
-          Shifts, rooms &amp; lunch
+          Shifts, Classes &amp; Lunch
         </h2>
 
         <div className="space-y-3">
@@ -74,44 +74,71 @@ function StaffPage() {
                     </span>
                   )}
                 </div>
-                {!off && (
-                  <ul className="divide-y divide-border list-none">
-                    {blocks.map((b, i) => (
-                      <li key={i} className="flex items-center justify-between px-4 py-3">
-                        <div className="text-base text-foreground">
-                          {b.start} – {b.end}
-                        </div>
-                        <div
-                          className="flex flex-wrap gap-1 justify-end"
-                          aria-label={`Rooms: ${b.rooms.join(", ")}`}
-                        >
-                          {b.rooms.map((r) => (
-                            <span
-                              key={r}
-                              className="bg-primary text-primary-foreground text-xs font-semibold px-2.5 py-1 rounded-full"
+                {!off && (() => {
+                  const showLunch = hrs >= 6;
+                  const fixed = showLunch && info.lunch.type === "fixed";
+                  const lunchStartMin = fixed ? parseClockToMin(info.lunch.time) : null;
+                  type Item =
+                    | { kind: "shift"; start: string; end: string; rooms: string[]; sort: number }
+                    | { kind: "lunch"; label: string; time: string; sort: number };
+                  const items: Item[] = blocks.map((b) => ({
+                    kind: "shift" as const,
+                    start: b.start,
+                    end: b.end,
+                    rooms: b.rooms,
+                    sort: parseClockToMin(b.start) ?? 0,
+                  }));
+                  if (showLunch && fixed && lunchStartMin !== null) {
+                    items.push({
+                      kind: "lunch",
+                      label: brk?.type === "lunch" ? "Lunch" : "Break",
+                      time: info.lunch.time,
+                      sort: lunchStartMin,
+                    });
+                  }
+                  items.sort((a, b) => a.sort - b.sort);
+                  return (
+                    <ul className="divide-y divide-border list-none">
+                      {items.map((it, i) =>
+                        it.kind === "shift" ? (
+                          <li key={i} className="flex items-center justify-between px-4 py-3">
+                            <div className="text-base text-foreground">
+                              {it.start} – {it.end}
+                            </div>
+                            <div
+                              className="flex flex-wrap gap-1 justify-end"
+                              aria-label={`Classes: ${it.rooms.map(roomToClass).join(", ")}`}
                             >
-                              {r}
-                            </span>
-                          ))}
-                        </div>
-                      </li>
-                    ))}
-                    {hrs >= 6 && (
-                      <li className="flex items-center gap-3 px-4 py-3 bg-secondary/50">
-                        <Coffee className="w-4 h-4 text-primary" aria-hidden="true" />
-                        {info.lunch.type === "fixed" ? (
-                          <span className="text-sm text-foreground">
-                            {brk?.type === "lunch" ? "Lunch" : "Break"}: {info.lunch.time}
-                          </span>
+                              {it.rooms.map((r) => (
+                                <span
+                                  key={r}
+                                  className="bg-primary text-primary-foreground text-xs font-semibold px-2.5 py-1 rounded-full"
+                                >
+                                  {roomToClass(r)}
+                                </span>
+                              ))}
+                            </div>
+                          </li>
                         ) : (
+                          <li key={i} className="flex items-center gap-3 px-4 py-3 bg-secondary/50">
+                            <Utensils className="w-4 h-4 text-primary" aria-hidden="true" />
+                            <span className="text-sm text-foreground">
+                              {it.label}: {it.time}
+                            </span>
+                          </li>
+                        )
+                      )}
+                      {showLunch && !fixed && (
+                        <li className="flex items-center gap-3 px-4 py-3 bg-secondary/50">
+                          <Utensils className="w-4 h-4 text-primary" aria-hidden="true" />
                           <span className="text-sm text-muted-foreground italic">
                             Check with director
                           </span>
-                        )}
-                      </li>
-                    )}
-                  </ul>
-                )}
+                        </li>
+                      )}
+                    </ul>
+                  );
+                })()}
               </div>
             );
           })}
@@ -137,4 +164,21 @@ function StaffPage() {
       </nav>
     </div>
   );
+}
+
+/** Replace the word "Room" in a room/class label with "Class". */
+function roomToClass(label: string): string {
+  return label.replace(/\bRoom\b/gi, "Class");
+}
+
+/** Parse "8:30 AM" or "12:30 PM" into minutes since midnight. Returns null on parse failure. */
+function parseClockToMin(s: string): number | null {
+  const m = /^\s*(\d{1,2}):(\d{2})\s*(AM|PM)?/i.exec(s);
+  if (!m) return null;
+  let h = Number(m[1]);
+  const min = Number(m[2]);
+  const ap = m[3]?.toUpperCase();
+  if (ap === "PM" && h !== 12) h += 12;
+  if (ap === "AM" && h === 12) h = 0;
+  return h * 60 + min;
 }
