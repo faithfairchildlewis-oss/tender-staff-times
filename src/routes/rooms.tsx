@@ -101,11 +101,16 @@ function RoomsPage() {
                       {rooms.map((r) => {
                         const staffed = slot.assignments[r] ?? [];
                         const under = slot.understaffed.includes(r);
+                        const highlight = r === "M.O.D." || r === "Room I" || r === "J/K";
                         return (
                           <td
                             key={r}
                             className={`p-1.5 border border-border text-center ${
-                              under ? "bg-destructive/10 text-destructive" : ""
+                              under
+                                ? "bg-destructive/10 text-destructive"
+                                : highlight
+                                  ? "bg-lilac/30"
+                                  : ""
                             }`}
                           >
                             {staffed.length > 0 ? (
