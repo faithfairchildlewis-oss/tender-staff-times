@@ -472,6 +472,28 @@ function RoomView({
         ))}
       </div>
 
+      <div
+        aria-label="Legend"
+        className="flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground"
+      >
+        <span className="inline-flex items-center gap-1.5">
+          <span className="inline-block w-3 h-3 rounded-sm bg-lilac border border-border" />
+          Tutor / shared rooms
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="inline-block w-3 h-3 rounded-sm bg-closed border border-border" />
+          Closed
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="inline-block w-3 h-3 rounded-sm bg-row-stripe border border-border" />
+          Half hour
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="inline-block w-3 h-3 rounded-sm bg-destructive/15 border border-destructive/40" />
+          <span className="text-destructive font-semibold">Understaffed</span>
+        </span>
+      </div>
+
       <div className="overflow-x-auto -mx-4 px-4">
         <table className="w-full text-xs border-collapse">
           <thead>
@@ -531,8 +553,10 @@ function RoomView({
                     return (
                       <td
                         key={r}
-                        className={`p-1 border border-border ${bg} ${
-                          under ? "text-destructive" : lilac ? "text-lilac-foreground" : "text-foreground"
+                        className={`p-1 border border-border ${
+                          under ? "bg-destructive/10 text-destructive font-semibold" : bg
+                        } ${
+                          !under && lilac ? "text-lilac-foreground" : !under ? "text-foreground" : ""
                         }`}
                       >
                         {a.length ? a.join(", ") : <span className="text-destructive">empty</span>}
