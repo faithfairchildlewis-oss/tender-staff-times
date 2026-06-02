@@ -54,7 +54,7 @@ export function useAllSchedules() {
 }
 
 /** Loads the most recent schedule marked as Live. Used for the shared
- *  "Our Day" view so every staff member sees the same room schedule. */
+ *  "Our Rooms" view so every staff member sees the same room schedule. */
 export function useLiveSchedule() {
   return useQuery({
     queryKey: ["schedule", "live"],
