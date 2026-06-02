@@ -173,13 +173,23 @@ function RoomsPage() {
         }
       >
         <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => router.history.back()}
-            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
-          >
-            <CalendarDays className="w-4 h-4" /> My Week
-          </button>
+          {from ? (
+            <Link
+              to="/staff/$name"
+              params={{ name: from }}
+              className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
+            >
+              <CalendarDays className="w-4 h-4" /> My Week
+            </Link>
+          ) : (
+            <button
+              type="button"
+              onClick={() => router.history.back()}
+              className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
+            >
+              <CalendarDays className="w-4 h-4" /> My Week
+            </button>
+          )}
           <span
             aria-current="page"
             className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground text-primary"
