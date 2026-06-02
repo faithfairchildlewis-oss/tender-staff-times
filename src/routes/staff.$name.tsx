@@ -4,6 +4,7 @@ import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 import { formatWeekRange } from "@/lib/format-date";
 import { getDailyContent } from "@/data/daily-content";
+import { useState, useEffect } from "react";
 
 export const Route = createFileRoute("/staff/$name")({
   head: ({ params }) => ({
@@ -29,21 +30,30 @@ function StaffPage() {
   }
   const hours = weeklyHours(schedule, name);
 
+  const [timeGreeting, setTimeGreeting] = useState("");
+  useEffect(() => {
+    const hour = new Date().getHours();
+    setTimeGreeting(
+      hour < 12 ? "Good morning!" : hour < 17 ? "Good afternoon!" : "Good evening!"
+    );
+  }, []);
+
   const { verse, encouragement: subline } = getDailyContent(new Date().getDate());
 
   return (
     <div className="min-h-dvh bg-background pb-24">
       <header className="bg-primary text-primary-foreground px-5 pt-8 pb-6 shadow-md">
-        <div className="relative flex items-center mb-4 min-h-11">
+        <div className="relative flex items-center mb-2 min-h-11">
           <Link
             to="/"
             className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary-foreground/15"
           >
             <Home className="w-4 h-4" /> Home
           </Link>
-          <h1 className="absolute left-1/2 -translate-x-1/2 text-xl font-bold">
-            Hello, {name}
-          </h1>
+          <div className="absolute left-1/2 -translate-x-1/2 text-center">
+            <h1 className="text-xl font-bold">Hello, {name}</h1>
+            <p className="text-sm opacity-90 mt-0.5">{timeGreeting}</p>
+          </div>
         </div>
         <div className="flex gap-2">
           <Link
