@@ -715,3 +715,96 @@ function TimeSelect({
     </select>
   );
 }
+
+function PayrollView({
+  schedules,
+  selectedId,
+  onSelect,
+}: {
+  schedules: ScheduleRow[];
+  selectedId: string | null;
+  onSelect: (id: string) => void;
+}) {
+  const selected = schedules.find((s) => s.id === selectedId) ?? schedules[0] ?? null;
+
+  if (!selected) {
+    return (
+      <section className="bg-card rounded-2xl shadow-sm p-4">
+        <p className="text-sm text-muted-foreground">No schedules yet.</p>
+      </section>
+    );
+  }
+
+  const data: ScheduleData = selected.data;
+  const names = Object.keys(data.staff ?? {});
+
+  const rows = names.map((name) => {
+    const perDay: Record<string, number> = {};
+    let total = 0;
+    for (const d of DAY_NAMES) {
+      const hrs = (data.staff_daily?.[name]?.[d]?.length ?? 0) * 0.5;
+      perDay[d] = hrs;
+      total += hrs;
+    }
+    const rate = data.staff[name]?.rate ?? 0;
+    return { name, perDay, total, rate, pay: total * rate };
+  });
+
+  const totalHours = rows.reduce((a, r) => a + r.total, 0);
+  const totalPay = rows.reduce((a, r) => a + r.pay, 0);
+
+  return (
+    <section className="bg-card rounded-2xl shadow-sm p-4">
+      <div className="flex items-center justify-between mb-3 gap-2">
+        <h2 className="font-semibold text-foreground">Payroll</h2>
+        <select
+          value={selected.id}
+          onChange={(e) => onSelect(e.target.value)}
+          className="bg-background border border-border rounded-lg px-2 py-2 min-h-11 text-sm"
+        >
+          {schedules.map((s) => (
+            <option key={s.id} value={s.id}>
+              {s.week_label}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="bg-secondary text-secondary-foreground">
+              <th className="text-left p-2 border border-border">Staff</th>
+              {DAY_NAMES.map((d) => (
+                <th key={d} className="text-center p-2 border border-border">{d.slice(0, 3)}</th>
+              ))}
+              <th className="text-right p-2 border border-border">Hours</th>
+              <th className="text-right p-2 border border-border">Rate</th>
+              <th className="text-right p-2 border border-border">Pay</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.name} className="bg-card">
+                <td className="p-2 border border-border font-medium text-foreground">{r.name}</td>
+                {DAY_NAMES.map((d) => (
+                  <td key={d} className="p-2 border border-border text-center text-muted-foreground">
+                    {r.perDay[d] || ""}
+                  </td>
+                ))}
+                <td className="p-2 border border-border text-right font-semibold">{r.total}</td>
+                <td className="p-2 border border-border text-right">${r.rate.toFixed(2)}</td>
+                <td className="p-2 border border-border text-right font-semibold">${r.pay.toFixed(2)}</td>
+              </tr>
+            ))}
+            <tr className="bg-secondary font-semibold">
+              <td className="p-2 border border-border" colSpan={1 + DAY_NAMES.length}>Total</td>
+              <td className="p-2 border border-border text-right">{totalHours}</td>
+              <td className="p-2 border border-border" />
+              <td className="p-2 border border-border text-right">${totalPay.toFixed(2)}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
