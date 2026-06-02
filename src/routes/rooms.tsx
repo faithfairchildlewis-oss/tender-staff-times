@@ -167,10 +167,12 @@ function RoomsPage() {
                     key={`${t.weekIdx}-${t.dayIdx}`}
                     ref={(el) => { buttonRefs.current[i] = el; }}
                     onClick={() => setActiveIdx(i)}
-                    className={`shrink-0 px-3 min-h-11 rounded-lg transition flex flex-col items-center justify-center leading-tight ${
+                    className={`shrink-0 px-3 min-h-11 rounded-lg transition-all duration-300 flex flex-col items-center justify-center leading-tight ${
                       weeks.length > 1 ? "min-w-[68px]" : "flex-1"
                     } ${
                       isActive ? "bg-card text-foreground shadow" : "text-muted-foreground"
+                    } ${
+                      t.weekIdx === flashWeek ? "ring-2 ring-primary ring-offset-2 ring-offset-secondary scale-105 animate-[pulse_0.8s_ease-in-out_2]" : ""
                     }`}
                   >
                     <span className="text-sm font-semibold">{t.shortLabel}</span>
