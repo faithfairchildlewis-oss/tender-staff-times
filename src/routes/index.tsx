@@ -21,6 +21,60 @@ function Index() {
   const smsBody = encodeURIComponent(
     "Hi, I would like to request time off.\nMy name is: \nDate(s) requested: \nReason: "
   );
+
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12 ? "Good morning, team!" : hour < 17 ? "Good afternoon, team!" : "Good evening, team!";
+
+  const verses = [
+    { text: "Whatever you do, work at it with all your heart, as working for the Lord, not for human masters.", ref: "Colossians 3:23" },
+    { text: "Commit to the Lord whatever you do, and he will establish your plans.", ref: "Proverbs 16:3" },
+    { text: "Each of you should use whatever gift you have received to serve others, as faithful stewards of God's grace.", ref: "1 Peter 4:10" },
+    { text: "Let us not become weary in doing good, for at the proper time we will reap a harvest if we do not give up.", ref: "Galatians 6:9" },
+    { text: "Be completely humble and gentle; be patient, bearing with one another in love.", ref: "Ephesians 4:2" },
+    { text: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose.", ref: "Romans 8:28" },
+    { text: "The Lord is my strength and my shield; my heart trusts in him, and he helps me.", ref: "Psalm 28:7" },
+    { text: "Do everything in love.", ref: "1 Corinthians 16:14" },
+    { text: "Shout for joy to the Lord, all the earth. Serve the Lord with gladness; come before him with joyful songs.", ref: "Psalm 100:1-2" },
+    { text: "I can do all this through him who gives me strength.", ref: "Philippians 4:13" },
+    { text: "Encourage one another and build each other up.", ref: "1 Thessalonians 5:11" },
+    { text: "Above all, love each other deeply, because love covers over a multitude of sins.", ref: "1 Peter 4:8" },
+    { text: "Trust in the Lord with all your heart and lean not on your own understanding.", ref: "Proverbs 3:5" },
+    { text: "A friend loves at all times, and a brother is born for a time of adversity.", ref: "Proverbs 17:17" },
+    { text: "Therefore encourage one another and build each other up, just as in fact you are doing.", ref: "1 Thessalonians 5:11" },
+    { text: "She opens her mouth with wisdom, and the teaching of kindness is on her tongue.", ref: "Proverbs 31:26" },
+    { text: "For we are God's handiwork, created in Christ Jesus to do good works, which God prepared in advance for us to do.", ref: "Ephesians 2:10" },
+    { text: "Let your light shine before others, that they may see your good deeds and glorify your Father in heaven.", ref: "Matthew 5:16" },
+    { text: "The fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control.", ref: "Galatians 5:22-23" },
+    { text: "My grace is sufficient for you, for my power is made perfect in weakness.", ref: "2 Corinthians 12:9" },
+  ];
+
+  const sublines = [
+    "Your faithfulness shapes little lives every day.",
+    "The seeds you plant today grow into tomorrow's miracles.",
+    "Every smile you share is a gift from the heart.",
+    "Small acts of love leave the biggest footprints.",
+    "You are making a difference, one child at a time.",
+    "Patience today becomes courage tomorrow.",
+    "Your kindness is the lesson they will never forget.",
+    "Teaching love is the greatest curriculum of all.",
+    "The light you carry brightens every room you enter.",
+    "You are exactly who they need today.",
+    "Every hug you give plants hope in a little heart.",
+    "Your presence is a safe harbor for growing souls.",
+    "In your care, children learn they matter.",
+    "Gentle hands and steady hearts change the world.",
+    "You turn ordinary moments into lifelong memories.",
+    "The work of your hands is written on their hearts.",
+    "Your compassion today builds their confidence forever.",
+    "Each story read aloud is a door opened wide.",
+    "You are a chapter in their story of love.",
+    "Rest well tonight — you gave your whole heart today.",
+  ];
+
+  const dayIndex = new Date().getDate() % verses.length;
+  const verse = verses[dayIndex];
+  const subline = sublines[dayIndex];
   return (
     <div className="min-h-dvh bg-background pb-10">
       <header className="bg-primary text-primary-foreground px-5 pt-10 pb-12 rounded-b-3xl shadow-md">
