@@ -64,6 +64,54 @@ function RoomsPage() {
     return out;
   }, [weeks]);
 
+  const currentWeekStartTab = useMemo(() => {
+    if (!schedules || schedules.length === 0) return 0;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayUTC = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+
+    for (let wi = 0; wi < weeks.length; wi++) {
+      const sd = weeks[wi].schedule.start_date;
+      if (!sd) continue;
+      const m = sd.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (!m) continue;
+      const startUTC = Date.UTC(+m[1], +m[2] - 1, +m[3]);
+      const endUTC = startUTC + 4 * 24 * 60 * 60 * 1000; // Friday
+      if (todayUTC >= startUTC && todayUTC <= endUTC) {
+        return wi * 5; // first day (Mon) of that week
+      }
+    }
+    // Fallback: nearest upcoming week, or last week if all past
+    for (let wi = 0; wi < weeks.length; wi++) {
+      const sd = weeks[wi].schedule.start_date;
+      if (!sd) continue;
+      const m = sd.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (!m) continue;
+      const startUTC = Date.UTC(+m[1], +m[2] - 1, +m[3]);
+      if (todayUTC < startUTC) return wi * 5;
+    }
+    return (weeks.length - 1) * 5;
+  }, [schedules, weeks]);
+
+  // Auto-scroll to current week on first load
+  useEffect(() => {
+    if (tabs.length === 0) return;
+    const btn = buttonRefs.current[currentWeekStartTab];
+    const strip = stripRef.current;
+    if (btn && strip) {
+      strip.scrollTo({ left: btn.offsetLeft - strip.clientWidth / 2 + btn.clientWidth / 2, behavior: "smooth" });
+    }
+  }, [tabs.length, currentWeekStartTab]);
+
+  const scrollToCurrentWeek = () => {
+    setActiveIdx(currentWeekStartTab);
+    const btn = buttonRefs.current[currentWeekStartTab];
+    const strip = stripRef.current;
+    if (btn && strip) {
+      strip.scrollTo({ left: btn.offsetLeft - strip.clientWidth / 2 + btn.clientWidth / 2, behavior: "smooth" });
+    }
+  };
+
   if (isLoading) {
     return <div className="min-h-dvh bg-background p-6 text-muted-foreground">Loading…</div>;
   }
