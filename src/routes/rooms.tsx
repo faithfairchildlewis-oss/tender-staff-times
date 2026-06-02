@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Home } from "lucide-react";
 import { useState, useMemo } from "react";
-import { useCurrentSchedule } from "@/hooks/use-schedule";
+import { useLiveSchedule } from "@/hooks/use-schedule";
 import { deriveDays, DAY_NAMES, DEFAULT_ROOMS } from "@/lib/schedule-derive";
 import { formatWeekRange } from "@/lib/format-date";
 
@@ -13,11 +13,27 @@ export const Route = createFileRoute("/rooms")({
 });
 
 function RoomsPage() {
-  const { data: schedule, isLoading } = useCurrentSchedule();
+  const { data: schedule, isLoading } = useLiveSchedule();
   const [dayIdx, setDayIdx] = useState(0);
 
-  if (isLoading || !schedule) {
+  if (isLoading) {
     return <div className="min-h-dvh bg-background p-6 text-muted-foreground">Loading…</div>;
+  }
+  if (!schedule) {
+    return (
+      <div className="min-h-dvh bg-background p-6">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1 text-primary mb-4"
+        >
+          <Home className="w-4 h-4" /> Home
+        </Link>
+        <h1 className="text-xl font-bold text-foreground">Our Day</h1>
+        <p className="text-muted-foreground mt-2">
+          No live schedule has been published yet. Check back once the director marks a week as Live.
+        </p>
+      </div>
+    );
   }
 
   const derivedDays = useMemo(() => deriveDays(schedule), [schedule]);
