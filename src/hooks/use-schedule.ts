@@ -53,7 +53,7 @@ export function useAllSchedules() {
     queryFn: async (): Promise<ScheduleRow[]> => {
       const { data, error } = await supabase
         .from("schedules")
-        .select("id, week_label, start_date, is_current, data, updated_at")
+        .select("id, week_label, start_date, is_current, is_live, data, updated_at")
         .order("start_date", { ascending: false });
       if (error) throw error;
       return (data ?? []) as unknown as ScheduleRow[];
