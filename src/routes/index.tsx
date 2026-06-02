@@ -57,6 +57,12 @@ function Index() {
           </div>
         </section>
 
+        <section className="bg-card rounded-2xl shadow-sm p-5 mt-5">
+          <p className="text-sm font-semibold text-foreground">Verse of the Day</p>
+          <p className="text-sm italic text-muted-foreground mt-1">"{verse.text}"</p>
+          <p className="text-xs text-muted-foreground mt-0.5">{verse.ref}</p>
+        </section>
+
         <a
           href={`sms:+1${phone}?&body=${smsBody}`}
           aria-label="Request time off by texting the director at 410-474-4156"
