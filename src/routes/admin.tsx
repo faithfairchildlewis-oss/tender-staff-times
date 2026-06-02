@@ -15,6 +15,13 @@ import {
   expandBlocks,
 } from "@/lib/schedule-derive";
 import { blocksForDay } from "@/data/schedule";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({ meta: [{ title: "Admin — Edit Schedules" }] }),
@@ -288,18 +295,22 @@ function AdminEditor() {
               <label className="block text-xs text-muted-foreground mb-1">
                 Select week to edit
               </label>
-              <select
-                value={selectedId ?? ""}
-                onChange={(e) => setSelectedId(e.target.value)}
-                className="w-full bg-background border border-border rounded-lg px-3 py-2 min-h-11 text-sm"
+              <Select
+                value={selectedId ?? undefined}
+                onValueChange={(v) => setSelectedId(v)}
               >
-                {schedules.map((s) => (
-                  <option key={s.id} value={s.id}>
-                    {s.week_label}
-                    {s.is_current ? " · current" : ""}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger className="w-full min-h-11">
+                  <SelectValue placeholder="Choose a week" />
+                </SelectTrigger>
+                <SelectContent position="popper" side="bottom" align="start" sideOffset={4} avoidCollisions={false}>
+                  {schedules.map((s) => (
+                    <SelectItem key={s.id} value={s.id}>
+                      {s.week_label}
+                      {s.is_current ? " · current" : ""}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <ul className="divide-y divide-border">
               {schedules.map((s) => (
