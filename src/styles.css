@@ -54,6 +54,9 @@
   --color-lilac: var(--lilac);
   --color-lilac-light: var(--lilac-light);
   --color-lilac-foreground: var(--lilac-foreground);
+  --color-teal: var(--teal);
+  --color-teal-light: var(--teal-light);
+  --color-teal-foreground: var(--teal-foreground);
   --color-row-stripe: var(--row-stripe);
   --color-closed: var(--closed);
   --color-closed-foreground: var(--closed-foreground);
@@ -90,6 +93,10 @@
   --lilac: oklch(0.88 0.06 300);
   --lilac-light: oklch(0.94 0.035 300);
   --lilac-foreground: oklch(0.35 0.08 300);
+  /* Teal scale — mirrors --primary so header, banners, and badges share one source of truth. */
+  --teal: oklch(0.45 0.06 195);
+  --teal-light: oklch(0.94 0.025 195);
+  --teal-foreground: oklch(1 0 0);
   --row-stripe: oklch(0.94 0.04 230);
   --closed: oklch(0.78 0.15 145);
   --closed-foreground: oklch(0.2 0.08 145);
@@ -131,6 +138,9 @@
   --lilac: oklch(0.75 0.08 300);
   --lilac-light: oklch(0.82 0.06 300);
   --lilac-foreground: oklch(0.25 0.08 300);
+  --teal: oklch(0.55 0.08 195);
+  --teal-light: oklch(0.32 0.05 195);
+  --teal-foreground: oklch(0.98 0.005 195);
   --row-stripe: oklch(0.35 0.06 230);
   --closed: oklch(0.55 0.15 145);
   --closed-foreground: oklch(0.98 0.02 145);

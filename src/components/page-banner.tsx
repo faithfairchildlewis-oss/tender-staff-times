@@ -16,7 +16,7 @@ type PageBannerProps = {
  */
 export function PageBanner({ title, subline, rightSlot, children }: PageBannerProps) {
   return (
-    <header className="bg-primary text-primary-foreground px-5 pt-8 pb-6 shadow-md">
+    <header className="bg-primary text-primary-foreground px-5 pt-8 pb-7 shadow-md rounded-b-3xl">
       <div className="relative flex items-center justify-between mb-2 min-h-11">
         <Link
           to="/"

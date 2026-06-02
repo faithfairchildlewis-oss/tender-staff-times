@@ -66,7 +66,7 @@ function StaffPage() {
         </div>
       </PageBanner>
 
-      <main className="px-4 mt-4 max-w-md mx-auto">
+      <main className="px-4 -mt-6 max-w-md mx-auto">
         <div className="bg-lilac text-lilac-foreground rounded-2xl p-5 shadow-sm text-center">
           <div className="text-4xl font-bold">{hours.toFixed(1)}</div>
           <div className="text-sm opacity-90 mt-1">hours this week</div>
