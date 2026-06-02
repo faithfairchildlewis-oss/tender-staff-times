@@ -731,6 +731,21 @@ function WeekEditor({
         )}
       </div>
 
+      <Select value="" onValueChange={importStaffFrom}>
+        <SelectTrigger className="w-full min-h-11 text-sm">
+          <SelectValue placeholder="Import staff roster from another week…" />
+        </SelectTrigger>
+        <SelectContent position="popper" side="bottom" align="start" sideOffset={4} avoidCollisions={false}>
+          {schedules
+            .filter((s) => s.id !== row.id && Object.keys(s.data.staff ?? {}).length > 0)
+            .map((s) => (
+              <SelectItem key={s.id} value={s.id}>
+                {s.week_label} ({Object.keys(s.data.staff ?? {}).length})
+              </SelectItem>
+            ))}
+        </SelectContent>
+      </Select>
+
       {info && (
         <div className="grid grid-cols-2 gap-2 text-sm">
           <label className="block">
