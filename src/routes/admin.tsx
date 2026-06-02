@@ -341,6 +341,7 @@ function AdminEditor() {
                 </li>
               ))}
             </ul>
+            </>
           )}
         </section>
 
