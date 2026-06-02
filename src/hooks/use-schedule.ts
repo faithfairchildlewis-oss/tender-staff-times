@@ -69,7 +69,7 @@ export function useSchedule(id: string | null) {
       if (!id) return null;
       const { data, error } = await supabase
         .from("schedules")
-        .select("id, week_label, start_date, is_current, data, updated_at")
+        .select("id, week_label, start_date, is_current, is_live, data, updated_at")
         .eq("id", id)
         .maybeSingle();
       if (error) throw error;
