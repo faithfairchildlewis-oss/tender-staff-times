@@ -310,8 +310,13 @@ function AdminEditor() {
                     }`}
                   >
                     <div className="font-medium text-foreground">{s.week_label}</div>
-                    <div className="text-xs text-muted-foreground">
+                    <div className="text-xs text-muted-foreground flex items-center gap-1.5">
                       {s.start_date}
+                      {s.is_live && (
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-semibold">
+                          Live
+                        </span>
+                      )}
                     </div>
                   </button>
                   {s.is_current ? (
