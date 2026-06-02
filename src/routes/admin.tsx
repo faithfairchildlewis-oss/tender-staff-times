@@ -1120,17 +1120,18 @@ function TimeOffView() {
   const [filterStatus, setFilterStatus] = useState<"all" | "pending" | "approved" | "denied">("all");
   const [search, setSearch] = useState("");
 
-  const filtered = (requests ?? []).filter((r) => {
+  const allRequests = requests ?? [];
+  const filtered = allRequests.filter((r) => {
     const matchStatus = filterStatus === "all" || r.status === filterStatus;
     const matchSearch = search.trim() === "" || r.staff_name.toLowerCase().includes(search.trim().toLowerCase());
     return matchStatus && matchSearch;
   });
 
   const counts = {
-    all: requests?.length ?? 0,
-    pending: requests?.filter((r) => r.status === "pending").length ?? 0,
-    approved: requests?.filter((r) => r.status === "approved").length ?? 0,
-    denied: requests?.filter((r) => r.status === "denied").length ?? 0,
+    all: allRequests.length,
+    pending: allRequests.filter((r) => r.status === "pending").length,
+    approved: allRequests.filter((r) => r.status === "approved").length,
+    denied: allRequests.filter((r) => r.status === "denied").length,
   };
 
   async function handleStatus(id: string, status: "pending" | "approved" | "denied") {
