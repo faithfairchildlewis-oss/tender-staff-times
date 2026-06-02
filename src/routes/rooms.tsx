@@ -36,6 +36,8 @@ export const Route = createFileRoute("/rooms")({
 function RoomsPage() {
   const { data: schedules, isLoading } = useLiveSchedules();
   const [activeIdx, setActiveIdx] = useState(0);
+  const stripRef = useRef<HTMLDivElement>(null);
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const weeks = useMemo(
     () =>
