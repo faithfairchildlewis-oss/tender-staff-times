@@ -46,7 +46,7 @@ function Index() {
           <p className="text-xs text-muted-foreground mt-2">{verse.ref}</p>
         </section>
 
-        <section className="bg-card rounded-2xl shadow-sm p-5 mt-5">
+        <section className="bg-card rounded-2xl shadow-sm p-5 mt-6">
           <h2 className="text-base font-semibold text-foreground mb-3">Select your name</h2>
           <div className="grid grid-cols-2 gap-3">
             {names.map((n) => (
