@@ -131,3 +131,27 @@ export function useSchedule(id: string | null) {
     },
   });
 }
+
+/** Admin-only: load per-staff pay rates for a given schedule from the
+ *  access-controlled `payroll_rates` table. Returns an empty object for
+ *  non-admins (RLS will return no rows). */
+export function usePayrollRates(scheduleId: string | null) {
+  return useQuery({
+    queryKey: ["payroll_rates", scheduleId],
+    enabled: !!scheduleId,
+    queryFn: async (): Promise<Record<string, number>> => {
+      if (!scheduleId) return {};
+      const { data, error } = await supabase
+        .from("payroll_rates")
+        .select("staff_name, rate")
+        .eq("schedule_id", scheduleId);
+      if (error) {
+        console.error("payroll_rates fetch failed", error);
+        return {};
+      }
+      const out: Record<string, number> = {};
+      for (const r of data ?? []) out[r.staff_name as string] = Number(r.rate);
+      return out;
+    },
+  });
+}
