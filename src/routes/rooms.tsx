@@ -1,5 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Home, CalendarDays, TreePine, Nut } from "lucide-react";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { Home, CalendarDays, TreePine, Nut, CalendarOff } from "lucide-react";
 import { useState, useMemo, useRef, useEffect } from "react";
 import { PageBanner } from "@/components/page-banner";
 import { useLiveSchedules } from "@/hooks/use-schedule";
@@ -34,6 +34,7 @@ export const Route = createFileRoute("/rooms")({
 
 function RoomsPage() {
   const { data: schedules, isLoading } = useLiveSchedules();
+  const router = useRouter();
   const [activeIdx, setActiveIdx] = useState(0);
   const [flashWeek, setFlashWeek] = useState<number | null>(null);
   const stripRef = useRef<HTMLDivElement>(null);
@@ -161,12 +162,13 @@ function RoomsPage() {
         }
       >
         <div className="flex gap-2">
-          <Link
-            to="/"
+          <button
+            type="button"
+            onClick={() => router.history.back()}
             className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
           >
             <CalendarDays className="w-4 h-4" /> My Week
-          </Link>
+          </button>
           <span
             aria-current="page"
             className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground text-primary"
@@ -175,10 +177,9 @@ function RoomsPage() {
           </span>
           <button
             type="button"
-            onClick={scrollToCurrentWeek}
             className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
           >
-            <CalendarDays className="w-4 h-4" /> This Week
+            <CalendarOff className="w-4 h-4" /> Request Off
           </button>
         </div>
       </PageBanner>
