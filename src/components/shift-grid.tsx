@@ -472,6 +472,78 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
   );
 }
 
+function AutosaveStatus({
+  status,
+  lastSavedAt,
+  errorMsg,
+  onRetry,
+  onDiscard,
+}: {
+  status: "idle" | "pending" | "saving" | "error";
+  lastSavedAt: Date | null;
+  errorMsg: string | null;
+  onRetry: () => void;
+  onDiscard: () => void;
+}) {
+  const label =
+    status === "saving"
+      ? "Saving…"
+      : status === "pending"
+        ? "Unsaved changes"
+        : status === "error"
+          ? "Save failed"
+          : lastSavedAt
+            ? `Saved ${formatRelative(lastSavedAt)}`
+            : "All changes saved";
+  const Icon =
+    status === "saving"
+      ? Loader2
+      : status === "error"
+        ? AlertCircle
+        : status === "pending"
+          ? Coffee
+          : Check;
+  const tone =
+    status === "error"
+      ? "text-destructive"
+      : status === "saving" || status === "pending"
+        ? "text-muted-foreground"
+        : "text-primary";
+  return (
+    <div className="flex items-center gap-2 text-sm" role="status" aria-live="polite">
+      <span className={`inline-flex items-center gap-1.5 ${tone}`} title={errorMsg ?? undefined}>
+        <Icon className={`w-4 h-4 ${status === "saving" ? "animate-spin" : ""}`} />
+        {label}
+      </span>
+      {status === "error" && (
+        <>
+          <button
+            onClick={onRetry}
+            className="min-h-9 px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold"
+          >
+            Retry
+          </button>
+          <button
+            onClick={onDiscard}
+            className="min-h-9 px-3 rounded-lg bg-secondary text-secondary-foreground text-xs font-semibold"
+          >
+            Discard
+          </button>
+        </>
+      )}
+    </div>
+  );
+}
+
+function formatRelative(d: Date): string {
+  const s = Math.max(0, Math.floor((Date.now() - d.getTime()) / 1000));
+  if (s < 5) return "just now";
+  if (s < 60) return `${s}s ago`;
+  const m = Math.floor(s / 60);
+  if (m < 60) return `${m}m ago`;
+  return d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+}
+
 function Chip({
   name,
   tone,
