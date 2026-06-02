@@ -263,8 +263,8 @@ function AdminEditor() {
             onClick={() => setView("payroll")}
             className={`flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 ${
               view === "payroll"
-                ? "bg-amber-400 text-primary shadow-lg ring-2 ring-amber-300"
-                : "bg-amber-500 text-white shadow hover:bg-amber-600"
+                ? "bg-lilac text-lilac-foreground shadow-lg ring-2 ring-lilac-light"
+                : "bg-lilac-light text-lilac-foreground shadow hover:bg-lilac"
             }`}
           >
             <DollarSign className="w-4 h-4" /> Payroll
@@ -323,7 +323,7 @@ function AdminEditor() {
                     <div className="text-xs text-muted-foreground flex items-center gap-1.5">
                       {formatMDY(s.start_date)}
                       {s.is_live && (
-                        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-semibold">
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-lilac text-lilac-foreground text-[10px] font-semibold">
                           Live
                         </span>
                       )}
@@ -346,7 +346,7 @@ function AdminEditor() {
                     onClick={() => setLive(s.id, !s.is_live)}
                     title={s.is_live ? "Hide from staff" : "Make visible to staff"}
                     className={`p-2 min-h-11 min-w-11 rounded-lg ${
-                      s.is_live ? "text-emerald-500 bg-emerald-500/10" : "text-muted-foreground"
+                      s.is_live ? "text-lilac-foreground bg-lilac-light" : "text-muted-foreground"
                     }`}
                   >
                     {s.is_live ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
@@ -472,6 +472,28 @@ function RoomView({
         ))}
       </div>
 
+      <div
+        aria-label="Legend"
+        className="flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground"
+      >
+        <span className="inline-flex items-center gap-1.5">
+          <span className="inline-block w-3 h-3 rounded-sm bg-lilac border border-border" />
+          Tutor / shared rooms
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="inline-block w-3 h-3 rounded-sm bg-closed border border-border" />
+          Closed
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="inline-block w-3 h-3 rounded-sm bg-row-stripe border border-border" />
+          Half hour
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="inline-block w-3 h-3 rounded-sm bg-destructive/15 border border-destructive/40" />
+          <span className="text-destructive font-semibold">Understaffed</span>
+        </span>
+      </div>
+
       <div className="overflow-x-auto -mx-4 px-4">
         <table className="w-full text-xs border-collapse">
           <thead>
@@ -531,8 +553,10 @@ function RoomView({
                     return (
                       <td
                         key={r}
-                        className={`p-1 border border-border ${bg} ${
-                          under ? "text-destructive" : lilac ? "text-lilac-foreground" : "text-foreground"
+                        className={`p-1 border border-border ${
+                          under ? "bg-destructive/10 text-destructive font-semibold" : bg
+                        } ${
+                          !under && lilac ? "text-lilac-foreground" : !under ? "text-foreground" : ""
                         }`}
                       >
                         {a.length ? a.join(", ") : <span className="text-destructive">empty</span>}
