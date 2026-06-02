@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { GripVertical, Save, Coffee, X } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { GripVertical, Check, Coffee, X, Loader2, AlertCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import type { ScheduleRow } from "@/hooks/use-schedule";
@@ -25,14 +25,33 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
   const qc = useQueryClient();
   const [data, setData] = useState<ScheduleData>(row.data);
   const [dayIdx, setDayIdx] = useState(0);
-  const [saving, setSaving] = useState(false);
-  const [dirty, setDirty] = useState(false);
+  const [status, setStatus] = useState<"idle" | "pending" | "saving" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
   const [drag, setDrag] = useState<DragPayload | null>(null);
   const [hover, setHover] = useState<string | null>(null);
+  const dataRef = useRef(data);
+  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const savingRef = useRef(false);
+  const pendingRef = useRef(false);
+  const rowIdRef = useRef(row.id);
+  const AUTOSAVE_MS = 800;
+
+  useEffect(() => {
+    dataRef.current = data;
+  }, [data]);
 
   useEffect(() => {
     setData(row.data);
-    setDirty(false);
+    setStatus("idle");
+    setErrorMsg(null);
+    setLastSavedAt(null);
+    rowIdRef.current = row.id;
+    if (saveTimer.current) {
+      clearTimeout(saveTimer.current);
+      saveTimer.current = null;
+    }
+    pendingRef.current = false;
   }, [row.id]);
 
   const day = DAY_NAMES[dayIdx];
@@ -69,7 +88,7 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
 
   function update(mutate: (d: ScheduleData) => ScheduleData) {
     setData((d) => mutate(d));
-    setDirty(true);
+    scheduleAutosave();
   }
 
   function assignAt(d: ScheduleData, name: string, time: string, room: string): ScheduleData {
@@ -173,32 +192,105 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
     update((d) => clearWholeDay(d, p.name));
   }
 
-  async function save() {
-    setSaving(true);
-    const staff = { ...(data.staff ?? {}) };
+  const save = useCallback(async () => {
+    if (savingRef.current) {
+      pendingRef.current = true;
+      return;
+    }
+    savingRef.current = true;
+    setStatus("saving");
+    const snapshot = dataRef.current;
+    const targetRowId = rowIdRef.current;
+    const staff = { ...(snapshot.staff ?? {}) };
     for (const name of Object.keys(staff)) {
       let h = 0;
       for (const d of DAY_NAMES) {
-        h += (data.staff_daily?.[name]?.[d]?.length ?? 0) * 0.5;
+        h += (snapshot.staff_daily?.[name]?.[d]?.length ?? 0) * 0.5;
       }
       staff[name] = { ...staff[name], hours: h };
     }
-    const next: ScheduleData = { ...data, staff };
+    const next: ScheduleData = { ...snapshot, staff };
     next.days = deriveDays(next);
     const { error } = await supabase
       .from("schedules")
       .update({ data: next as any })
-      .eq("id", row.id);
-    setSaving(false);
-    if (error) return alert(error.message);
-    setDirty(false);
+      .eq("id", targetRowId);
+    savingRef.current = false;
+    if (error) {
+      setStatus("error");
+      setErrorMsg(error.message);
+      return;
+    }
+    setLastSavedAt(new Date());
+    setErrorMsg(null);
     await qc.invalidateQueries({ queryKey: ["schedules"] });
     await qc.invalidateQueries({ queryKey: ["schedule"] });
+    // If more edits landed mid-save, flush them now.
+    if (pendingRef.current) {
+      pendingRef.current = false;
+      setStatus("pending");
+      saveTimer.current = setTimeout(() => {
+        saveTimer.current = null;
+        void save();
+      }, AUTOSAVE_MS);
+    } else {
+      setStatus("idle");
+    }
+  }, [qc]);
+
+  const scheduleAutosave = useCallback(() => {
+    if (savingRef.current) {
+      pendingRef.current = true;
+      return;
+    }
+    setStatus("pending");
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(() => {
+      saveTimer.current = null;
+      void save();
+    }, AUTOSAVE_MS);
+  }, [save]);
+
+  function saveNow() {
+    if (saveTimer.current) {
+      clearTimeout(saveTimer.current);
+      saveTimer.current = null;
+    }
+    void save();
   }
 
+  // Warn the operator if they navigate away with unsaved or in-flight changes.
+  useEffect(() => {
+    function handler(e: BeforeUnloadEvent) {
+      if (status === "pending" || status === "saving" || status === "error") {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    }
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [status]);
+
+  // Flush a pending autosave on unmount so quick tab/row switches don't drop edits.
+  useEffect(() => {
+    return () => {
+      if (saveTimer.current) {
+        clearTimeout(saveTimer.current);
+        saveTimer.current = null;
+        void save();
+      }
+    };
+  }, [save]);
+
   function resetChanges() {
+    if (saveTimer.current) {
+      clearTimeout(saveTimer.current);
+      saveTimer.current = null;
+    }
+    pendingRef.current = false;
     setData(row.data);
-    setDirty(false);
+    setStatus("idle");
+    setErrorMsg(null);
   }
 
   return (
@@ -207,24 +299,13 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
         <h2 className="font-semibold text-foreground">
           Drag-and-drop — {formatWeekRange(row.start_date)}
         </h2>
-        <div className="flex items-center gap-2">
-          {dirty && (
-            <button
-              onClick={resetChanges}
-              className="text-sm min-h-11 px-3 rounded-lg bg-secondary text-secondary-foreground"
-            >
-              Discard
-            </button>
-          )}
-          <button
-            onClick={save}
-            disabled={saving || !dirty}
-            className="inline-flex items-center gap-1 bg-primary text-primary-foreground font-semibold px-4 py-2 rounded-lg min-h-11 disabled:opacity-50"
-          >
-            <Save className="w-4 h-4" />
-            {saving ? "Saving…" : dirty ? "Save changes" : "Saved"}
-          </button>
-        </div>
+        <AutosaveStatus
+          status={status}
+          lastSavedAt={lastSavedAt}
+          errorMsg={errorMsg}
+          onRetry={saveNow}
+          onDiscard={resetChanges}
+        />
       </div>
 
       <div className="flex gap-1 bg-secondary rounded-xl p-1">
@@ -389,6 +470,78 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
       </div>
     </section>
   );
+}
+
+function AutosaveStatus({
+  status,
+  lastSavedAt,
+  errorMsg,
+  onRetry,
+  onDiscard,
+}: {
+  status: "idle" | "pending" | "saving" | "error";
+  lastSavedAt: Date | null;
+  errorMsg: string | null;
+  onRetry: () => void;
+  onDiscard: () => void;
+}) {
+  const label =
+    status === "saving"
+      ? "Saving…"
+      : status === "pending"
+        ? "Unsaved changes"
+        : status === "error"
+          ? "Save failed"
+          : lastSavedAt
+            ? `Saved ${formatRelative(lastSavedAt)}`
+            : "All changes saved";
+  const Icon =
+    status === "saving"
+      ? Loader2
+      : status === "error"
+        ? AlertCircle
+        : status === "pending"
+          ? Coffee
+          : Check;
+  const tone =
+    status === "error"
+      ? "text-destructive"
+      : status === "saving" || status === "pending"
+        ? "text-muted-foreground"
+        : "text-primary";
+  return (
+    <div className="flex items-center gap-2 text-sm" role="status" aria-live="polite">
+      <span className={`inline-flex items-center gap-1.5 ${tone}`} title={errorMsg ?? undefined}>
+        <Icon className={`w-4 h-4 ${status === "saving" ? "animate-spin" : ""}`} />
+        {label}
+      </span>
+      {status === "error" && (
+        <>
+          <button
+            onClick={onRetry}
+            className="min-h-9 px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold"
+          >
+            Retry
+          </button>
+          <button
+            onClick={onDiscard}
+            className="min-h-9 px-3 rounded-lg bg-secondary text-secondary-foreground text-xs font-semibold"
+          >
+            Discard
+          </button>
+        </>
+      )}
+    </div>
+  );
+}
+
+function formatRelative(d: Date): string {
+  const s = Math.max(0, Math.floor((Date.now() - d.getTime()) / 1000));
+  if (s < 5) return "just now";
+  if (s < 60) return `${s}s ago`;
+  const m = Math.floor(s / 60);
+  if (m < 60) return `${m}m ago`;
+  return d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 }
 
 function Chip({
