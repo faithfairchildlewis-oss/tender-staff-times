@@ -1144,7 +1144,7 @@ function TimeOffView() {
       return <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-teal text-teal-foreground text-xs font-semibold">Approved</span>;
     if (status === "denied")
       return <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-destructive text-destructive-foreground text-xs font-semibold">Denied</span>;
-    return <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-warning text-warning-foreground text-xs font-semibold">Pending</span>;
+    return <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-accent text-accent-foreground text-xs font-semibold">Pending</span>;
   }
 
   return (
