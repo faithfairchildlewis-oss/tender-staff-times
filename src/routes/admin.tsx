@@ -302,10 +302,14 @@ function AdminEditor() {
                   >
                     <div className="font-medium text-foreground">{s.week_label}</div>
                     <div className="text-xs text-muted-foreground">
-                      {s.start_date} {s.is_current && "· current"}
+                      {s.start_date}
                     </div>
                   </button>
-                  {!s.is_current && (
+                  {s.is_current ? (
+                    <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary min-w-11">
+                      Current
+                    </span>
+                  ) : (
                     <button
                       onClick={() => setCurrent(s.id)}
                       title="Set as current"
