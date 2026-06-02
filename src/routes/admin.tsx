@@ -1,5 +1,5 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { LogOut, Plus, Trash2, Copy, Check } from "lucide-react";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { LogOut, Plus, Trash2, Copy, Check, Home } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -53,6 +53,7 @@ function AdminEditor() {
   const qc = useQueryClient();
   const { data: schedules, isLoading } = useAllSchedules();
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [view, setView] = useState<"edit" | "rooms">("edit");
 
   useEffect(() => {
     if (!selectedId && schedules?.length) {
@@ -154,18 +155,50 @@ function AdminEditor() {
   return (
     <div className="min-h-dvh bg-background pb-20">
       <header className="bg-primary text-primary-foreground px-5 pt-8 pb-6 shadow-md">
-        <div className="flex items-center justify-between mb-3">
-          <h1 className="text-xl font-bold">Admin — Schedules</h1>
-          <button
-            onClick={() => supabase.auth.signOut().then(() => location.reload())}
+        <div className="relative flex items-center mb-4 min-h-11">
+          <Link
+            to="/"
             className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary-foreground/15"
           >
+            <Home className="w-4 h-4" /> Home
+          </Link>
+          <h1 className="absolute left-1/2 -translate-x-1/2 text-xl font-bold">
+            Admin
+          </h1>
+          <button
+            onClick={() => supabase.auth.signOut().then(() => location.reload())}
+            className="ml-auto inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary-foreground/15"
+          >
             <LogOut className="w-4 h-4" /> Sign out
+          </button>
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setView("edit")}
+            className={`flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold ${
+              view === "edit"
+                ? "bg-primary-foreground text-primary"
+                : "bg-primary-foreground/15 text-primary-foreground"
+            }`}
+          >
+            Edit Schedule
+          </button>
+          <button
+            onClick={() => setView("rooms")}
+            className={`flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold ${
+              view === "rooms"
+                ? "bg-primary-foreground text-primary"
+                : "bg-primary-foreground/15 text-primary-foreground"
+            }`}
+          >
+            By Room
           </button>
         </div>
       </header>
 
       <main className="px-4 mt-4 max-w-2xl mx-auto space-y-4">
+        {view === "edit" ? (
+          <>
         <section className="bg-card rounded-2xl shadow-sm p-4">
           <div className="flex items-center justify-between mb-3">
             <h2 className="font-semibold text-foreground">Weeks</h2>
@@ -235,12 +268,116 @@ function AdminEditor() {
         </section>
 
         {selected && <WeekEditor row={selected} onSaved={refresh} />}
+          </>
+        ) : (
+          <RoomView schedules={schedules ?? []} selectedId={selectedId} onSelect={setSelectedId} />
+        )}
       </main>
     </div>
   );
 }
 
 type Block = { start: string; end: string; rooms: string[] };
+
+function RoomView({
+  schedules,
+  selectedId,
+  onSelect,
+}: {
+  schedules: ScheduleRow[];
+  selectedId: string | null;
+  onSelect: (id: string) => void;
+}) {
+  const selected = schedules.find((s) => s.id === selectedId) ?? schedules[0] ?? null;
+  const [dayIdx, setDayIdx] = useState(0);
+
+  if (!selected) {
+    return (
+      <section className="bg-card rounded-2xl shadow-sm p-4">
+        <p className="text-sm text-muted-foreground">No schedules yet.</p>
+      </section>
+    );
+  }
+
+  const data: ScheduleData = selected.data;
+  const derivedDays = useMemo(() => deriveDays(data), [data]);
+  const day = derivedDays[dayIdx];
+  const rooms = data.rooms?.length ? data.rooms : DEFAULT_ROOMS;
+
+  return (
+    <section className="bg-card rounded-2xl shadow-sm p-4 space-y-3">
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="font-semibold text-foreground">Rooms — {selected.week_label}</h2>
+        {schedules.length > 1 && (
+          <select
+            value={selected.id}
+            onChange={(e) => onSelect(e.target.value)}
+            className="bg-secondary rounded-lg px-2 py-2 min-h-11 text-sm max-w-[55%]"
+          >
+            {schedules.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.week_label}
+              </option>
+            ))}
+          </select>
+        )}
+      </div>
+
+      <div className="flex gap-1 bg-secondary rounded-xl p-1">
+        {DAY_NAMES.map((d, i) => (
+          <button
+            key={d}
+            onClick={() => setDayIdx(i)}
+            className={`flex-1 text-sm font-semibold min-h-11 rounded-lg ${
+              i === dayIdx ? "bg-card text-foreground shadow" : "text-muted-foreground"
+            }`}
+          >
+            {d.slice(0, 3)}
+          </button>
+        ))}
+      </div>
+
+      <div className="overflow-x-auto -mx-4 px-4">
+        <table className="w-full text-xs border-collapse">
+          <thead>
+            <tr>
+              <th className="text-left p-1 sticky left-0 bg-card">Time</th>
+              {rooms.map((r) => (
+                <th key={r} className="p-1 text-left font-semibold text-foreground">
+                  {r}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {day.slots.map((sl) => (
+              <tr key={sl.time} className="border-t border-border align-top">
+                <td className="p-1 whitespace-nowrap font-medium text-muted-foreground sticky left-0 bg-card">
+                  {sl.time}
+                </td>
+                {rooms.map((r) => {
+                  const a = sl.assignments[r];
+                  if (a === null) {
+                    return <td key={r} className="p-1 text-muted-foreground/40">—</td>;
+                  }
+                  const under = sl.understaffed.includes(r);
+                  return (
+                    <td
+                      key={r}
+                      className={`p-1 ${under ? "text-destructive" : "text-foreground"}`}
+                    >
+                      {a.length ? a.join(", ") : <span className="text-destructive">empty</span>}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
 
 function WeekEditor({ row, onSaved }: { row: ScheduleRow; onSaved: () => void }) {
   const [data, setData] = useState<ScheduleData>(row.data);
