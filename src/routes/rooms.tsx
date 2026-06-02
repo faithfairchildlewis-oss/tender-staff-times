@@ -16,6 +16,7 @@ export const Route = createFileRoute("/rooms")({
 function RoomsPage() {
   const { data: schedule, isLoading } = useLiveSchedule();
   const [dayIdx, setDayIdx] = useState(0);
+  const derivedDays = useMemo(() => (schedule ? deriveDays(schedule) : []), [schedule]);
 
   if (isLoading) {
     return <div className="min-h-dvh bg-background p-6 text-muted-foreground">Loading…</div>;
@@ -37,7 +38,6 @@ function RoomsPage() {
     );
   }
 
-  const derivedDays = useMemo(() => deriveDays(schedule), [schedule]);
   const day = derivedDays[dayIdx];
   const rooms = schedule.rooms?.length ? schedule.rooms : DEFAULT_ROOMS;
   const weekLabel = schedule.start_date ? formatWeekRange(schedule.start_date) : schedule.week;
