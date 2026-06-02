@@ -48,6 +48,30 @@ function StaffPage() {
           <div className="text-sm opacity-90 mt-1">hours this week</div>
         </div>
 
+        <div className="grid grid-cols-3 gap-2 mt-4">
+          <Link
+            to="/schedule"
+            className="flex flex-col items-center justify-center gap-1 bg-card border border-border rounded-xl p-3 min-h-[72px] text-foreground hover:bg-accent transition active:scale-[0.98]"
+          >
+            <CalendarDays className="w-5 h-5 text-primary" aria-hidden="true" />
+            <span className="text-xs font-semibold">My Week</span>
+          </Link>
+          <Link
+            to="/rooms"
+            className="flex flex-col items-center justify-center gap-1 bg-card border border-border rounded-xl p-3 min-h-[72px] text-foreground hover:bg-accent transition active:scale-[0.98]"
+          >
+            <Building2 className="w-5 h-5 text-primary" aria-hidden="true" />
+            <span className="text-xs font-semibold">Our Day</span>
+          </Link>
+          <a
+            href={`sms:+14104744156?&body=${encodeURIComponent("Hi, I would like to request time off.\nMy name: " + name + "\nDate(s) requested: \nReason: ")}`}
+            className="flex flex-col items-center justify-center gap-1 bg-card border border-border rounded-xl p-3 min-h-[72px] text-foreground hover:bg-accent transition active:scale-[0.98]"
+          >
+            <MessageSquare className="w-5 h-5 text-primary" aria-hidden="true" />
+            <span className="text-xs font-semibold">Request Off</span>
+          </a>
+        </div>
+
         <h2 className="text-base font-semibold text-foreground mt-6 mb-3 px-1">
           Shifts, Classes &amp; Lunch
         </h2>
