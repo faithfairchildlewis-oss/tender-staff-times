@@ -185,7 +185,14 @@ function RoomsPage() {
 
       <main className="px-4 mt-4 max-w-2xl mx-auto space-y-4">
         <div ref={stripRef} className="overflow-x-auto -mx-4 px-4">
-          <div className="flex gap-3 w-max min-w-full">
+          <div className="flex gap-3 w-max min-w-full items-center">
+            {/* Selected day indicator — sticky while scrolling weeks */}
+            <div className="sticky left-0 z-10 bg-background/95 backdrop-blur-sm rounded-xl border shadow-sm px-3 py-2 flex flex-col items-center justify-center gap-0.5 shrink-0 self-stretch">
+              <CalendarDays className="w-4 h-4 text-primary" />
+              <span className="text-[10px] font-bold uppercase tracking-wide text-primary">{active?.shortLabel}</span>
+              <span className="text-[10px] text-muted-foreground">{active?.mmdd}</span>
+            </div>
+
             {weeks.map((w, wi) => {
               const weekTabs = tabs
                 .map((t, i) => ({ t, i }))
