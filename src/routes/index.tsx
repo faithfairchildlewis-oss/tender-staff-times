@@ -28,13 +28,7 @@ function Index() {
   const { verse, encouragement: subline } = getDailyContent(dayOfMonth);
   return (
     <div className="min-h-dvh bg-background pb-10">
-      <header
-        className="text-primary-foreground px-5 pt-8 pb-7 shadow-md rounded-b-3xl"
-        style={{
-          background:
-            "linear-gradient(160deg, oklch(0.62 0.12 50) 0%, oklch(0.52 0.1 45) 100%)",
-        }}
-      >
+      <header className="bg-primary text-primary-foreground px-5 pt-8 pb-7 shadow-md rounded-b-3xl">
         <div className="text-center">
           <h1 className="text-xl font-bold tracking-tight leading-none">
             {schedule?.center ?? "Tender Years of Deale"}
