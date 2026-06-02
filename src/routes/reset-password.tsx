@@ -35,7 +35,7 @@ function ResetPasswordPage() {
         // Clean the URL so tokens don't linger
         window.history.replaceState({}, "", window.location.pathname);
       } else if (msg) {
-        setError(msg);
+        setLinkError(msg);
       }
     };
 
