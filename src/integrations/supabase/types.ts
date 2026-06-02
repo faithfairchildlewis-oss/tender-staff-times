@@ -14,6 +14,41 @@ export type Database = {
   }
   public: {
     Tables: {
+      payroll_rates: {
+        Row: {
+          created_at: string
+          id: string
+          rate: number
+          schedule_id: string
+          staff_name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          rate?: number
+          schedule_id: string
+          staff_name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          rate?: number
+          schedule_id?: string
+          staff_name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payroll_rates_schedule_id_fkey"
+            columns: ["schedule_id"]
+            isOneToOne: false
+            referencedRelation: "schedules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       schedules: {
         Row: {
           created_at: string
