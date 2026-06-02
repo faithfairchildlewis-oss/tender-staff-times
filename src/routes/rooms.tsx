@@ -43,7 +43,7 @@ function RoomsPage() {
 
   return (
     <div className="min-h-dvh bg-background pb-6">
-      <header className="bg-primary text-primary-foreground px-5 pt-8 pb-6 rounded-b-3xl shadow-md">
+      <header className="bg-primary text-primary-foreground px-5 pt-8 pb-6 shadow-md">
         <Link
           to="/"
           aria-label="Home"
