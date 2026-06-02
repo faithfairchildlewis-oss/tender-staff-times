@@ -977,6 +977,7 @@ function PayrollView({
   const data: ScheduleData = selected.data;
   const names = Object.keys(data.staff ?? {});
 
+  const { data: rates } = usePayrollRates(selected.id);
   const rows = names.map((name) => {
     const perDay: Record<string, number> = {};
     let total = 0;
@@ -985,7 +986,7 @@ function PayrollView({
       perDay[d] = hrs;
       total += hrs;
     }
-    const rate = data.staff[name]?.rate ?? 0;
+    const rate = rates?.[name] ?? data.staff[name]?.rate ?? 0;
     return { name, perDay, total, rate, pay: total * rate };
   });
 
