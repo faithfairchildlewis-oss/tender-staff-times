@@ -23,15 +23,41 @@ function Index() {
     "Hi, I would like to request time off.\nMy name is: \nDate(s) requested: \nReason: "
   );
 
-  const dayOfMonth = new Date().getDate();
+  const now = new Date();
+  const dayOfMonth = now.getDate();
   const { verse, encouragement: subline } = getDailyContent(dayOfMonth);
+  const hour = now.getHours();
+  const greeting =
+    hour < 12 ? "Good morning, team!" : hour < 17 ? "Good afternoon, team!" : "Good evening, team!";
   return (
     <div className="min-h-dvh bg-background pb-10">
-      <header className="bg-primary text-primary-foreground px-5 pt-8 pb-6 shadow-md">
-        <h1 className="text-xl font-bold tracking-tight leading-none">{schedule?.center ?? "Tender Years of Deale"}</h1>
-        <p className="text-xs opacity-90 mt-0 leading-tight">
-          Week of {schedule?.start_date ? formatWeekRange(schedule.start_date) : schedule?.week ?? "—"}
-        </p>
+      <header
+        className="relative overflow-hidden text-primary-foreground px-5 pt-8 pb-7 shadow-md rounded-b-3xl"
+        style={{
+          background:
+            "linear-gradient(160deg, oklch(0.58 0.09 150) 0%, oklch(0.5 0.08 160) 100%)",
+        }}
+      >
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.12]"
+          style={{
+            backgroundImage:
+              "radial-gradient(ellipse 6px 10px at 20% 25%, white 60%, transparent 62%), radial-gradient(ellipse 5px 8px at 70% 40%, white 60%, transparent 62%), radial-gradient(ellipse 7px 11px at 45% 75%, white 60%, transparent 62%), radial-gradient(ellipse 4px 7px at 88% 80%, white 60%, transparent 62%), radial-gradient(ellipse 5px 9px at 10% 85%, white 60%, transparent 62%), radial-gradient(ellipse 6px 10px at 60% 15%, white 60%, transparent 62%)",
+            backgroundSize: "180px 180px",
+          }}
+        />
+        <div className="relative">
+          <h1 className="text-xl font-bold tracking-tight leading-none">
+            {schedule?.center ?? "Tender Years of Deale"}
+          </h1>
+          <p className="text-sm italic mt-2 leading-tight text-[oklch(0.98_0.01_90)]/95">
+            Where God's word falls like gentle rain.
+          </p>
+          <p className="text-xs font-light mt-1 leading-tight text-white/70">
+            {greeting}
+          </p>
+        </div>
       </header>
 
       <main className="px-4 -mt-6 max-w-md mx-auto">
