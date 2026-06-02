@@ -283,6 +283,24 @@ function AdminEditor() {
               </button>
             </div>
           ) : (
+            <>
+            <div className="mb-3">
+              <label className="block text-xs text-muted-foreground mb-1">
+                Select week to edit
+              </label>
+              <select
+                value={selectedId ?? ""}
+                onChange={(e) => setSelectedId(e.target.value)}
+                className="w-full bg-background border border-border rounded-lg px-3 py-2 min-h-11 text-sm"
+              >
+                {schedules.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.week_label}
+                    {s.is_current ? " · current" : ""}
+                  </option>
+                ))}
+              </select>
+            </div>
             <ul className="divide-y divide-border">
               {schedules.map((s) => (
                 <li key={s.id} className="py-2 flex items-center gap-2">
@@ -323,6 +341,7 @@ function AdminEditor() {
                 </li>
               ))}
             </ul>
+            </>
           )}
         </section>
 
