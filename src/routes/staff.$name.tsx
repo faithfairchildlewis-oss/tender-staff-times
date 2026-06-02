@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CalendarDays, TreePine, MessageSquare, Utensils, Share2 } from "lucide-react";
-import { useState } from "react";
+import { CalendarDays, TreePine, MessageSquare, Utensils } from "lucide-react";
+
 import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 import { formatWeekRange } from "@/lib/format-date";
@@ -14,74 +14,6 @@ export const Route = createFileRoute("/staff/$name")({
   component: StaffPage,
 });
 
-function buildShareText(
-  name: string,
-  schedule: NonNullable<ReturnType<typeof useCurrentSchedule>['data']>
-): string {
-  const weekText = schedule.start_date
-    ? formatWeekRange(schedule.start_date)
-    : schedule.week ?? "";
-  const lines: string[] = [`${name}'s Schedule — Week of ${weekText}`];
-  for (const d of schedule.days) {
-    const info = schedule.staff[name];
-    if (!info) continue;
-    const blocks = blocksForDay(schedule, name, d.day);
-    if (blocks.length === 0) {
-      lines.push(`${d.day}: OFF`);
-      continue;
-    }
-    const hrs = dayHours(schedule, name, d.day);
-    const showLunch = hrs >= 6;
-    const lunchTime =
-      showLunch && info.lunch.type === "fixed" && typeof info.lunch.time === "string"
-        ? info.lunch.time
-        : null;
-    const dayLines: string[] = [];
-    for (const b of blocks) {
-      const rooms = b.rooms.map(roomToClass).join(", ");
-      dayLines.push(`${b.start} – ${b.end} (${rooms})`);
-    }
-    if (lunchTime) {
-      const brk = info.daily_breaks?.[d.day];
-      dayLines.push(`${brk?.type === "lunch" ? "Lunch" : "Break"}: ${lunchTime}`);
-    }
-    lines.push(`${d.day}: ${dayLines.join("; ")}`);
-  }
-  const total = weeklyHours(schedule, name);
-  lines.push(`Total: ${total.toFixed(1)} hours`);
-  return lines.join("\n");
-}
-
-function ShareButton({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false);
-  const handleShare = async () => {
-    try {
-      if (navigator.share) {
-        await navigator.share({ text });
-        return;
-      }
-    } catch {
-      // fallback to clipboard
-    }
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      // noop
-    }
-  };
-  return (
-    <button
-      onClick={handleShare}
-      className="inline-flex items-center gap-1 text-xs font-semibold min-h-9 px-3 rounded-lg bg-primary-foreground/15 text-primary-foreground active:scale-[0.97] transition"
-      aria-label="Share schedule"
-    >
-      <Share2 className="w-4 h-4" />
-      {copied ? "Copied" : "Share"}
-    </button>
-  );
-}
 
 function StaffPage() {
   const { name } = Route.useParams();
@@ -107,7 +39,14 @@ function StaffPage() {
       <PageBanner
         title={`Hello, ${name}`}
         subline={subline}
-        rightSlot={<ShareButton text={buildShareText(name, schedule)} />}
+        rightSlot={
+          <Link
+            to="/rooms"
+            className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary-foreground/15"
+          >
+            <TreePine className="w-4 h-4" /> Our Rooms
+          </Link>
+        }
       >
         <div className="flex gap-2">
           <Link
@@ -117,12 +56,6 @@ function StaffPage() {
             className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground text-primary"
           >
             <CalendarDays className="w-4 h-4" /> My Week
-          </Link>
-          <Link
-            to="/rooms"
-            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
-          >
-            <TreePine className="w-4 h-4" /> Our Rooms
           </Link>
           <a
             href={`sms:+14104744156?&body=${encodeURIComponent(
