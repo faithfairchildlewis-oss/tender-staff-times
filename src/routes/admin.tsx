@@ -968,17 +968,7 @@ function WeekEditor({
       )}
 
       {info && (
-        <div className="grid grid-cols-2 gap-2 text-sm">
-          <label className="block">
-            <span className="text-muted-foreground">Pay rate ($/hr)</span>
-            <input
-              type="number"
-              step="0.01"
-              value={info.rate}
-              onChange={(e) => patchStaffInfo({ rate: parseFloat(e.target.value) || 0 })}
-              className="mt-1 w-full bg-secondary rounded-lg px-3 py-2 min-h-11"
-            />
-          </label>
+        <div className="grid grid-cols-1 gap-2 text-sm">
           <label className="block">
             <span className="text-muted-foreground">Lunch</span>
             <select
@@ -998,7 +988,7 @@ function WeekEditor({
             </select>
           </label>
           {info.lunch.type === "fixed" && (
-            <label className="block col-span-2">
+            <label className="block">
               <span className="text-muted-foreground">Lunch time (e.g. 12:00 PM)</span>
               <input
                 value={info.lunch.time ?? ""}
