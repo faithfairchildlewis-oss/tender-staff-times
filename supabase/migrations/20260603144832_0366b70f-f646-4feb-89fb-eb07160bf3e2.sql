@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Anyone can submit time off requests" ON public.time_off_requests;
