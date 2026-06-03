@@ -212,7 +212,7 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
       staff[name] = { ...staff[name], hours: h };
     }
     const next: ScheduleData = { ...snapshot, staff };
-    next.days = deriveDays(next);
+    next.days = deriveDays(next, row.start_date);
     const { error } = await supabase
       .from("schedules")
       .update({ data: next as any })
@@ -390,7 +390,7 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
                     {time}
                   </td>
                   {rooms.map((r) => {
-                    const min = minimumFor(r, time);
+                    const min = minimumFor(r, time, row.start_date);
                     const cellId = `${time}|${r}`;
                     const names = [...(byRoom.get(r) ?? [])];
                     if (min === null) {

@@ -22,11 +22,24 @@ function parseTime(t: string): number {
   return h * 60 + min;
 }
 
-/** Returns the minimum number of staff for a room at a given time slot. */
-export function minimumFor(room: string, time: string): number | null {
+/** Week (Monday ISO date) when SAC expands to a full-day room. */
+export const SAC_FULL_DAY_START = "2026-06-22";
+
+/** Returns the minimum number of staff for a room at a given time slot.
+ *  When startDate (the schedule's Monday) is on/after SAC_FULL_DAY_START,
+ *  SAC is staffed for the full 7:00 AM – 5:30 PM day. */
+export function minimumFor(
+  room: string,
+  time: string,
+  startDate?: string | null,
+): number | null {
   const m = parseTime(time);
   const HM = (h: number, mn: number) => h * 60 + mn;
   if (room === "SAC") {
+    const fullDay = !!startDate && startDate >= SAC_FULL_DAY_START;
+    if (fullDay) {
+      return m >= HM(7, 0) && m <= HM(17, 30) ? 1 : null;
+    }
     // Active 2:30 PM through 5:30 PM inclusive.
     return m >= HM(14, 30) && m <= HM(17, 30) ? 1 : null;
   }
@@ -47,7 +60,7 @@ export function minimumFor(room: string, time: string): number | null {
 
 /** Rebuilds days[].slots from staff_daily + minimums so the room-grid view
  *  stays in sync with the per-staff schedule that admins edit. */
-export function deriveDays(s: ScheduleData): Day[] {
+export function deriveDays(s: ScheduleData, startDate?: string | null): Day[] {
   const rooms = s.rooms?.length ? s.rooms : DEFAULT_ROOMS;
   return s.days.map((d) => {
     const times = d.slots?.length ? d.slots.map((sl) => sl.time) : DEFAULT_TIMES;
@@ -56,7 +69,7 @@ export function deriveDays(s: ScheduleData): Day[] {
       const minimums: Record<string, number> = {};
       const understaffed: string[] = [];
       for (const r of rooms) {
-        const min = minimumFor(r, time);
+        const min = minimumFor(r, time, startDate);
         if (min === null) {
           assignments[r] = null;
           continue;

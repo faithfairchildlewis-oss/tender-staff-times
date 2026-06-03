@@ -202,7 +202,7 @@ function AdminEditor() {
     cloned.week = label;
     // Rebuild days[].slots from the duplicated staff_daily so the room
     // grid is in sync with the copied per-staff assignments.
-    cloned.days = deriveDays(cloned);
+    cloned.days = deriveDays(cloned, date);
     const { data: row, error } = await supabase
       .from("schedules")
       .insert({
@@ -511,7 +511,10 @@ function RoomView({
   }
 
   const data: ScheduleData = selected.data;
-  const derivedDays = useMemo(() => deriveDays(data), [data]);
+  const derivedDays = useMemo(
+    () => deriveDays(data, selected.start_date),
+    [data, selected.start_date],
+  );
   const day = derivedDays[dayIdx];
   const rooms = data.rooms?.length ? data.rooms : DEFAULT_ROOMS;
   const closedReason = holidayForOffset(selected.start_date, dayIdx);
@@ -839,7 +842,7 @@ function WeekEditor({
       staff[name] = { ...staff[name], hours: h };
     }
     const next: ScheduleData = { ...data, staff };
-    next.days = deriveDays(next);
+    next.days = deriveDays(next, row.start_date);
     const { error } = await supabase
       .from("schedules")
       .update({ data: next as any })

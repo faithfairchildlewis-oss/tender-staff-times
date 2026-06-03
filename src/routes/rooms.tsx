@@ -58,7 +58,7 @@ function RoomsPage() {
     () =>
       (schedules ?? []).map((s) => ({
         schedule: s,
-        days: deriveDays(s),
+        days: deriveDays(s, s.start_date),
       })),
     [schedules],
   );
