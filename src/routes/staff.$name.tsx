@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, TreePine, MessageSquare, Utensils } from "lucide-react";
 
 import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
-import { useCurrentSchedule } from "@/hooks/use-schedule";
+import { useCurrentSchedule, useLiveSchedules } from "@/hooks/use-schedule";
 import { formatWeekRange } from "@/lib/format-date";
 import { PageBanner } from "@/components/page-banner";
 
@@ -24,6 +24,7 @@ export const Route = createFileRoute("/staff/$name")({
 function StaffPage() {
   const { name } = Route.useParams();
   const { data: schedule, isLoading } = useCurrentSchedule();
+  const { data: liveSchedules } = useLiveSchedules();
   if (isLoading || !schedule) {
     return <div className="min-h-dvh bg-background p-6 text-muted-foreground">Loading…</div>;
   }
@@ -37,6 +38,39 @@ function StaffPage() {
     );
   }
   const hours = weeklyHours(schedule, name);
+
+  // Pay period: every 2 weeks, anchored to May 25, 2026 (Mon)
+  const ANCHOR = new Date(2026, 4, 25);
+  const today = new Date();
+  const msPerDay = 24 * 60 * 60 * 1000;
+  const msPerPeriod = 14 * msPerDay;
+  const periodsElapsed = Math.floor((today.getTime() - ANCHOR.getTime()) / msPerPeriod);
+  const periodStart = new Date(ANCHOR.getTime() + periodsElapsed * msPerPeriod);
+  const periodEnd = new Date(periodStart.getTime() + msPerPeriod - 1);
+  // Next payday = first Friday strictly after periodEnd
+  const payday = new Date(periodEnd);
+  payday.setHours(0, 0, 0, 0);
+  const dow = payday.getDay(); // 0=Sun..6=Sat
+  const daysToFri = ((5 - dow + 7) % 7) || 7;
+  payday.setDate(payday.getDate() + daysToFri);
+  const daysUntilPayday = Math.max(
+    0,
+    Math.ceil((payday.getTime() - new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime()) / msPerDay),
+  );
+  const formatShort = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const formatFull = (d: Date) => d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+
+  // Sum hours across all live schedules whose start_date falls inside the pay period.
+  const periodHours = (liveSchedules ?? []).reduce((sum, s) => {
+    if (!s.start_date) return sum;
+    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s.start_date);
+    if (!m) return sum;
+    const sd = new Date(+m[1], +m[2] - 1, +m[3]);
+    if (sd >= periodStart && sd <= periodEnd) {
+      return sum + weeklyHours(s, name);
+    }
+    return sum;
+  }, 0);
 
   return (
     <div className="min-h-dvh bg-background pb-24">
@@ -75,9 +109,29 @@ function StaffPage() {
       </PageBanner>
 
       <main className="px-4 -mt-6 max-w-md mx-auto">
-        <div className="bg-lilac text-lilac-foreground rounded-2xl p-5 shadow-sm text-center">
-          <div className="text-4xl font-bold">{hours.toFixed(1)}</div>
-          <div className="text-sm opacity-90 mt-1">hours this week</div>
+        <div className="bg-lilac text-lilac-foreground rounded-2xl p-5 shadow-sm">
+          <div className="text-center">
+            <div className="text-4xl font-bold">{hours.toFixed(1)}</div>
+            <div className="text-sm opacity-90 mt-1">hours this week</div>
+          </div>
+          <div className="mt-4 pt-4 border-t border-lilac-foreground/20 space-y-3 text-sm">
+            <div className="flex items-start gap-3">
+              <span className="font-semibold whitespace-nowrap">Pay Period</span>
+              <div className="flex-1 text-right">
+                <div>{formatShort(periodStart)} – {formatShort(periodEnd)}</div>
+                <div className="opacity-80 text-xs mt-0.5">{periodHours.toFixed(1)} hrs accumulated</div>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="font-semibold whitespace-nowrap">💰 Payday</span>
+              <div className="flex-1 text-right">
+                <div>{formatFull(payday)}</div>
+                <div className="opacity-80 text-xs mt-0.5">
+                  {daysUntilPayday === 0 ? "today" : `${daysUntilPayday} day${daysUntilPayday === 1 ? "" : "s"} away`}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <h2 className="text-base font-semibold text-foreground mt-6 mb-3 px-1">
