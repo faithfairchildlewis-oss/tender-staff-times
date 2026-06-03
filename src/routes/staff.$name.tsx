@@ -119,7 +119,7 @@ function StaffPage() {
               <span className="font-semibold whitespace-nowrap">Pay Period</span>
               <div className="flex-1 text-right">
                 <div>{formatShort(periodStart)} – {formatShort(periodEnd)}</div>
-                <div className="opacity-80 text-xs mt-0.5">{periodHours.toFixed(1)} hrs accumulated</div>
+                <div className="opacity-80 text-xs mt-0.5">{periodHours.toFixed(1)} hrs to date</div>
               </div>
             </div>
             <div className="flex items-start gap-3">
