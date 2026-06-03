@@ -146,7 +146,7 @@ function StaffPage() {
             .flatMap((wk) => {
               const weekLabel = wk.start_date ? formatWeekRange(wk.start_date) : wk.week ?? "—";
               const divider = (
-                <div key={`div-${wk.id ?? weekLabel}`} className="flex items-center gap-3 py-2">
+                <div key={`div-${weekLabel}`} className="flex items-center gap-3 py-2">
                   <hr className="flex-1 border-border" />
                   <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide whitespace-nowrap">
                     {weekLabel}
@@ -161,7 +161,7 @@ function StaffPage() {
                 const brk = info.daily_breaks?.[d.day];
                 const closedReason = holidayForOffset(wk.start_date, dayIdx);
                 return (
-              <div key={`${wk.id ?? weekLabel}-${d.day}`} className="bg-card rounded-2xl shadow-sm overflow-hidden">
+              <div key={`${weekLabel}-${d.day}`} className="bg-card rounded-2xl shadow-sm overflow-hidden">
                 <div className="flex items-center justify-between px-4 py-3 border-b border-border">
                   <div>
                     <div className="font-semibold text-base text-foreground inline-flex items-center gap-1.5">
