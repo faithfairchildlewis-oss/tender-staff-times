@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth, useIsAdmin } from "@/hooks/use-auth";
-import { useAllSchedules, usePayrollRates, type ScheduleRow } from "@/hooks/use-schedule";
+import { useAllSchedules, usePayrollRates, useDefaultRates, type ScheduleRow } from "@/hooks/use-schedule";
 import { fallbackSchedule, type ScheduleData } from "@/data/schedule";
 import {
   DAY_NAMES,
@@ -1175,12 +1175,36 @@ function PayrollView({
   const names = Object.keys(data.staff ?? {});
 
   const { data: rates } = usePayrollRates(selected.id);
+  const { data: defaultRates } = useDefaultRates();
 
   async function refreshAll() {
     await qc.invalidateQueries({ queryKey: ["schedules"] });
     await qc.invalidateQueries({ queryKey: ["schedule"] });
     await qc.invalidateQueries({ queryKey: ["payroll_rates"] });
     await qc.invalidateQueries({ queryKey: ["staff_default_rates"] });
+  }
+
+  async function updateRate(name: string, rate: number) {
+    if (!Number.isFinite(rate) || rate < 0) return;
+    setBusy(true);
+    try {
+      const { error: prErr } = await supabase
+        .from("payroll_rates")
+        .upsert(
+          { schedule_id: selected.id, staff_name: name, rate },
+          { onConflict: "schedule_id,staff_name" },
+        );
+      if (prErr) throw prErr;
+      const { error: drErr } = await supabase
+        .from("staff_default_rates")
+        .upsert({ staff_name: name, rate }, { onConflict: "staff_name" });
+      if (drErr) throw drErr;
+      await refreshAll();
+    } catch (e: any) {
+      alert(e?.message ?? "Failed to update rate.");
+    } finally {
+      setBusy(false);
+    }
   }
 
   async function addStaffEverywhere() {
@@ -1284,7 +1308,7 @@ function PayrollView({
       perDay[d] = hrs;
       total += hrs;
     }
-    const rate = rates?.[name] ?? data.staff[name]?.rate ?? 0;
+    const rate = rates?.[name] ?? defaultRates?.[name] ?? 0;
     return { name, perDay, total, rate, pay: total * rate };
   });
 
@@ -1362,7 +1386,25 @@ function PayrollView({
                   </td>
                 ))}
                 <td className="p-2 border border-border text-right font-semibold">{r.total}</td>
-                <td className="p-2 border border-border text-right">${r.rate.toFixed(2)}</td>
+                <td className="p-2 border border-border text-right">
+                  <div className="inline-flex items-center gap-1">
+                    <span className="text-muted-foreground">$</span>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      defaultValue={r.rate.toFixed(2)}
+                      disabled={busy}
+                      onBlur={(e) => {
+                        const next = Number(e.target.value);
+                        if (Number.isFinite(next) && next !== r.rate) {
+                          updateRate(r.name, next);
+                        }
+                      }}
+                      className="w-20 bg-background border border-border rounded-md px-2 py-1 text-right text-sm"
+                    />
+                  </div>
+                </td>
                 <td className="p-2 border border-border text-right font-semibold">${r.pay.toFixed(2)}</td>
                 <td className="p-2 border border-border text-center">
                   <button
