@@ -15,7 +15,7 @@ import {
   expandBlocks,
 } from "@/lib/schedule-derive";
 import { blocksForDay } from "@/data/schedule";
-import { formatMDY, formatWeekRange, parseMDYToIso } from "@/lib/format-date";
+import { formatMDY, formatWeekRange, mmddFor, parseMDYToIso } from "@/lib/format-date";
 import {
   Select,
   SelectContent,
@@ -523,11 +523,14 @@ function RoomView({
           <button
             key={d}
             onClick={() => setDayIdx(i)}
-            className={`flex-1 text-sm font-semibold min-h-11 rounded-lg ${
+            className={`flex-1 min-h-11 rounded-lg flex flex-col items-center justify-center leading-tight ${
               i === dayIdx ? "bg-card text-foreground shadow" : "text-muted-foreground"
             }`}
           >
-            {d.slice(0, 3)}
+            <span className="text-sm font-semibold">{d.slice(0, 3)}</span>
+            {selected.start_date && (
+              <span className="text-[10px] opacity-80">{mmddFor(selected.start_date, i)}</span>
+            )}
           </button>
         ))}
       </div>
@@ -822,11 +825,14 @@ function WeekEditor({
           <button
             key={d}
             onClick={() => setDayIdx(i)}
-            className={`flex-1 text-sm font-semibold min-h-11 rounded-lg ${
+            className={`flex-1 min-h-11 rounded-lg flex flex-col items-center justify-center leading-tight ${
               i === dayIdx ? "bg-card text-foreground shadow" : "text-muted-foreground"
             }`}
           >
-            {d.slice(0, 3)}
+            <span className="text-sm font-semibold">{d.slice(0, 3)}</span>
+            {row.start_date && (
+              <span className="text-[10px] opacity-80">{mmddFor(row.start_date, i)}</span>
+            )}
           </button>
         ))}
       </div>
