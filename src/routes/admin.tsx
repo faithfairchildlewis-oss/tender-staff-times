@@ -1308,7 +1308,7 @@ function PayrollView({
       perDay[d] = hrs;
       total += hrs;
     }
-    const rate = rates?.[name] ?? data.staff[name]?.rate ?? 0;
+    const rate = rates?.[name] ?? defaultRates?.[name] ?? 0;
     return { name, perDay, total, rate, pay: total * rate };
   });
 
