@@ -1167,7 +1167,11 @@ function PayrollView({
   selectedId: string | null;
   onSelect: (id: string) => void;
 }) {
+  const qc = useQueryClient();
   const selected = schedules.find((s) => s.id === selectedId) ?? schedules[0] ?? null;
+  const [newName, setNewName] = useState("");
+  const [newRate, setNewRate] = useState("");
+  const [busy, setBusy] = useState(false);
 
   if (!selected) {
     return (
@@ -1181,6 +1185,107 @@ function PayrollView({
   const names = Object.keys(data.staff ?? {});
 
   const { data: rates } = usePayrollRates(selected.id);
+
+  async function refreshAll() {
+    await qc.invalidateQueries({ queryKey: ["schedules"] });
+    await qc.invalidateQueries({ queryKey: ["schedule"] });
+    await qc.invalidateQueries({ queryKey: ["payroll_rates"] });
+    await qc.invalidateQueries({ queryKey: ["staff_default_rates"] });
+  }
+
+  async function addStaffEverywhere() {
+    const name = newName.trim();
+    if (!name) return alert("Enter a staff name.");
+    if (name.length > 100) return alert("Name too long.");
+    const rate = Number(newRate);
+    if (!Number.isFinite(rate) || rate < 0) return alert("Enter a valid hourly rate.");
+    setBusy(true);
+    try {
+      for (const row of schedules) {
+        if (row.data.staff?.[name]) continue;
+        const nextData: ScheduleData = {
+          ...row.data,
+          staff: {
+            ...row.data.staff,
+            [name]: {
+              rate,
+              hours: 0,
+              lunch: { type: "varies" },
+              daily_breaks: {},
+            },
+          },
+          staff_daily: { ...(row.data.staff_daily ?? {}), [name]: {} },
+        };
+        const { error } = await supabase
+          .from("schedules")
+          .update({ data: nextData as any })
+          .eq("id", row.id);
+        if (error) throw error;
+      }
+      const { error: drErr } = await supabase
+        .from("staff_default_rates")
+        .upsert({ staff_name: name, rate }, { onConflict: "staff_name" });
+      if (drErr) throw drErr;
+      setNewName("");
+      setNewRate("");
+      await refreshAll();
+    } catch (e: any) {
+      alert(e?.message ?? "Failed to add staff.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function removeStaffEverywhere(name: string) {
+    if (!confirm(`Remove ${name} from every schedule? This cannot be undone.`)) return;
+    setBusy(true);
+    try {
+      for (const row of schedules) {
+        const staff = { ...(row.data.staff ?? {}) };
+        const staffDaily = { ...(row.data.staff_daily ?? {}) };
+        let touched = false;
+        if (staff[name]) {
+          delete staff[name];
+          touched = true;
+        }
+        if (staffDaily[name]) {
+          delete staffDaily[name];
+          touched = true;
+        }
+        const days = (row.data.days ?? []).map((d) => ({
+          ...d,
+          slots: d.slots.map((s) => {
+            const assignments: Record<string, string[] | null> = {};
+            for (const [room, list] of Object.entries(s.assignments ?? {})) {
+              if (Array.isArray(list)) {
+                const filtered = list.filter((n) => n !== name);
+                if (filtered.length !== list.length) touched = true;
+                assignments[room] = filtered;
+              } else {
+                assignments[room] = list;
+              }
+            }
+            return { ...s, assignments };
+          }),
+        }));
+        if (!touched) continue;
+        const nextData: ScheduleData = { ...row.data, staff, staff_daily: staffDaily, days };
+        const { error } = await supabase
+          .from("schedules")
+          .update({ data: nextData as any })
+          .eq("id", row.id);
+        if (error) throw error;
+      }
+      await supabase.from("payroll_rates").delete().eq("staff_name", name);
+      await supabase.from("staff_default_rates").delete().eq("staff_name", name);
+      await refreshAll();
+    } catch (e: any) {
+      alert(e?.message ?? "Failed to remove staff.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   const rows = names.map((name) => {
     const perDay: Record<string, number> = {};
     let total = 0;
@@ -1212,6 +1317,37 @@ function PayrollView({
           ))}
         </select>
       </div>
+      <div className="mb-4 p-3 rounded-xl bg-secondary flex flex-wrap items-end gap-2">
+        <div className="flex-1 min-w-[160px]">
+          <label className="block text-xs font-medium text-muted-foreground mb-1">New staff name</label>
+          <input
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            maxLength={100}
+            placeholder="Full name"
+            className="w-full bg-card border border-border rounded-lg px-2 py-2 min-h-11 text-sm"
+          />
+        </div>
+        <div className="w-28">
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Hourly rate</label>
+          <input
+            value={newRate}
+            onChange={(e) => setNewRate(e.target.value)}
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="0.00"
+            className="w-full bg-card border border-border rounded-lg px-2 py-2 min-h-11 text-sm"
+          />
+        </div>
+        <button
+          onClick={addStaffEverywhere}
+          disabled={busy}
+          className="inline-flex items-center gap-1 min-h-11 px-3 rounded-lg bg-primary text-primary-foreground text-sm font-semibold disabled:opacity-50"
+        >
+          <Plus className="w-4 h-4" /> Add staff
+        </button>
+      </div>
       <div className="overflow-x-auto">
         <table className="w-full text-sm border-collapse">
           <thead>
@@ -1223,6 +1359,7 @@ function PayrollView({
               <th className="text-right p-2 border border-border">Hours</th>
               <th className="text-right p-2 border border-border">Rate</th>
               <th className="text-right p-2 border border-border">Pay</th>
+              <th className="p-2 border border-border" />
             </tr>
           </thead>
           <tbody>
@@ -1237,6 +1374,16 @@ function PayrollView({
                 <td className="p-2 border border-border text-right font-semibold">{r.total}</td>
                 <td className="p-2 border border-border text-right">${r.rate.toFixed(2)}</td>
                 <td className="p-2 border border-border text-right font-semibold">${r.pay.toFixed(2)}</td>
+                <td className="p-2 border border-border text-center">
+                  <button
+                    onClick={() => removeStaffEverywhere(r.name)}
+                    disabled={busy}
+                    title={`Remove ${r.name} from all schedules`}
+                    className="inline-flex items-center justify-center w-8 h-8 rounded-md text-destructive hover:bg-destructive/10 disabled:opacity-50"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </td>
               </tr>
             ))}
             <tr className="bg-secondary font-semibold">
@@ -1244,6 +1391,7 @@ function PayrollView({
               <td className="p-2 border border-border text-right">{totalHours}</td>
               <td className="p-2 border border-border" />
               <td className="p-2 border border-border text-right">${totalPay.toFixed(2)}</td>
+              <td className="p-2 border border-border" />
             </tr>
           </tbody>
         </table>
