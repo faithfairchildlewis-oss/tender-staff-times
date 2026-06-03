@@ -154,6 +154,8 @@ export function usePayrollRates(scheduleId: string | null) {
       return out;
     },
   });
+}
+
 /** Admin-only: load default hourly rates per staff member from the
  *  `staff_default_rates` table. Returns an empty object for non-admins
  *  (RLS will return no rows). */
