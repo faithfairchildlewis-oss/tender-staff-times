@@ -6,6 +6,7 @@ import { useCurrentSchedule, useLiveSchedules } from "@/hooks/use-schedule";
 import { formatWeekRange } from "@/lib/format-date";
 import { PageBanner } from "@/components/page-banner";
 import { holidayForOffset } from "@/lib/holidays";
+import { buildDayItems } from "@/lib/day-items";
 
 export const Route = createFileRoute("/staff/$name")({
   head: ({ params }) => ({
@@ -209,26 +210,11 @@ function StaffPage() {
                     showLunch && sInfo.lunch.type === "fixed" && typeof sInfo.lunch.time === "string"
                       ? sInfo.lunch.time
                       : null;
-                  const lunchStartMin = lunchTime ? parseClockToMin(lunchTime) : null;
-                  type Item =
-                    | { kind: "shift"; start: string; end: string; rooms: string[]; sort: number }
-                    | { kind: "lunch"; label: string; time: string; sort: number };
-                  const items: Item[] = blocks.map((b) => ({
-                    kind: "shift" as const,
-                    start: b.start,
-                    end: b.end,
-                    rooms: b.rooms,
-                    sort: parseClockToMin(b.start) ?? 0,
-                  }));
-                  if (lunchTime && lunchStartMin !== null) {
-                    items.push({
-                      kind: "lunch",
-                      label: brk?.type === "lunch" ? "Lunch" : "Break",
-                      time: lunchTime,
-                      sort: lunchStartMin,
-                    });
-                  }
-                  items.sort((a, b) => a.sort - b.sort);
+                  const items = buildDayItems(
+                    blocks,
+                    lunchTime,
+                    brk?.type === "lunch" ? "Lunch" : "Break",
+                  );
                   return (
                     <ul className="divide-y divide-border list-none">
                       {items.map((it, i) =>
@@ -292,16 +278,4 @@ function StaffPage() {
 /** Replace the word "Room" in a room/class label with "Class". */
 function roomToClass(label: string): string {
   return label.replace(/\bRoom\b/gi, "Class");
-}
-
-/** Parse "8:30 AM" or "12:30 PM" into minutes since midnight. Returns null on parse failure. */
-function parseClockToMin(s: string): number | null {
-  const m = /^\s*(\d{1,2}):(\d{2})\s*(AM|PM)?/i.exec(s);
-  if (!m) return null;
-  let h = Number(m[1]);
-  const min = Number(m[2]);
-  const ap = m[3]?.toUpperCase();
-  if (ap === "PM" && h !== 12) h += 12;
-  if (ap === "AM" && h === 12) h = 0;
-  return h * 60 + min;
 }
