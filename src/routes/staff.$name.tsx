@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CalendarDays, TreePine, MessageSquare, Utensils } from "lucide-react";
+import { CalendarDays, TreePine, MessageSquare, Utensils, PartyPopper } from "lucide-react";
 
 import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
 import { useCurrentSchedule, useLiveSchedules } from "@/hooks/use-schedule";
 import { formatWeekRange } from "@/lib/format-date";
 import { PageBanner } from "@/components/page-banner";
+import { holidayForOffset } from "@/lib/holidays";
 
 export const Route = createFileRoute("/staff/$name")({
   head: ({ params }) => ({
@@ -139,19 +140,32 @@ function StaffPage() {
         </h2>
 
         <div className="space-y-3">
-          {schedule.days.map((d) => {
+          {schedule.days.map((d, dayIdx) => {
             const blocks = blocksForDay(schedule, name, d.day);
             const hrs = dayHours(schedule, name, d.day);
             const off = blocks.length === 0;
             const brk = info.daily_breaks?.[d.day];
+            const closedReason = holidayForOffset(schedule.start_date, dayIdx);
             return (
               <div key={d.day} className="bg-card rounded-2xl shadow-sm overflow-hidden">
                 <div className="flex items-center justify-between px-4 py-3 border-b border-border">
                   <div>
-                    <div className="font-semibold text-base text-foreground">{d.day}</div>
+                    <div className="font-semibold text-base text-foreground inline-flex items-center gap-1.5">
+                      {d.day}
+                      {closedReason && (
+                        <PartyPopper className="w-4 h-4 text-closed-foreground" aria-label="Closed" />
+                      )}
+                    </div>
                     <div className="text-xs text-muted-foreground">{d.date}</div>
                   </div>
-                  {off && (
+                  {closedReason ? (
+                    <span
+                      aria-label={`Closed for ${closedReason}`}
+                      className="bg-closed text-closed-foreground text-xs font-bold px-3 py-1 rounded-full inline-flex items-center gap-1"
+                    >
+                      <PartyPopper className="w-3 h-3" /> CLOSED
+                    </span>
+                  ) : off && (
                     <span
                       aria-label="Not scheduled"
                       className="bg-muted text-muted-foreground text-xs font-bold px-3 py-1 rounded-full"
@@ -160,7 +174,11 @@ function StaffPage() {
                     </span>
                   )}
                 </div>
-                {!off && (() => {
+                {closedReason ? (
+                  <div className="px-4 py-4 bg-closed/20 text-sm text-closed-foreground font-medium">
+                    Center closed — {closedReason}
+                  </div>
+                ) : !off && (() => {
                   const showLunch = hrs >= 6;
                   const lunchTime =
                     showLunch && info.lunch.type === "fixed" && typeof info.lunch.time === "string"
