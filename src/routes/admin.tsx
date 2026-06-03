@@ -739,7 +739,7 @@ function WeekEditor({
   }, [rates, row.id]);
 
   const day = DAY_NAMES[dayIdx];
-  const staffNames = Object.keys(data.staff ?? {});
+  const staffNames = Object.keys(data.staff ?? {}).sort();
   const blocks: Block[] = useMemo(
     () => (staffName ? blocksForDay(data, staffName, day) : []),
     [data, staffName, day],
