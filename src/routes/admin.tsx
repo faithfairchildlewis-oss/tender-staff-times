@@ -648,6 +648,8 @@ function WeekEditor({
   const [dayIdx, setDayIdx] = useState(0);
   const [staffName, setStaffName] = useState<string>("");
   const [saving, setSaving] = useState(false);
+  const [applyOpen, setApplyOpen] = useState(false);
+  const [applyTargets, setApplyTargets] = useState<Set<string>>(new Set());
   const { data: rates } = usePayrollRates(row.id);
 
   useEffect(() => {
@@ -697,6 +699,21 @@ function WeekEditor({
   }
   function patchBlock(i: number, p: Partial<Block>) {
     updateBlocks(blocks.map((b, idx) => (idx === i ? { ...b, ...p } : b)));
+  }
+
+  function applyDayToOthers(targets: string[]) {
+    if (!staffName || targets.length === 0) return;
+    const slots = expandBlocks(blocks);
+    const sd = { ...(data.staff_daily ?? {}) };
+    const byDay = { ...(sd[staffName] ?? {}) };
+    for (const d of targets) {
+      // deep copy slot objects so days don't share references
+      byDay[d] = slots.map((s) => ({ time: s.time, rooms: [...s.rooms] }));
+    }
+    sd[staffName] = byDay;
+    setData({ ...data, staff_daily: sd });
+    setApplyOpen(false);
+    setApplyTargets(new Set());
   }
 
   function addStaff() {
