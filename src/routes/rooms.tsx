@@ -1,9 +1,10 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { Home, CalendarDays, TreePine, Nut, CalendarOff } from "lucide-react";
+import { Home, CalendarDays, TreePine, Nut, CalendarOff, PartyPopper } from "lucide-react";
 import { useState, useMemo, useRef, useEffect } from "react";
 import { PageBanner } from "@/components/page-banner";
 import { useLiveSchedules } from "@/hooks/use-schedule";
 import { deriveDays, DAY_NAMES, DEFAULT_ROOMS } from "@/lib/schedule-derive";
+import { holidayForOffset } from "@/lib/holidays";
 
 type TabDay = {
   weekIdx: number;
@@ -161,6 +162,7 @@ function RoomsPage() {
   const day = week.days[active.dayIdx];
   const schedule = week.schedule;
   const rooms = schedule.rooms?.length ? schedule.rooms : DEFAULT_ROOMS;
+  const closedReason = holidayForOffset(schedule.start_date, active.dayIdx);
   return (
     <div className="min-h-dvh bg-background pb-6">
       <PageBanner
@@ -234,6 +236,7 @@ function RoomsPage() {
                   <div className="flex gap-1">
                     {weekTabs.map(({ t, i }) => {
                       const isActive = i === activeIdx;
+                      const closed = holidayForOffset(w.schedule.start_date, t.dayIdx);
                       return (
                         <button
                           key={`${t.weekIdx}-${t.dayIdx}`}
@@ -243,7 +246,10 @@ function RoomsPage() {
                             isActive ? "bg-card text-foreground shadow" : "text-muted-foreground"
                           }`}
                         >
-                          <span className="text-sm font-semibold">{t.shortLabel}</span>
+                          <span className="text-sm font-semibold inline-flex items-center gap-1">
+                            {t.shortLabel}
+                            {closed && <PartyPopper className="w-3 h-3" aria-label="Closed" />}
+                          </span>
                           {t.mmdd && <span className="text-[10px] opacity-80">{t.mmdd}</span>}
                         </button>
                       );
@@ -261,6 +267,15 @@ function RoomsPage() {
             <span className="text-sm text-muted-foreground">{day?.date ?? ""}</span>
           </div>
 
+          {closedReason ? (
+            <div className="bg-closed/30 border-2 border-dashed border-closed rounded-xl px-4 py-10 text-center space-y-2">
+              <PartyPopper className="w-10 h-10 mx-auto text-closed-foreground" />
+              <div className="font-bold text-xl text-closed-foreground">Closed — {closedReason}</div>
+              <p className="text-sm text-muted-foreground">
+                The center is closed. Enjoy your day off!
+              </p>
+            </div>
+          ) : (
           <div className="overflow-x-auto -mx-4 px-4">
             <table className="w-full text-xs border-collapse">
               <thead>
@@ -325,6 +340,7 @@ function RoomsPage() {
               </tbody>
             </table>
           </div>
+          )}
         </section>
       </main>
     </div>
