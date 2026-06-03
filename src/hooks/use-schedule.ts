@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { fallbackSchedule, type ScheduleData } from "@/data/schedule";
 
-export type CurrentSchedule = ScheduleData & { start_date?: string | null };
+export type CurrentSchedule = ScheduleData & { id?: string | null; start_date?: string | null };
 
 export type ScheduleRow = {
   id: string;
@@ -85,7 +85,7 @@ export function useLiveSchedules() {
     queryFn: async (): Promise<CurrentSchedule[]> => {
       const { data, error } = await supabase
         .from("schedules")
-        .select("data, start_date")
+        .select("id, data, start_date")
         .eq("is_live", true)
         .order("start_date", { ascending: true });
       if (error) {
@@ -93,6 +93,7 @@ export function useLiveSchedules() {
         return [];
       }
       return (data ?? []).map((r) => ({
+        id: r.id,
         ...(r.data as ScheduleData),
         start_date: r.start_date,
       }));
