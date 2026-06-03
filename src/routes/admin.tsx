@@ -432,13 +432,7 @@ function AdminEditor() {
             </section>
           </>
         ) : view === "grid" ? (
-          selected ? (
-            <ShiftGrid row={selected} />
-          ) : (
-            <section className="bg-card rounded-2xl shadow-sm p-4">
-              <p className="text-sm text-muted-foreground">Select a week above to start editing.</p>
-            </section>
-          )
+          <GridView schedules={schedules ?? []} selectedId={selectedId} />
         ) : view === "rooms" ? (
           <RoomView schedules={schedules ?? []} selectedId={selectedId} onSelect={setSelectedId} />
         ) : view === "timeoff" ? (
