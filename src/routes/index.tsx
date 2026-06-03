@@ -115,13 +115,6 @@ function Index() {
 
         <div className="mt-8 text-center">
           <Link
-            to="/schedule"
-            className="inline-flex items-center justify-center min-h-11 px-4 text-sm text-muted-foreground underline rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            Full schedule (admin)
-          </Link>
-          <span className="mx-2 text-muted-foreground">·</span>
-          <Link
             to="/admin"
             className="inline-flex items-center justify-center min-h-11 px-4 text-sm text-muted-foreground underline rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
