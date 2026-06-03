@@ -82,6 +82,24 @@ export type Database = {
         }
         Relationships: []
       }
+      staff_default_rates: {
+        Row: {
+          rate: number
+          staff_name: string
+          updated_at: string | null
+        }
+        Insert: {
+          rate?: number
+          staff_name: string
+          updated_at?: string | null
+        }
+        Update: {
+          rate?: number
+          staff_name?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       time_off_requests: {
         Row: {
           created_at: string | null
