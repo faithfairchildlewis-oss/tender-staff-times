@@ -5,6 +5,7 @@ import { PageBanner } from "@/components/page-banner";
 import { useLiveSchedules } from "@/hooks/use-schedule";
 import { deriveDays, DAY_NAMES, DEFAULT_ROOMS } from "@/lib/schedule-derive";
 import { holidayForOffset } from "@/lib/holidays";
+import { monthDayFor } from "@/lib/format-date";
 
 type TabDay = {
   weekIdx: number;
@@ -264,7 +265,7 @@ function RoomsPage() {
         <section className="bg-card rounded-2xl shadow-sm p-4 space-y-3">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold text-foreground">
-              {day?.day ?? "—"}{day?.date ? ` ${day.date}` : ""}
+              {day?.day ?? "—"}{schedule.start_date ? ` ${monthDayFor(schedule.start_date, active.dayIdx)}` : ""}
               {closedReason ? " — Closed" : ""}
             </h2>
           </div>
