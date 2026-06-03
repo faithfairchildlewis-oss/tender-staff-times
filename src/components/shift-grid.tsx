@@ -212,7 +212,7 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
       staff[name] = { ...staff[name], hours: h };
     }
     const next: ScheduleData = { ...snapshot, staff };
-    next.days = deriveDays(next);
+    next.days = deriveDays(next, row.start_date);
     const { error } = await supabase
       .from("schedules")
       .update({ data: next as any })
