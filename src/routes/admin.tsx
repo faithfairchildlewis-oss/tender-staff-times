@@ -550,7 +550,7 @@ function RoomView({
         </span>
         <span className="inline-flex items-center gap-1.5">
           <span className="inline-block w-3 h-3 rounded-sm bg-destructive/15 border border-destructive/40" />
-          <span className="text-destructive font-semibold">need 2 staff</span>
+          <span className="text-destructive font-semibold">Understaffed</span>
         </span>
       </div>
 
@@ -619,7 +619,7 @@ function RoomView({
                           !under && lilac ? "text-lilac-foreground" : !under ? "text-foreground" : ""
                         }`}
                       >
-                        {a.length ? a.join(", ") : <span className="text-destructive">open</span>}
+                        {a.length ? a.join(", ") : <span className="text-destructive">empty</span>}
                       </td>
                     );
                   })}
