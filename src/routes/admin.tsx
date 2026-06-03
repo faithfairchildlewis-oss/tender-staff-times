@@ -15,7 +15,7 @@ import {
   expandBlocks,
 } from "@/lib/schedule-derive";
 import { blocksForDay } from "@/data/schedule";
-import { formatMDY, formatWeekRange, mmddFor, parseMDYToIso } from "@/lib/format-date";
+import { formatMDY, formatWeekRange, mmddFor, monthDayFor, parseMDYToIso } from "@/lib/format-date";
 import {
   Select,
   SelectContent,
@@ -578,7 +578,7 @@ function RoomView({
 
       <div className="flex items-center justify-between">
         <h2 className="font-semibold text-foreground">
-          {day?.day ?? "—"}{day?.date ? ` ${day.date}` : ""}
+          {day?.day ?? "—"}{selected.start_date ? ` ${monthDayFor(selected.start_date, dayIdx)}` : ""}
           {closedReason ? " — Closed" : ""}
         </h2>
       </div>
