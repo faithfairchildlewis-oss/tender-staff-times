@@ -154,4 +154,23 @@ export function usePayrollRates(scheduleId: string | null) {
       return out;
     },
   });
+/** Admin-only: load default hourly rates per staff member from the
+ *  `staff_default_rates` table. Returns an empty object for non-admins
+ *  (RLS will return no rows). */
+export function useDefaultRates() {
+  return useQuery({
+    queryKey: ["staff_default_rates"],
+    queryFn: async (): Promise<Record<string, number>> => {
+      const { data, error } = await supabase
+        .from("staff_default_rates")
+        .select("staff_name, rate");
+      if (error) {
+        console.error("staff_default_rates fetch failed", error);
+        return {};
+      }
+      const out: Record<string, number> = {};
+      for (const r of data ?? []) out[r.staff_name as string] = Number(r.rate);
+      return out;
+    },
+  });
 }
