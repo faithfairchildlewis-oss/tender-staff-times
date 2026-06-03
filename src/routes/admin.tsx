@@ -1386,7 +1386,25 @@ function PayrollView({
                   </td>
                 ))}
                 <td className="p-2 border border-border text-right font-semibold">{r.total}</td>
-                <td className="p-2 border border-border text-right">${r.rate.toFixed(2)}</td>
+                <td className="p-2 border border-border text-right">
+                  <div className="inline-flex items-center gap-1">
+                    <span className="text-muted-foreground">$</span>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      defaultValue={r.rate.toFixed(2)}
+                      disabled={busy}
+                      onBlur={(e) => {
+                        const next = Number(e.target.value);
+                        if (Number.isFinite(next) && next !== r.rate) {
+                          updateRate(r.name, next);
+                        }
+                      }}
+                      className="w-20 bg-background border border-border rounded-md px-2 py-1 text-right text-sm"
+                    />
+                  </div>
+                </td>
                 <td className="p-2 border border-border text-right font-semibold">${r.pay.toFixed(2)}</td>
                 <td className="p-2 border border-border text-center">
                   <button
