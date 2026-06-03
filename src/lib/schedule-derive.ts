@@ -31,13 +31,15 @@ export function minimumFor(room: string, time: string): number | null {
     return m >= HM(14, 30) && m <= HM(17, 30) ? 1 : null;
   }
   if (room === "G/H") {
-    // 2 staff 7:00 AM–12:30 PM and 2:30 PM–4:30 PM (inclusive), else 1.
-    if ((m >= HM(7, 0) && m <= HM(12, 30)) || (m >= HM(14, 30) && m <= HM(16, 30))) return 2;
+    // 2 staff 9:00 AM–12:00 PM and 3:00 PM–4:30 PM (inclusive), else 1.
+    // 7:00–9:00 AM and 12:30 PM–2:30 PM only need 1 staff.
+    if ((m >= HM(9, 0) && m <= HM(12, 0)) || (m >= HM(15, 0) && m <= HM(16, 30))) return 2;
     return 1;
   }
   if (room === "J/K") {
-    // 2 staff 7:30 AM–12:30 PM and 2:30 PM–4:30 PM (inclusive), else 1.
-    if ((m >= HM(7, 30) && m <= HM(12, 30)) || (m >= HM(14, 30) && m <= HM(16, 30))) return 2;
+    // 2 staff 9:00 AM–12:00 PM and 3:00 PM–4:30 PM (inclusive), else 1.
+    // 7:00–9:00 AM and 12:30 PM–2:30 PM only need 1 staff.
+    if ((m >= HM(9, 0) && m <= HM(12, 0)) || (m >= HM(15, 0) && m <= HM(16, 30))) return 2;
     return 1;
   }
   return 1;
