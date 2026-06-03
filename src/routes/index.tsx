@@ -53,7 +53,15 @@ function Index() {
   const { verse, encouragement: subline } = getDailyContent(dayOfMonth);
   return (
     <div className="min-h-dvh bg-background pb-10">
-      <header className="bg-primary text-primary-foreground px-5 pt-8 pb-7 shadow-md rounded-b-3xl">
+      <header className="bg-primary text-primary-foreground px-5 pt-8 pb-7 shadow-md rounded-b-3xl relative">
+        <div className="absolute top-4 right-4">
+          <Link
+            to="/admin"
+            className="text-sm underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+          >
+            Admin
+          </Link>
+        </div>
         <div className="text-center">
           <h1 className="text-xl font-bold tracking-tight leading-none">
             {schedule?.center ? `${schedule.center} Staff Schedule` : "Tender Years of Deale Staff Schedule"}
