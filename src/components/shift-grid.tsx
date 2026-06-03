@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { GripVertical, Check, Coffee, X, Loader2, AlertCircle } from "lucide-react";
+import { GripVertical, Check, Coffee, X, Loader2, AlertCircle, PartyPopper } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import type { ScheduleRow } from "@/hooks/use-schedule";
@@ -12,6 +12,7 @@ import {
   minimumFor,
 } from "@/lib/schedule-derive";
 import { formatWeekRange, mmddFor } from "@/lib/format-date";
+import { holidayForOffset } from "@/lib/holidays";
 
 type DragPayload = {
   name: string;
@@ -57,6 +58,7 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
   const day = DAY_NAMES[dayIdx];
   const rooms = data.rooms?.length ? data.rooms : DEFAULT_ROOMS;
   const allStaff = useMemo(() => Object.keys(data.staff ?? {}).sort(), [data.staff]);
+  const closedReason = holidayForOffset(row.start_date, dayIdx);
 
   /** Staff name → set of times worked on this day (any room). */
   const workingByTime = useMemo(() => {
@@ -317,12 +319,21 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
               i === dayIdx ? "bg-card text-foreground shadow" : "text-muted-foreground"
             }`}
           >
-            <span>{d.slice(0, 3)}</span>
+            <span className="inline-flex items-center gap-1">
+              {d.slice(0, 3)}
+              {holidayForOffset(row.start_date, i) && (
+                <PartyPopper className="w-3 h-3" aria-label="Closed" />
+              )}
+            </span>
             <span className="text-[10px] opacity-80 font-normal">{mmddFor(row.start_date, i)}</span>
           </button>
         ))}
       </div>
 
+      {closedReason ? (
+        <ClosedBanner reason={closedReason} />
+      ) : (
+        <>
       <StaffPalette
         allStaff={allStaff}
         onClockToday={onClockToday}
@@ -475,7 +486,21 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
           </tbody>
         </table>
       </div>
+        </>
+      )}
     </section>
+  );
+}
+
+function ClosedBanner({ reason }: { reason: string }) {
+  return (
+    <div className="bg-closed/30 border-2 border-dashed border-closed rounded-xl px-4 py-8 text-center space-y-2">
+      <PartyPopper className="w-8 h-8 mx-auto text-closed-foreground" />
+      <div className="font-bold text-lg text-closed-foreground">Closed — {reason}</div>
+      <p className="text-xs text-muted-foreground">
+        No shifts can be scheduled on this day.
+      </p>
+    </div>
   );
 }
 
