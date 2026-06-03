@@ -263,8 +263,10 @@ function RoomsPage() {
 
         <section className="bg-card rounded-2xl shadow-sm p-4 space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold text-foreground">{day?.day ?? "—"}</h2>
-            <span className="text-sm text-muted-foreground">{day?.date ?? ""}</span>
+            <h2 className="font-semibold text-foreground">
+              {day?.day ?? "—"}{day?.date ? ` ${day.date}` : ""}
+              {closedReason ? " — Closed" : ""}
+            </h2>
           </div>
 
           {closedReason ? (
