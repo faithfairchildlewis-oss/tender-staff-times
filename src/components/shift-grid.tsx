@@ -390,7 +390,7 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
                     {time}
                   </td>
                   {rooms.map((r) => {
-                    const min = minimumFor(r, time);
+                    const min = minimumFor(r, time, row.start_date);
                     const cellId = `${time}|${r}`;
                     const names = [...(byRoom.get(r) ?? [])];
                     if (min === null) {
