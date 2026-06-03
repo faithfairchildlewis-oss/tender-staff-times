@@ -950,13 +950,76 @@ function WeekEditor({
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <h3 className="font-semibold text-foreground">{day} blocks</h3>
-            <button
-              onClick={addBlock}
-              className="text-sm text-primary inline-flex items-center gap-1 min-h-11 px-2"
-            >
-              <Plus className="w-4 h-4" /> Add block
-            </button>
+            <div className="flex items-center gap-2">
+              {blocks.length > 0 && (
+                <button
+                  onClick={() => {
+                    setApplyTargets(new Set());
+                    setApplyOpen((v) => !v);
+                  }}
+                  className="text-sm text-primary inline-flex items-center gap-1 min-h-11 px-2"
+                  title={`Copy ${day}'s blocks to other days for ${staffName}`}
+                >
+                  <Copy className="w-4 h-4" /> Apply to more days
+                </button>
+              )}
+              <button
+                onClick={addBlock}
+                className="text-sm text-primary inline-flex items-center gap-1 min-h-11 px-2"
+              >
+                <Plus className="w-4 h-4" /> Add block
+              </button>
+            </div>
           </div>
+          {applyOpen && (
+            <div className="bg-secondary/60 rounded-xl p-3 space-y-2 border border-border">
+              <p className="text-xs text-muted-foreground">
+                Copy {staffName}'s {day} blocks to:
+                <span className="block mt-0.5 text-[11px]">
+                  (overwrites existing blocks on selected days)
+                </span>
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {DAY_NAMES.filter((d) => d !== day).map((d) => {
+                  const on = applyTargets.has(d);
+                  return (
+                    <button
+                      key={d}
+                      onClick={() => {
+                        const next = new Set(applyTargets);
+                        if (on) next.delete(d);
+                        else next.add(d);
+                        setApplyTargets(next);
+                      }}
+                      className={`px-3 py-2 rounded-lg text-sm min-h-11 ${
+                        on ? "bg-primary text-primary-foreground" : "bg-card text-foreground"
+                      }`}
+                    >
+                      {d.slice(0, 3)}
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="flex items-center gap-2 justify-end">
+                <button
+                  onClick={() => {
+                    setApplyOpen(false);
+                    setApplyTargets(new Set());
+                  }}
+                  className="text-sm min-h-11 px-3 rounded-lg bg-card text-foreground border border-border"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => applyDayToOthers([...applyTargets])}
+                  disabled={applyTargets.size === 0}
+                  className="text-sm min-h-11 px-3 rounded-lg bg-primary text-primary-foreground font-semibold disabled:opacity-50"
+                >
+                  Apply
+                </button>
+              </div>
+            </div>
+          )}
           {blocks.length === 0 && (
             <p className="text-sm text-muted-foreground">Off this day.</p>
           )}
