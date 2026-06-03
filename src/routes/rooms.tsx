@@ -318,7 +318,7 @@ function RoomsPage() {
                             key={r}
                             className={`p-1.5 border border-border text-center ${
                               under
-                                ? "bg-destructive/10 text-destructive"
+                                ? "bg-destructive/10"
                                 : highlight
                                   ? "bg-lilac/30"
                                   : ""
