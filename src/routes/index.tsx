@@ -58,7 +58,7 @@ function Index() {
           <h1 className="text-xl font-bold tracking-tight leading-none">
             {schedule?.center ? `${schedule.center} Staff Schedule` : "Tender Years of Deale Staff Schedule"}
           </h1>
-          <p className="text-sm italic mt-2 leading-tight text-[oklch(0.98_0.01_90)]/95">
+          <p className="text-sm italic mt-2 leading-tight text-primary-foreground/95">
             Where God's word falls like gentle rain.
           </p>
         </div>
