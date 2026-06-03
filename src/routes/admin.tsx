@@ -576,6 +576,13 @@ function RoomView({
         ))}
       </div>
 
+      <div className="flex items-center justify-between">
+        <h2 className="font-semibold text-foreground">
+          {day?.day ?? "—"}{day?.date ? ` ${day.date}` : ""}
+          {closedReason ? " — Closed" : ""}
+        </h2>
+      </div>
+
       {closedReason ? (
         <div className="bg-closed/30 border-2 border-dashed border-closed rounded-xl px-4 py-8 text-center space-y-2">
           <PartyPopper className="w-8 h-8 mx-auto text-closed-foreground" />
