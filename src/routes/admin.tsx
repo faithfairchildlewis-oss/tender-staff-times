@@ -447,6 +447,47 @@ function AdminEditor() {
 
 type Block = { start: string; end: string; rooms: string[] };
 
+function GridView({
+  schedules,
+  selectedId,
+}: {
+  schedules: ScheduleRow[];
+  selectedId: string | null;
+}) {
+  const [localId, setLocalId] = useState<string | null>(selectedId);
+  const selected =
+    schedules.find((s) => s.id === localId) ??
+    schedules.find((s) => s.id === selectedId) ??
+    schedules[0] ??
+    null;
+  if (!selected) {
+    return (
+      <section className="bg-card rounded-2xl shadow-sm p-4">
+        <p className="text-sm text-muted-foreground">Select a week above to start editing.</p>
+      </section>
+    );
+  }
+  return (
+    <div className="space-y-3">
+      <div className="bg-card rounded-2xl shadow-sm p-3 flex items-center gap-2 flex-wrap">
+        <span className="text-sm font-semibold text-foreground">Week:</span>
+        <select
+          value={selected.id}
+          onChange={(e) => setLocalId(e.target.value)}
+          className="bg-secondary rounded-lg px-2 py-2 min-h-11 text-sm flex-1 max-w-[70%]"
+        >
+          {schedules.map((s) => (
+            <option key={s.id} value={s.id}>
+              {formatWeekRange(s.start_date)}
+            </option>
+          ))}
+        </select>
+      </div>
+      <ShiftGrid key={selected.id} row={selected} />
+    </div>
+  );
+}
+
 function RoomView({
   schedules,
   selectedId,
