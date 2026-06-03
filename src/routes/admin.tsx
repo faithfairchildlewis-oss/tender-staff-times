@@ -1175,12 +1175,36 @@ function PayrollView({
   const names = Object.keys(data.staff ?? {});
 
   const { data: rates } = usePayrollRates(selected.id);
+  const { data: defaultRates } = useDefaultRates();
 
   async function refreshAll() {
     await qc.invalidateQueries({ queryKey: ["schedules"] });
     await qc.invalidateQueries({ queryKey: ["schedule"] });
     await qc.invalidateQueries({ queryKey: ["payroll_rates"] });
     await qc.invalidateQueries({ queryKey: ["staff_default_rates"] });
+  }
+
+  async function updateRate(name: string, rate: number) {
+    if (!Number.isFinite(rate) || rate < 0) return;
+    setBusy(true);
+    try {
+      const { error: prErr } = await supabase
+        .from("payroll_rates")
+        .upsert(
+          { schedule_id: selected.id, staff_name: name, rate },
+          { onConflict: "schedule_id,staff_name" },
+        );
+      if (prErr) throw prErr;
+      const { error: drErr } = await supabase
+        .from("staff_default_rates")
+        .upsert({ staff_name: name, rate }, { onConflict: "staff_name" });
+      if (drErr) throw drErr;
+      await refreshAll();
+    } catch (e: any) {
+      alert(e?.message ?? "Failed to update rate.");
+    } finally {
+      setBusy(false);
+    }
   }
 
   async function addStaffEverywhere() {
