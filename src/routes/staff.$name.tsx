@@ -140,14 +140,28 @@ function StaffPage() {
         </h2>
 
         <div className="space-y-3">
-          {schedule.days.map((d, dayIdx) => {
-            const blocks = blocksForDay(schedule, name, d.day);
-            const hrs = dayHours(schedule, name, d.day);
-            const off = blocks.length === 0;
-            const brk = info.daily_breaks?.[d.day];
-            const closedReason = holidayForOffset(schedule.start_date, dayIdx);
-            return (
-              <div key={d.day} className="bg-card rounded-2xl shadow-sm overflow-hidden">
+          {(liveSchedules ?? [])
+            .slice()
+            .sort((a, b) => (a.start_date ?? "").localeCompare(b.start_date ?? ""))
+            .flatMap((wk) => {
+              const weekLabel = wk.start_date ? formatWeekRange(wk.start_date) : wk.week ?? "—";
+              const divider = (
+                <div key={`div-${weekLabel}`} className="flex items-center gap-3 py-2">
+                  <hr className="flex-1 border-border" />
+                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide whitespace-nowrap">
+                    {weekLabel}
+                  </span>
+                  <hr className="flex-1 border-border" />
+                </div>
+              );
+              const dayCards = wk.days.map((d, dayIdx) => {
+                const blocks = blocksForDay(wk, name, d.day);
+                const hrs = dayHours(wk, name, d.day);
+                const off = blocks.length === 0;
+                const brk = info.daily_breaks?.[d.day];
+                const closedReason = holidayForOffset(wk.start_date, dayIdx);
+                return (
+              <div key={`${weekLabel}-${d.day}`} className="bg-card rounded-2xl shadow-sm overflow-hidden">
                 <div className="flex items-center justify-between px-4 py-3 border-b border-border">
                   <div>
                     <div className="font-semibold text-base text-foreground inline-flex items-center gap-1.5">
@@ -247,8 +261,10 @@ function StaffPage() {
                   );
                 })()}
               </div>
-            );
-          })}
+                );
+              });
+              return [divider, ...dayCards];
+            })}
         </div>
 
         <div className="mt-6" />
