@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ShiftGrid } from "@/components/shift-grid";
-import { TimeOffView } from "@/components/time-off-view.client";
+import { TimeOffView } from "@/components/time-off-view";
 import { holidayForOffset } from "@/lib/holidays";
 
 export const Route = createFileRoute("/admin")({
