@@ -325,111 +325,111 @@ function AdminEditor() {
       <main className="px-4 mt-4 max-w-2xl mx-auto space-y-4">
         {view === "edit" ? (
           <>
-        <section className="bg-card rounded-2xl shadow-sm p-4">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="font-semibold text-foreground">Weeks</h2>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={autoFillWeeks}
-                className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-secondary text-secondary-foreground border border-border"
-                title="Auto-create blank Mon–Fri weeks starting June 1, 2026"
-              >
-                Auto-fill
-              </button>
-              <button
-                onClick={createBlank}
-                className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary text-primary-foreground"
-              >
-                <Plus className="w-4 h-4" /> New
-              </button>
-            </div>
-          </div>
-          {isLoading ? (
-            <p className="text-sm text-muted-foreground">Loading…</p>
-          ) : !schedules?.length ? (
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">
-                No schedules yet. Seed the database with the bundled week (June 1–5, 2026) to get started.
-              </p>
-              <button
-                onClick={seedFromBundled}
-                className="bg-primary text-primary-foreground px-4 py-2 rounded-lg min-h-11"
-              >
-                Seed bundled week
-              </button>
-            </div>
-          ) : (
-            <>
-            <ul className="divide-y divide-border">
-              {schedules.map((s) => (
-                <li key={s.id} className="py-2 flex items-center gap-2">
-                  <button
-                    onClick={() => setSelectedId(s.id)}
-                    className={`flex-1 text-left min-h-11 px-2 rounded-lg ${
-                      selectedId === s.id ? "bg-secondary" : ""
-                    }`}
-                  >
-                    <div className="font-medium text-foreground">{formatWeekRange(s.start_date)}</div>
-                    <div className="text-xs text-muted-foreground flex items-center gap-1.5">
-                      {formatMDY(s.start_date)}
-                      {s.is_live && (
-                        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-lilac text-lilac-foreground text-[10px] font-semibold">
-                          Live
-                        </span>
-                      )}
-                    </div>
-                  </button>
-                  {s.is_current ? (
-                    <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary min-w-11">
-                      Current
-                    </span>
-                  ) : (
-                    <button
-                      onClick={() => setCurrent(s.id)}
-                      title="Set as current"
-                      className="p-2 min-h-11 min-w-11 rounded-lg text-primary"
-                    >
-                      <Check className="w-5 h-5" />
-                    </button>
-                  )}
-                  <button
-                    onClick={() => setLive(s.id, !s.is_live)}
-                    title={s.is_live ? "Hide from staff" : "Make visible to staff"}
-                    className={`p-2 min-h-11 min-w-11 rounded-lg ${
-                      s.is_live ? "text-lilac-foreground bg-lilac-light" : "text-muted-foreground"
-                    }`}
-                  >
-                    {s.is_live ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
-                  </button>
-                  <button
-                    onClick={() => duplicate(s)}
-                    title="Duplicate"
-                    className="p-2 min-h-11 min-w-11 rounded-lg text-muted-foreground"
-                  >
-                    <Copy className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={() => remove(s.id)}
-                    title="Delete"
-                    className="p-2 min-h-11 min-w-11 rounded-lg text-destructive"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                  </button>
-                </li>
-              ))}
-            </ul>
-            </>
-          )}
-        </section>
+            {selected && (
+              <WeekEditor
+                row={selected}
+                onSaved={refresh}
+                schedules={schedules ?? []}
+                onSelect={setSelectedId}
+              />
+            )}
 
-        {selected && (
-          <WeekEditor
-            row={selected}
-            onSaved={refresh}
-            schedules={schedules ?? []}
-            onSelect={setSelectedId}
-          />
-        )}
+            <section className="bg-card rounded-2xl shadow-sm p-4">
+              <div className="flex items-center justify-between mb-3">
+                <h2 className="font-semibold text-foreground">Weeks</h2>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={autoFillWeeks}
+                    className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-secondary text-secondary-foreground border border-border"
+                    title="Auto-create blank Mon–Fri weeks starting June 1, 2026"
+                  >
+                    Auto-fill
+                  </button>
+                  <button
+                    onClick={createBlank}
+                    className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary text-primary-foreground"
+                  >
+                    <Plus className="w-4 h-4" /> New
+                  </button>
+                </div>
+              </div>
+              {isLoading ? (
+                <p className="text-sm text-muted-foreground">Loading…</p>
+              ) : !schedules?.length ? (
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">
+                    No schedules yet. Seed the database with the bundled week (June 1–5, 2026) to get started.
+                  </p>
+                  <button
+                    onClick={seedFromBundled}
+                    className="bg-primary text-primary-foreground px-4 py-2 rounded-lg min-h-11"
+                  >
+                    Seed bundled week
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <ul className="divide-y divide-border">
+                    {schedules.map((s) => (
+                      <li key={s.id} className="py-2 flex items-center gap-2">
+                        <button
+                          onClick={() => setSelectedId(s.id)}
+                          className={`flex-1 text-left min-h-11 px-2 rounded-lg ${
+                            selectedId === s.id ? "bg-secondary" : ""
+                          }`}
+                        >
+                          <div className="font-medium text-foreground">{formatWeekRange(s.start_date)}</div>
+                          <div className="text-xs text-muted-foreground flex items-center gap-1.5">
+                            {formatMDY(s.start_date)}
+                            {s.is_live && (
+                              <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-lilac text-lilac-foreground text-[10px] font-semibold">
+                                Live
+                              </span>
+                            )}
+                          </div>
+                        </button>
+                        {s.is_current ? (
+                          <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary min-w-11">
+                            Current
+                          </span>
+                        ) : (
+                          <button
+                            onClick={() => setCurrent(s.id)}
+                            title="Set as current"
+                            className="p-2 min-h-11 min-w-11 rounded-lg text-primary"
+                          >
+                            <Check className="w-5 h-5" />
+                          </button>
+                        )}
+                        <button
+                          onClick={() => setLive(s.id, !s.is_live)}
+                          title={s.is_live ? "Hide from staff" : "Make visible to staff"}
+                          className={`p-2 min-h-11 min-w-11 rounded-lg ${
+                            s.is_live ? "text-lilac-foreground bg-lilac-light" : "text-muted-foreground"
+                          }`}
+                        >
+                          {s.is_live ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
+                        </button>
+                        <button
+                          onClick={() => duplicate(s)}
+                          title="Duplicate"
+                          className="p-2 min-h-11 min-w-11 rounded-lg text-muted-foreground"
+                        >
+                          <Copy className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() => remove(s.id)}
+                          title="Delete"
+                          className="p-2 min-h-11 min-w-11 rounded-lg text-destructive"
+                        >
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </section>
           </>
         ) : view === "grid" ? (
           selected ? (
