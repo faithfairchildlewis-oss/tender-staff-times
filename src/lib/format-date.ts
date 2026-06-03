@@ -53,3 +53,18 @@ export function mmddFor(startDate: string | null | undefined, dayOffset: number)
   const dd = String(d.getUTCDate()).padStart(2, "0");
   return `${mm}-${dd}`;
 }
+
+const MONTH_NAMES = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
+/** Returns "June 8" for the given day offset within a week starting at
+ *  startDate (YYYY-MM-DD). Empty string when startDate is missing. */
+export function monthDayFor(startDate: string | null | undefined, dayOffset: number): string {
+  if (!startDate) return "";
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(startDate);
+  if (!m) return "";
+  const d = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3] + dayOffset));
+  return `${MONTH_NAMES[d.getUTCMonth()]} ${d.getUTCDate()}`;
+}

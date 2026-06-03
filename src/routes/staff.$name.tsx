@@ -3,7 +3,7 @@ import { CalendarDays, TreePine, MessageSquare, Utensils, PartyPopper } from "lu
 
 import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
 import { useCurrentSchedule, useLiveSchedules } from "@/hooks/use-schedule";
-import { formatWeekRange } from "@/lib/format-date";
+import { formatWeekRange, mmddFor } from "@/lib/format-date";
 import { PageBanner } from "@/components/page-banner";
 import { holidayForOffset } from "@/lib/holidays";
 import { buildDayItems } from "@/lib/day-items";
@@ -182,7 +182,7 @@ function StaffPage() {
                         <PartyPopper className="w-4 h-4 text-closed-foreground" aria-label="Closed" />
                       )}
                     </div>
-                    <div className="text-xs text-muted-foreground">{d.date}</div>
+                    <div className="text-xs text-muted-foreground">{mmddFor(sched.start_date, dayIdx)}</div>
                   </div>
                   {closedReason ? (
                     <span
