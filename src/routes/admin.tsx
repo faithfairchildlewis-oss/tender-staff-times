@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
-import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign, Eye, EyeOff, Users, Move, CalendarX2, Filter } from "lucide-react";
+import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign, Eye, EyeOff, Users, Move, CalendarX2, Filter, PartyPopper } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/select";
 import { ShiftGrid } from "@/components/shift-grid";
 import { TimeOffView } from "@/components/time-off-view.client";
+import { holidayForOffset } from "@/lib/holidays";
 
 export const Route = createFileRoute("/admin")({
   ssr: false,
@@ -513,6 +514,7 @@ function RoomView({
   const derivedDays = useMemo(() => deriveDays(data), [data]);
   const day = derivedDays[dayIdx];
   const rooms = data.rooms?.length ? data.rooms : DEFAULT_ROOMS;
+  const closedReason = holidayForOffset(selected.start_date, dayIdx);
 
   const LILAC_ROOMS = new Set(["M.O.D.", "Room I", "J/K"]);
   const CLOSED_AT_4 = new Set(["Room F", "Room I"]);
@@ -561,7 +563,12 @@ function RoomView({
               i === dayIdx ? "bg-card text-foreground shadow" : "text-muted-foreground"
             }`}
           >
-            <span className="text-sm font-semibold">{d.slice(0, 3)}</span>
+            <span className="text-sm font-semibold inline-flex items-center gap-1">
+              {d.slice(0, 3)}
+              {holidayForOffset(selected.start_date, i) && (
+                <PartyPopper className="w-3 h-3" aria-label="Closed" />
+              )}
+            </span>
             {selected.start_date && (
               <span className="text-[10px] opacity-80">{mmddFor(selected.start_date, i)}</span>
             )}
@@ -569,6 +576,14 @@ function RoomView({
         ))}
       </div>
 
+      {closedReason ? (
+        <div className="bg-closed/30 border-2 border-dashed border-closed rounded-xl px-4 py-8 text-center space-y-2">
+          <PartyPopper className="w-8 h-8 mx-auto text-closed-foreground" />
+          <div className="font-bold text-lg text-closed-foreground">Closed — {closedReason}</div>
+          <p className="text-xs text-muted-foreground">The center is closed on this day.</p>
+        </div>
+      ) : (
+        <>
       <div
         aria-label="Legend"
         className="flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground"
@@ -666,6 +681,8 @@ function RoomView({
           </tbody>
         </table>
       </div>
+        </>
+      )}
     </section>
   );
 }
