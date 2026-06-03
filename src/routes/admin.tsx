@@ -462,7 +462,8 @@ function RoomView({
   selectedId: string | null;
   onSelect: (id: string) => void;
 }) {
-  const selected = schedules.find((s) => s.id === selectedId) ?? schedules[0] ?? null;
+  const [localId, setLocalId] = useState<string | null>(selectedId);
+  const selected = schedules.find((s) => s.id === localId) ?? schedules.find((s) => s.id === selectedId) ?? schedules[0] ?? null;
   const [dayIdx, setDayIdx] = useState(0);
 
   if (!selected) {
@@ -503,19 +504,17 @@ function RoomView({
     <section className="bg-card rounded-2xl shadow-sm p-4 space-y-3">
       <div className="flex items-center justify-between gap-2">
         <h2 className="font-semibold text-foreground">Rooms — {formatWeekRange(selected.start_date)}</h2>
-        {schedules.length > 1 && (
-          <select
-            value={selected.id}
-            onChange={(e) => onSelect(e.target.value)}
-            className="bg-secondary rounded-lg px-2 py-2 min-h-11 text-sm max-w-[55%]"
-          >
-            {schedules.map((s) => (
-              <option key={s.id} value={s.id}>
-                {formatWeekRange(s.start_date)}
-              </option>
-            ))}
-          </select>
-        )}
+        <select
+          value={selected.id}
+          onChange={(e) => setLocalId(e.target.value)}
+          className="bg-secondary rounded-lg px-2 py-2 min-h-11 text-sm max-w-[55%]"
+        >
+          {schedules.map((s) => (
+            <option key={s.id} value={s.id}>
+              {formatWeekRange(s.start_date)}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="flex gap-1 bg-secondary rounded-xl p-1">
