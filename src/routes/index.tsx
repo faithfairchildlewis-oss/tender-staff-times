@@ -139,3 +139,119 @@ function Index() {
     </div>
   );
 }
+
+function TimeOffRequestButton({ names }: { names: string[] }) {
+  const [open, setOpen] = useState(false);
+  const [staffName, setStaffName] = useState("");
+  const [dateRequested, setDateRequested] = useState("");
+  const [reason, setReason] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const submit = useServerFn(createTimeOffRequest);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!staffName.trim() || !dateRequested.trim() || !reason.trim()) return;
+    setSubmitting(true);
+    try {
+      await submit({ data: { staff_name: staffName.trim(), date_requested: dateRequested.trim(), reason: reason.trim() } });
+      toast.success("Time-off request submitted");
+      setStaffName("");
+      setDateRequested("");
+      setReason("");
+      setOpen(false);
+    } catch (err) {
+      console.error(err);
+      toast.error("Could not submit request. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <button
+          type="button"
+          aria-label="Request time off"
+          className="mt-5 w-full flex items-center gap-3 bg-primary text-primary-foreground rounded-2xl p-5 min-h-16 shadow-sm active:scale-[0.99] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background text-left"
+        >
+          <div className="bg-primary-foreground/15 rounded-xl p-3" aria-hidden="true">
+            <MessageSquare className="w-6 h-6" />
+          </div>
+          <div className="min-w-0">
+            <div className="font-semibold text-base">Request Time Off</div>
+            <div className="text-sm opacity-90">
+              Sent to Michelle & Pastor Faith for approval
+            </div>
+          </div>
+        </button>
+      </DialogTrigger>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>Request Time Off</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <div className="space-y-1">
+            <label htmlFor="to-name" className="text-sm font-medium text-foreground">Your name</label>
+            {names.length > 0 ? (
+              <select
+                id="to-name"
+                value={staffName}
+                onChange={(e) => setStaffName(e.target.value)}
+                required
+                className="w-full bg-secondary rounded-xl px-3 py-2 min-h-11 text-sm"
+              >
+                <option value="">Select your name…</option>
+                {names.map((n) => (
+                  <option key={n} value={n}>{n}</option>
+                ))}
+              </select>
+            ) : (
+              <input
+                id="to-name"
+                value={staffName}
+                onChange={(e) => setStaffName(e.target.value)}
+                required
+                maxLength={100}
+                className="w-full bg-secondary rounded-xl px-3 py-2 min-h-11 text-sm"
+              />
+            )}
+          </div>
+          <div className="space-y-1">
+            <label htmlFor="to-date" className="text-sm font-medium text-foreground">Date(s) requested</label>
+            <input
+              id="to-date"
+              value={dateRequested}
+              onChange={(e) => setDateRequested(e.target.value)}
+              required
+              maxLength={200}
+              placeholder="e.g. July 14–16, 2026"
+              className="w-full bg-secondary rounded-xl px-3 py-2 min-h-11 text-sm"
+            />
+          </div>
+          <div className="space-y-1">
+            <label htmlFor="to-reason" className="text-sm font-medium text-foreground">Reason</label>
+            <textarea
+              id="to-reason"
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+              required
+              maxLength={1000}
+              rows={3}
+              className="w-full bg-secondary rounded-xl px-3 py-2 text-sm"
+            />
+          </div>
+          <DialogFooter>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full min-h-11 rounded-xl bg-primary text-primary-foreground font-semibold disabled:opacity-50"
+            >
+              {submitting ? "Submitting…" : "Submit Request"}
+            </button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
