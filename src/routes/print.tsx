@@ -18,6 +18,7 @@ export const Route = createFileRoute("/print")({
 function PrintPage() {
   const { data: schedule, isLoading } = useCurrentSchedule();
   const [day, setDay] = useState<string>("Monday");
+  const [roomFilter, setRoomFilter] = useState<"all" | "classrooms">("all");
 
   if (isLoading || !schedule) {
     return <div className="p-8 text-center text-muted-foreground">Loading schedule…</div>;
@@ -25,7 +26,10 @@ function PrintPage() {
 
   const names = staffNames(schedule).sort();
   const derivedDays = deriveDays(schedule, schedule.start_date);
-  const rooms = schedule.rooms?.length ? schedule.rooms : DEFAULT_ROOMS;
+  const allRooms = schedule.rooms?.length ? schedule.rooms : DEFAULT_ROOMS;
+  const CLASSROOMS = ["Room F", "Room I", "G/H", "J/K"];
+  const rooms =
+    roomFilter === "classrooms" ? allRooms.filter((r) => CLASSROOMS.includes(r)) : allRooms;
 
   return (
     <div className="min-h-dvh bg-background">
@@ -101,6 +105,27 @@ function PrintPage() {
 
         <section>
           <h2 className="text-lg font-semibold mb-3">Daily Room Schedule</h2>
+
+          <div className="no-print mb-3 inline-flex rounded-lg border bg-muted p-1 text-xs">
+            <button
+              type="button"
+              onClick={() => setRoomFilter("all")}
+              className={`px-3 py-1.5 rounded-md font-medium transition ${
+                roomFilter === "all" ? "bg-background shadow text-foreground" : "text-muted-foreground"
+              }`}
+            >
+              All Rooms
+            </button>
+            <button
+              type="button"
+              onClick={() => setRoomFilter("classrooms")}
+              className={`px-3 py-1.5 rounded-md font-medium transition ${
+                roomFilter === "classrooms" ? "bg-background shadow text-foreground" : "text-muted-foreground"
+              }`}
+            >
+              Classrooms Only
+            </button>
+          </div>
 
           <Tabs value={day} onValueChange={setDay} className="no-print">
             <TabsList>
