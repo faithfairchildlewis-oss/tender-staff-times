@@ -385,8 +385,8 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
               for (const set of byRoom.values()) for (const n of set) assignedNames.add(n);
               const onLunch = [...onClockToday].filter((n) => !assignedNames.has(n));
               return (
-                <tr key={time} className="align-top">
-                  <td className="p-1 whitespace-nowrap font-medium text-muted-foreground border border-border sticky left-0 bg-card z-10">
+                <tr key={time} className={`align-top ${time === "5:30" ? "bg-closed-green/30" : ""}`}>
+                  <td className={`p-1 whitespace-nowrap font-medium border border-border sticky left-0 z-10 ${time === "5:30" ? "text-closed-green-foreground bg-closed-green/30" : "text-muted-foreground bg-card"}`}>
                     {time}
                   </td>
                   {rooms.map((r) => {
