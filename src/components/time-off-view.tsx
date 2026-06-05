@@ -36,10 +36,10 @@ export function TimeOffView() {
 
   function statusBadge(status: string) {
     if (status === "approved")
-      return <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-teal text-teal-foreground text-xs font-semibold">Approved</span>;
+      return <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-teal text-teal-foreground text-xs font-semibold capitalize">Approved</span>;
     if (status === "denied")
-      return <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-destructive text-destructive-foreground text-xs font-semibold">Denied</span>;
-    return <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-accent text-accent-foreground text-xs font-semibold">Pending</span>;
+      return <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-destructive text-destructive-foreground text-xs font-semibold capitalize">Denied</span>;
+    return <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-accent text-accent-foreground text-xs font-semibold capitalize">Pending</span>;
   }
 
   return (
@@ -84,51 +84,57 @@ export function TimeOffView() {
           </p>
         </div>
       ) : (
-        <div className="space-y-3">
-          {filtered.map((r) => (
-            <div key={r.id} className="bg-secondary rounded-xl p-4 space-y-2">
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <div className="font-semibold text-foreground text-base">{r.staff_name}</div>
-                  <div className="text-xs text-muted-foreground mt-0.5">
-                    Submitted {new Date(r.created_at).toLocaleDateString()}
-                  </div>
-                </div>
-                {statusBadge(r.status)}
-              </div>
-              <div className="text-sm text-foreground">
-                <span className="text-muted-foreground">Date(s) requested:</span>{" "}
-                {r.date_requested}
-              </div>
-              <div className="text-sm text-foreground">
-                <span className="text-muted-foreground">Reason:</span>{" "}
-                {r.reason}
-              </div>
-              <div className="flex gap-2 pt-1">
-                <button
-                  onClick={() => handleStatus(r.id, "approved")}
-                  disabled={r.status === "approved"}
-                  className="flex-1 min-h-9 rounded-lg text-xs font-semibold bg-teal text-teal-foreground disabled:opacity-40"
-                >
-                  Approve
-                </button>
-                <button
-                  onClick={() => handleStatus(r.id, "denied")}
-                  disabled={r.status === "denied"}
-                  className="flex-1 min-h-9 rounded-lg text-xs font-semibold bg-destructive text-destructive-foreground disabled:opacity-40"
-                >
-                  Deny
-                </button>
-                <button
-                  onClick={() => handleStatus(r.id, "pending")}
-                  disabled={r.status === "pending"}
-                  className="flex-1 min-h-9 rounded-lg text-xs font-semibold bg-accent text-accent-foreground disabled:opacity-40"
-                >
-                  Reset
-                </button>
-              </div>
-            </div>
-          ))}
+        <div className="overflow-x-auto -mx-4 px-4">
+          <table className="w-full text-sm border-separate border-spacing-y-2 min-w-[640px]">
+            <thead>
+              <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <th className="px-3 py-2 font-semibold">Staff</th>
+                <th className="px-3 py-2 font-semibold">Date(s) Requested</th>
+                <th className="px-3 py-2 font-semibold">Reason</th>
+                <th className="px-3 py-2 font-semibold">Submitted</th>
+                <th className="px-3 py-2 font-semibold">Status</th>
+                <th className="px-3 py-2 font-semibold text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.map((r) => (
+                <tr key={r.id} className="bg-secondary">
+                  <td className="px-3 py-3 font-semibold text-foreground rounded-l-xl align-top">{r.staff_name}</td>
+                  <td className="px-3 py-3 align-top text-foreground">{r.date_requested}</td>
+                  <td className="px-3 py-3 align-top text-foreground max-w-xs">{r.reason}</td>
+                  <td className="px-3 py-3 align-top text-muted-foreground whitespace-nowrap">
+                    {new Date(r.created_at).toLocaleDateString()}
+                  </td>
+                  <td className="px-3 py-3 align-top">{statusBadge(r.status)}</td>
+                  <td className="px-3 py-3 align-top rounded-r-xl">
+                    <div className="flex gap-1 justify-end">
+                      <button
+                        onClick={() => handleStatus(r.id, "approved")}
+                        disabled={r.status === "approved"}
+                        className="min-h-8 px-2 rounded-lg text-xs font-semibold bg-teal text-teal-foreground disabled:opacity-40"
+                      >
+                        Approve
+                      </button>
+                      <button
+                        onClick={() => handleStatus(r.id, "denied")}
+                        disabled={r.status === "denied"}
+                        className="min-h-8 px-2 rounded-lg text-xs font-semibold bg-destructive text-destructive-foreground disabled:opacity-40"
+                      >
+                        Deny
+                      </button>
+                      <button
+                        onClick={() => handleStatus(r.id, "pending")}
+                        disabled={r.status === "pending"}
+                        className="min-h-8 px-2 rounded-lg text-xs font-semibold bg-accent text-accent-foreground disabled:opacity-40"
+                      >
+                        Reset
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </section>
