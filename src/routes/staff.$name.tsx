@@ -100,7 +100,7 @@ function StaffPage() {
             <TreePine className="w-4 h-4" /> Our Rooms
           </Link>
           <a
-            href={`sms:+14104744156?&body=${encodeURIComponent(
+            href={`sms:+14104744156,+12404167395?&body=${encodeURIComponent(
               "Hi, I would like to request time off.\nMy name: " +
                 name +
                 "\nWeek: " +
