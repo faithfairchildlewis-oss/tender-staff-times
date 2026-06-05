@@ -7,6 +7,7 @@ import { formatWeekRange, mmddFor } from "@/lib/format-date";
 import { PageBanner } from "@/components/page-banner";
 import { holidayForOffset } from "@/lib/holidays";
 import { buildDayItems } from "@/lib/day-items";
+import { getDailyContent } from "@/data/daily-content";
 
 export const Route = createFileRoute("/staff/$name")({
   head: ({ params }) => ({
@@ -40,6 +41,8 @@ function StaffPage() {
     );
   }
   const hours = weeklyHours(schedule, name);
+
+  const { encouragement } = getDailyContent(new Date().getDate());
 
   // Pay period: every 2 weeks, anchored to May 25, 2026 (Mon)
   const ANCHOR = new Date(2026, 4, 25);
@@ -78,6 +81,7 @@ function StaffPage() {
     <div className="min-h-dvh bg-background pb-24">
       <PageBanner
         title={`${name}'s Schedule`}
+        subline={encouragement}
       >
         <div className="flex gap-2">
           <Link
