@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { MessageSquare } from "lucide-react";
 import { staffNames } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
-import { formatWeekRange } from "@/lib/format-date";
 import { getDailyContent } from "@/data/daily-content";
 
 export const Route = createFileRoute("/")({
@@ -50,7 +49,7 @@ function Index() {
 
   const now = new Date();
   const dayOfMonth = now.getDate();
-  const { verse, encouragement: subline } = getDailyContent(dayOfMonth);
+  const { verse } = getDailyContent(dayOfMonth);
   return (
     <div className="min-h-dvh bg-background pb-10">
       <header className="bg-primary text-primary-foreground px-5 pt-8 pb-7 shadow-md rounded-b-3xl relative">
@@ -64,31 +63,31 @@ function Index() {
         </div>
         <div className="text-center">
           <h1 className="text-xl font-bold tracking-tight leading-none">
-            {schedule?.center ? `${schedule.center} Staff Schedule` : "Tender Years of Deale Staff Schedule"}
+            Tender Years of Deale
           </h1>
           <p className="text-sm italic mt-2 leading-tight text-primary-foreground/95">
             Where God's word falls like gentle rain.
           </p>
         </div>
-      </header>
 
-      <main className="px-4 -mt-6 max-w-md mx-auto">
-        <section className="bg-lilac-light rounded-2xl shadow-sm p-5">
+        <section className="bg-lilac-light rounded-2xl shadow-sm p-5 mt-5">
           <p className="text-xs font-semibold text-lilac-foreground uppercase tracking-wide">Verse of the Day</p>
           <p className="text-base italic text-lilac-foreground mt-2 leading-relaxed">"{verse.text}"</p>
           <p className="text-xs text-lilac-foreground mt-2 opacity-70">{verse.ref}</p>
         </section>
+      </header>
 
-        <section className="bg-card rounded-2xl shadow-sm p-5 mt-5">
+      <main className="px-4 mt-5 max-w-md mx-auto">
+        <section className="bg-card rounded-2xl shadow-sm p-5">
           <h2 className="text-base font-semibold text-foreground mb-3">Select your name</h2>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
             {names.map((n) => (
               <Link
                 key={n}
                 to="/staff/$name"
                 params={{ name: n }}
                 aria-label={`View ${n}'s schedule`}
-                className="bg-secondary text-secondary-foreground hover:bg-accent active:scale-[0.98] transition text-center font-semibold py-4 min-h-14 flex items-center justify-center rounded-xl text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                className="bg-secondary text-secondary-foreground hover:bg-accent active:scale-[0.98] transition text-center font-semibold py-2 min-h-10 flex items-center justify-center rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
               >
                 {n}
               </Link>
