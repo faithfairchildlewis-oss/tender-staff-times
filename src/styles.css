@@ -60,6 +60,8 @@
   --color-row-stripe: var(--row-stripe);
   --color-closed: var(--closed);
   --color-closed-foreground: var(--closed-foreground);
+  --color-closed-green: var(--closed-green);
+  --color-closed-green-foreground: var(--closed-green-foreground);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -100,6 +102,8 @@
   --row-stripe: oklch(0.94 0.04 230);
   --closed: oklch(0.78 0.15 145);
   --closed-foreground: oklch(0.2 0.08 145);
+  --closed-green: oklch(0.85 0.14 140);
+  --closed-green-foreground: oklch(0.2 0.08 140);
   --border: oklch(0.9 0.015 200);
   --input: oklch(0.92 0.015 200);
   --ring: oklch(0.45 0.06 195);
@@ -144,6 +148,8 @@
   --row-stripe: oklch(0.35 0.06 230);
   --closed: oklch(0.55 0.15 145);
   --closed-foreground: oklch(0.98 0.02 145);
+  --closed-green: oklch(0.55 0.14 140);
+  --closed-green-foreground: oklch(0.98 0.02 140);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.551 0.027 264.364);
