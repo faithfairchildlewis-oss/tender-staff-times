@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Printer, ArrowLeft } from "lucide-react";
 import { DAYS } from "@/data/schedule";
 import { DEFAULT_TIMES, DEFAULT_ROOMS, deriveDays } from "@/lib/schedule-derive";
-import { useCurrentSchedule } from "@/hooks/use-schedule";
+import { useCurrentSchedule, useLiveSchedules } from "@/hooks/use-schedule";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/print/rooms")({
@@ -17,9 +17,16 @@ export const Route = createFileRoute("/print/rooms")({
 const CLASSROOMS = ["Room F", "Room I", "G/H", "J/K"];
 
 function PrintRoomsPage() {
-  const { data: schedule, isLoading } = useCurrentSchedule();
+  const { data: current, isLoading } = useCurrentSchedule();
+  const { data: weeks } = useLiveSchedules();
+  const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [day, setDay] = useState<string>("Monday");
   const [roomFilter, setRoomFilter] = useState<"all" | "classrooms">("all");
+
+  const schedule = useMemo(() => {
+    if (!selectedKey) return current;
+    return weeks?.find((w) => (w.start_date ?? w.week) === selectedKey) ?? current;
+  }, [selectedKey, weeks, current]);
 
   if (isLoading || !schedule) {
     return <div className="p-8 text-center text-muted-foreground">Loading schedule…</div>;
@@ -55,9 +62,28 @@ function PrintRoomsPage() {
         <Link to="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
           <ArrowLeft className="w-4 h-4" /> Back
         </Link>
-        <Button onClick={() => window.print()} size="sm">
-          <Printer className="w-4 h-4" /> Print this page
-        </Button>
+        <div className="flex items-center gap-2">
+          {weeks && weeks.length > 1 && (
+            <select
+              value={selectedKey ?? (current?.start_date ?? current?.week ?? "")}
+              onChange={(e) => setSelectedKey(e.target.value)}
+              className="h-9 rounded-md border bg-background px-2 text-sm"
+              aria-label="Select week"
+            >
+              {weeks.map((w) => {
+                const key = w.start_date ?? w.week;
+                return (
+                  <option key={key} value={key}>
+                    Week of {w.week}
+                  </option>
+                );
+              })}
+            </select>
+          )}
+          <Button onClick={() => window.print()} size="sm">
+            <Printer className="w-4 h-4" /> Print this page
+          </Button>
+        </div>
       </div>
 
       <main className="max-w-6xl mx-auto px-4 py-6 print:p-0 print:max-w-none">
