@@ -3,6 +3,11 @@ import { MessageSquare, Printer } from "lucide-react";
 import { staffNames } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 import { getDailyContent } from "@/data/daily-content";
+import { useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { createTimeOffRequest } from "@/lib/time-off.functions";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -42,10 +47,6 @@ export const Route = createFileRoute("/")({
 function Index() {
   const { data: schedule } = useCurrentSchedule();
   const names = schedule ? staffNames(schedule).sort() : [];
-  const phone = "4104744156";
-  const smsBody = encodeURIComponent(
-    "Hi, I would like to request time off.\nMy name is: \nDate(s) requested: \nReason: "
-  );
 
   const now = new Date();
   const dayOfMonth = now.getDate();
@@ -95,21 +96,7 @@ function Index() {
           </div>
         </section>
 
-        <a
-          href={`sms:+14104744156,+12404167395?&body=${smsBody}`}
-          aria-label="Request time off by texting Michelle and Pastor Faith"
-          className="mt-5 flex items-center gap-3 bg-primary text-primary-foreground rounded-2xl p-5 min-h-16 shadow-sm active:scale-[0.99] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-        >
-          <div className="bg-primary-foreground/15 rounded-xl p-3" aria-hidden="true">
-            <MessageSquare className="w-6 h-6" />
-          </div>
-          <div className="min-w-0">
-            <div className="font-semibold text-base">Request Time Off</div>
-            <div className="text-sm opacity-90">
-              Approval needed from Michelle & Pastor Faith
-            </div>
-          </div>
-        </a>
+        <TimeOffRequestButton names={names} />
 
         <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Link
