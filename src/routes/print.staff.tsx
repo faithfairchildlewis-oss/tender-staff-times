@@ -4,6 +4,7 @@ import { Printer, ArrowLeft } from "lucide-react";
 import { blocksForDay, staffNames, weeklyHours, DAYS } from "@/data/schedule";
 import { useCurrentSchedule, useLiveSchedules } from "@/hooks/use-schedule";
 import { Button } from "@/components/ui/button";
+import { DAY_NAMES } from "@/lib/schedule-derive";
 
 export const Route = createFileRoute("/print/staff")({
   ssr: false,
@@ -12,6 +13,19 @@ export const Route = createFileRoute("/print/staff")({
   }),
   component: PrintStaffPage,
 });
+
+function dateForDay(schedule: ReturnType<typeof useCurrentSchedule>['data'], dayName: string): string {
+  if (!schedule) return '';
+  const fromDays = schedule.days?.find((d) => d.day === dayName)?.date;
+  if (fromDays) return fromDays;
+  if (!schedule.start_date) return '';
+  const monday = new Date(schedule.start_date + 'T00:00:00');
+  const idx = DAY_NAMES.indexOf(dayName as typeof DAY_NAMES[number]);
+  if (idx < 0) return '';
+  const date = new Date(monday);
+  date.setDate(monday.getDate() + idx);
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
 
 function PrintStaffPage() {
   const { data: current, isLoading } = useCurrentSchedule();
@@ -98,7 +112,10 @@ function PrintStaffPage() {
               <tr>
                 <th className="text-left p-2 border-b font-semibold sticky left-0 bg-muted">Staff</th>
                 {DAYS.map((d) => (
-                  <th key={d} className="text-left p-2 border-b border-l font-semibold">{d}</th>
+                  <th key={d} className="text-left p-2 border-b border-l font-semibold">
+                    {d}
+                    <span className="block text-[10px] font-normal text-muted-foreground">{dateForDay(schedule, d)}</span>
+                  </th>
                 ))}
                 <th className="text-right p-2 border-b border-l font-semibold">Total</th>
               </tr>

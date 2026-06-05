@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Printer, ArrowLeft } from "lucide-react";
 import { DAYS } from "@/data/schedule";
-import { DEFAULT_TIMES, DEFAULT_ROOMS, deriveDays } from "@/lib/schedule-derive";
+import { DEFAULT_TIMES, DEFAULT_ROOMS, deriveDays, DAY_NAMES } from "@/lib/schedule-derive";
 import { useCurrentSchedule, useLiveSchedules } from "@/hooks/use-schedule";
 import { Button } from "@/components/ui/button";
 
@@ -15,6 +15,20 @@ export const Route = createFileRoute("/print/rooms")({
 });
 
 const CLASSROOMS = ["Room F", "Room I", "G/H", "J/K"];
+
+function dateForDay(schedule: ReturnType<typeof useCurrentSchedule>['data'], dayName: string): string {
+  if (!schedule) return '';
+  const fromDays = schedule.days?.find((d) => d.day === dayName)?.date;
+  if (fromDays) return fromDays;
+  if (!schedule.start_date) return '';
+  const monday = new Date(schedule.start_date + 'T00:00:00');
+  const idx = DAY_NAMES.indexOf(dayName as typeof DAY_NAMES[number]);
+  if (idx < 0) return '';
+  const date = new Date(monday);
+  date.setDate(monday.getDate() + idx);
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
 
 function PrintRoomsPage() {
   const { data: current, isLoading } = useCurrentSchedule();
