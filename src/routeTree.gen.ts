@@ -18,6 +18,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StaffNameRouteImport } from './routes/staff.$name'
 import { Route as PrintStaffRouteImport } from './routes/print.staff'
+import { Route as PrintRoomsRouteImport } from './routes/print.rooms'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -64,6 +65,11 @@ const PrintStaffRoute = PrintStaffRouteImport.update({
   path: '/print/staff',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrintRoomsRoute = PrintRoomsRouteImport.update({
+  id: '/print/rooms',
+  path: '/print/rooms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
 }
@@ -84,6 +91,7 @@ export interface FileRoutesByTo {
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
 }
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
 }
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/rooms'
     | '/schedule'
     | '/sitemap.xml'
+    | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
   fileRoutesByTo: FileRoutesByTo
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
     | '/rooms'
     | '/schedule'
     | '/sitemap.xml'
+    | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
   id:
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/rooms'
     | '/schedule'
     | '/sitemap.xml'
+    | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
   fileRoutesById: FileRoutesById
@@ -143,6 +155,7 @@ export interface RootRouteChildren {
   RoomsRoute: typeof RoomsRoute
   ScheduleRoute: typeof ScheduleRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  PrintRoomsRoute: typeof PrintRoomsRoute
   PrintStaffRoute: typeof PrintStaffRoute
   StaffNameRoute: typeof StaffNameRoute
 }
@@ -212,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrintStaffRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/print/rooms': {
+      id: '/print/rooms'
+      path: '/print/rooms'
+      fullPath: '/print/rooms'
+      preLoaderRoute: typeof PrintRoomsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -223,6 +243,7 @@ const rootRouteChildren: RootRouteChildren = {
   RoomsRoute: RoomsRoute,
   ScheduleRoute: ScheduleRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  PrintRoomsRoute: PrintRoomsRoute,
   PrintStaffRoute: PrintStaffRoute,
   StaffNameRoute: StaffNameRoute,
 }
