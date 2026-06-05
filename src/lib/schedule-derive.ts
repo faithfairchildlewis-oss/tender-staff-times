@@ -8,7 +8,7 @@ export const DEFAULT_TIMES: string[] = [
   "3:00 PM","3:30 PM","4:00 PM","4:30 PM","5:00 PM","5:30 PM",
 ];
 
-export const DEFAULT_ROOMS = ["M.O.D.", "Room F", "Room I", "G/H", "J/K", "SAC"];
+export const DEFAULT_ROOMS = ["Room F", "Room I", "G/H", "J/K", "M.O.D.", "SAC"];
 
 export const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] as const;
 
