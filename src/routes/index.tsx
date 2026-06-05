@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Printer } from "lucide-react";
 import { staffNames } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 import { getDailyContent } from "@/data/daily-content";
@@ -110,6 +110,20 @@ function Index() {
             </div>
           </div>
         </a>
+
+        <Link
+          to="/print"
+          aria-label="Open printable schedule"
+          className="mt-3 flex items-center gap-3 bg-secondary text-secondary-foreground rounded-2xl p-5 min-h-16 shadow-sm active:scale-[0.99] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        >
+          <div className="bg-primary/10 rounded-xl p-3" aria-hidden="true">
+            <Printer className="w-6 h-6" />
+          </div>
+          <div className="min-w-0">
+            <div className="font-semibold text-base">Print Schedule</div>
+            <div className="text-sm opacity-80">Weekly hours & daily room view</div>
+          </div>
+        </Link>
 
         <div className="mt-8 text-center">
           <Link
