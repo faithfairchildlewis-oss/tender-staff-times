@@ -104,6 +104,9 @@ export type Database = {
         Row: {
           created_at: string | null
           date_requested: string
+          decided_at: string | null
+          decided_by: string | null
+          decided_by_email: string | null
           id: string
           reason: string
           staff_name: string
@@ -112,6 +115,9 @@ export type Database = {
         Insert: {
           created_at?: string | null
           date_requested: string
+          decided_at?: string | null
+          decided_by?: string | null
+          decided_by_email?: string | null
           id?: string
           reason: string
           staff_name: string
@@ -120,6 +126,9 @@ export type Database = {
         Update: {
           created_at?: string | null
           date_requested?: string
+          decided_at?: string | null
+          decided_by?: string | null
+          decided_by_email?: string | null
           id?: string
           reason?: string
           staff_name?: string
