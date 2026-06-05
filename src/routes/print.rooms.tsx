@@ -130,7 +130,7 @@ function PrintRoomsPage() {
                   day === d ? "bg-background shadow text-foreground" : "text-muted-foreground"
                 }`}
               >
-                {d}
+                {d}, {dateForDay(schedule, d)}
               </button>
             ))}
           </div>
