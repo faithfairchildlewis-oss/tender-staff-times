@@ -13,11 +13,12 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as RoomsRouteImport } from './routes/rooms'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as PrintRouteImport } from './routes/print'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StaffNameRouteImport } from './routes/staff.$name'
+import { Route as PrintStaffRouteImport } from './routes/print.staff'
+import { Route as PrintRoomsRouteImport } from './routes/print.rooms'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -37,11 +38,6 @@ const RoomsRoute = RoomsRouteImport.update({
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrintRoute = PrintRouteImport.update({
-  id: '/print',
-  path: '/print',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -64,27 +60,39 @@ const StaffNameRoute = StaffNameRouteImport.update({
   path: '/staff/$name',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrintStaffRoute = PrintStaffRouteImport.update({
+  id: '/print/staff',
+  path: '/print/staff',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrintRoomsRoute = PrintRoomsRouteImport.update({
+  id: '/print/rooms',
+  path: '/print/rooms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
-  '/print': typeof PrintRoute
   '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/print/rooms': typeof PrintRoomsRoute
+  '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
-  '/print': typeof PrintRoute
   '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/print/rooms': typeof PrintRoomsRoute
+  '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
 }
 export interface FileRoutesById {
@@ -92,11 +100,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
-  '/print': typeof PrintRoute
   '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/print/rooms': typeof PrintRoomsRoute
+  '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
 }
 export interface FileRouteTypes {
@@ -105,33 +114,36 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/login'
-    | '/print'
     | '/reset-password'
     | '/rooms'
     | '/schedule'
     | '/sitemap.xml'
+    | '/print/rooms'
+    | '/print/staff'
     | '/staff/$name'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
     | '/login'
-    | '/print'
     | '/reset-password'
     | '/rooms'
     | '/schedule'
     | '/sitemap.xml'
+    | '/print/rooms'
+    | '/print/staff'
     | '/staff/$name'
   id:
     | '__root__'
     | '/'
     | '/admin'
     | '/login'
-    | '/print'
     | '/reset-password'
     | '/rooms'
     | '/schedule'
     | '/sitemap.xml'
+    | '/print/rooms'
+    | '/print/staff'
     | '/staff/$name'
   fileRoutesById: FileRoutesById
 }
@@ -139,11 +151,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   LoginRoute: typeof LoginRoute
-  PrintRoute: typeof PrintRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   RoomsRoute: typeof RoomsRoute
   ScheduleRoute: typeof ScheduleRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  PrintRoomsRoute: typeof PrintRoomsRoute
+  PrintStaffRoute: typeof PrintStaffRoute
   StaffNameRoute: typeof StaffNameRoute
 }
 
@@ -177,13 +190,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/print': {
-      id: '/print'
-      path: '/print'
-      fullPath: '/print'
-      preLoaderRoute: typeof PrintRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -212,6 +218,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StaffNameRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/print/staff': {
+      id: '/print/staff'
+      path: '/print/staff'
+      fullPath: '/print/staff'
+      preLoaderRoute: typeof PrintStaffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/print/rooms': {
+      id: '/print/rooms'
+      path: '/print/rooms'
+      fullPath: '/print/rooms'
+      preLoaderRoute: typeof PrintRoomsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -219,11 +239,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   LoginRoute: LoginRoute,
-  PrintRoute: PrintRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   RoomsRoute: RoomsRoute,
   ScheduleRoute: ScheduleRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  PrintRoomsRoute: PrintRoomsRoute,
+  PrintStaffRoute: PrintStaffRoute,
   StaffNameRoute: StaffNameRoute,
 }
 export const routeTree = rootRouteImport

@@ -111,19 +111,24 @@ function Index() {
           </div>
         </a>
 
-        <Link
-          to="/print"
-          aria-label="Open printable schedule"
-          className="mt-3 flex items-center gap-3 bg-secondary text-secondary-foreground rounded-2xl p-5 min-h-16 shadow-sm active:scale-[0.99] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-        >
-          <div className="bg-primary/10 rounded-xl p-3" aria-hidden="true">
-            <Printer className="w-6 h-6" />
-          </div>
-          <div className="min-w-0">
-            <div className="font-semibold text-base">Print Schedule</div>
-            <div className="text-sm opacity-80">Weekly hours & daily room view</div>
-          </div>
-        </Link>
+        <div className="mt-3 grid grid-cols-2 gap-3">
+          <Link
+            to="/print/staff"
+            aria-label="Open printable staff schedule"
+            className="flex flex-col items-center justify-center gap-2 bg-secondary text-secondary-foreground rounded-2xl p-4 min-h-20 shadow-sm active:scale-[0.99] transition text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            <Printer className="w-5 h-5" aria-hidden="true" />
+            <span className="font-semibold text-sm leading-tight">Print Staff Schedule</span>
+          </Link>
+          <Link
+            to="/print/rooms"
+            aria-label="Open printable room view"
+            className="flex flex-col items-center justify-center gap-2 bg-secondary text-secondary-foreground rounded-2xl p-4 min-h-20 shadow-sm active:scale-[0.99] transition text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            <Printer className="w-5 h-5" aria-hidden="true" />
+            <span className="font-semibold text-sm leading-tight">Print Room View</span>
+          </Link>
+        </div>
 
         <div className="mt-8 text-center">
           <Link
