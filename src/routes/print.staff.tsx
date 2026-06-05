@@ -70,9 +70,10 @@ function PrintStaffPage() {
             >
               {weeks.map((w) => {
                 const key = w.start_date ?? w.week;
+                const label = w.week.replace(/^\s*copy of\s+/i, "");
                 return (
                   <option key={key} value={key}>
-                    Week of {w.week}
+                    Week of {label}
                   </option>
                 );
               })}
