@@ -8,6 +8,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/print")({
+  ssr: false,
   head: () => ({
     meta: [{ title: "Print Schedule — Tender Years of Deale" }],
   }),
