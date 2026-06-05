@@ -108,33 +108,46 @@ function RoomsPage() {
     return (weeks.length - 1) * 5;
   }, [schedules, weeks]);
 
+  const todayOffset = useMemo(() => {
+    const d = new Date().getDay();
+    // 0=Sun, 1=Mon... clamp Mon-Fri (0-4)
+    return d >= 1 && d <= 5 ? d - 1 : 0;
+  }, []);
+
+  const todayTabIndex = useMemo(() => {
+    if (tabs.length === 0) return 0;
+    const idx = currentWeekStartTab + todayOffset;
+    return Math.min(idx, tabs.length - 1);
+  }, [tabs.length, currentWeekStartTab, todayOffset]);
+
   const triggerFlash = (weekIdx: number) => {
     if (flashTimeoutRef.current) clearTimeout(flashTimeoutRef.current);
     setFlashWeek(weekIdx);
     flashTimeoutRef.current = setTimeout(() => setFlashWeek(null), 1500);
   };
 
-  // Auto-scroll to current week on first load
+  // Auto-scroll to today's day on first load
   useEffect(() => {
     if (tabs.length === 0) return;
-    const btn = buttonRefs.current[currentWeekStartTab];
+    setActiveIdx(todayTabIndex);
+    const btn = buttonRefs.current[todayTabIndex];
     const strip = stripRef.current;
     if (btn && strip) {
       strip.scrollTo({ left: btn.offsetLeft - strip.clientWidth / 2 + btn.clientWidth / 2, behavior: "smooth" });
     }
-    const weekIdx = tabs[currentWeekStartTab]?.weekIdx;
+    const weekIdx = tabs[todayTabIndex]?.weekIdx;
     if (weekIdx !== undefined) triggerFlash(weekIdx);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tabs.length, currentWeekStartTab]);
+  }, [tabs.length, todayTabIndex]);
 
   const scrollToCurrentWeek = () => {
-    setActiveIdx(currentWeekStartTab);
-    const btn = buttonRefs.current[currentWeekStartTab];
+    setActiveIdx(todayTabIndex);
+    const btn = buttonRefs.current[todayTabIndex];
     const strip = stripRef.current;
     if (btn && strip) {
       strip.scrollTo({ left: btn.offsetLeft - strip.clientWidth / 2 + btn.clientWidth / 2, behavior: "smooth" });
     }
-    const weekIdx = tabs[currentWeekStartTab]?.weekIdx;
+    const weekIdx = tabs[todayTabIndex]?.weekIdx;
     if (weekIdx !== undefined) triggerFlash(weekIdx);
   };
 
