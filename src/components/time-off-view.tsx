@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { CalendarX2, Filter } from "lucide-react";
+import { CalendarX2, Filter, X } from "lucide-react";
 import { getTimeOffRequests, updateTimeOffStatus } from "@/lib/time-off.functions";
 
 export function TimeOffView() {
@@ -14,12 +14,22 @@ export function TimeOffView() {
   });
   const [filterStatus, setFilterStatus] = useState<"all" | "pending" | "approved" | "denied">("all");
   const [search, setSearch] = useState("");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
 
   const allRequests = requests ?? [];
   const filtered = allRequests.filter((r) => {
     const matchStatus = filterStatus === "all" || r.status === filterStatus;
     const matchSearch = search.trim() === "" || r.staff_name.toLowerCase().includes(search.trim().toLowerCase());
-    return matchStatus && matchSearch;
+    let matchDate = true;
+    if (dateFrom && r.date_from) {
+      const reqEnd = r.date_to ?? r.date_from;
+      matchDate = matchDate && reqEnd >= dateFrom;
+    }
+    if (dateTo && r.date_from) {
+      matchDate = matchDate && r.date_from <= dateTo;
+    }
+    return matchStatus && matchSearch && matchDate;
   });
 
   const counts = {
@@ -28,6 +38,8 @@ export function TimeOffView() {
     approved: allRequests.filter((r) => r.status === "approved").length,
     denied: allRequests.filter((r) => r.status === "denied").length,
   };
+
+  const hasDateFilter = dateFrom || dateTo;
 
   async function handleStatus(id: string, status: "pending" | "approved" | "denied") {
     await updateStatus({ data: { id, status } });
@@ -71,6 +83,38 @@ export function TimeOffView() {
               {s} ({counts[s]})
             </button>
           ))}
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="flex-1 grid grid-cols-2 gap-2">
+            <div>
+              <label className="text-xs text-muted-foreground font-medium">From</label>
+              <input
+                type="date"
+                value={dateFrom}
+                onChange={(e) => setDateFrom(e.target.value)}
+                className="w-full bg-secondary rounded-xl px-3 py-2 min-h-10 text-sm mt-0.5"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-muted-foreground font-medium">To</label>
+              <input
+                type="date"
+                value={dateTo}
+                onChange={(e) => setDateTo(e.target.value)}
+                min={dateFrom}
+                className="w-full bg-secondary rounded-xl px-3 py-2 min-h-10 text-sm mt-0.5"
+              />
+            </div>
+          </div>
+          {hasDateFilter && (
+            <button
+              onClick={() => { setDateFrom(""); setDateTo(""); }}
+              className="mt-4 min-h-10 px-2 rounded-lg bg-secondary text-muted-foreground"
+              aria-label="Clear date filter"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
         </div>
       </div>
 

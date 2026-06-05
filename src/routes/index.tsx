@@ -143,20 +143,22 @@ function Index() {
 function TimeOffRequestButton({ names }: { names: string[] }) {
   const [open, setOpen] = useState(false);
   const [staffName, setStaffName] = useState("");
-  const [dateRequested, setDateRequested] = useState("");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
   const [reason, setReason] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const submit = useServerFn(createTimeOffRequest);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!staffName.trim() || !dateRequested.trim() || !reason.trim()) return;
+    if (!staffName.trim() || !dateFrom.trim() || !reason.trim()) return;
     setSubmitting(true);
     try {
-      await submit({ data: { staff_name: staffName.trim(), date_requested: dateRequested.trim(), reason: reason.trim() } });
+      await submit({ data: { staff_name: staffName.trim(), date_from: dateFrom, date_to: dateTo || null, reason: reason.trim() } });
       toast.success("Time-off request submitted");
       setStaffName("");
-      setDateRequested("");
+      setDateFrom("");
+      setDateTo("");
       setReason("");
       setOpen(false);
     } catch (err) {
@@ -217,17 +219,29 @@ function TimeOffRequestButton({ names }: { names: string[] }) {
               />
             )}
           </div>
-          <div className="space-y-1">
-            <label htmlFor="to-date" className="text-sm font-medium text-foreground">Date(s) requested</label>
-            <input
-              id="to-date"
-              value={dateRequested}
-              onChange={(e) => setDateRequested(e.target.value)}
-              required
-              maxLength={200}
-              placeholder="e.g. July 14–16, 2026"
-              className="w-full bg-secondary rounded-xl px-3 py-2 min-h-11 text-sm"
-            />
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <label htmlFor="to-date-from" className="text-sm font-medium text-foreground">Start date</label>
+              <input
+                id="to-date-from"
+                type="date"
+                value={dateFrom}
+                onChange={(e) => setDateFrom(e.target.value)}
+                required
+                className="w-full bg-secondary rounded-xl px-3 py-2 min-h-11 text-sm"
+              />
+            </div>
+            <div className="space-y-1">
+              <label htmlFor="to-date-to" className="text-sm font-medium text-foreground">End date</label>
+              <input
+                id="to-date-to"
+                type="date"
+                value={dateTo}
+                onChange={(e) => setDateTo(e.target.value)}
+                min={dateFrom}
+                className="w-full bg-secondary rounded-xl px-3 py-2 min-h-11 text-sm"
+              />
+            </div>
           </div>
           <div className="space-y-1">
             <label htmlFor="to-reason" className="text-sm font-medium text-foreground">Reason</label>
