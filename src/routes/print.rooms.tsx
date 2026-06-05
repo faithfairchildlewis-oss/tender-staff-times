@@ -37,10 +37,16 @@ function PrintRoomsPage() {
   return (
     <div className="min-h-dvh bg-background">
       <style>{`
+        @page { size: landscape; margin: 0.35in; }
         @media print {
           .no-print { display: none !important; }
           .print-only { display: block !important; }
           body { background: white !important; }
+          main { padding: 0 !important; }
+          header { margin-bottom: 4px !important; }
+          table { font-size: 9px !important; }
+          th, td { padding: 2px 4px !important; }
+          tr { page-break-inside: avoid; }
         }
         .print-only { display: none; }
       `}</style>
