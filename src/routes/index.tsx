@@ -96,8 +96,8 @@ function Index() {
         </section>
 
         <a
-          href={`sms:+1${phone}?&body=${smsBody}`}
-          aria-label="Request time off by texting Michelle and Pastor Faith at 410-474-4156"
+          href={`sms:+14104744156,+12404167395?&body=${smsBody}`}
+          aria-label="Request time off by texting Michelle and Pastor Faith"
           className="mt-5 flex items-center gap-3 bg-primary text-primary-foreground rounded-2xl p-5 min-h-16 shadow-sm active:scale-[0.99] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           <div className="bg-primary-foreground/15 rounded-xl p-3" aria-hidden="true">
@@ -106,7 +106,7 @@ function Index() {
           <div className="min-w-0">
             <div className="font-semibold text-base">Request Time Off</div>
             <div className="text-sm opacity-90">
-              notify Michelle & Pastor Faith
+              Approval needed from Michelle & Pastor Faith
             </div>
           </div>
         </a>
