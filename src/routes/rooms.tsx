@@ -5,7 +5,7 @@ import { PageBanner } from "@/components/page-banner";
 import { useLiveSchedules } from "@/hooks/use-schedule";
 import { deriveDays, DAY_NAMES, DEFAULT_ROOMS } from "@/lib/schedule-derive";
 import { holidayForOffset } from "@/lib/holidays";
-import { monthDayFor } from "@/lib/format-date";
+import { monthDayFor, formatWeekRange } from "@/lib/format-date";
 
 type TabDay = {
   weekIdx: number;
@@ -199,12 +199,18 @@ function RoomsPage() {
           >
             <TreePine className="w-4 h-4" /> Our Rooms
           </span>
-          <button
-            type="button"
+          <a
+            href={`sms:+14104744156,+12404167395?&body=${encodeURIComponent(
+              "Hi, I would like to request time off." +
+                (from ? "\nMy name: " + from : "") +
+                "\nWeek: " +
+                (schedule.start_date ? formatWeekRange(schedule.start_date) : schedule.week ?? "—") +
+                "\nDate(s) requested: \nReason: "
+            )}`}
             className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
           >
             <CalendarOff className="w-4 h-4" /> Request Off
-          </button>
+          </a>
         </div>
       </PageBanner>
 
