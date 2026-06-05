@@ -16,7 +16,17 @@ export const Route = createFileRoute("/print/staff")({
 function PrintStaffPage() {
   const { data: current, isLoading } = useCurrentSchedule();
   const { data: weeks } = useLiveSchedules();
-  const [selectedKey, setSelectedKey] = useState<string | null>(null);
+  const [selectedKey, setSelectedKey] = useState<string | null>(() => {
+    if (typeof window === "undefined") return null;
+    return window.localStorage.getItem("print:selectedWeek");
+  });
+
+  const handleWeekChange = (key: string) => {
+    setSelectedKey(key);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("print:selectedWeek", key);
+    }
+  };
 
   const schedule = useMemo(() => {
     if (!selectedKey) return current;
@@ -54,7 +64,7 @@ function PrintStaffPage() {
           {weeks && weeks.length > 1 && (
             <select
               value={selectedKey ?? (current?.start_date ?? current?.week ?? "")}
-              onChange={(e) => setSelectedKey(e.target.value)}
+              onChange={(e) => handleWeekChange(e.target.value)}
               className="h-9 rounded-md border bg-background px-2 text-sm"
               aria-label="Select week"
             >
