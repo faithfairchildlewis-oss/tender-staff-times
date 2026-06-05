@@ -40,3 +40,25 @@ export const updateTimeOffStatus = createServerFn({ method: "POST" })
     if (error) throw error;
     return { ok: true };
   });
+
+export const createTimeOffRequest = createServerFn({ method: "POST" })
+  .inputValidator((input: { staff_name: string; date_requested: string; reason: string }) =>
+    z.object({
+      staff_name: z.string().trim().min(1).max(100),
+      date_requested: z.string().trim().min(1).max(200),
+      reason: z.string().trim().min(1).max(1000),
+    }).parse(input),
+  )
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin
+      .from("time_off_requests")
+      .insert({
+        staff_name: data.staff_name,
+        date_requested: data.date_requested,
+        reason: data.reason,
+        status: "pending",
+      });
+    if (error) throw error;
+    return { ok: true };
+  });
