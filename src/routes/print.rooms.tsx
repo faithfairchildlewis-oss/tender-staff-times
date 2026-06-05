@@ -63,7 +63,7 @@ function PrintRoomsPage() {
 
   const dayData = derivedDays.find((d) => d.day === day);
   const slotsByTime = new Map(dayData?.slots.map((s) => [s.time, s]) ?? []);
-  const subtitle = `${day} — ${roomFilter === "classrooms" ? "Classrooms Only" : "All Rooms"}`;
+  const subtitle = `${day}, ${dateForDay(schedule, day)} — ${roomFilter === "classrooms" ? "Classrooms Only" : "All Rooms"}`;
 
   return (
     <div className="min-h-dvh bg-background">
