@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Printer, ArrowLeft } from "lucide-react";
 import { DAYS } from "@/data/schedule";
-import { DEFAULT_TIMES, DEFAULT_ROOMS, deriveDays } from "@/lib/schedule-derive";
+import { DEFAULT_TIMES, DEFAULT_ROOMS, deriveDays, DAY_NAMES } from "@/lib/schedule-derive";
 import { useCurrentSchedule, useLiveSchedules } from "@/hooks/use-schedule";
 import { Button } from "@/components/ui/button";
 
