@@ -9,6 +9,9 @@ export type TimeOffRequest = {
   reason: string;
   status: "pending" | "approved" | "denied";
   created_at: string;
+  decided_by: string | null;
+  decided_by_email: string | null;
+  decided_at: string | null;
 };
 
 export const getTimeOffRequests = createServerFn({ method: "POST" })
@@ -17,7 +20,7 @@ export const getTimeOffRequests = createServerFn({ method: "POST" })
     const { supabase } = context;
     const { data, error } = await supabase
       .from("time_off_requests")
-      .select("id, staff_name, date_requested, reason, status, created_at")
+      .select("id, staff_name, date_requested, reason, status, created_at, decided_by, decided_by_email, decided_at")
       .order("created_at", { ascending: false });
     if (error) throw error;
     return (data ?? []) as unknown as TimeOffRequest[];
@@ -32,10 +35,24 @@ export const updateTimeOffStatus = createServerFn({ method: "POST" })
     }).parse(input),
   )
   .handler(async ({ data, context }) => {
-    const { supabase } = context;
+    const { supabase, userId, claims } = context;
+    const isDecision = data.status === "approved" || data.status === "denied";
+    const patch = isDecision
+      ? {
+          status: data.status,
+          decided_by: userId,
+          decided_by_email: (claims as { email?: string } | null)?.email ?? null,
+          decided_at: new Date().toISOString(),
+        }
+      : {
+          status: data.status,
+          decided_by: null,
+          decided_by_email: null,
+          decided_at: null,
+        };
     const { error } = await supabase
       .from("time_off_requests")
-      .update({ status: data.status })
+      .update(patch)
       .eq("id", data.id);
     if (error) throw error;
     return { ok: true };
