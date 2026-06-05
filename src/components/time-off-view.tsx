@@ -93,6 +93,7 @@ export function TimeOffView() {
                 <th className="px-3 py-2 font-semibold">Reason</th>
                 <th className="px-3 py-2 font-semibold">Submitted</th>
                 <th className="px-3 py-2 font-semibold">Status</th>
+                <th className="px-3 py-2 font-semibold">Decision</th>
                 <th className="px-3 py-2 font-semibold text-right">Actions</th>
               </tr>
             </thead>
@@ -106,6 +107,18 @@ export function TimeOffView() {
                     {new Date(r.created_at).toLocaleDateString()}
                   </td>
                   <td className="px-3 py-3 align-top">{statusBadge(r.status)}</td>
+                  <td className="px-3 py-3 align-top text-xs text-muted-foreground whitespace-nowrap">
+                    {r.decided_at ? (
+                      <div className="space-y-0.5">
+                        <div className="text-foreground font-medium">
+                          {r.decided_by_email ?? "Unknown admin"}
+                        </div>
+                        <div>{new Date(r.decided_at).toLocaleString()}</div>
+                      </div>
+                    ) : (
+                      <span>—</span>
+                    )}
+                  </td>
                   <td className="px-3 py-3 align-top rounded-r-xl">
                     <div className="flex gap-1 justify-end">
                       <button
