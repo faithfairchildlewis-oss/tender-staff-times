@@ -24,9 +24,17 @@ function PrintStaffPage() {
   return (
     <div className="min-h-dvh bg-background">
       <style>{`
+        @page { size: landscape; margin: 0.35in; }
         @media print {
           .no-print { display: none !important; }
           body { background: white !important; }
+          main { padding: 0 !important; }
+          table { font-size: 9px !important; }
+          th, td { padding: 2px 4px !important; }
+          .print-tight ul { margin: 0 !important; }
+          .print-tight li { line-height: 1.15 !important; }
+          .print-tight li + li { margin-top: 1px !important; }
+          tr { page-break-inside: avoid; }
         }
       `}</style>
 
@@ -39,8 +47,8 @@ function PrintStaffPage() {
         </Button>
       </div>
 
-      <main className="max-w-6xl mx-auto px-4 py-6 print:p-0 print:max-w-none">
-        <header className="mb-6 text-center">
+      <main className="max-w-6xl mx-auto px-4 py-6 print:p-0 print:max-w-none print-tight">
+        <header className="mb-6 text-center no-print">
           <h1 className="text-2xl font-bold">{schedule.center}</h1>
           <p className="text-sm text-muted-foreground mt-1">Week of {schedule.week}</p>
           <h2 className="text-lg font-semibold mt-3">Weekly Staff Hours</h2>
