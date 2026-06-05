@@ -327,7 +327,7 @@ function RoomsPage() {
                   return (
                     <tr key={slot.time}>
                       <td className="p-1 border border-border font-medium sticky left-0 bg-card whitespace-nowrap">
-                        {slot.time}
+                        {slot.time.replace(/\s*(AM|PM)/i, "")}
                       </td>
                       {rooms.map((r) => {
                         const staffed = slot.assignments[r] ?? [];
