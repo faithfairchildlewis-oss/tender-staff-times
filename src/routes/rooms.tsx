@@ -54,6 +54,18 @@ function RoomsPage() {
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const flashTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const todayOffset = useMemo(() => {
+    const d = new Date().getDay();
+    // 0=Sun, 1=Mon... clamp Mon-Fri (0-4)
+    return d >= 1 && d <= 5 ? d - 1 : 0;
+  }, []);
+
+  const todayTabIndex = useMemo(() => {
+    if (tabs.length === 0) return 0;
+    const idx = currentWeekStartTab + todayOffset;
+    return Math.min(idx, tabs.length - 1);
+  }, [tabs.length, currentWeekStartTab, todayOffset]);
+
   const weeks = useMemo(
     () =>
       (schedules ?? []).map((s) => ({
