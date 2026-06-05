@@ -60,6 +60,8 @@
   --color-row-stripe: var(--row-stripe);
   --color-closed: var(--closed);
   --color-closed-foreground: var(--closed-foreground);
+  --color-closed-green: var(--closed-green);
+  --color-closed-green-foreground: var(--closed-green-foreground);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
