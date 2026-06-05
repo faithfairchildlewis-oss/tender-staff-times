@@ -12,9 +12,9 @@ import { getDailyContent } from "@/data/daily-content";
 export const Route = createFileRoute("/staff/$name")({
   head: ({ params }) => ({
     meta: [
-      { title: `${params.name}'s Schedule — Tender Years of Deale` },
+      { title: `Hi, ${params.name} — Tender Years of Deale` },
       { name: "description", content: `Weekly shift schedule, room assignments, and lunch times for ${params.name} at Tender Years of Deale.` },
-      { property: "og:title", content: `${params.name}'s Schedule — Tender Years of Deale` },
+      { property: "og:title", content: `Hi, ${params.name} — Tender Years of Deale` },
       { property: "og:description", content: `Weekly shift schedule, room assignments, and lunch times for ${params.name} at Tender Years of Deale.` },
       { property: "og:url", content: `/staff/${params.name}` },
     ],
@@ -80,7 +80,7 @@ function StaffPage() {
   return (
     <div className="min-h-dvh bg-background pb-24">
       <PageBanner
-        title={`${name}'s Schedule`}
+        title={`Hi, ${name}`}
         subline={encouragement}
       >
         <div className="flex gap-2">
