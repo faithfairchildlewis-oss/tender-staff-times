@@ -111,22 +111,32 @@ function Index() {
           </div>
         </a>
 
-        <div className="mt-3 grid grid-cols-2 gap-3">
+        <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Link
             to="/print/staff"
             aria-label="Open printable staff schedule"
-            className="flex flex-col items-center justify-center gap-2 bg-secondary text-secondary-foreground rounded-2xl p-4 min-h-20 shadow-sm active:scale-[0.99] transition text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="flex items-center gap-3 bg-primary text-primary-foreground rounded-2xl p-4 min-h-14 shadow-sm active:scale-[0.99] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            <Printer className="w-5 h-5" aria-hidden="true" />
-            <span className="font-semibold text-sm leading-tight">Print Staff Schedule</span>
+            <div className="bg-primary-foreground/15 rounded-xl p-2.5" aria-hidden="true">
+              <Printer className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <div className="font-semibold text-sm leading-tight">Print Staff Schedule</div>
+              <div className="text-xs opacity-90 mt-0.5">Weekly hours table</div>
+            </div>
           </Link>
           <Link
             to="/print/rooms"
             aria-label="Open printable room view"
-            className="flex flex-col items-center justify-center gap-2 bg-secondary text-secondary-foreground rounded-2xl p-4 min-h-20 shadow-sm active:scale-[0.99] transition text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="flex items-center gap-3 bg-primary text-primary-foreground rounded-2xl p-4 min-h-14 shadow-sm active:scale-[0.99] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            <Printer className="w-5 h-5" aria-hidden="true" />
-            <span className="font-semibold text-sm leading-tight">Print Room View</span>
+            <div className="bg-primary-foreground/15 rounded-xl p-2.5" aria-hidden="true">
+              <Printer className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <div className="font-semibold text-sm leading-tight">Print Room View</div>
+              <div className="text-xs opacity-90 mt-0.5">Daily room assignments</div>
+            </div>
           </Link>
         </div>
 
