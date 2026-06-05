@@ -37,16 +37,19 @@ export const updateTimeOffStatus = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { supabase, userId, claims } = context;
     const isDecision = data.status === "approved" || data.status === "denied";
-    const patch: Record<string, unknown> = { status: data.status };
-    if (isDecision) {
-      patch.decided_by = userId;
-      patch.decided_by_email = (claims as { email?: string } | null)?.email ?? null;
-      patch.decided_at = new Date().toISOString();
-    } else {
-      patch.decided_by = null;
-      patch.decided_by_email = null;
-      patch.decided_at = null;
-    }
+    const patch = isDecision
+      ? {
+          status: data.status,
+          decided_by: userId,
+          decided_by_email: (claims as { email?: string } | null)?.email ?? null,
+          decided_at: new Date().toISOString(),
+        }
+      : {
+          status: data.status,
+          decided_by: null,
+          decided_by_email: null,
+          decided_at: null,
+        };
     const { error } = await supabase
       .from("time_off_requests")
       .update(patch)
