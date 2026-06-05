@@ -112,7 +112,10 @@ function PrintStaffPage() {
               <tr>
                 <th className="text-left p-2 border-b font-semibold sticky left-0 bg-muted">Staff</th>
                 {DAYS.map((d) => (
-                  <th key={d} className="text-left p-2 border-b border-l font-semibold">{d}</th>
+                  <th key={d} className="text-left p-2 border-b border-l font-semibold">
+                    {d}
+                    <span className="block text-[10px] font-normal text-muted-foreground">{dateForDay(schedule, d)}</span>
+                  </th>
                 ))}
                 <th className="text-right p-2 border-b border-l font-semibold">Total</th>
               </tr>
