@@ -56,9 +56,9 @@ function PrintRoomsPage() {
 
       <main className="max-w-6xl mx-auto px-4 py-6 print:p-0 print:max-w-none">
         <header className="mb-6 text-center">
-          <h1 className="text-2xl font-bold">{schedule.center}</h1>
-          <p className="text-sm text-muted-foreground mt-1">Week of {schedule.week}</p>
-          <h2 className="text-lg font-semibold mt-3">Daily Room Schedule</h2>
+          <h1 className="text-2xl font-bold no-print">{schedule.center}</h1>
+          <p className="text-sm text-muted-foreground mt-1 no-print">Week of {schedule.week}</p>
+          <h2 className="text-lg font-semibold mt-3 no-print">Daily Room Schedule</h2>
           <p className="print-only text-sm mt-1">{subtitle}</p>
         </header>
 
