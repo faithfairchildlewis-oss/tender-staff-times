@@ -103,7 +103,9 @@ export type Database = {
       time_off_requests: {
         Row: {
           created_at: string | null
+          date_from: string | null
           date_requested: string
+          date_to: string | null
           decided_at: string | null
           decided_by: string | null
           decided_by_email: string | null
@@ -114,7 +116,9 @@ export type Database = {
         }
         Insert: {
           created_at?: string | null
+          date_from?: string | null
           date_requested: string
+          date_to?: string | null
           decided_at?: string | null
           decided_by?: string | null
           decided_by_email?: string | null
@@ -125,7 +129,9 @@ export type Database = {
         }
         Update: {
           created_at?: string | null
+          date_from?: string | null
           date_requested?: string
+          date_to?: string | null
           decided_at?: string | null
           decided_by?: string | null
           decided_by_email?: string | null
