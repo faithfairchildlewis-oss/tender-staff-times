@@ -4,6 +4,7 @@ import { Printer, ArrowLeft } from "lucide-react";
 import { blocksForDay, staffNames, weeklyHours, DAYS } from "@/data/schedule";
 import { useCurrentSchedule, useLiveSchedules } from "@/hooks/use-schedule";
 import { Button } from "@/components/ui/button";
+import { DAY_NAMES } from "@/lib/schedule-derive";
 
 export const Route = createFileRoute("/print/staff")({
   ssr: false,
