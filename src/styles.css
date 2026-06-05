@@ -102,6 +102,8 @@
   --row-stripe: oklch(0.94 0.04 230);
   --closed: oklch(0.78 0.15 145);
   --closed-foreground: oklch(0.2 0.08 145);
+  --closed-green: oklch(0.85 0.14 140);
+  --closed-green-foreground: oklch(0.2 0.08 140);
   --border: oklch(0.9 0.015 200);
   --input: oklch(0.92 0.015 200);
   --ring: oklch(0.45 0.06 195);
