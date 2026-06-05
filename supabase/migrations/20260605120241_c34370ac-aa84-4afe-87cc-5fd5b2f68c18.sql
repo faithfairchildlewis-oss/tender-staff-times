@@ -1,0 +1,1 @@
+UPDATE payroll_rates SET staff_name = 'Courtney' WHERE staff_name = 'Kyleigh';
