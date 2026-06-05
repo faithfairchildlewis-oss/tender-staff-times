@@ -302,7 +302,7 @@ function RoomsPage() {
             <table className="w-full text-xs border-collapse">
               <thead>
                 <tr>
-                  <th className="text-left p-1.5 border border-border sticky left-0 bg-card min-w-[60px]">
+                  <th className="text-left p-1 border border-border sticky left-0 bg-card w-[1%] whitespace-nowrap">
                     Time
                   </th>
                   {rooms.map((r) => (
@@ -326,7 +326,7 @@ function RoomsPage() {
                   if (!hasStaff) return null;
                   return (
                     <tr key={slot.time}>
-                      <td className="p-1.5 border border-border font-medium sticky left-0 bg-card">
+                      <td className="p-1 border border-border font-medium sticky left-0 bg-card whitespace-nowrap">
                         {slot.time}
                       </td>
                       {rooms.map((r) => {
