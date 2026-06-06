@@ -20,9 +20,10 @@ export function PageBanner({ title, subline, rightSlot, children }: PageBannerPr
       <div className="relative flex items-center justify-between mb-2 min-h-11">
         <Link
           to="/"
+          aria-label="Home"
           className="inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary-foreground/15"
         >
-          <Home className="w-4 h-4" /> Home
+          <Home className="w-4 h-4" />
         </Link>
         <div className="absolute left-1/2 -translate-x-1/2 text-center">
           <h1 className="text-xl font-bold leading-none">{title}</h1>
