@@ -159,9 +159,10 @@ function RoomsPage() {
       <div className="min-h-dvh bg-background p-6">
         <Link
           to="/"
-          className="inline-flex items-center gap-1 text-primary mb-4"
+          aria-label="Home"
+          className="inline-flex items-center gap-1 text-primary mb-4 min-h-11 -ml-2 px-2 rounded-lg"
         >
-          <Home className="w-4 h-4" /> Home
+          <Home className="w-4 h-4" />
         </Link>
         <h1 className="text-xl font-bold text-foreground">Our Rooms</h1>
         <p className="text-muted-foreground mt-2">
