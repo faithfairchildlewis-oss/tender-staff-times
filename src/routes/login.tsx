@@ -85,7 +85,7 @@ function LoginPage() {
           aria-label="Home"
           className="inline-flex items-center gap-1 text-primary-foreground/90 mb-3 min-h-11 -ml-2 px-2 rounded-lg"
         >
-          <Home className="w-5 h-5" /> <span className="text-sm">Home</span>
+          <Home className="w-5 h-5" />
         </Link>
         <h1 className="text-2xl font-bold">
           {mode === "recover" ? "Reset password" : "Admin sign in"}
