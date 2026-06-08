@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, TreePine, MessageSquare, Utensils, PartyPopper } from "lucide-react";
 
 import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
-import { useCurrentSchedule, useLiveSchedules, useSchedulesInRange } from "@/hooks/use-schedule";
+import { useCurrentSchedule, useLiveSchedules, useStaffHoursInRange } from "@/hooks/use-schedule";
 import { formatWeekRange, mmddFor } from "@/lib/format-date";
 import { PageBanner } from "@/components/page-banner";
 import { holidayForOffset } from "@/lib/holidays";
@@ -38,7 +38,7 @@ function StaffPage() {
   const periodEnd = new Date(periodStart.getTime() + msPerPeriod - 1);
   const isoDate = (d: Date) =>
     `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-  const { data: periodSchedules } = useSchedulesInRange(isoDate(periodStart), isoDate(periodEnd));
+  const { data: periodHoursData } = useStaffHoursInRange(name, isoDate(periodStart), isoDate(periodEnd));
   if (isLoading || !schedule) {
     return <div className="min-h-dvh bg-background p-6 text-muted-foreground">Loading…</div>;
   }
@@ -68,12 +68,9 @@ function StaffPage() {
   const formatShort = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
   const formatFull = (d: Date) => d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 
-  // Sum hours across all schedules whose start_date falls inside the pay period
-  // (regardless of live status — past weeks still count toward pay).
-  const periodHours = (periodSchedules ?? []).reduce(
-    (sum, s) => sum + weeklyHours(s, name),
-    0,
-  );
+  // Total hours across the pay period (includes past weeks even if no
+  // longer live).
+  const periodHours = periodHoursData ?? 0;
 
   return (
     <div className="min-h-dvh bg-background pb-24">
