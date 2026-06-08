@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, TreePine, MessageSquare, Utensils, PartyPopper } from "lucide-react";
 
 import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
-import { useCurrentSchedule, useLiveSchedules } from "@/hooks/use-schedule";
+import { useCurrentSchedule, useLiveSchedules, useSchedulesInRange } from "@/hooks/use-schedule";
 import { formatWeekRange, mmddFor } from "@/lib/format-date";
 import { PageBanner } from "@/components/page-banner";
 import { holidayForOffset } from "@/lib/holidays";
@@ -28,6 +28,17 @@ function StaffPage() {
   const { name } = Route.useParams();
   const { data: schedule, isLoading } = useCurrentSchedule();
   const { data: liveSchedules } = useLiveSchedules();
+  // Pay period: every 2 weeks, anchored to May 25, 2026 (Mon)
+  const ANCHOR = new Date(2026, 4, 25);
+  const today = new Date();
+  const msPerDay = 24 * 60 * 60 * 1000;
+  const msPerPeriod = 14 * msPerDay;
+  const periodsElapsed = Math.floor((today.getTime() - ANCHOR.getTime()) / msPerPeriod);
+  const periodStart = new Date(ANCHOR.getTime() + periodsElapsed * msPerPeriod);
+  const periodEnd = new Date(periodStart.getTime() + msPerPeriod - 1);
+  const isoDate = (d: Date) =>
+    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const { data: periodSchedules } = useSchedulesInRange(isoDate(periodStart), isoDate(periodEnd));
   if (isLoading || !schedule) {
     return <div className="min-h-dvh bg-background p-6 text-muted-foreground">Loading…</div>;
   }
@@ -44,14 +55,6 @@ function StaffPage() {
 
   const { encouragement } = getDailyContent(new Date().getDate());
 
-  // Pay period: every 2 weeks, anchored to May 25, 2026 (Mon)
-  const ANCHOR = new Date(2026, 4, 25);
-  const today = new Date();
-  const msPerDay = 24 * 60 * 60 * 1000;
-  const msPerPeriod = 14 * msPerDay;
-  const periodsElapsed = Math.floor((today.getTime() - ANCHOR.getTime()) / msPerPeriod);
-  const periodStart = new Date(ANCHOR.getTime() + periodsElapsed * msPerPeriod);
-  const periodEnd = new Date(periodStart.getTime() + msPerPeriod - 1);
   // Next payday = first Friday strictly after periodEnd
   const payday = new Date(periodEnd);
   payday.setHours(0, 0, 0, 0);
@@ -65,17 +68,12 @@ function StaffPage() {
   const formatShort = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
   const formatFull = (d: Date) => d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 
-  // Sum hours across all live schedules whose start_date falls inside the pay period.
-  const periodHours = (liveSchedules ?? []).reduce((sum, s) => {
-    if (!s.start_date) return sum;
-    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s.start_date);
-    if (!m) return sum;
-    const sd = new Date(+m[1], +m[2] - 1, +m[3]);
-    if (sd >= periodStart && sd <= periodEnd) {
-      return sum + weeklyHours(s, name);
-    }
-    return sum;
-  }, 0);
+  // Sum hours across all schedules whose start_date falls inside the pay period
+  // (regardless of live status — past weeks still count toward pay).
+  const periodHours = (periodSchedules ?? []).reduce(
+    (sum, s) => sum + weeklyHours(s, name),
+    0,
+  );
 
   return (
     <div className="min-h-dvh bg-background pb-24">
