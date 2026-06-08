@@ -102,30 +102,31 @@ export function useLiveSchedules() {
   });
 }
 
-/** Loads all schedules whose start_date falls within [start, end] inclusive,
- *  regardless of is_live. Used for pay-period hour totals so past weeks
- *  still count even after they've been taken off the live view. */
-export function useSchedulesInRange(start: string | null, end: string | null) {
+/** Returns the total scheduled hours for a staff member across every week
+ *  whose start_date falls within [start, end] inclusive — including weeks
+ *  that have been taken off the live view. Calls a SECURITY DEFINER RPC so
+ *  past pay-period weeks still count toward "hrs to date" without exposing
+ *  the rest of their data. */
+export function useStaffHoursInRange(
+  name: string | null,
+  start: string | null,
+  end: string | null,
+) {
   return useQuery({
-    queryKey: ["schedules", "range", start, end],
-    enabled: !!start && !!end,
-    queryFn: async (): Promise<CurrentSchedule[]> => {
-      if (!start || !end) return [];
-      const { data, error } = await supabase
-        .from("schedules")
-        .select("id, data, start_date")
-        .gte("start_date", start)
-        .lte("start_date", end)
-        .order("start_date", { ascending: true });
+    queryKey: ["staff_hours_in_range", name, start, end],
+    enabled: !!name && !!start && !!end,
+    queryFn: async (): Promise<number> => {
+      if (!name || !start || !end) return 0;
+      const { data, error } = await supabase.rpc("staff_hours_in_range", {
+        _name: name,
+        _start: start,
+        _end: end,
+      });
       if (error) {
-        console.error("schedules range fetch failed", error);
-        return [];
+        console.error("staff_hours_in_range failed", error);
+        return 0;
       }
-      return (data ?? []).map((r) => ({
-        id: r.id,
-        ...(r.data as ScheduleData),
-        start_date: r.start_date,
-      }));
+      return Number(data ?? 0);
     },
     staleTime: 60_000,
   });
