@@ -88,14 +88,14 @@ function StaffPage() {
             to="/staff/$name"
             params={{ name }}
             activeOptions={{ exact: true }}
-            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground text-primary"
+            className="flex-1 min-h-11 px-3 rounded-lg text-xs font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground text-primary"
           >
             <CalendarDays className="w-4 h-4" /> My Week
           </Link>
           <Link
             to="/rooms"
             search={{ from: name }}
-            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
+            className="flex-1 min-h-11 px-3 rounded-lg text-xs font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
           >
             <TreePine className="w-4 h-4" /> Our Rooms
           </Link>
@@ -107,7 +107,7 @@ function StaffPage() {
                 (schedule.start_date ? formatWeekRange(schedule.start_date) : schedule.week ?? "—") +
                 "\nDate(s) requested: \nReason: "
             )}`}
-            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
+            className="flex-1 min-h-11 px-3 rounded-lg text-xs font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
           >
             <MessageSquare className="w-4 h-4" /> Request Off
           </a>
