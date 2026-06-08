@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
-import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign, Eye, EyeOff, Users, Move, CalendarX2, Filter, PartyPopper } from "lucide-react";
+import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign, Eye, EyeOff, Users, Move, CalendarX2, Filter, PartyPopper, Ban } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -1019,6 +1019,19 @@ function WeekEditor({
                   title={`Copy ${day}'s blocks to other days for ${staffName}`}
                 >
                   <Copy className="w-4 h-4" /> Apply to more days
+                </button>
+              )}
+              {blocks.length > 0 && (
+                <button
+                  onClick={() => {
+                    if (confirm(`Mark ${staffName} as Off on ${day}? This clears all blocks for the day.`)) {
+                      updateBlocks([]);
+                    }
+                  }}
+                  className="text-sm text-destructive inline-flex items-center gap-1 min-h-11 px-2"
+                  title={`Clear ${day}'s blocks and mark ${staffName} as Off`}
+                >
+                  <Ban className="w-4 h-4" /> Off
                 </button>
               )}
               <button
