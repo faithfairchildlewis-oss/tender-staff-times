@@ -175,6 +175,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      staff_hours_in_range: {
+        Args: { _end: string; _name: string; _start: string }
+        Returns: number
+      }
     }
     Enums: {
       app_role: "admin" | "staff"
