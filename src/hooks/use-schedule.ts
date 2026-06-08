@@ -102,6 +102,35 @@ export function useLiveSchedules() {
   });
 }
 
+/** Loads all schedules whose start_date falls within [start, end] inclusive,
+ *  regardless of is_live. Used for pay-period hour totals so past weeks
+ *  still count even after they've been taken off the live view. */
+export function useSchedulesInRange(start: string | null, end: string | null) {
+  return useQuery({
+    queryKey: ["schedules", "range", start, end],
+    enabled: !!start && !!end,
+    queryFn: async (): Promise<CurrentSchedule[]> => {
+      if (!start || !end) return [];
+      const { data, error } = await supabase
+        .from("schedules")
+        .select("id, data, start_date")
+        .gte("start_date", start)
+        .lte("start_date", end)
+        .order("start_date", { ascending: true });
+      if (error) {
+        console.error("schedules range fetch failed", error);
+        return [];
+      }
+      return (data ?? []).map((r) => ({
+        id: r.id,
+        ...(r.data as ScheduleData),
+        start_date: r.start_date,
+      }));
+    },
+    staleTime: 60_000,
+  });
+}
+
 function useAllSchedulesQuery() {
   return useQuery({
     queryKey: ["schedules", "all"],
