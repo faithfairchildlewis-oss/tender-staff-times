@@ -1,0 +1,1 @@
+SELECT routine_definition FROM information_schema.routines WHERE routine_name = 'strip_schedule_payroll' AND routine_schema = 'public';
