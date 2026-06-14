@@ -1,0 +1,1 @@
+SELECT id, week_label, start_date, is_current FROM public.schedules WHERE is_current = true;
