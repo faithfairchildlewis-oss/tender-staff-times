@@ -1,0 +1,1 @@
+SELECT id, week_label, start_date, is_current, is_live, data->'staff'->'Sophia' as sophia_staff, data->'staff_daily'->'Sophia' as sophia_daily FROM public.schedules WHERE id = '321abb62-8d49-4b4e-9c9f-6b6c3e56fd99';
