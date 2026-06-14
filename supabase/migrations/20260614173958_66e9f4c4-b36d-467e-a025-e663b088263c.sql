@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.staff_hours_in_range(text, date, date) FROM PUBLIC, anon;
