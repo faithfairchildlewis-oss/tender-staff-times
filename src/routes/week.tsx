@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, Printer } from "lucide-react";
+import { ArrowLeft, Printer, FileDown } from "lucide-react";
 import { blocksForDay, staffNames, weeklyHours, DAYS } from "@/data/schedule";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 import { Button } from "@/components/ui/button";
@@ -42,6 +42,65 @@ function WeekPage() {
 
   const names = staffNames(schedule).sort();
 
+  const exportPdf = async () => {
+    const { jsPDF } = await import("jspdf");
+    const doc = new jsPDF({ unit: "pt", format: "letter" });
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+    const margin = 40;
+    let y = margin;
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(16);
+    doc.text(`${schedule.center} — Weekly Schedule`, pageW / 2, y, { align: "center" });
+    y += 20;
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    doc.text(`Week of ${schedule.week}`, pageW / 2, y, { align: "center" });
+    y += 24;
+
+    const ensureSpace = (needed: number) => {
+      if (y + needed > pageH - margin) {
+        doc.addPage();
+        y = margin;
+      }
+    };
+
+    for (const n of names) {
+      ensureSpace(90);
+      doc.setDrawColor(220);
+      doc.setFillColor(245, 245, 245);
+      doc.rect(margin, y, pageW - margin * 2, 22, "F");
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      doc.text(n, margin + 8, y + 15);
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.text(`${weeklyHours(schedule, n)} h this week`, pageW - margin - 8, y + 15, { align: "right" });
+      y += 28;
+
+      doc.setFontSize(10);
+      for (const d of DAYS) {
+        ensureSpace(16);
+        const blocks = blocksForDay(schedule, n, d);
+        const label = `${d}, ${dateForDay(schedule, d)}`;
+        const value = blocks.length === 0
+          ? "OFF"
+          : blocks.map((b) => `${b.start}–${b.end}`).join(", ");
+        doc.setFont("helvetica", "bold");
+        doc.text(label, margin + 8, y);
+        doc.setFont("helvetica", "normal");
+        const wrapped = doc.splitTextToSize(value, pageW - margin * 2 - 160);
+        doc.text(wrapped, margin + 160, y);
+        y += Math.max(14, wrapped.length * 12);
+      }
+      y += 10;
+    }
+
+    const fileLabel = (schedule.week || "schedule").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+    doc.save(`weekly-schedule-${fileLabel}.pdf`);
+  };
+
   return (
     <div className="min-h-dvh bg-background">
       <header className="bg-primary text-primary-foreground px-4 py-4 no-print">
@@ -53,9 +112,14 @@ function WeekPage() {
             <h1 className="text-lg sm:text-xl font-bold">This Week's Schedule</h1>
             <p className="text-xs opacity-90">Week of {schedule.week}</p>
           </div>
-          <Button onClick={() => window.print()} size="sm" variant="secondary">
-            <Printer className="w-4 h-4" /> Print
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button onClick={exportPdf} size="sm" variant="secondary">
+              <FileDown className="w-4 h-4" /> Export PDF
+            </Button>
+            <Button onClick={() => window.print()} size="sm" variant="secondary" className="hidden sm:inline-flex">
+              <Printer className="w-4 h-4" /> Print
+            </Button>
+          </div>
         </div>
       </header>
 
