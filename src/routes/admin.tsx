@@ -933,20 +933,27 @@ function WeekEditor({
         )}
       </div>
 
-      <Select value="" onValueChange={importStaffFrom}>
-        <SelectTrigger className="w-full min-h-11 text-sm">
-          <SelectValue placeholder="Import staff roster from another week…" />
-        </SelectTrigger>
-        <SelectContent position="popper" side="bottom" align="start" sideOffset={4} avoidCollisions={false}>
-          {schedules
-            .filter((s) => s.id !== row.id && Object.keys(s.data.staff ?? {}).length > 0)
-            .map((s) => (
-              <SelectItem key={s.id} value={s.id}>
-                {formatWeekRange(s.start_date)} ({Object.keys(s.data.staff ?? {}).length})
-              </SelectItem>
-            ))}
-        </SelectContent>
-      </Select>
+      {staffName && (
+        <Select value="" onValueChange={importStaffFrom}>
+          <SelectTrigger className="w-full min-h-11 text-sm">
+            <SelectValue placeholder={`Import ${staffName}'s schedule from another week…`} />
+          </SelectTrigger>
+          <SelectContent position="popper" side="bottom" align="start" sideOffset={4} avoidCollisions={false}>
+            {schedules
+              .filter((s) => s.id !== row.id && s.data.staff?.[staffName])
+              .map((s) => (
+                <SelectItem key={s.id} value={s.id}>
+                  {formatWeekRange(s.start_date)}
+                </SelectItem>
+              ))}
+            {schedules.filter((s) => s.id !== row.id && s.data.staff?.[staffName]).length === 0 && (
+              <div className="px-3 py-2 text-sm text-muted-foreground">
+                No other weeks have {staffName}.
+              </div>
+            )}
+          </SelectContent>
+        </Select>
+      )}
 
       {staffNames.length === 0 && (
         <div className="bg-secondary/50 rounded-2xl p-6 text-center space-y-3">
