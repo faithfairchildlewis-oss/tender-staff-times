@@ -791,28 +791,35 @@ function WeekEditor({
     setStaffName(name);
   }
   function importStaffFrom(sourceId: string) {
+    if (!staffName) {
+      return alert("Select a staff member first, then import their schedule from another week.");
+    }
     const src = schedules.find((s) => s.id === sourceId);
     if (!src) return;
-    const srcStaff = src.data.staff ?? {};
-    const names = Object.keys(srcStaff);
-    if (!names.length) return alert("That week has no staff to import.");
-    const staff = { ...(data.staff ?? {}) };
-    let added = 0;
-    for (const n of names) {
-      if (staff[n]) continue;
-      // Copy roster info (rate, lunch, daily_breaks) but reset hours;
-      // do NOT copy staff_daily — assignments stay empty for the new week.
-      staff[n] = {
-        rate: srcStaff[n].rate ?? 0,
-        hours: 0,
-        lunch: srcStaff[n].lunch ?? { type: "varies" },
-        daily_breaks: srcStaff[n].daily_breaks ?? {},
-      };
-      added++;
+    const srcEntry = src.data.staff?.[staffName];
+    if (!srcEntry) {
+      return alert(`${staffName} isn't on the schedule for ${formatWeekRange(src.start_date)}.`);
     }
-    setData({ ...data, staff });
-    if (!staffName && names[0]) setStaffName(names[0]);
-    alert(`Imported ${added} staff member${added === 1 ? "" : "s"}.`);
+    const srcDaily = src.data.staff_daily?.[staffName] ?? {};
+    const staff = { ...(data.staff ?? {}) };
+    const sd = { ...(data.staff_daily ?? {}) };
+    // Copy roster info (rate, lunch, daily_breaks) and per-day shift assignments
+    // for just this one person. Hours recompute on save from the new slots.
+    staff[staffName] = {
+      ...staff[staffName],
+      rate: srcEntry.rate ?? staff[staffName]?.rate ?? 0,
+      hours: 0,
+      lunch: srcEntry.lunch ?? staff[staffName]?.lunch ?? { type: "varies" },
+      daily_breaks: srcEntry.daily_breaks ?? staff[staffName]?.daily_breaks ?? {},
+    };
+    const byDay: Record<string, { time: string; rooms: string[] }[]> = {};
+    for (const d of DAY_NAMES) {
+      const slots = srcDaily[d] ?? [];
+      byDay[d] = slots.map((s) => ({ time: s.time, rooms: [...s.rooms] }));
+    }
+    sd[staffName] = byDay;
+    setData({ ...data, staff, staff_daily: sd });
+    alert(`Imported ${staffName}'s schedule from ${formatWeekRange(src.start_date)}.`);
   }
   function removeStaff() {
     if (!staffName) return;
