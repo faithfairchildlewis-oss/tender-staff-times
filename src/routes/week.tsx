@@ -1,8 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Printer, FileDown } from "lucide-react";
-import { blocksForDay, staffNames, weeklyHours, DAYS } from "@/data/schedule";
-import { useCurrentSchedule } from "@/hooks/use-schedule";
+import { useState, useMemo } from "react";
+import { blocksForDay, staffNames, weeklyHours, DAYS, type ScheduleData } from "@/data/schedule";
+import { useCurrentSchedule, useAllSchedules } from "@/hooks/use-schedule";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { DAY_NAMES } from "@/lib/schedule-derive";
 
 export const Route = createFileRoute("/week")({
@@ -20,7 +28,9 @@ export const Route = createFileRoute("/week")({
   notFoundComponent: () => <div className="p-8 text-center">Schedule not found.</div>,
 });
 
-function dateForDay(schedule: ReturnType<typeof useCurrentSchedule>["data"], dayName: string): string {
+type WeekSchedule = ScheduleData & { start_date?: string | null };
+
+function dateForDay(schedule: WeekSchedule | null | undefined, dayName: string): string {
   if (!schedule) return "";
   const fromDays = schedule.days?.find((d) => d.day === dayName)?.date;
   if (fromDays) return fromDays;
@@ -34,9 +44,21 @@ function dateForDay(schedule: ReturnType<typeof useCurrentSchedule>["data"], day
 }
 
 function WeekPage() {
-  const { data: schedule, isLoading } = useCurrentSchedule();
+  const { data: current, isLoading: loadingCurrent } = useCurrentSchedule();
+  const { data: allRows, isLoading: loadingAll } = useAllSchedules();
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  if (isLoading || !schedule) {
+  const weeks = useMemo(() => (allRows ?? []).slice().sort((a, b) => a.start_date.localeCompare(b.start_date)), [allRows]);
+
+  const schedule: WeekSchedule | null = useMemo(() => {
+    if (selectedId) {
+      const row = weeks.find((w) => w.id === selectedId);
+      if (row) return { ...(row.data as ScheduleData), start_date: row.start_date };
+    }
+    return current ?? null;
+  }, [selectedId, weeks, current]);
+
+  if ((loadingCurrent && loadingAll) || !schedule) {
     return <div className="p-8 text-center text-muted-foreground">Loading schedule…</div>;
   }
 
@@ -121,6 +143,26 @@ function WeekPage() {
             </Button>
           </div>
         </div>
+        {weeks.length > 1 && (
+          <div className="max-w-5xl mx-auto mt-3 flex items-center justify-center gap-2">
+            <span className="text-xs opacity-90">Week:</span>
+            <Select
+              value={selectedId ?? weeks.find((w) => w.is_current && w.is_live)?.id ?? weeks[0]?.id}
+              onValueChange={(v) => setSelectedId(v)}
+            >
+              <SelectTrigger className="h-8 w-[260px] bg-primary-foreground text-primary">
+                <SelectValue placeholder="Select a week" />
+              </SelectTrigger>
+              <SelectContent>
+                {weeks.map((w) => (
+                  <SelectItem key={w.id} value={w.id}>
+                    {w.week_label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
       </header>
 
       <main className="max-w-5xl mx-auto px-4 py-6 space-y-4">
