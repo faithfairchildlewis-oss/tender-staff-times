@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WeekRouteImport } from './routes/week'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as RoomsRouteImport } from './routes/rooms'
@@ -20,6 +21,11 @@ import { Route as StaffNameRouteImport } from './routes/staff.$name'
 import { Route as PrintStaffRouteImport } from './routes/print.staff'
 import { Route as PrintRoomsRouteImport } from './routes/print.rooms'
 
+const WeekRoute = WeekRouteImport.update({
+  id: '/week',
+  path: '/week',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/week': typeof WeekRoute
   '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/week': typeof WeekRoute
   '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/week': typeof WeekRoute
   '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/rooms'
     | '/schedule'
     | '/sitemap.xml'
+    | '/week'
     | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/rooms'
     | '/schedule'
     | '/sitemap.xml'
+    | '/week'
     | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/rooms'
     | '/schedule'
     | '/sitemap.xml'
+    | '/week'
     | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
@@ -155,6 +167,7 @@ export interface RootRouteChildren {
   RoomsRoute: typeof RoomsRoute
   ScheduleRoute: typeof ScheduleRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  WeekRoute: typeof WeekRoute
   PrintRoomsRoute: typeof PrintRoomsRoute
   PrintStaffRoute: typeof PrintStaffRoute
   StaffNameRoute: typeof StaffNameRoute
@@ -162,6 +175,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/week': {
+      id: '/week'
+      path: '/week'
+      fullPath: '/week'
+      preLoaderRoute: typeof WeekRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -243,6 +263,7 @@ const rootRouteChildren: RootRouteChildren = {
   RoomsRoute: RoomsRoute,
   ScheduleRoute: ScheduleRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  WeekRoute: WeekRoute,
   PrintRoomsRoute: PrintRoomsRoute,
   PrintStaffRoute: PrintStaffRoute,
   StaffNameRoute: StaffNameRoute,
@@ -250,13 +271,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
