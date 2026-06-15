@@ -963,25 +963,9 @@ function WeekEditor({
           <div>
             <p className="font-medium text-foreground">No staff yet</p>
             <p className="text-sm text-muted-foreground mt-1">
-              This week doesn't have any staff. Add staff manually or import a roster from another week.
+              This week doesn't have any staff. Add a staff member, then you can import their schedule from a previous week.
             </p>
           </div>
-          {schedules.some((s) => s.id !== row.id && Object.keys(s.data.staff ?? {}).length > 0) && (
-            <Select value="" onValueChange={importStaffFrom}>
-              <SelectTrigger className="w-full min-h-11 text-sm mx-auto max-w-xs">
-                <SelectValue placeholder="Import staff from another week…" />
-              </SelectTrigger>
-              <SelectContent position="popper" side="bottom" align="center" sideOffset={4} avoidCollisions={false}>
-                {schedules
-                  .filter((s) => s.id !== row.id && Object.keys(s.data.staff ?? {}).length > 0)
-                  .map((s) => (
-                    <SelectItem key={s.id} value={s.id}>
-                      {formatWeekRange(s.start_date)} ({Object.keys(s.data.staff ?? {}).length})
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
-          )}
         </div>
       )}
 
