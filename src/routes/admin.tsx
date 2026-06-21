@@ -850,6 +850,31 @@ function WeekEditor({
       staff[name] = { ...staff[name], hours: h };
     }
     const next: ScheduleData = { ...data, staff };
+
+    // Merge in any staff that were added remotely since this editor loaded,
+    // so saves don't clobber concurrent changes from another window/device.
+    const { data: latest } = await supabase
+      .from("schedules")
+      .select("data")
+      .eq("id", row.id)
+      .single();
+    const remote = (latest?.data ?? {}) as ScheduleData;
+    const remoteStaff = remote.staff ?? {};
+    const remoteDaily = remote.staff_daily ?? {};
+    const mergedStaff = { ...next.staff };
+    const mergedDaily = { ...(next.staff_daily ?? {}) };
+    const localKeys = new Set(Object.keys(data.staff ?? {}));
+    for (const name of Object.keys(remoteStaff)) {
+      // Only add back names that were never in this editor's local copy.
+      // Names the user deleted in this session stay deleted.
+      if (!localKeys.has(name) && !(name in mergedStaff)) {
+        mergedStaff[name] = remoteStaff[name];
+        if (remoteDaily[name]) mergedDaily[name] = remoteDaily[name];
+      }
+    }
+    next.staff = mergedStaff;
+    next.staff_daily = mergedDaily;
+
     next.days = deriveDays(next, row.start_date);
     const { error } = await supabase
       .from("schedules")
