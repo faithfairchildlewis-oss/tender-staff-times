@@ -43,7 +43,10 @@ function StaffPage() {
     return <div className="min-h-dvh bg-background p-6 text-muted-foreground">Loading…</div>;
   }
   const info = schedule.staff[name];
-  if (!info) {
+  const infoFromLive = info
+    ? info
+    : (liveSchedules ?? []).map((s) => s.staff?.[name]).find(Boolean);
+  if (!infoFromLive) {
     return (
       <div className="min-h-dvh bg-background p-6">
         <p className="text-foreground">No schedule found for {name}.</p>
@@ -152,7 +155,7 @@ function StaffPage() {
               const weekLabel = sched.start_date
                 ? formatWeekRange(sched.start_date)
                 : sched.week ?? "—";
-              const sInfo = sched.staff[name] ?? info;
+              const sInfo = sched.staff[name] ?? infoFromLive;
               return (
                 <div key={sched.start_date ?? weekLabel}>
                   {showDividers && (
