@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MessageSquare, Printer } from "lucide-react";
 import { staffNames } from "@/data/schedule";
-import { useCurrentSchedule } from "@/hooks/use-schedule";
+import { useAllStaffNames, useCurrentSchedule } from "@/hooks/use-schedule";
 import { getDailyContent } from "@/data/daily-content";
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
@@ -46,7 +46,12 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const { data: schedule } = useCurrentSchedule();
-  const names = schedule ? staffNames(schedule).sort() : [];
+  const { data: allNames } = useAllStaffNames();
+  const merged = new Set<string>([
+    ...(schedule ? staffNames(schedule) : []),
+    ...(allNames ?? []),
+  ]);
+  const names = Array.from(merged).sort();
 
   const now = new Date();
   const dayOfMonth = now.getDate();

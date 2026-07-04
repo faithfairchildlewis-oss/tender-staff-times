@@ -53,6 +53,23 @@ export function useAllSchedules() {
   return useAllSchedulesQuery();
 }
 
+/** Returns every staff name that has ever appeared on any schedule, so the
+ *  home page can show all names even when someone isn't on the current week. */
+export function useAllStaffNames() {
+  return useQuery({
+    queryKey: ["all_staff_names"],
+    queryFn: async (): Promise<string[]> => {
+      const { data, error } = await supabase.rpc("all_staff_names");
+      if (error) {
+        console.error("all_staff_names failed", error);
+        return [];
+      }
+      return (data as string[] | null) ?? [];
+    },
+    staleTime: 5 * 60_000,
+  });
+}
+
 /** Loads the most recent schedule marked as Live. Used for the shared
  *  "Our Rooms" view so every staff member sees the same room schedule. */
 export function useLiveSchedule() {
