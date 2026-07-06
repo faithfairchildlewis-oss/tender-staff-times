@@ -22,6 +22,7 @@ import { Route as EnrollmentIndexRouteImport } from './routes/enrollment.index'
 import { Route as StaffNameRouteImport } from './routes/staff.$name'
 import { Route as PrintStaffRouteImport } from './routes/print.staff'
 import { Route as PrintRoomsRouteImport } from './routes/print.rooms'
+import { Route as EnrollmentTransitionsRouteImport } from './routes/enrollment.transitions'
 import { Route as EnrollmentChildrenRouteImport } from './routes/enrollment.children'
 
 const WeekRoute = WeekRouteImport.update({
@@ -89,6 +90,11 @@ const PrintRoomsRoute = PrintRoomsRouteImport.update({
   path: '/print/rooms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnrollmentTransitionsRoute = EnrollmentTransitionsRouteImport.update({
+  id: '/transitions',
+  path: '/transitions',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
 const EnrollmentChildrenRoute = EnrollmentChildrenRouteImport.update({
   id: '/children',
   path: '/children',
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/week': typeof WeekRoute
   '/enrollment/children': typeof EnrollmentChildrenRoute
+  '/enrollment/transitions': typeof EnrollmentTransitionsRoute
   '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
@@ -121,6 +128,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/week': typeof WeekRoute
   '/enrollment/children': typeof EnrollmentChildrenRoute
+  '/enrollment/transitions': typeof EnrollmentTransitionsRoute
   '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
@@ -138,6 +146,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/week': typeof WeekRoute
   '/enrollment/children': typeof EnrollmentChildrenRoute
+  '/enrollment/transitions': typeof EnrollmentTransitionsRoute
   '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
@@ -156,6 +165,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/week'
     | '/enrollment/children'
+    | '/enrollment/transitions'
     | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
@@ -171,6 +181,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/week'
     | '/enrollment/children'
+    | '/enrollment/transitions'
     | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
@@ -187,6 +198,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/week'
     | '/enrollment/children'
+    | '/enrollment/transitions'
     | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
@@ -301,6 +313,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrintRoomsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/enrollment/transitions': {
+      id: '/enrollment/transitions'
+      path: '/transitions'
+      fullPath: '/enrollment/transitions'
+      preLoaderRoute: typeof EnrollmentTransitionsRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
     '/enrollment/children': {
       id: '/enrollment/children'
       path: '/children'
@@ -313,11 +332,13 @@ declare module '@tanstack/react-router' {
 
 interface EnrollmentRouteChildren {
   EnrollmentChildrenRoute: typeof EnrollmentChildrenRoute
+  EnrollmentTransitionsRoute: typeof EnrollmentTransitionsRoute
   EnrollmentIndexRoute: typeof EnrollmentIndexRoute
 }
 
 const EnrollmentRouteChildren: EnrollmentRouteChildren = {
   EnrollmentChildrenRoute: EnrollmentChildrenRoute,
+  EnrollmentTransitionsRoute: EnrollmentTransitionsRoute,
   EnrollmentIndexRoute: EnrollmentIndexRoute,
 }
 
