@@ -60,12 +60,20 @@ function Index() {
     <div className="min-h-dvh bg-background pb-10">
       <header className="bg-primary text-primary-foreground px-5 pt-8 pb-7 shadow-md rounded-b-3xl relative">
         <div className="absolute top-4 right-4">
-          <Link
-            to="/admin"
-            className="text-sm underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-          >
-            Admin
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              to="/enrollment"
+              className="text-sm underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+            >
+              Enrollment
+            </Link>
+            <Link
+              to="/admin"
+              className="text-sm underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+            >
+              Admin
+            </Link>
+          </div>
         </div>
         <div className="text-center">
           <h1 className="text-xl font-bold tracking-tight leading-none">
