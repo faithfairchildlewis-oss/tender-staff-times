@@ -18,6 +18,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as EnrollmentRouteImport } from './routes/enrollment'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EnrollmentIndexRouteImport } from './routes/enrollment.index'
 import { Route as StaffNameRouteImport } from './routes/staff.$name'
 import { Route as PrintStaffRouteImport } from './routes/print.staff'
 import { Route as PrintRoomsRouteImport } from './routes/print.rooms'
@@ -67,6 +68,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnrollmentIndexRoute = EnrollmentIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
 const StaffNameRoute = StaffNameRouteImport.update({
   id: '/staff/$name',
   path: '/staff/$name',
@@ -86,7 +92,7 @@ const PrintRoomsRoute = PrintRoomsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/enrollment': typeof EnrollmentRoute
+  '/enrollment': typeof EnrollmentRouteWithChildren
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
@@ -96,11 +102,11 @@ export interface FileRoutesByFullPath {
   '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
+  '/enrollment/': typeof EnrollmentIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/enrollment': typeof EnrollmentRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
@@ -110,12 +116,13 @@ export interface FileRoutesByTo {
   '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
+  '/enrollment': typeof EnrollmentIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/enrollment': typeof EnrollmentRoute
+  '/enrollment': typeof EnrollmentRouteWithChildren
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
@@ -125,6 +132,7 @@ export interface FileRoutesById {
   '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
+  '/enrollment/': typeof EnrollmentIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -141,11 +149,11 @@ export interface FileRouteTypes {
     | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
+    | '/enrollment/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
-    | '/enrollment'
     | '/login'
     | '/reset-password'
     | '/rooms'
@@ -155,6 +163,7 @@ export interface FileRouteTypes {
     | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
+    | '/enrollment'
   id:
     | '__root__'
     | '/'
@@ -169,12 +178,13 @@ export interface FileRouteTypes {
     | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
+    | '/enrollment/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
-  EnrollmentRoute: typeof EnrollmentRoute
+  EnrollmentRoute: typeof EnrollmentRouteWithChildren
   LoginRoute: typeof LoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   RoomsRoute: typeof RoomsRoute
@@ -251,6 +261,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/enrollment/': {
+      id: '/enrollment/'
+      path: '/'
+      fullPath: '/enrollment/'
+      preLoaderRoute: typeof EnrollmentIndexRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
     '/staff/$name': {
       id: '/staff/$name'
       path: '/staff/$name'
@@ -275,10 +292,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface EnrollmentRouteChildren {
+  EnrollmentIndexRoute: typeof EnrollmentIndexRoute
+}
+
+const EnrollmentRouteChildren: EnrollmentRouteChildren = {
+  EnrollmentIndexRoute: EnrollmentIndexRoute,
+}
+
+const EnrollmentRouteWithChildren = EnrollmentRoute._addFileChildren(
+  EnrollmentRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
-  EnrollmentRoute: EnrollmentRoute,
+  EnrollmentRoute: EnrollmentRouteWithChildren,
   LoginRoute: LoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   RoomsRoute: RoomsRoute,
