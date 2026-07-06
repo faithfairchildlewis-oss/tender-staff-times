@@ -503,6 +503,12 @@ function RoomView({
   const selected = schedules.find((s) => s.id === localId) ?? schedules.find((s) => s.id === selectedId) ?? schedules[0] ?? null;
   const [dayIdx, setDayIdx] = useState(0);
 
+  const data: ScheduleData | null = selected?.data ?? null;
+  const derivedDays = useMemo(
+    () => (data && selected ? deriveDays(data, selected.start_date) : []),
+    [data, selected?.start_date],
+  );
+
   if (!selected) {
     return (
       <section className="bg-card rounded-2xl shadow-sm p-4">
@@ -511,13 +517,8 @@ function RoomView({
     );
   }
 
-  const data: ScheduleData = selected.data;
-  const derivedDays = useMemo(
-    () => deriveDays(data, selected.start_date),
-    [data, selected.start_date],
-  );
   const day = derivedDays[dayIdx];
-  const rooms = data.rooms?.length ? data.rooms : DEFAULT_ROOMS;
+  const rooms = data!.rooms?.length ? data!.rooms : DEFAULT_ROOMS;
   const closedReason = holidayForOffset(selected.start_date, dayIdx);
 
   const LILAC_ROOMS = new Set(["M.O.D.", "Room I", "J/K"]);
