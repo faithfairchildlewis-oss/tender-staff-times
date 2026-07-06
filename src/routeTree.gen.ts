@@ -22,6 +22,7 @@ import { Route as EnrollmentIndexRouteImport } from './routes/enrollment.index'
 import { Route as StaffNameRouteImport } from './routes/staff.$name'
 import { Route as PrintStaffRouteImport } from './routes/print.staff'
 import { Route as PrintRoomsRouteImport } from './routes/print.rooms'
+import { Route as EnrollmentWaitlistRouteImport } from './routes/enrollment.waitlist'
 import { Route as EnrollmentTransitionsRouteImport } from './routes/enrollment.transitions'
 import { Route as EnrollmentRosterRouteImport } from './routes/enrollment.roster'
 import { Route as EnrollmentChildrenRouteImport } from './routes/enrollment.children'
@@ -91,6 +92,11 @@ const PrintRoomsRoute = PrintRoomsRouteImport.update({
   path: '/print/rooms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnrollmentWaitlistRoute = EnrollmentWaitlistRouteImport.update({
+  id: '/waitlist',
+  path: '/waitlist',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
 const EnrollmentTransitionsRoute = EnrollmentTransitionsRouteImport.update({
   id: '/transitions',
   path: '/transitions',
@@ -120,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/enrollment/children': typeof EnrollmentChildrenRoute
   '/enrollment/roster': typeof EnrollmentRosterRoute
   '/enrollment/transitions': typeof EnrollmentTransitionsRoute
+  '/enrollment/waitlist': typeof EnrollmentWaitlistRoute
   '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
@@ -137,6 +144,7 @@ export interface FileRoutesByTo {
   '/enrollment/children': typeof EnrollmentChildrenRoute
   '/enrollment/roster': typeof EnrollmentRosterRoute
   '/enrollment/transitions': typeof EnrollmentTransitionsRoute
+  '/enrollment/waitlist': typeof EnrollmentWaitlistRoute
   '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
@@ -156,6 +164,7 @@ export interface FileRoutesById {
   '/enrollment/children': typeof EnrollmentChildrenRoute
   '/enrollment/roster': typeof EnrollmentRosterRoute
   '/enrollment/transitions': typeof EnrollmentTransitionsRoute
+  '/enrollment/waitlist': typeof EnrollmentWaitlistRoute
   '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
@@ -176,6 +185,7 @@ export interface FileRouteTypes {
     | '/enrollment/children'
     | '/enrollment/roster'
     | '/enrollment/transitions'
+    | '/enrollment/waitlist'
     | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
@@ -193,6 +203,7 @@ export interface FileRouteTypes {
     | '/enrollment/children'
     | '/enrollment/roster'
     | '/enrollment/transitions'
+    | '/enrollment/waitlist'
     | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
@@ -211,6 +222,7 @@ export interface FileRouteTypes {
     | '/enrollment/children'
     | '/enrollment/roster'
     | '/enrollment/transitions'
+    | '/enrollment/waitlist'
     | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
@@ -325,6 +337,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrintRoomsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/enrollment/waitlist': {
+      id: '/enrollment/waitlist'
+      path: '/waitlist'
+      fullPath: '/enrollment/waitlist'
+      preLoaderRoute: typeof EnrollmentWaitlistRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
     '/enrollment/transitions': {
       id: '/enrollment/transitions'
       path: '/transitions'
@@ -353,6 +372,7 @@ interface EnrollmentRouteChildren {
   EnrollmentChildrenRoute: typeof EnrollmentChildrenRoute
   EnrollmentRosterRoute: typeof EnrollmentRosterRoute
   EnrollmentTransitionsRoute: typeof EnrollmentTransitionsRoute
+  EnrollmentWaitlistRoute: typeof EnrollmentWaitlistRoute
   EnrollmentIndexRoute: typeof EnrollmentIndexRoute
 }
 
@@ -360,6 +380,7 @@ const EnrollmentRouteChildren: EnrollmentRouteChildren = {
   EnrollmentChildrenRoute: EnrollmentChildrenRoute,
   EnrollmentRosterRoute: EnrollmentRosterRoute,
   EnrollmentTransitionsRoute: EnrollmentTransitionsRoute,
+  EnrollmentWaitlistRoute: EnrollmentWaitlistRoute,
   EnrollmentIndexRoute: EnrollmentIndexRoute,
 }
 
