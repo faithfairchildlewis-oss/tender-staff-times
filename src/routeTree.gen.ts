@@ -27,6 +27,7 @@ import { Route as EnrollmentTransitionsRouteImport } from './routes/enrollment.t
 import { Route as EnrollmentRosterRouteImport } from './routes/enrollment.roster'
 import { Route as EnrollmentImportRouteImport } from './routes/enrollment.import'
 import { Route as EnrollmentChildrenRouteImport } from './routes/enrollment.children'
+import { Route as EnrollmentPrintRoomRouteImport } from './routes/enrollment.print.$room'
 
 const WeekRoute = WeekRouteImport.update({
   id: '/week',
@@ -118,6 +119,11 @@ const EnrollmentChildrenRoute = EnrollmentChildrenRouteImport.update({
   path: '/children',
   getParentRoute: () => EnrollmentRoute,
 } as any)
+const EnrollmentPrintRoomRoute = EnrollmentPrintRoomRouteImport.update({
+  id: '/print/$room',
+  path: '/print/$room',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -138,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
   '/enrollment/': typeof EnrollmentIndexRoute
+  '/enrollment/print/$room': typeof EnrollmentPrintRoomRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -157,6 +164,7 @@ export interface FileRoutesByTo {
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
   '/enrollment': typeof EnrollmentIndexRoute
+  '/enrollment/print/$room': typeof EnrollmentPrintRoomRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -178,6 +186,7 @@ export interface FileRoutesById {
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
   '/enrollment/': typeof EnrollmentIndexRoute
+  '/enrollment/print/$room': typeof EnrollmentPrintRoomRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -200,6 +209,7 @@ export interface FileRouteTypes {
     | '/print/staff'
     | '/staff/$name'
     | '/enrollment/'
+    | '/enrollment/print/$room'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -219,6 +229,7 @@ export interface FileRouteTypes {
     | '/print/staff'
     | '/staff/$name'
     | '/enrollment'
+    | '/enrollment/print/$room'
   id:
     | '__root__'
     | '/'
@@ -239,6 +250,7 @@ export interface FileRouteTypes {
     | '/print/staff'
     | '/staff/$name'
     | '/enrollment/'
+    | '/enrollment/print/$room'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -384,6 +396,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnrollmentChildrenRouteImport
       parentRoute: typeof EnrollmentRoute
     }
+    '/enrollment/print/$room': {
+      id: '/enrollment/print/$room'
+      path: '/print/$room'
+      fullPath: '/enrollment/print/$room'
+      preLoaderRoute: typeof EnrollmentPrintRoomRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
   }
 }
 
@@ -394,6 +413,7 @@ interface EnrollmentRouteChildren {
   EnrollmentTransitionsRoute: typeof EnrollmentTransitionsRoute
   EnrollmentWaitlistRoute: typeof EnrollmentWaitlistRoute
   EnrollmentIndexRoute: typeof EnrollmentIndexRoute
+  EnrollmentPrintRoomRoute: typeof EnrollmentPrintRoomRoute
 }
 
 const EnrollmentRouteChildren: EnrollmentRouteChildren = {
@@ -403,6 +423,7 @@ const EnrollmentRouteChildren: EnrollmentRouteChildren = {
   EnrollmentTransitionsRoute: EnrollmentTransitionsRoute,
   EnrollmentWaitlistRoute: EnrollmentWaitlistRoute,
   EnrollmentIndexRoute: EnrollmentIndexRoute,
+  EnrollmentPrintRoomRoute: EnrollmentPrintRoomRoute,
 }
 
 const EnrollmentRouteWithChildren = EnrollmentRoute._addFileChildren(
