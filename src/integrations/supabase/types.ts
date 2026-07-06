@@ -14,6 +14,132 @@ export type Database = {
   }
   public: {
     Tables: {
+      enrollment_children: {
+        Row: {
+          created_at: string
+          dob: string | null
+          fall_plan: string | null
+          id: string
+          name: string
+          notes: string | null
+          parent: string | null
+          parent_email: string | null
+          parent_phone: string | null
+          room: string
+          schedule: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          dob?: string | null
+          fall_plan?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          parent?: string | null
+          parent_email?: string | null
+          parent_phone?: string | null
+          room: string
+          schedule?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          dob?: string | null
+          fall_plan?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          parent?: string | null
+          parent_email?: string | null
+          parent_phone?: string | null
+          room?: string
+          schedule?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      enrollment_rooms: {
+        Row: {
+          capacity: number
+          classroom: string
+          code: string
+          created_at: string
+          max_twos: number | null
+          max_under_2: number | null
+          notes: string | null
+          updated_at: string
+        }
+        Insert: {
+          capacity: number
+          classroom: string
+          code: string
+          created_at?: string
+          max_twos?: number | null
+          max_under_2?: number | null
+          notes?: string | null
+          updated_at?: string
+        }
+        Update: {
+          capacity?: number
+          classroom?: string
+          code?: string
+          created_at?: string
+          max_twos?: number | null
+          max_under_2?: number | null
+          notes?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      enrollment_waitlist: {
+        Row: {
+          created_at: string
+          date_inquired: string | null
+          desired_start: string
+          dob_or_due_date: string
+          email: string | null
+          id: string
+          name: string
+          notes: string | null
+          parent: string | null
+          phone: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          date_inquired?: string | null
+          desired_start: string
+          dob_or_due_date: string
+          email?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          parent?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          date_inquired?: string | null
+          desired_start?: string
+          dob_or_due_date?: string
+          email?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          parent?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       payroll_rates: {
         Row: {
           created_at: string
