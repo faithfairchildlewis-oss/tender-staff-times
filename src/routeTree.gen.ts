@@ -15,11 +15,19 @@ import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as RoomsRouteImport } from './routes/rooms'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as EnrollmentRouteImport } from './routes/enrollment'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EnrollmentIndexRouteImport } from './routes/enrollment.index'
 import { Route as StaffNameRouteImport } from './routes/staff.$name'
 import { Route as PrintStaffRouteImport } from './routes/print.staff'
 import { Route as PrintRoomsRouteImport } from './routes/print.rooms'
+import { Route as EnrollmentWaitlistRouteImport } from './routes/enrollment.waitlist'
+import { Route as EnrollmentTransitionsRouteImport } from './routes/enrollment.transitions'
+import { Route as EnrollmentRosterRouteImport } from './routes/enrollment.roster'
+import { Route as EnrollmentImportRouteImport } from './routes/enrollment.import'
+import { Route as EnrollmentChildrenRouteImport } from './routes/enrollment.children'
+import { Route as EnrollmentPrintRoomRouteImport } from './routes/enrollment.print.$room'
 
 const WeekRoute = WeekRouteImport.update({
   id: '/week',
@@ -51,6 +59,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnrollmentRoute = EnrollmentRouteImport.update({
+  id: '/enrollment',
+  path: '/enrollment',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -60,6 +73,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const EnrollmentIndexRoute = EnrollmentIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EnrollmentRoute,
 } as any)
 const StaffNameRoute = StaffNameRouteImport.update({
   id: '/staff/$name',
@@ -76,19 +94,57 @@ const PrintRoomsRoute = PrintRoomsRouteImport.update({
   path: '/print/rooms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnrollmentWaitlistRoute = EnrollmentWaitlistRouteImport.update({
+  id: '/waitlist',
+  path: '/waitlist',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
+const EnrollmentTransitionsRoute = EnrollmentTransitionsRouteImport.update({
+  id: '/transitions',
+  path: '/transitions',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
+const EnrollmentRosterRoute = EnrollmentRosterRouteImport.update({
+  id: '/roster',
+  path: '/roster',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
+const EnrollmentImportRoute = EnrollmentImportRouteImport.update({
+  id: '/import',
+  path: '/import',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
+const EnrollmentChildrenRoute = EnrollmentChildrenRouteImport.update({
+  id: '/children',
+  path: '/children',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
+const EnrollmentPrintRoomRoute = EnrollmentPrintRoomRouteImport.update({
+  id: '/print/$room',
+  path: '/print/$room',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/enrollment': typeof EnrollmentRouteWithChildren
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/week': typeof WeekRoute
+  '/enrollment/children': typeof EnrollmentChildrenRoute
+  '/enrollment/import': typeof EnrollmentImportRoute
+  '/enrollment/roster': typeof EnrollmentRosterRoute
+  '/enrollment/transitions': typeof EnrollmentTransitionsRoute
+  '/enrollment/waitlist': typeof EnrollmentWaitlistRoute
   '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
+  '/enrollment/': typeof EnrollmentIndexRoute
+  '/enrollment/print/$room': typeof EnrollmentPrintRoomRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -99,38 +155,61 @@ export interface FileRoutesByTo {
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/week': typeof WeekRoute
+  '/enrollment/children': typeof EnrollmentChildrenRoute
+  '/enrollment/import': typeof EnrollmentImportRoute
+  '/enrollment/roster': typeof EnrollmentRosterRoute
+  '/enrollment/transitions': typeof EnrollmentTransitionsRoute
+  '/enrollment/waitlist': typeof EnrollmentWaitlistRoute
   '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
+  '/enrollment': typeof EnrollmentIndexRoute
+  '/enrollment/print/$room': typeof EnrollmentPrintRoomRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/enrollment': typeof EnrollmentRouteWithChildren
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/week': typeof WeekRoute
+  '/enrollment/children': typeof EnrollmentChildrenRoute
+  '/enrollment/import': typeof EnrollmentImportRoute
+  '/enrollment/roster': typeof EnrollmentRosterRoute
+  '/enrollment/transitions': typeof EnrollmentTransitionsRoute
+  '/enrollment/waitlist': typeof EnrollmentWaitlistRoute
   '/print/rooms': typeof PrintRoomsRoute
   '/print/staff': typeof PrintStaffRoute
   '/staff/$name': typeof StaffNameRoute
+  '/enrollment/': typeof EnrollmentIndexRoute
+  '/enrollment/print/$room': typeof EnrollmentPrintRoomRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/admin'
+    | '/enrollment'
     | '/login'
     | '/reset-password'
     | '/rooms'
     | '/schedule'
     | '/sitemap.xml'
     | '/week'
+    | '/enrollment/children'
+    | '/enrollment/import'
+    | '/enrollment/roster'
+    | '/enrollment/transitions'
+    | '/enrollment/waitlist'
     | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
+    | '/enrollment/'
+    | '/enrollment/print/$room'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -141,27 +220,43 @@ export interface FileRouteTypes {
     | '/schedule'
     | '/sitemap.xml'
     | '/week'
+    | '/enrollment/children'
+    | '/enrollment/import'
+    | '/enrollment/roster'
+    | '/enrollment/transitions'
+    | '/enrollment/waitlist'
     | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
+    | '/enrollment'
+    | '/enrollment/print/$room'
   id:
     | '__root__'
     | '/'
     | '/admin'
+    | '/enrollment'
     | '/login'
     | '/reset-password'
     | '/rooms'
     | '/schedule'
     | '/sitemap.xml'
     | '/week'
+    | '/enrollment/children'
+    | '/enrollment/import'
+    | '/enrollment/roster'
+    | '/enrollment/transitions'
+    | '/enrollment/waitlist'
     | '/print/rooms'
     | '/print/staff'
     | '/staff/$name'
+    | '/enrollment/'
+    | '/enrollment/print/$room'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
+  EnrollmentRoute: typeof EnrollmentRouteWithChildren
   LoginRoute: typeof LoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   RoomsRoute: typeof RoomsRoute
@@ -217,6 +312,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/enrollment': {
+      id: '/enrollment'
+      path: '/enrollment'
+      fullPath: '/enrollment'
+      preLoaderRoute: typeof EnrollmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -230,6 +332,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/enrollment/': {
+      id: '/enrollment/'
+      path: '/'
+      fullPath: '/enrollment/'
+      preLoaderRoute: typeof EnrollmentIndexRouteImport
+      parentRoute: typeof EnrollmentRoute
     }
     '/staff/$name': {
       id: '/staff/$name'
@@ -252,12 +361,79 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrintRoomsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/enrollment/waitlist': {
+      id: '/enrollment/waitlist'
+      path: '/waitlist'
+      fullPath: '/enrollment/waitlist'
+      preLoaderRoute: typeof EnrollmentWaitlistRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
+    '/enrollment/transitions': {
+      id: '/enrollment/transitions'
+      path: '/transitions'
+      fullPath: '/enrollment/transitions'
+      preLoaderRoute: typeof EnrollmentTransitionsRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
+    '/enrollment/roster': {
+      id: '/enrollment/roster'
+      path: '/roster'
+      fullPath: '/enrollment/roster'
+      preLoaderRoute: typeof EnrollmentRosterRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
+    '/enrollment/import': {
+      id: '/enrollment/import'
+      path: '/import'
+      fullPath: '/enrollment/import'
+      preLoaderRoute: typeof EnrollmentImportRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
+    '/enrollment/children': {
+      id: '/enrollment/children'
+      path: '/children'
+      fullPath: '/enrollment/children'
+      preLoaderRoute: typeof EnrollmentChildrenRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
+    '/enrollment/print/$room': {
+      id: '/enrollment/print/$room'
+      path: '/print/$room'
+      fullPath: '/enrollment/print/$room'
+      preLoaderRoute: typeof EnrollmentPrintRoomRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
   }
 }
+
+interface EnrollmentRouteChildren {
+  EnrollmentChildrenRoute: typeof EnrollmentChildrenRoute
+  EnrollmentImportRoute: typeof EnrollmentImportRoute
+  EnrollmentRosterRoute: typeof EnrollmentRosterRoute
+  EnrollmentTransitionsRoute: typeof EnrollmentTransitionsRoute
+  EnrollmentWaitlistRoute: typeof EnrollmentWaitlistRoute
+  EnrollmentIndexRoute: typeof EnrollmentIndexRoute
+  EnrollmentPrintRoomRoute: typeof EnrollmentPrintRoomRoute
+}
+
+const EnrollmentRouteChildren: EnrollmentRouteChildren = {
+  EnrollmentChildrenRoute: EnrollmentChildrenRoute,
+  EnrollmentImportRoute: EnrollmentImportRoute,
+  EnrollmentRosterRoute: EnrollmentRosterRoute,
+  EnrollmentTransitionsRoute: EnrollmentTransitionsRoute,
+  EnrollmentWaitlistRoute: EnrollmentWaitlistRoute,
+  EnrollmentIndexRoute: EnrollmentIndexRoute,
+  EnrollmentPrintRoomRoute: EnrollmentPrintRoomRoute,
+}
+
+const EnrollmentRouteWithChildren = EnrollmentRoute._addFileChildren(
+  EnrollmentRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
+  EnrollmentRoute: EnrollmentRouteWithChildren,
   LoginRoute: LoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   RoomsRoute: RoomsRoute,
@@ -271,3 +447,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
