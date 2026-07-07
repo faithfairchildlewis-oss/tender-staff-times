@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo } from "react";
 import { useChildren } from "@/hooks/use-enrollment";
-import { ageYearsMonths, formatFull } from "@/lib/enrollment/mapping";
+import { ageYearsMonths, compareOldestFirst, formatFull } from "@/lib/enrollment/mapping";
 import { nextTransition, ROOMS, type RoomCode } from "@/lib/enrollment/enrollment-logic";
 
 export const Route = createFileRoute("/enrollment/print/$room")({
@@ -12,13 +12,22 @@ export const Route = createFileRoute("/enrollment/print/$room")({
 function PrintPage() {
   const { room: roomParam } = Route.useParams();
   const room = roomParam.replace("-", "/") as RoomCode;
-  const { data: children = [] } = useChildren();
+  const { data: children = [], isSuccess } = useChildren();
   const now = new Date();
 
-  useEffect(() => { setTimeout(() => window.print(), 400); }, []);
+  // Print only once the roster has loaded — a fixed timer races the query
+  // and can print an empty page on slow connections.
+  useEffect(() => {
+    if (!isSuccess) return;
+    const t = setTimeout(() => window.print(), 250);
+    return () => clearTimeout(t);
+  }, [isSuccess]);
 
   const roster = useMemo(
-    () => children.filter((c) => c.room === room && c.status === "Active").sort((a, b) => a.name.localeCompare(b.name)),
+    () =>
+      children
+        .filter((c) => c.room === room && c.status === "Active")
+        .sort((a, b) => compareOldestFirst(a, b) || a.name.localeCompare(b.name)),
     [children, room],
   );
 

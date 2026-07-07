@@ -77,6 +77,16 @@ export function formatFull(d: Date): string {
   return d.toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
 }
 
+/** Standard child ordering: oldest at the top (earliest DOB first).
+ *  Children with a missing DOB sink to the bottom so the data flag
+ *  stays visible. ISO dates sort correctly as strings. */
+export function compareOldestFirst(a: { dob: string | null }, b: { dob: string | null }): number {
+  if (!a.dob && !b.dob) return 0;
+  if (!a.dob) return 1;
+  if (!b.dob) return -1;
+  return a.dob.localeCompare(b.dob);
+}
+
 export function ageYearsMonths(dobISO: string, asOf: Date = new Date()): string {
   const dob = new Date(dobISO + "T00:00:00");
   let y = asOf.getFullYear() - dob.getFullYear();
