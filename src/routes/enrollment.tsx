@@ -22,6 +22,7 @@ const TABS: Tab[] = [
   { to: "/enrollment",             label: "Snapshot",    adminOnly: true },
   { to: "/enrollment/children",    label: "Children",    adminOnly: true },
   { to: "/enrollment/transitions", label: "Transitions", adminOnly: true },
+  { to: "/enrollment/projections", label: "Projections", adminOnly: true },
   { to: "/enrollment/roster",      label: "Roster" },
   { to: "/enrollment/waitlist",    label: "Waitlist",    adminOnly: true },
   { to: "/enrollment/import",      label: "Import",      adminOnly: true },
