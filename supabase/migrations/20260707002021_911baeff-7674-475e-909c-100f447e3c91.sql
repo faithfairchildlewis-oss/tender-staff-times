@@ -1,0 +1,1 @@
+GRANT EXECUTE ON FUNCTION public.staff_hours_in_range(text, date, date) TO authenticated;
