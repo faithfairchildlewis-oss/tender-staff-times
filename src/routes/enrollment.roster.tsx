@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { Printer } from "lucide-react";
 import { useChildren, useWaitlist } from "@/hooks/use-enrollment";
-import { ageInMonths, eligibleRoomAtAge, roomOnDate, type RoomCode } from "@/lib/enrollment/enrollment-logic";
-import { CAMP_ENDS, formatISO, formatShort, mondayOf, ROOM_COLORS, ROOM_ORDER } from "@/lib/enrollment/mapping";
+import { ageInMonths, eligibleRoomAtAge, holdsSeat, roomOnDate, type RoomCode } from "@/lib/enrollment/enrollment-logic";
+import { CAMP_ENDS, compareOldestFirst, formatISO, formatShort, mondayOf, ROOM_COLORS, ROOM_ORDER } from "@/lib/enrollment/mapping";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/enrollment/roster")({
@@ -32,7 +32,7 @@ function RosterPage() {
       .filter((c) => c.status === "Active")
       .map((c) => ({ kind: "child" as const, key: c.id, name: c.name, dob: c.dob, room: c.room, child: c }));
     const wl = waitlist
-      .filter((w) => /deposit|hold/i.test(w.status))
+      .filter((w) => holdsSeat(w.status))
       .map((w) => ({
         kind: "waitlist" as const,
         key: `wl-${w.id}`,
@@ -45,8 +45,7 @@ function RosterPage() {
       const ra = ROOM_ORDER.indexOf(a.room);
       const rb = ROOM_ORDER.indexOf(b.room);
       if (ra !== rb) return ra - rb;
-      if (!a.dob || !b.dob) return (a.dob ? -1 : 1) - (b.dob ? -1 : 1);
-      return a.dob.localeCompare(b.dob);
+      return compareOldestFirst(a, b) || a.name.localeCompare(b.name); // oldest at the top of each room
     });
   }, [children, waitlist]);
 
