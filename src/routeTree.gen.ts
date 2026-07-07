@@ -25,6 +25,7 @@ import { Route as PrintRoomsRouteImport } from './routes/print.rooms'
 import { Route as EnrollmentWaitlistRouteImport } from './routes/enrollment.waitlist'
 import { Route as EnrollmentTransitionsRouteImport } from './routes/enrollment.transitions'
 import { Route as EnrollmentRosterRouteImport } from './routes/enrollment.roster'
+import { Route as EnrollmentProjectionsRouteImport } from './routes/enrollment.projections'
 import { Route as EnrollmentImportRouteImport } from './routes/enrollment.import'
 import { Route as EnrollmentChildrenRouteImport } from './routes/enrollment.children'
 import { Route as EnrollmentPrintRoomRouteImport } from './routes/enrollment.print.$room'
@@ -109,6 +110,11 @@ const EnrollmentRosterRoute = EnrollmentRosterRouteImport.update({
   path: '/roster',
   getParentRoute: () => EnrollmentRoute,
 } as any)
+const EnrollmentProjectionsRoute = EnrollmentProjectionsRouteImport.update({
+  id: '/projections',
+  path: '/projections',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
 const EnrollmentImportRoute = EnrollmentImportRouteImport.update({
   id: '/import',
   path: '/import',
@@ -137,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/week': typeof WeekRoute
   '/enrollment/children': typeof EnrollmentChildrenRoute
   '/enrollment/import': typeof EnrollmentImportRoute
+  '/enrollment/projections': typeof EnrollmentProjectionsRoute
   '/enrollment/roster': typeof EnrollmentRosterRoute
   '/enrollment/transitions': typeof EnrollmentTransitionsRoute
   '/enrollment/waitlist': typeof EnrollmentWaitlistRoute
@@ -157,6 +164,7 @@ export interface FileRoutesByTo {
   '/week': typeof WeekRoute
   '/enrollment/children': typeof EnrollmentChildrenRoute
   '/enrollment/import': typeof EnrollmentImportRoute
+  '/enrollment/projections': typeof EnrollmentProjectionsRoute
   '/enrollment/roster': typeof EnrollmentRosterRoute
   '/enrollment/transitions': typeof EnrollmentTransitionsRoute
   '/enrollment/waitlist': typeof EnrollmentWaitlistRoute
@@ -179,6 +187,7 @@ export interface FileRoutesById {
   '/week': typeof WeekRoute
   '/enrollment/children': typeof EnrollmentChildrenRoute
   '/enrollment/import': typeof EnrollmentImportRoute
+  '/enrollment/projections': typeof EnrollmentProjectionsRoute
   '/enrollment/roster': typeof EnrollmentRosterRoute
   '/enrollment/transitions': typeof EnrollmentTransitionsRoute
   '/enrollment/waitlist': typeof EnrollmentWaitlistRoute
@@ -202,6 +211,7 @@ export interface FileRouteTypes {
     | '/week'
     | '/enrollment/children'
     | '/enrollment/import'
+    | '/enrollment/projections'
     | '/enrollment/roster'
     | '/enrollment/transitions'
     | '/enrollment/waitlist'
@@ -222,6 +232,7 @@ export interface FileRouteTypes {
     | '/week'
     | '/enrollment/children'
     | '/enrollment/import'
+    | '/enrollment/projections'
     | '/enrollment/roster'
     | '/enrollment/transitions'
     | '/enrollment/waitlist'
@@ -243,6 +254,7 @@ export interface FileRouteTypes {
     | '/week'
     | '/enrollment/children'
     | '/enrollment/import'
+    | '/enrollment/projections'
     | '/enrollment/roster'
     | '/enrollment/transitions'
     | '/enrollment/waitlist'
@@ -382,6 +394,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnrollmentRosterRouteImport
       parentRoute: typeof EnrollmentRoute
     }
+    '/enrollment/projections': {
+      id: '/enrollment/projections'
+      path: '/projections'
+      fullPath: '/enrollment/projections'
+      preLoaderRoute: typeof EnrollmentProjectionsRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
     '/enrollment/import': {
       id: '/enrollment/import'
       path: '/import'
@@ -409,6 +428,7 @@ declare module '@tanstack/react-router' {
 interface EnrollmentRouteChildren {
   EnrollmentChildrenRoute: typeof EnrollmentChildrenRoute
   EnrollmentImportRoute: typeof EnrollmentImportRoute
+  EnrollmentProjectionsRoute: typeof EnrollmentProjectionsRoute
   EnrollmentRosterRoute: typeof EnrollmentRosterRoute
   EnrollmentTransitionsRoute: typeof EnrollmentTransitionsRoute
   EnrollmentWaitlistRoute: typeof EnrollmentWaitlistRoute
@@ -419,6 +439,7 @@ interface EnrollmentRouteChildren {
 const EnrollmentRouteChildren: EnrollmentRouteChildren = {
   EnrollmentChildrenRoute: EnrollmentChildrenRoute,
   EnrollmentImportRoute: EnrollmentImportRoute,
+  EnrollmentProjectionsRoute: EnrollmentProjectionsRoute,
   EnrollmentRosterRoute: EnrollmentRosterRoute,
   EnrollmentTransitionsRoute: EnrollmentTransitionsRoute,
   EnrollmentWaitlistRoute: EnrollmentWaitlistRoute,
