@@ -302,6 +302,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_admin: { Args: never; Returns: boolean }
       staff_hours_in_range: {
         Args: { _end: string; _name: string; _start: string }
         Returns: number
