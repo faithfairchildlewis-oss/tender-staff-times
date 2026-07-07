@@ -45,7 +45,8 @@ function RosterPage() {
       const ra = ROOM_ORDER.indexOf(a.room);
       const rb = ROOM_ORDER.indexOf(b.room);
       if (ra !== rb) return ra - rb;
-      return a.name.localeCompare(b.name);
+      if (!a.dob || !b.dob) return (a.dob ? -1 : 1) - (b.dob ? -1 : 1);
+      return a.dob.localeCompare(b.dob);
     });
   }, [children, waitlist]);
 
