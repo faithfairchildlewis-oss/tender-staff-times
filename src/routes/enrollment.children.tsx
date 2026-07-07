@@ -128,7 +128,7 @@ function WithdrawButton({ id, name, status }: { id: string; name: string; status
     return (
       <Button size="icon" variant="ghost" title="Reactivate"
         onClick={async () => {
-          await upsert.mutateAsync({ id, name, room: "F", status: "Active" } as never);
+          await upsert.mutateAsync({ id, name, status: "Active" } as never);
           toast.success(`${name} reactivated`);
         }}>
         <RotateCcw className="h-4 w-4" />
