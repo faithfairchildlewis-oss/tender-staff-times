@@ -259,6 +259,12 @@ function AdminEditor() {
           >
             <Home className="w-4 h-4" />
           </Link>
+          <Link
+            to="/enrollment"
+            className="ml-2 inline-flex items-center gap-1 text-sm min-h-11 px-3 rounded-lg bg-primary-foreground/15"
+          >
+            <Users className="w-4 h-4" /> Enrollment
+          </Link>
           <h1 className="absolute left-1/2 -translate-x-1/2 text-xl font-bold">
             Admin
           </h1>
