@@ -167,9 +167,16 @@ export function eligibleRoomAtAge(ageMonths: number): RoomCode {
   return "SAC";
 }
 
+/** Single source of truth for "this waitlist entry holds a seat."
+ *  Matches deposit/hold statuses but NOT Enrolled (already a child row —
+ *  counting both double-counts the census) or Withdrawn. */
+export function holdsSeat(status: string): boolean {
+  return /deposit|hold/i.test(status) && !/enrolled|withdrawn/i.test(status);
+}
+
 export function heldSeats(waitlist: WaitlistEntry[], room: RoomCode): number {
   return waitlist.filter((w) => {
-    if (!/deposit/i.test(w.status)) return false;
+    if (!holdsSeat(w.status)) return false;
     const age = ageInMonths(w.dobOrDueDate, new Date(w.desiredStart + "T00:00:00"));
     return eligibleRoomAtAge(Math.max(age, 0)) === room;
   }).length;
@@ -190,11 +197,11 @@ export function projectWeekly(
     const census: Record<RoomCode, number> = { F: 0, I: 0, "G/H": 0, "J/K": 0, SAC: 0, SUMMER: 0 };
     for (const c of children) {
       if (c.status !== "Active") continue;
-      const room = roomOnDate(c, wk, campEnds);
+      const room = roomOnDate(c, wk, campEnds, fromMonday);
       if (room) census[room] += 1;
     }
     for (const wl of waitlist) {
-      if (!/deposit|hold/i.test(wl.status)) continue;
+      if (!holdsSeat(wl.status)) continue;
       const start = new Date(wl.desiredStart + "T00:00:00");
       if (wk >= start) {
         const age = ageInMonths(wl.dobOrDueDate, wk);
@@ -206,7 +213,15 @@ export function projectWeekly(
   return out;
 }
 
-export function roomOnDate(c: Child, date: Date, campEnds: Date): RoomCode | null {
+/** The room a child occupies on `date`, anchored at `today`.
+ *
+ *  Guardrail: placement is the director's call. A child who is already past
+ *  an eligibility date but still in their current room (early/late placement)
+ *  stays there in the projection — we FLAG the difference in the Snapshot,
+ *  we never silently "correct" it. Only moves whose eligibility date falls
+ *  AFTER `today` are projected. The kindergarten departure is the exception:
+ *  that exit is mandatory, so it always applies. */
+export function roomOnDate(c: Child, date: Date, campEnds: Date, today: Date = new Date()): RoomCode | null {
   if (!c.dob) return c.room === "SUMMER" && date > campEnds ? null : c.room;
   if (c.room === "SUMMER") return date <= campEnds ? "SUMMER" : null;
   if (c.room === "SAC") return "SAC";
@@ -215,15 +230,33 @@ export function roomOnDate(c: Child, date: Date, campEnds: Date): RoomCode | nul
   if (date > kLast && ageInMonths(c.dob, date) >= 60) {
     return c.fallPlan === "SAC" ? "SAC" : null;
   }
-  // Walk forward through room chain by eligibility
+  // Walk forward through the room chain by eligibility — future moves only.
   let room: RoomCode = c.room;
   let guard = 0;
   while (guard++ < 5) {
     const cfg = ROOMS[room] as { movesUpAt?: number; nextRoom?: RoomCode };
     if (!cfg.movesUpAt || !cfg.nextRoom) break;
     const moveDate = addMonths(c.dob, cfg.movesUpAt);
+    if (moveDate <= today) break; // overdue → director hasn't moved them; don't assume
     if (date >= moveDate && room !== "J/K") room = cfg.nextRoom;
     else break;
   }
   return room;
+}
+
+/** Weekly value of one open seat in a room, derived from RATES at the room's
+ *  entry age — single source of truth (never hardcode rates in the UI). */
+export function openSeatRate(room: RoomCode): number {
+  const entryAge = ROOMS[room].ageMin;
+  const band = RATES.find((r) => entryAge < r.maxAgeMonthsExclusive)!;
+  return band.standard;
+}
+
+/** True if this Mighty Oaks child's kindergarten departure lands in `year`
+ *  (i.e. their last day is Aug 21 of that year). Used so the Fall SAC
+ *  outlook only counts THIS year's K class, not every child whose fall
+ *  plan has been pre-filled. */
+export function departsForKInYear(c: Child, year: number): boolean {
+  if (!c.dob || c.status !== "Active") return false;
+  return kindergartenLastDay(c.dob).getFullYear() === year;
 }
