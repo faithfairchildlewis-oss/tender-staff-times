@@ -8,7 +8,7 @@ import { Link } from "@tanstack/react-router";
 import { Printer } from "lucide-react";
 import { useChildren, useWaitlist } from "@/hooks/use-enrollment";
 import { ageInMonths, eligibleRoomAtAge, holdsSeat, roomOnDate, type RoomCode } from "@/lib/enrollment/enrollment-logic";
-import { CAMP_ENDS, compareOldestFirst, formatISO, formatShort, mondayOf, ROOM_COLORS, ROOM_ORDER } from "@/lib/enrollment/mapping";
+import { CAMP_ENDS, compareYoungestFirst, formatISO, formatShort, mondayOf, ROOM_COLORS, ROOM_ORDER } from "@/lib/enrollment/mapping";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/enrollment/roster")({
@@ -41,12 +41,8 @@ function RosterPage() {
         room: eligibleRoomAtAge(Math.max(ageInMonths(w.dobOrDueDate, new Date(w.desiredStart + "T00:00:00")), 0)) as RoomCode,
         waitlist: w,
       }));
-    return [...kids, ...wl].sort((a, b) => {
-      const ra = ROOM_ORDER.indexOf(a.room);
-      const rb = ROOM_ORDER.indexOf(b.room);
-      if (ra !== rb) return ra - rb;
-      return compareOldestFirst(a, b) || a.name.localeCompare(b.name); // oldest at the top of each room
-    });
+    // One continuous list: youngest (incl. unborn waitlist) at the top, oldest at the bottom.
+    return [...kids, ...wl].sort((a, b) => compareYoungestFirst(a, b) || a.name.localeCompare(b.name));
   }, [children, waitlist]);
 
   return (

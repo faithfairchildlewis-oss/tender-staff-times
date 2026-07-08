@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo } from "react";
 import { useChildren } from "@/hooks/use-enrollment";
-import { ageYearsMonths, compareOldestFirst, formatFull } from "@/lib/enrollment/mapping";
+import { ageYearsMonths, compareYoungestFirst, formatFull } from "@/lib/enrollment/mapping";
 import { nextTransition, ROOMS, type RoomCode } from "@/lib/enrollment/enrollment-logic";
 
 export const Route = createFileRoute("/enrollment/print/$room")({
@@ -27,7 +27,7 @@ function PrintPage() {
     () =>
       children
         .filter((c) => c.room === room && c.status === "Active")
-        .sort((a, b) => compareOldestFirst(a, b) || a.name.localeCompare(b.name)),
+        .sort((a, b) => compareYoungestFirst(a, b) || a.name.localeCompare(b.name)),
     [children, room],
   );
 

@@ -77,6 +77,17 @@ export function formatFull(d: Date): string {
   return d.toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
 }
 
+/** Child ordering per the director: YOUNGEST at the top (latest DOB first,
+ *  so unborn/newest birthdays lead), oldest at the bottom. One continuous
+ *  list — no room grouping. Children with a missing DOB sink to the very
+ *  bottom so the data flag stays visible. */
+export function compareYoungestFirst(a: { dob: string | null }, b: { dob: string | null }): number {
+  if (!a.dob && !b.dob) return 0;
+  if (!a.dob) return 1;
+  if (!b.dob) return -1;
+  return b.dob.localeCompare(a.dob);
+}
+
 /** Standard child ordering: oldest at the top (earliest DOB first).
  *  Children with a missing DOB sink to the bottom so the data flag
  *  stays visible. ISO dates sort correctly as strings. */
