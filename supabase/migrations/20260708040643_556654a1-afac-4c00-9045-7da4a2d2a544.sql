@@ -1,0 +1,1 @@
+UPDATE public.enrollment_waitlist SET status = 'Deposit paid', updated_at = now() WHERE id = '0fab2a51-eced-414b-b95a-ea267dcc6c63';
