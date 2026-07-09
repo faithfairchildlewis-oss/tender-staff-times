@@ -98,12 +98,9 @@ function RosterPage() {
                 {mondays.map((m) => {
                   const room = getRoomForRow(row, m);
                   const style = room ? ROOM_COLORS[room] : null;
-                  const label = room === "G/H" && row.dob
-                    ? (ageInMonths(row.dob, m) < 24 ? "G" : "H")
-                    : room ?? "";
                   return (
                     <td key={m.toISOString()} className={cn("border-b text-center px-0 py-0.5 min-w-[3.5rem]", style ? `${style.bg} ${style.text}` : "bg-muted/30")}>
-                      {label}
+                      {room ?? ""}
                     </td>
                   );
                 })}
@@ -113,7 +110,7 @@ function RosterPage() {
         </table>
       </Card>
 
-      <p className="text-xs text-muted-foreground">* indicates a waitlist deposit — appears from their desired start week. In the Sprouts room, <strong>G</strong> = under 2 (18–23 mo) and <strong>H</strong> = two-year-olds (24–35 mo).</p>
+      <p className="text-xs text-muted-foreground">* indicates a waitlist deposit — appears from their desired start week.</p>
     </div>
   );
 }
