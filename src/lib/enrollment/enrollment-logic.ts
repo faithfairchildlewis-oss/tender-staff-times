@@ -260,3 +260,95 @@ export function departsForKInYear(c: Child, year: number): boolean {
   if (!c.dob || c.status !== "Active") return false;
   return kindergartenLastDay(c.dob).getFullYear() === year;
 }
+
+// ---------------- Ask: "do I have room for a child born on X?" ----------------
+// Projects existing children's rooms forward via roomOnDate (not their static
+// `room` field), so a search for a future start date correctly accounts for
+// move-ups between now and then, under the same "director's call" guardrail
+// as everywhere else. G/H is gated on its own 1:3 / 1:6 sub-caps, not just
+// the 9-seat room total — see the HARD composition rule above.
+function mondayOnOrAfter(d: Date): Date {
+  const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const dow = x.getDay(); // 0 = Sun
+  const diff = dow === 0 ? 1 : dow === 1 ? 0 : 8 - dow;
+  x.setDate(x.getDate() + diff);
+  return x;
+}
+
+function roomCensusOnDate(children: Child[], room: RoomCode, date: Date, campEnds: Date, today: Date): number {
+  return children.filter((c) => c.status === "Active" && roomOnDate(c, date, campEnds, today) === room).length;
+}
+
+function sproutsBandCensusOnDate(
+  children: Child[], date: Date, campEnds: Date, today: Date,
+): { under2: number; twos: number } {
+  let under2 = 0, twos = 0;
+  for (const c of children) {
+    if (c.status !== "Active" || !c.dob) continue;
+    if (roomOnDate(c, date, campEnds, today) !== "G/H") continue;
+    if (ageInMonths(c.dob, date) < 24) under2++; else twos++;
+  }
+  return { under2, twos };
+}
+
+export interface AvailabilityCheck {
+  room: RoomCode;
+  classroom: string;
+  ageAtStartMonths: number;
+  gate: "room" | "under-2 seat" | "two-year-old seat";
+  capacity: number;
+  census: number;
+  open: number;
+  held: number; // room-wide floor — see heldSeats() note
+  availableAfterHolds: number;
+  available: boolean;
+  nextOpening: { date: Date; availableAfterHolds: number } | null;
+}
+
+function evaluateAvailability(
+  children: Child[], waitlist: WaitlistEntry[], dob: string, atDate: Date, campEnds: Date, today: Date,
+): Omit<AvailabilityCheck, "available" | "nextOpening"> {
+  const ageAtStartMonths = Math.max(ageInMonths(dob, atDate), 0);
+  const room = eligibleRoomAtAge(ageAtStartMonths);
+  const classroom = ROOMS[room].classroom;
+  let capacity: number, census: number, gate: AvailabilityCheck["gate"];
+  if (room === "G/H") {
+    const { under2, twos } = sproutsBandCensusOnDate(children, atDate, campEnds, today);
+    const under2Band = ageAtStartMonths < 24;
+    capacity = under2Band ? ROOMS["G/H"].maxUnder2 : ROOMS["G/H"].maxTwos;
+    census = under2Band ? under2 : twos;
+    gate = under2Band ? "under-2 seat" : "two-year-old seat";
+  } else {
+    capacity = ROOMS[room].capacity;
+    census = roomCensusOnDate(children, room, atDate, campEnds, today);
+    gate = "room";
+  }
+  const open = Math.max(capacity - census, 0);
+  const held = heldSeats(waitlist, room);
+  const availableAfterHolds = Math.max(open - held, 0);
+  return { room, classroom, ageAtStartMonths, gate, capacity, census, open, held, availableAfterHolds };
+}
+
+/** Answers "do we have room for a child with this birthday?" Checks the
+ *  age-eligible room/sub-cap at `desiredStart`; if full, walks forward
+ *  week by week (up to `horizonWeeks`) to find the next projected opening.
+ *  `today` anchors the roomOnDate guardrail — defaults to the real now. */
+export function checkAvailability(
+  children: Child[], waitlist: WaitlistEntry[], dob: string, desiredStart: Date, campEnds: Date,
+  horizonWeeks = 52, today: Date = new Date(),
+): AvailabilityCheck {
+  const first = evaluateAvailability(children, waitlist, dob, desiredStart, campEnds, today);
+  const result: AvailabilityCheck = { ...first, available: first.availableAfterHolds > 0, nextOpening: null };
+  if (result.available) return result;
+
+  const startMonday = mondayOnOrAfter(desiredStart);
+  for (let w = 1; w <= horizonWeeks; w++) {
+    const wk = new Date(startMonday.getTime() + w * 7 * 86400000);
+    const r = evaluateAvailability(children, waitlist, dob, wk, campEnds, today);
+    if (r.availableAfterHolds > 0) {
+      result.nextOpening = { date: wk, availableAfterHolds: r.availableAfterHolds };
+      break;
+    }
+  }
+  return result;
+}
