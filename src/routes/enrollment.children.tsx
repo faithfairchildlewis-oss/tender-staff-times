@@ -157,6 +157,7 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
   const [form, setForm] = useState({
     name: child?.name ?? "",
     dob: child?.dob ?? "",
+    start_date: (child as unknown as { startDate?: string | null })?.startDate ?? "",
     room: (child?.room ?? "F") as RoomCode,
     schedule: (child?.schedule ?? "Standard") as "Standard" | "Extended",
     fall_plan: child?.fallPlan ?? "",
@@ -171,6 +172,7 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
       id: child?.id,
       name: form.name.trim(),
       dob: form.dob || null,
+      start_date: form.start_date || null,
       room: form.room,
       schedule: form.schedule,
       status: "Active",
@@ -198,6 +200,7 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
               </Select>
             </Field>
           </div>
+          <Field label="Start date"><Input type="date" value={form.start_date} onChange={(e) => setForm({ ...form, start_date: e.target.value })} /></Field>
           <div className="grid grid-cols-2 gap-3">
             <Field label="Schedule">
               <Select value={form.schedule} onValueChange={(v) => setForm({ ...form, schedule: v as "Standard" | "Extended" })}>
