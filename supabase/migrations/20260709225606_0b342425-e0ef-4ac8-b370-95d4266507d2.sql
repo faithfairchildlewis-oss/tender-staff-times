@@ -1,0 +1,1 @@
+UPDATE enrollment_waitlist SET status = 'Enrolled' WHERE id = '0fab2a51-eced-414b-b95a-ea267dcc6c63';
