@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   ageInMonths,
+  checkAvailability,
   departsForKInYear,
   eligibleRoomAtAge,
   heldSeats,
@@ -12,6 +13,7 @@ import {
   staffRequired,
   weeklyRate,
   type Child,
+  type WaitlistEntry,
 } from "./enrollment-logic";
 import { isActiveStatus, normalizeRoom } from "./brightwheel";
 
@@ -187,6 +189,68 @@ describe("nextTransition", () => {
     expect(k.date).toEqual(new Date(2026, 7, 21));
     const sac = nextTransition(child({ dob: "2021-03-01", room: "J/K", fallPlan: "SAC" }), now)!;
     expect(sac.to).toBe("SAC");
+  });
+});
+
+describe("checkAvailability", () => {
+  const today = new Date(2026, 6, 1); // Wed Jul 1, 2026 — fixed "now" anchor
+
+  it("says yes when the age-eligible room has open capacity", () => {
+    const result = checkAvailability([], [], "2026-06-01", today, CAMP_ENDS, 52, today);
+    expect(result.room).toBe("F");
+    expect(result.available).toBe(true);
+    expect(result.availableAfterHolds).toBe(6);
+  });
+
+  it("says no when the room is full and finds the next opening after a future move-up", () => {
+    // 6 kids in F, born 2026-01-01 -> F->I eligible 2026-11-01 (after `today`, so it projects).
+    const children: Child[] = Array.from({ length: 6 }, (_, i) =>
+      child({ name: `F${i}`, room: "F", dob: "2026-01-01" }),
+    );
+    const result = checkAvailability(children, [], "2026-07-01", today, CAMP_ENDS, 52, today);
+    expect(result.available).toBe(false);
+    expect(result.nextOpening).not.toBeNull();
+    expect(result.nextOpening!.date >= new Date(2026, 10, 1)).toBe(true);
+  });
+
+  it("gates G/H on the under-2 sub-cap (3), not the room total (9)", () => {
+    // 3 children placed in G/H, all under 2 -> fill the under-2 band even though the room total (3) is well under 9.
+    const children: Child[] = [
+      child({ name: "U1", room: "G/H", dob: "2025-06-01" }),
+      child({ name: "U2", room: "G/H", dob: "2025-07-01" }),
+      child({ name: "U3", room: "G/H", dob: "2025-08-01" }),
+    ];
+    // Born 2024-11-01 -> 20mo at desired start -> age-eligible for G/H (18-36mo), under-2 band (<24mo).
+    const result = checkAvailability(children, [], "2024-11-01", today, CAMP_ENDS, 52, today);
+    expect(result.room).toBe("G/H");
+    expect(result.gate).toBe("under-2 seat");
+    expect(result.capacity).toBe(3);
+    expect(result.census).toBe(3);
+    expect(result.available).toBe(false);
+  });
+
+  it("does not gate a two-year-old on the under-2 sub-cap", () => {
+    const children: Child[] = [
+      child({ name: "U1", room: "G/H", dob: "2025-06-01" }),
+      child({ name: "U2", room: "G/H", dob: "2025-07-01" }),
+      child({ name: "U3", room: "G/H", dob: "2025-08-01" }),
+    ];
+    // Born 2024-01-01 -> ~30mo at desired start -> two-year-old band, plenty of room (0/6).
+    const result = checkAvailability(children, [], "2024-01-01", today, CAMP_ENDS, 52, today);
+    expect(result.gate).toBe("two-year-old seat");
+    expect(result.capacity).toBe(6);
+    expect(result.available).toBe(true);
+  });
+
+  it("subtracts held (deposit) seats from open seats", () => {
+    const waitlist: WaitlistEntry[] = [
+      { name: "Held Baby", dobOrDueDate: "2026-06-01", desiredStart: "2026-07-01", status: "Deposit paid" },
+    ];
+    const result = checkAvailability([], waitlist, "2026-06-15", today, CAMP_ENDS, 52, today);
+    expect(result.room).toBe("F");
+    expect(result.open).toBe(6);
+    expect(result.held).toBe(1);
+    expect(result.availableAfterHolds).toBe(5);
   });
 });
 
