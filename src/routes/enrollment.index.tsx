@@ -3,21 +3,24 @@ import { useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Copy, AlertTriangle } from "lucide-react";
+import { Copy, AlertTriangle, ChevronDown, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { useChildren, useRooms, useWaitlist } from "@/hooks/use-enrollment";
 import {
   ageInMonths,
+  departsForKInYear,
   eligibleRoomAtAge,
   heldSeats,
-  nextTransition,
+  holdsSeat,
+  openSeatRate,
   ROOMS,
   sproutsComposition,
   staffRequired,
   weeklyRate,
   type RoomCode,
 } from "@/lib/enrollment/enrollment-logic";
-import { CAMP_ENDS, formatFull, ROOM_ORDER } from "@/lib/enrollment/mapping";
+import { ageYearsMonths, CAMP_ENDS, compareYoungestFirst, formatFull, ROOM_ORDER } from "@/lib/enrollment/mapping";
+import type { ChildRecord, WaitlistRecord } from "@/lib/enrollment/mapping";
 
 export const Route = createFileRoute("/enrollment/")({
   component: SnapshotPage,
@@ -28,6 +31,7 @@ function SnapshotPage() {
   const { data: waitlist = [] } = useWaitlist();
   const { data: rooms = [] } = useRooms();
   const [asOf] = useState<Date>(() => new Date());
+  const [expandedRoom, setExpandedRoom] = useState<RoomCode | null>(null);
 
   const roomsByCode = useMemo(
     () => Object.fromEntries(rooms.map((r) => [r.code, r])),
@@ -43,8 +47,7 @@ function SnapshotPage() {
       const availableAfterHolds = Math.max(open - held, 0);
       const staff = staffRequired(code, children, asOf);
       const revenue = roster.reduce((sum, c) => sum + (weeklyRate(c, asOf) ?? 0), 0);
-      const openValueBand = code === "F" ? 475 : code === "I" ? 425 : code === "G/H" ? 310 : code === "J/K" ? 300 : 175;
-      const openValue = open * openValueBand;
+      const openValue = open * openSeatRate(code);
       return { code, roster: roster.length, cap, open, held, availableAfterHolds, staff, revenue, openValue };
     });
   }, [children, waitlist, roomsByCode, asOf]);
@@ -52,14 +55,20 @@ function SnapshotPage() {
   const sprouts = useMemo(() => sproutsComposition(children, asOf), [children, asOf]);
 
   const sacOutlook = useMemo(() => {
-    const jk = children.filter((c) => c.room === "J/K" && c.status === "Active");
+    // Only THIS year's K class counts toward the Aug 24 projection. A child
+    // whose fall plan was pre-filled but who departs next year isn't part of
+    // this fall's SAC census.
+    const kYear = CAMP_ENDS.getFullYear();
+    const jk = children.filter(
+      (c) => c.room === "J/K" && c.status === "Active" && departsForKInYear(c, kYear),
+    );
     const groups = { SAC: 0, Inactive: 0, TBD: 0, none: 0 } as Record<string, number>;
     for (const c of jk) {
       const key = c.fallPlan ?? "none";
       groups[key] = (groups[key] ?? 0) + 1;
     }
     const sacWaitlist = waitlist.filter((w) => {
-      if (!/deposit/i.test(w.status)) return false;
+      if (!holdsSeat(w.status)) return false;
       const age = ageInMonths(w.dobOrDueDate, new Date(w.desiredStart + "T00:00:00"));
       return eligibleRoomAtAge(Math.max(age, 0)) === "SAC";
     }).length;
@@ -129,7 +138,16 @@ function SnapshotPage() {
             <Card key={r.code} className="border-l-4" style={{ borderLeftColor: "hsl(var(--primary))" }}>
               <CardHeader className="pb-2">
                 <CardTitle className="text-base flex items-center justify-between">
-                  <span>{cls}</span>
+                  <button
+                    type="button"
+                    className="flex items-center gap-1 hover:underline text-left"
+                    onClick={() => setExpandedRoom(expandedRoom === r.code ? null : (r.code as RoomCode))}
+                    aria-expanded={expandedRoom === r.code}
+                    title="Show the children counted in this census"
+                  >
+                    {expandedRoom === r.code ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+                    <span>{cls}</span>
+                  </button>
                   <span className="text-xs font-normal text-muted-foreground">{r.code}</span>
                 </CardTitle>
               </CardHeader>
@@ -141,6 +159,9 @@ function SnapshotPage() {
                 <div className="flex justify-between"><span>Staff required</span><span>{r.staff}{r.code === "G/H" && <span className="text-xs text-muted-foreground ml-1">(1:3 + 1:6)</span>}</span></div>
                 <div className="border-t pt-1 mt-2 flex justify-between"><span>Weekly revenue</span><span className="font-semibold">${r.revenue.toLocaleString()}</span></div>
                 <div className="flex justify-between text-muted-foreground text-xs"><span>Open-seat value</span><span>${r.openValue.toLocaleString()}/wk</span></div>
+                {expandedRoom === r.code && (
+                  <RoomRosterList code={r.code as RoomCode} children={children} waitlist={waitlist} asOf={asOf} open={r.open} />
+                )}
               </CardContent>
             </Card>
           );
@@ -209,6 +230,56 @@ function SnapshotPage() {
           </CardContent>
         </Card>
       )}
+    </div>
+  );
+}
+
+function RoomRosterList({ code, children, waitlist, asOf, open }: {
+  code: RoomCode;
+  children: ChildRecord[];
+  waitlist: WaitlistRecord[];
+  asOf: Date;
+  open: number;
+}) {
+  const roster = children
+    .filter((c) => c.room === code && c.status === "Active")
+    .sort((a, b) => compareYoungestFirst(a, b) || a.name.localeCompare(b.name));
+  const holds = waitlist
+    .filter((w) => {
+      if (!holdsSeat(w.status)) return false;
+      const age = ageInMonths(w.dobOrDueDate, new Date(w.desiredStart + "T00:00:00"));
+      return eligibleRoomAtAge(Math.max(age, 0)) === code;
+    })
+    .sort((a, b) => a.desiredStart.localeCompare(b.desiredStart));
+  return (
+    <div className="border-t mt-2 pt-2 space-y-1">
+      <div className="text-xs font-semibold text-muted-foreground uppercase">Enrolled ({roster.length})</div>
+      {roster.length === 0 ? (
+        <div className="text-xs text-muted-foreground italic">No children in this room</div>
+      ) : (
+        <ul className="space-y-0.5">
+          {roster.map((c) => (
+            <li key={c.id} className="flex justify-between text-xs">
+              <span>{c.name}</span>
+              <span className="text-muted-foreground">{c.dob ? ageYearsMonths(c.dob, asOf) : "DOB?"}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+      {holds.length > 0 && (
+        <>
+          <div className="text-xs font-semibold text-muted-foreground uppercase pt-1">Held by deposit ({holds.length})</div>
+          <ul className="space-y-0.5">
+            {holds.map((w) => (
+              <li key={w.id} className="flex justify-between text-xs italic">
+                <span>{w.name}</span>
+                <span className="text-muted-foreground">starts {w.desiredStart}</span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      {open > 0 && <div className="text-xs text-muted-foreground pt-1">{open} open seat{open === 1 ? "" : "s"}</div>}
     </div>
   );
 }
