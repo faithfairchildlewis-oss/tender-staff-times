@@ -157,7 +157,7 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
   const [form, setForm] = useState({
     name: child?.name ?? "",
     dob: child?.dob ?? "",
-    start_date: (child as unknown as { startDate?: string | null })?.startDate ?? "",
+    start_date: child?.startDate ?? "",
     room: (child?.room ?? "F") as RoomCode,
     schedule: (child?.schedule ?? "Standard") as "Standard" | "Extended",
     fall_plan: child?.fallPlan ?? "",
