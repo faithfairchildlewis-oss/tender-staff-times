@@ -116,7 +116,13 @@ function RosterPage() {
 }
 
 function getRoomForRow(row: { kind: "child"; child: import("@/lib/enrollment/mapping").ChildRecord } | { kind: "waitlist"; waitlist: import("@/lib/enrollment/mapping").WaitlistRecord; dob: string }, m: Date): RoomCode | null {
-  if (row.kind === "child") return roomOnDate(row.child, m, CAMP_ENDS);
+  if (row.kind === "child") {
+    if (row.child.startDate) {
+      const start = new Date(row.child.startDate + "T00:00:00");
+      if (m < start) return null;
+    }
+    return roomOnDate(row.child, m, CAMP_ENDS);
+  }
   const start = new Date(row.waitlist.desiredStart + "T00:00:00");
   if (m < start) return null;
   return eligibleRoomAtAge(Math.max(ageInMonths(row.dob, m), 0));
