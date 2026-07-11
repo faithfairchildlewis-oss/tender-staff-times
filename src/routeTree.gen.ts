@@ -28,6 +28,7 @@ import { Route as EnrollmentRosterRouteImport } from './routes/enrollment.roster
 import { Route as EnrollmentProjectionsRouteImport } from './routes/enrollment.projections'
 import { Route as EnrollmentImportRouteImport } from './routes/enrollment.import'
 import { Route as EnrollmentChildrenRouteImport } from './routes/enrollment.children'
+import { Route as EnrollmentAskRouteImport } from './routes/enrollment.ask'
 import { Route as EnrollmentPrintRoomRouteImport } from './routes/enrollment.print.$room'
 
 const WeekRoute = WeekRouteImport.update({
@@ -125,6 +126,11 @@ const EnrollmentChildrenRoute = EnrollmentChildrenRouteImport.update({
   path: '/children',
   getParentRoute: () => EnrollmentRoute,
 } as any)
+const EnrollmentAskRoute = EnrollmentAskRouteImport.update({
+  id: '/ask',
+  path: '/ask',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
 const EnrollmentPrintRoomRoute = EnrollmentPrintRoomRouteImport.update({
   id: '/print/$room',
   path: '/print/$room',
@@ -141,6 +147,7 @@ export interface FileRoutesByFullPath {
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/week': typeof WeekRoute
+  '/enrollment/ask': typeof EnrollmentAskRoute
   '/enrollment/children': typeof EnrollmentChildrenRoute
   '/enrollment/import': typeof EnrollmentImportRoute
   '/enrollment/projections': typeof EnrollmentProjectionsRoute
@@ -162,6 +169,7 @@ export interface FileRoutesByTo {
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/week': typeof WeekRoute
+  '/enrollment/ask': typeof EnrollmentAskRoute
   '/enrollment/children': typeof EnrollmentChildrenRoute
   '/enrollment/import': typeof EnrollmentImportRoute
   '/enrollment/projections': typeof EnrollmentProjectionsRoute
@@ -185,6 +193,7 @@ export interface FileRoutesById {
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/week': typeof WeekRoute
+  '/enrollment/ask': typeof EnrollmentAskRoute
   '/enrollment/children': typeof EnrollmentChildrenRoute
   '/enrollment/import': typeof EnrollmentImportRoute
   '/enrollment/projections': typeof EnrollmentProjectionsRoute
@@ -209,6 +218,7 @@ export interface FileRouteTypes {
     | '/schedule'
     | '/sitemap.xml'
     | '/week'
+    | '/enrollment/ask'
     | '/enrollment/children'
     | '/enrollment/import'
     | '/enrollment/projections'
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/schedule'
     | '/sitemap.xml'
     | '/week'
+    | '/enrollment/ask'
     | '/enrollment/children'
     | '/enrollment/import'
     | '/enrollment/projections'
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/schedule'
     | '/sitemap.xml'
     | '/week'
+    | '/enrollment/ask'
     | '/enrollment/children'
     | '/enrollment/import'
     | '/enrollment/projections'
@@ -415,6 +427,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnrollmentChildrenRouteImport
       parentRoute: typeof EnrollmentRoute
     }
+    '/enrollment/ask': {
+      id: '/enrollment/ask'
+      path: '/ask'
+      fullPath: '/enrollment/ask'
+      preLoaderRoute: typeof EnrollmentAskRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
     '/enrollment/print/$room': {
       id: '/enrollment/print/$room'
       path: '/print/$room'
@@ -426,6 +445,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface EnrollmentRouteChildren {
+  EnrollmentAskRoute: typeof EnrollmentAskRoute
   EnrollmentChildrenRoute: typeof EnrollmentChildrenRoute
   EnrollmentImportRoute: typeof EnrollmentImportRoute
   EnrollmentProjectionsRoute: typeof EnrollmentProjectionsRoute
@@ -437,6 +457,7 @@ interface EnrollmentRouteChildren {
 }
 
 const EnrollmentRouteChildren: EnrollmentRouteChildren = {
+  EnrollmentAskRoute: EnrollmentAskRoute,
   EnrollmentChildrenRoute: EnrollmentChildrenRoute,
   EnrollmentImportRoute: EnrollmentImportRoute,
   EnrollmentProjectionsRoute: EnrollmentProjectionsRoute,
