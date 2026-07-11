@@ -146,9 +146,9 @@ function SnapshotPage() {
                     title="Show the children counted in this census"
                   >
                     {expandedRoom === r.code ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-                    <span>{cls}</span>
+                    <span className="font-bold">Room {r.code}</span>
+                    <span className="text-xs font-normal text-muted-foreground ml-1">· {cls}</span>
                   </button>
-                  <span className="text-xs font-normal text-muted-foreground">{r.code}</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-sm space-y-1">
