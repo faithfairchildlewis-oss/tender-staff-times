@@ -111,7 +111,7 @@ function SnapshotPage() {
     }
     try {
       await navigator.clipboard.writeText(lines.join("\n"));
-      toast.success("Monday Snapshot copied to clipboard");
+      toast.success("This Week at a Glance copied to clipboard");
     } catch {
       toast.error("Copy failed — clipboard access denied");
     }
@@ -123,11 +123,11 @@ function SnapshotPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h2 className="text-2xl font-bold">Monday Snapshot</h2>
+          <h2 className="text-2xl font-bold">This Week at a Glance</h2>
           <p className="text-sm text-muted-foreground">{formatFull(asOf)}</p>
         </div>
         <Button onClick={copySnapshot} className="gap-2">
-          <Copy className="h-4 w-4" /> Copy Monday Snapshot
+          <Copy className="h-4 w-4" /> Copy This Week at a Glance
         </Button>
       </div>
 
