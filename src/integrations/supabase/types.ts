@@ -17,6 +17,7 @@ export type Database = {
       enrollment_children: {
         Row: {
           created_at: string
+          days_per_week: number | null
           dob: string | null
           fall_plan: string | null
           id: string
@@ -30,9 +31,11 @@ export type Database = {
           start_date: string | null
           status: string
           updated_at: string
+          weekly_rate_override: number | null
         }
         Insert: {
           created_at?: string
+          days_per_week?: number | null
           dob?: string | null
           fall_plan?: string | null
           id?: string
@@ -46,9 +49,11 @@ export type Database = {
           start_date?: string | null
           status?: string
           updated_at?: string
+          weekly_rate_override?: number | null
         }
         Update: {
           created_at?: string
+          days_per_week?: number | null
           dob?: string | null
           fall_plan?: string | null
           id?: string
@@ -62,6 +67,7 @@ export type Database = {
           start_date?: string | null
           status?: string
           updated_at?: string
+          weekly_rate_override?: number | null
         }
         Relationships: []
       }
