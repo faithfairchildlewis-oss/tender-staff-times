@@ -19,7 +19,7 @@ export const Route = createFileRoute("/enrollment")({
 
 type Tab = { to: string; label: string; adminOnly?: boolean };
 const TABS: Tab[] = [
-  { to: "/enrollment",             label: "Snapshot",    adminOnly: true },
+  { to: "/enrollment",             label: "This Week",   adminOnly: true },
   { to: "/enrollment/ask",         label: "Ask",         adminOnly: true },
   { to: "/enrollment/children",    label: "Children",    adminOnly: true },
   { to: "/enrollment/transitions", label: "Transitions", adminOnly: true },
