@@ -22,15 +22,19 @@ export const Route = createFileRoute("/enrollment/children")({
 function ChildrenPage() {
   const { data: children = [], isLoading } = useChildren();
   const [showWithdrawn, setShowWithdrawn] = useState(false);
+  const [sortBy, setSortBy] = useState<"dob" | "name">("dob");
   const [editing, setEditing] = useState<ChildRecord | null>(null);
   const [creating, setCreating] = useState(false);
   const now = new Date();
 
   const visible = useMemo(() => {
     const list = showWithdrawn ? children : children.filter((c) => c.status === "Active");
-    // One continuous list: youngest at the top, oldest at the bottom (director's preference).
+    if (sortBy === "name") {
+      return [...list].sort((a, b) => a.name.localeCompare(b.name));
+    }
+    // Default: youngest at the top, oldest at the bottom (director's preference).
     return [...list].sort((a, b) => compareYoungestFirst(a, b) || a.name.localeCompare(b.name));
-  }, [children, showWithdrawn]);
+  }, [children, showWithdrawn, sortBy]);
 
   return (
     <div className="space-y-4">
@@ -40,6 +44,13 @@ function ChildrenPage() {
           <p className="text-sm text-muted-foreground">{visible.length} shown • {children.filter(c=>c.status==="Active").length} active total</p>
         </div>
         <div className="flex items-center gap-2">
+          <Select value={sortBy} onValueChange={(v) => setSortBy(v as "dob" | "name")}>
+            <SelectTrigger className="h-9 w-[150px]"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="dob">Sort by Birthday</SelectItem>
+              <SelectItem value="name">Sort by Name</SelectItem>
+            </SelectContent>
+          </Select>
           <Button variant="outline" size="sm" onClick={() => setShowWithdrawn((v) => !v)}>
             {showWithdrawn ? "Hide withdrawn" : "Show withdrawn"}
           </Button>
