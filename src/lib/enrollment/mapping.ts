@@ -21,6 +21,8 @@ export function rowToChild(r: ChildRow): ChildRecord {
     parentEmail: r.parent_email,
     notes: r.notes,
     startDate: (r as unknown as { start_date: string | null }).start_date ?? null,
+    weeklyRateOverride: r.weekly_rate_override ?? null,
+    daysPerWeek: r.days_per_week ?? null,
   };
 }
 
