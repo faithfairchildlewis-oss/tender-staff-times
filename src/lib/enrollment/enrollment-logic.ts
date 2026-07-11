@@ -14,6 +14,11 @@ export interface Child {
   parent?: string | null;
   parentPhone?: string | null;
   parentEmail?: string | null;
+  /** Optional weekly rate override — overrides the age-based RATES band
+   *  when set (used for part-time / shared-seat arrangements). */
+  weeklyRateOverride?: number | null;
+  /** Optional days-per-week attendance count (informational). */
+  daysPerWeek?: number | null;
 }
 
 export interface WaitlistEntry {
@@ -131,6 +136,7 @@ export function nextTransition(c: Child, asOf: Date): Transition | null {
 // ---------------- Rates ----------------
 export function weeklyRate(c: Child, asOf: Date): number | null {
   if (!c.dob || c.room === "SUMMER") return null; // summer camp priced separately
+  if (c.weeklyRateOverride != null) return c.weeklyRateOverride;
   const age = ageInMonths(c.dob, asOf);
   const band = RATES.find((r) => age < r.maxAgeMonthsExclusive)!;
   return c.schedule === "Extended" && band.extended ? band.extended : band.standard;

@@ -176,9 +176,15 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
     parent_phone: child?.parentPhone ?? "",
     parent_email: child?.parentEmail ?? "",
     notes: child?.notes ?? "",
+    weekly_rate_override: child?.weeklyRateOverride != null ? String(child.weeklyRateOverride) : "",
+    days_per_week: child?.daysPerWeek != null ? String(child.daysPerWeek) : "",
   });
   const save = async () => {
     if (!form.name.trim()) { toast.error("Name is required"); return; }
+    const rateOverride = form.weekly_rate_override.trim() === "" ? null : Number(form.weekly_rate_override);
+    if (rateOverride != null && !Number.isFinite(rateOverride)) { toast.error("Rate override must be a number"); return; }
+    const days = form.days_per_week.trim() === "" ? null : Number(form.days_per_week);
+    if (days != null && (!Number.isInteger(days) || days < 1 || days > 7)) { toast.error("Days per week must be 1–7"); return; }
     await upsert.mutateAsync({
       id: child?.id,
       name: form.name.trim(),
@@ -192,6 +198,8 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
       parent_phone: form.parent_phone || null,
       parent_email: form.parent_email || null,
       notes: form.notes || null,
+      weekly_rate_override: rateOverride,
+      days_per_week: days,
     } as never);
     toast.success(child ? "Child updated" : "Child added");
     onClose();
@@ -235,6 +243,18 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
           <div className="grid grid-cols-2 gap-3">
             <Field label="Parent phone"><Input value={form.parent_phone} onChange={(e) => setForm({ ...form, parent_phone: e.target.value })} /></Field>
             <Field label="Parent email"><Input value={form.parent_email} onChange={(e) => setForm({ ...form, parent_email: e.target.value })} /></Field>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <Field label="Weekly rate override ($)">
+              <Input type="number" inputMode="decimal" placeholder="age-based default"
+                value={form.weekly_rate_override}
+                onChange={(e) => setForm({ ...form, weekly_rate_override: e.target.value })} />
+            </Field>
+            <Field label="Days per week">
+              <Input type="number" min={1} max={7} placeholder="5"
+                value={form.days_per_week}
+                onChange={(e) => setForm({ ...form, days_per_week: e.target.value })} />
+            </Field>
           </div>
           <Field label="Notes"><Input value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></Field>
         </div>
