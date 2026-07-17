@@ -9,6 +9,7 @@ import { useChildren, useRooms, useWaitlist } from "@/hooks/use-enrollment";
 import {
   ageInMonths,
   departsForKInYear,
+  distinctSeats,
   eligibleRoomAtAge,
   heldSeats,
   holdsSeat,
@@ -41,14 +42,15 @@ function SnapshotPage() {
   const perRoom = useMemo(() => {
     return ROOM_ORDER.map((code) => {
       const roster = children.filter((c) => c.room === code && c.status === "Active");
+      const seats = distinctSeats(roster).length;
       const cap = roomsByCode[code]?.capacity ?? ROOMS[code].capacity;
       const held = heldSeats(waitlist, code);
-      const open = Math.max(cap - roster.length, 0);
+      const open = Math.max(cap - seats, 0);
       const availableAfterHolds = Math.max(open - held, 0);
       const staff = staffRequired(code, children, asOf);
       const revenue = roster.reduce((sum, c) => sum + (weeklyRate(c, asOf) ?? 0), 0);
       const openValue = open * openSeatRate(code);
-      return { code, roster: roster.length, cap, open, held, availableAfterHolds, staff, revenue, openValue };
+      return { code, roster: roster.length, seats, cap, open, held, availableAfterHolds, staff, revenue, openValue };
     });
   }, [children, waitlist, roomsByCode, asOf]);
 
@@ -152,7 +154,15 @@ function SnapshotPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-sm space-y-1">
-                <div className="flex justify-between"><span>Census / Capacity</span><span className="font-semibold">{r.roster} / {r.cap}</span></div>
+                <div className="flex justify-between">
+                  <span>Seats / Capacity</span>
+                  <span className="font-semibold">
+                    {r.seats} / {r.cap}
+                    {r.roster !== r.seats && (
+                      <span className="text-xs font-normal text-muted-foreground ml-1">({r.roster} children)</span>
+                    )}
+                  </span>
+                </div>
                 <div className="flex justify-between"><span>Open seats</span><span>{r.open}</span></div>
                 <div className="flex justify-between"><span>Held by deposit</span><span>{r.held}</span></div>
                 <div className="flex justify-between font-medium"><span>Available after holds</span><span>{r.availableAfterHolds}</span></div>
