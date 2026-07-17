@@ -4,7 +4,7 @@ import type { Database } from "@/integrations/supabase/types";
 type ChildRow = Database["public"]["Tables"]["enrollment_children"]["Row"];
 type WaitlistRow = Database["public"]["Tables"]["enrollment_waitlist"]["Row"];
 
-export interface ChildRecord extends Child { id: string; notes: string | null; startDate: string | null }
+export interface ChildRecord extends Child { id: string; notes: string | null; startDate: string | null; shareSeatGroup: string | null }
 export interface WaitlistRecord extends WaitlistEntry { id: string; dateInquired: string | null }
 
 export function rowToChild(r: ChildRow): ChildRecord {
@@ -23,6 +23,7 @@ export function rowToChild(r: ChildRow): ChildRecord {
     startDate: (r as unknown as { start_date: string | null }).start_date ?? null,
     weeklyRateOverride: r.weekly_rate_override ?? null,
     daysPerWeek: r.days_per_week ?? null,
+    shareSeatGroup: r.share_seat_group ?? null,
   };
 }
 
