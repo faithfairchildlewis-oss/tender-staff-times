@@ -28,6 +28,7 @@ export type Database = {
           parent_phone: string | null
           room: string
           schedule: string
+          share_seat_group: string | null
           start_date: string | null
           status: string
           updated_at: string
@@ -46,6 +47,7 @@ export type Database = {
           parent_phone?: string | null
           room: string
           schedule?: string
+          share_seat_group?: string | null
           start_date?: string | null
           status?: string
           updated_at?: string
@@ -64,6 +66,7 @@ export type Database = {
           parent_phone?: string | null
           room?: string
           schedule?: string
+          share_seat_group?: string | null
           start_date?: string | null
           status?: string
           updated_at?: string

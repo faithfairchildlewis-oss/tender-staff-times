@@ -1,0 +1,2 @@
+ALTER TABLE public.enrollment_children ADD COLUMN IF NOT EXISTS share_seat_group text;
+CREATE INDEX IF NOT EXISTS enrollment_children_share_seat_group_idx ON public.enrollment_children(share_seat_group) WHERE share_seat_group IS NOT NULL;
