@@ -9,6 +9,7 @@ import { useChildren, useRooms, useWaitlist } from "@/hooks/use-enrollment";
 import {
   ageInMonths,
   departsForKInYear,
+  distinctSeats,
   eligibleRoomAtAge,
   heldSeats,
   holdsSeat,
@@ -41,14 +42,15 @@ function SnapshotPage() {
   const perRoom = useMemo(() => {
     return ROOM_ORDER.map((code) => {
       const roster = children.filter((c) => c.room === code && c.status === "Active");
+      const seats = distinctSeats(roster).length;
       const cap = roomsByCode[code]?.capacity ?? ROOMS[code].capacity;
       const held = heldSeats(waitlist, code);
-      const open = Math.max(cap - roster.length, 0);
+      const open = Math.max(cap - seats, 0);
       const availableAfterHolds = Math.max(open - held, 0);
       const staff = staffRequired(code, children, asOf);
       const revenue = roster.reduce((sum, c) => sum + (weeklyRate(c, asOf) ?? 0), 0);
       const openValue = open * openSeatRate(code);
-      return { code, roster: roster.length, cap, open, held, availableAfterHolds, staff, revenue, openValue };
+      return { code, roster: roster.length, seats, cap, open, held, availableAfterHolds, staff, revenue, openValue };
     });
   }, [children, waitlist, roomsByCode, asOf]);
 
@@ -96,7 +98,8 @@ function SnapshotPage() {
     lines.push("CENSUS BY ROOM");
     for (const r of perRoom) {
       const cls = ROOMS[r.code as RoomCode].classroom;
-      lines.push(`  ${cls} (${r.code}): ${r.roster}/${r.cap} — ${r.open} open, ${r.held} held → ${r.availableAfterHolds} available. Staff req: ${r.staff}. $${r.revenue}/wk`);
+      const seatLine = r.roster !== r.seats ? `${r.seats}/${r.cap} seats (${r.roster} children)` : `${r.seats}/${r.cap}`;
+      lines.push(`  ${cls} (${r.code}): ${seatLine} — ${r.open} open, ${r.held} held → ${r.availableAfterHolds} available. Staff req: ${r.staff}. $${r.revenue}/wk`);
     }
     lines.push("");
     lines.push(`SPROUTS COMPOSITION: ${sprouts.under2}/3 under-2, ${sprouts.twos}/6 twos`);
@@ -152,7 +155,15 @@ function SnapshotPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-sm space-y-1">
-                <div className="flex justify-between"><span>Census / Capacity</span><span className="font-semibold">{r.roster} / {r.cap}</span></div>
+                <div className="flex justify-between">
+                  <span>Seats / Capacity</span>
+                  <span className="font-semibold">
+                    {r.seats} / {r.cap}
+                    {r.roster !== r.seats && (
+                      <span className="text-xs font-normal text-muted-foreground ml-1">({r.roster} children)</span>
+                    )}
+                  </span>
+                </div>
                 <div className="flex justify-between"><span>Open seats</span><span>{r.open}</span></div>
                 <div className="flex justify-between"><span>Held by deposit</span><span>{r.held}</span></div>
                 <div className="flex justify-between font-medium"><span>Available after holds</span><span>{r.availableAfterHolds}</span></div>
@@ -244,6 +255,22 @@ function RoomRosterList({ code, children, waitlist, asOf, open }: {
   const roster = children
     .filter((c) => c.room === code && c.status === "Active")
     .sort((a, b) => compareYoungestFirst(a, b) || a.name.localeCompare(b.name));
+  // Group shared-seat kids into a single line.
+  type RosterItem =
+    | { kind: "solo"; child: ChildRecord }
+    | { kind: "pair"; group: string; children: ChildRecord[] };
+  const groupMap = new Map<string, ChildRecord[]>();
+  const items: RosterItem[] = [];
+  for (const c of roster) {
+    if (!c.shareSeatGroup) {
+      items.push({ kind: "solo", child: c });
+    } else {
+      const arr = groupMap.get(c.shareSeatGroup) ?? [];
+      arr.push(c);
+      groupMap.set(c.shareSeatGroup, arr);
+      if (arr.length === 1) items.push({ kind: "pair", group: c.shareSeatGroup, children: arr });
+    }
+  }
   const holds = waitlist
     .filter((w) => {
       if (!holdsSeat(w.status)) return false;
@@ -253,17 +280,36 @@ function RoomRosterList({ code, children, waitlist, asOf, open }: {
     .sort((a, b) => a.desiredStart.localeCompare(b.desiredStart));
   return (
     <div className="border-t mt-2 pt-2 space-y-1">
-      <div className="text-xs font-semibold text-muted-foreground uppercase">Enrolled ({roster.length})</div>
+      <div className="text-xs font-semibold text-muted-foreground uppercase">
+        Enrolled ({roster.length}{roster.length !== items.length && <> · {items.length} seats</>})
+      </div>
       {roster.length === 0 ? (
         <div className="text-xs text-muted-foreground italic">No children in this room</div>
       ) : (
         <ul className="space-y-0.5">
-          {roster.map((c) => (
-            <li key={c.id} className="flex justify-between text-xs">
-              <span>{c.name}</span>
-              <span className="text-muted-foreground">{c.dob ? ageYearsMonths(c.dob, asOf) : "DOB?"}</span>
-            </li>
-          ))}
+          {items.map((it) => {
+            if (it.kind === "solo") {
+              const c = it.child;
+              return (
+                <li key={c.id} className="flex justify-between text-xs">
+                  <span>{c.name}</span>
+                  <span className="text-muted-foreground">{c.dob ? ageYearsMonths(c.dob, asOf) : "DOB?"}</span>
+                </li>
+              );
+            }
+            const names = it.children.map((k) => k.name.split(" ")[0]).join(" & ");
+            return (
+              <li key={it.group} className="flex justify-between text-xs">
+                <span>
+                  {names}
+                  <span className="ml-1 text-[10px] uppercase tracking-wide text-muted-foreground">shared seat</span>
+                </span>
+                <span className="text-muted-foreground">
+                  {it.children.map((k) => (k.dob ? ageYearsMonths(k.dob, asOf) : "DOB?")).join(" / ")}
+                </span>
+              </li>
+            );
+          })}
         </ul>
       )}
       {holds.length > 0 && (

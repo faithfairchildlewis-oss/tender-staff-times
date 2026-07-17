@@ -19,6 +19,10 @@ export interface Child {
   weeklyRateOverride?: number | null;
   /** Optional days-per-week attendance count (informational). */
   daysPerWeek?: number | null;
+  /** Optional seat-share group label. Two children with the same label attend
+   *  on different days and share ONE seat: they count as 1 toward capacity,
+   *  composition, and staffing (one child is present at a time). */
+  shareSeatGroup?: string | null;
 }
 
 export interface WaitlistEntry {
@@ -143,14 +147,30 @@ export function weeklyRate(c: Child, asOf: Date): number | null {
 }
 
 // ---------------- Sprouts composition & staffing ----------------
+/** Collapses share-seat pairs to one representative (the oldest child in the
+ *  pair, so band classification matches the more mature attendee). Children
+ *  without a `shareSeatGroup` are returned unchanged. */
+export function distinctSeats<T extends Child>(children: T[]): T[] {
+  const groups = new Map<string, T>();
+  const solo: T[] = [];
+  for (const c of children) {
+    const g = c.shareSeatGroup;
+    if (!g) { solo.push(c); continue; }
+    const existing = groups.get(g);
+    if (!existing) groups.set(g, c);
+    else if (c.dob && existing.dob && c.dob < existing.dob) groups.set(g, c); // older DOB wins
+  }
+  return [...solo, ...groups.values()];
+}
+
 export function sproutsComposition(children: Child[], asOf: Date) {
-  const gh = children.filter((c) => c.room === "G/H" && c.status === "Active" && c.dob);
+  const gh = distinctSeats(children.filter((c) => c.room === "G/H" && c.status === "Active" && c.dob));
   const under2 = gh.filter((c) => ageInMonths(c.dob!, asOf) < 24).length;
   return { under2, twos: gh.length - under2, maxUnder2: 3, maxTwos: 6 };
 }
 
 export function staffRequired(room: RoomCode, children: Child[], asOf: Date): number {
-  const roster = children.filter((c) => c.room === room && c.status === "Active");
+  const roster = distinctSeats(children.filter((c) => c.room === room && c.status === "Active"));
   if (roster.length === 0) return 0;
   if (room === "G/H") {
     const { under2, twos } = sproutsComposition(children, asOf);
