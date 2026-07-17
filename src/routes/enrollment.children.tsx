@@ -22,19 +22,23 @@ export const Route = createFileRoute("/enrollment/children")({
 function ChildrenPage() {
   const { data: children = [], isLoading } = useChildren();
   const [showWithdrawn, setShowWithdrawn] = useState(false);
+  const [pendingOnly, setPendingOnly] = useState(false);
   const [sortBy, setSortBy] = useState<"dob" | "name">("dob");
   const [editing, setEditing] = useState<ChildRecord | null>(null);
   const [creating, setCreating] = useState(false);
   const now = new Date();
 
   const visible = useMemo(() => {
-    const list = showWithdrawn ? children : children.filter((c) => c.status === "Active");
+    let list = showWithdrawn ? children : children.filter((c) => c.status === "Active");
+    if (pendingOnly) {
+      list = list.filter((c) => (c.notes ?? "").toLowerCase().includes("pending deposit"));
+    }
     if (sortBy === "name") {
       return [...list].sort((a, b) => a.name.localeCompare(b.name));
     }
     // Default: youngest at the top, oldest at the bottom (director's preference).
     return [...list].sort((a, b) => compareYoungestFirst(a, b) || a.name.localeCompare(b.name));
-  }, [children, showWithdrawn, sortBy]);
+  }, [children, showWithdrawn, pendingOnly, sortBy]);
 
   return (
     <div className="space-y-4">
@@ -53,6 +57,9 @@ function ChildrenPage() {
           </Select>
           <Button variant="outline" size="sm" onClick={() => setShowWithdrawn((v) => !v)}>
             {showWithdrawn ? "Hide withdrawn" : "Show withdrawn"}
+          </Button>
+          <Button variant={pendingOnly ? "default" : "outline"} size="sm" onClick={() => setPendingOnly((v) => !v)}>
+            {pendingOnly ? "Showing pending deposit" : "Pending deposit only"}
           </Button>
           <Button onClick={() => setCreating(true)} className="gap-2"><Plus className="h-4 w-4" /> Add child</Button>
         </div>
