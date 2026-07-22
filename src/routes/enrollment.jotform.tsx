@@ -270,6 +270,12 @@ function JotformImportPage() {
         </Card>
       )}
 
+      {toursError && (
+        <Card className="p-3 text-xs text-muted-foreground">
+          Couldn't load Calendly tours: {(toursError as Error).message}
+        </Card>
+      )}
+
       {isLoading ? (
         <Card className="p-6 text-sm text-muted-foreground">Loading submissions…</Card>
       ) : filtered.length === 0 ? (
