@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { RefreshCw, Download, CheckCircle2, XCircle, Undo2 } from "lucide-react";
+import { RefreshCw, Download, CheckCircle2, XCircle, Undo2, Calendar } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -18,7 +18,9 @@ import {
   importJotformSubmission,
   dismissJotformSubmission,
   undismissJotformSubmission,
+  listCalendlyTours,
   type JotformSubmission,
+  type CalendlyTour,
 } from "@/lib/jotform.functions";
 
 const STATUSES = ["Inquiry", "Touring", "Deposit paid", "Hold – deposit pending", "Enrolled", "Withdrawn"];
@@ -76,6 +78,7 @@ function JotformImportPage() {
   const doImport = useServerFn(importJotformSubmission);
   const doDismiss = useServerFn(dismissJotformSubmission);
   const doUndismiss = useServerFn(undismissJotformSubmission);
+  const fetchTours = useServerFn(listCalendlyTours);
   const qc = useQueryClient();
 
   const { data: subs = [], isLoading, error, refetch, isFetching } = useQuery({
@@ -104,6 +107,39 @@ function JotformImportPage() {
       return data ?? [];
     },
   });
+
+  const { data: tours = [], error: toursError } = useQuery({
+    queryKey: ["calendly", "tours"],
+    queryFn: () => fetchTours(),
+    staleTime: 60_000,
+    retry: false,
+  });
+
+  const toursByEmail = useMemo(() => {
+    const m = new Map<string, CalendlyTour[]>();
+    for (const t of tours as CalendlyTour[]) {
+      if (!t.invitee_email) continue;
+      const arr = m.get(t.invitee_email) ?? [];
+      arr.push(t);
+      m.set(t.invitee_email, arr);
+    }
+    for (const arr of m.values()) arr.sort((a, b) => a.start_time.localeCompare(b.start_time));
+    return m;
+  }, [tours]);
+
+  function findTour(sub: JotformSubmission): CalendlyTour | null {
+    const email = (sub.parent_email || "").toLowerCase().trim();
+    if (!email) return null;
+    const arr = toursByEmail.get(email);
+    if (!arr || arr.length === 0) return null;
+    const active = arr.filter((t) => t.status !== "canceled");
+    return active[active.length - 1] ?? arr[arr.length - 1] ?? null;
+  }
+
+  function fmtTour(t: CalendlyTour): string {
+    const d = new Date(t.start_time);
+    return d.toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+  }
 
   const findMatch = useMemo(() => {
     const rosterByName = new Map<string, { name: string; dob: string | null; room: string | null; status: string | null }>();
@@ -234,6 +270,12 @@ function JotformImportPage() {
         </Card>
       )}
 
+      {toursError && (
+        <Card className="p-3 text-xs text-muted-foreground">
+          Couldn't load Calendly tours: {(toursError as Error).message}
+        </Card>
+      )}
+
       {isLoading ? (
         <Card className="p-6 text-sm text-muted-foreground">Loading submissions…</Card>
       ) : filtered.length === 0 ? (
@@ -258,6 +300,16 @@ function JotformImportPage() {
                       <XCircle className="h-3 w-3 mr-1" /> Declined
                     </Badge>
                   )}
+                  {(() => {
+                    const t = findTour(s);
+                    if (!t) return null;
+                    return (
+                      <Badge className={t.status === "canceled" ? "bg-rose-600 text-white" : "bg-purple-600 text-white"}>
+                        <Calendar className="h-3 w-3 mr-1" />
+                        {t.status === "canceled" ? "Tour canceled" : "Tour"} · {fmtTour(t)}
+                      </Badge>
+                    );
+                  })()}
                   {(() => {
                     const m = findMatch(s);
                     if (!m) return null;
