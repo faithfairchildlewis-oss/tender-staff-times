@@ -78,6 +78,7 @@ function JotformImportPage() {
   const doImport = useServerFn(importJotformSubmission);
   const doDismiss = useServerFn(dismissJotformSubmission);
   const doUndismiss = useServerFn(undismissJotformSubmission);
+  const fetchTours = useServerFn(listCalendlyTours);
   const qc = useQueryClient();
 
   const { data: subs = [], isLoading, error, refetch, isFetching } = useQuery({
