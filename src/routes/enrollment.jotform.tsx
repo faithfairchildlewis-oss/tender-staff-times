@@ -174,6 +174,31 @@ function JotformImportPage() {
     });
   }, [subs, showImported, showDeclined]);
 
+  const orphanTours = useMemo(() => {
+    const subEmails = new Set(
+      subs
+        .map((s) => (s.parent_email || "").toLowerCase().trim())
+        .filter(Boolean),
+    );
+    // Deduplicate by invitee email; prefer the most recent active tour.
+    const byEmail = new Map<string, CalendlyTour>();
+    for (const t of tours as CalendlyTour[]) {
+      const email = (t.invitee_email || "").toLowerCase().trim();
+      if (!email) continue;
+      if (subEmails.has(email)) continue;
+      const prev = byEmail.get(email);
+      if (!prev) {
+        byEmail.set(email, t);
+        continue;
+      }
+      const prevActive = prev.status !== "canceled";
+      const curActive = t.status !== "canceled";
+      if (curActive && !prevActive) byEmail.set(email, t);
+      else if (curActive === prevActive && t.start_time > prev.start_time) byEmail.set(email, t);
+    }
+    return Array.from(byEmail.values()).sort((a, b) => b.start_time.localeCompare(a.start_time));
+  }, [tours, subs]);
+
   const importMut = useMutation({
     mutationFn: async (input: { sub: JotformSubmission; draft: Draft }) => {
       return await doImport({
@@ -274,6 +299,49 @@ function JotformImportPage() {
         <Card className="p-3 text-xs text-muted-foreground">
           Couldn't load Calendly tours: {(toursError as Error).message}
         </Card>
+      )}
+
+      {orphanTours.length > 0 && (
+        <div className="space-y-2">
+          <div>
+            <h3 className="text-sm font-semibold">Tours without an inquiry form</h3>
+            <p className="text-xs text-muted-foreground">
+              These people booked a Calendly tour but haven't submitted the Child Inquiry Form. Reach out and ask them to complete it.
+            </p>
+          </div>
+          {orphanTours.map((t) => (
+            <Card
+              key={t.event_uri + t.invitee_email}
+              className="p-4 flex flex-col sm:flex-row sm:items-center gap-3 border-l-4 border-l-purple-500 bg-purple-50 dark:bg-purple-950/30"
+            >
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="font-medium">{t.invitee_name || "(no name)"}</span>
+                  <Badge className="bg-amber-500 text-white">Child name & age unknown</Badge>
+                  <Badge className={t.status === "canceled" ? "bg-rose-600 text-white" : "bg-purple-600 text-white"}>
+                    <Calendar className="h-3 w-3 mr-1" />
+                    {t.status === "canceled" ? "Tour canceled" : "Tour"} · {fmtTour(t)}
+                  </Badge>
+                </div>
+                <div className="text-xs text-muted-foreground mt-1">
+                  {t.invitee_email && <>Email: {t.invitee_email}</>}
+                </div>
+                <div className="text-xs text-muted-foreground mt-1 italic">
+                  No matching Child Inquiry Form submission — child name & DOB not on file.
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                {t.invitee_email && (
+                  <Button size="sm" variant="outline" asChild>
+                    <a href={`mailto:${t.invitee_email}?subject=${encodeURIComponent("Please complete our Child Inquiry Form")}`}>
+                      Email parent
+                    </a>
+                  </Button>
+                )}
+              </div>
+            </Card>
+          ))}
+        </div>
       )}
 
       {isLoading ? (
