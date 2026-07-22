@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { RefreshCw, Download, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import {
   listJotformSubmissions,
   importJotformSubmission,
@@ -38,6 +39,12 @@ type Draft = {
 function today(): string {
   return new Date().toISOString().slice(0, 10);
 }
+
+function normName(s: string | null | undefined): string {
+  return (s ?? "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+type MatchHit = { where: "roster" | "waitlist"; name: string; extra?: string };
 
 function buildDraft(sub: JotformSubmission): Draft {
   const dobOrDue = sub.dob ?? sub.due_date ?? "";
@@ -71,6 +78,48 @@ function JotformImportPage() {
     queryKey: ["jotform", "child-inquiry"],
     queryFn: () => fetchList(),
   });
+
+  const { data: roster = [] } = useQuery({
+    queryKey: ["enrollment_children", "match-list"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("enrollment_children")
+        .select("name, dob, room, status");
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  const { data: waitlist = [] } = useQuery({
+    queryKey: ["enrollment_waitlist", "match-list"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("enrollment_waitlist")
+        .select("name, dob_or_due_date, status");
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  const findMatch = useMemo(() => {
+    const rosterByName = new Map<string, { name: string; dob: string | null; room: string | null; status: string | null }>();
+    for (const r of roster as any[]) rosterByName.set(normName(r.name), r);
+    const waitByName = new Map<string, { name: string; dob_or_due_date: string | null; status: string | null }>();
+    for (const w of waitlist as any[]) waitByName.set(normName(w.name), w);
+    return (sub: JotformSubmission): MatchHit | null => {
+      const candidates = [
+        sub.child_name,
+        `${sub.child_first} ${sub.child_last}`,
+      ].map(normName).filter(Boolean);
+      for (const key of candidates) {
+        const r = rosterByName.get(key);
+        if (r) return { where: "roster", name: r.name, extra: [r.room, r.status].filter(Boolean).join(" · ") };
+        const w = waitByName.get(key);
+        if (w) return { where: "waitlist", name: w.name, extra: w.status ?? undefined };
+      }
+      return null;
+    };
+  }, [roster, waitlist]);
 
   const [showImported, setShowImported] = useState(false);
   const [selected, setSelected] = useState<JotformSubmission | null>(null);
@@ -160,6 +209,16 @@ function JotformImportPage() {
                       <CheckCircle2 className="h-3 w-3 mr-1" /> Imported
                     </Badge>
                   )}
+                  {(() => {
+                    const m = findMatch(s);
+                    if (!m) return null;
+                    return (
+                      <Badge className={m.where === "roster" ? "bg-blue-600 text-white" : "bg-amber-500 text-white"}>
+                        {m.where === "roster" ? "On roster" : "On waitlist"}
+                        {m.extra ? ` · ${m.extra}` : ""}
+                      </Badge>
+                    );
+                  })()}
                 </div>
                 <div className="text-xs text-muted-foreground mt-1 space-x-2">
                   <span>Submitted {s.created_at.slice(0, 10)}</span>
