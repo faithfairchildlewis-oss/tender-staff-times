@@ -295,6 +295,16 @@ function JotformImportPage() {
                     </Badge>
                   )}
                   {(() => {
+                    const t = findTour(s);
+                    if (!t) return null;
+                    return (
+                      <Badge className={t.status === "canceled" ? "bg-rose-600 text-white" : "bg-purple-600 text-white"}>
+                        <Calendar className="h-3 w-3 mr-1" />
+                        {t.status === "canceled" ? "Tour canceled" : "Tour"} · {fmtTour(t)}
+                      </Badge>
+                    );
+                  })()}
+                  {(() => {
                     const m = findMatch(s);
                     if (!m) return null;
                     return (
