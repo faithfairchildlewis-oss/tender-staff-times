@@ -237,3 +237,96 @@ export const undismissJotformSubmission = createServerFn({ method: "POST" })
     if (error) throw error;
     return { ok: true };
   });
+
+// ─────────────── Calendly cross-check ───────────────
+
+export type CalendlyTour = {
+  event_uri: string;
+  event_name: string;
+  start_time: string; // ISO
+  status: string;     // active / canceled
+  invitee_name: string;
+  invitee_email: string;
+};
+
+const CALENDLY_GATEWAY = "https://connector-gateway.lovable.dev/calendly";
+
+async function calendlyFetch(path: string, params?: Record<string, string>): Promise<any> {
+  const lov = process.env.LOVABLE_API_KEY;
+  const cal = process.env.CALENDLY_API_KEY;
+  if (!lov || !cal) throw new Error("Calendly connection not configured");
+  const url = new URL(`${CALENDLY_GATEWAY}${path}`);
+  if (params) for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
+  const res = await fetch(url.toString(), {
+    headers: {
+      Authorization: `Bearer ${lov}`,
+      "X-Connection-Api-Key": cal,
+    },
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Calendly ${res.status}: ${body.slice(0, 200)}`);
+  }
+  return res.json();
+}
+
+export const listCalendlyTours = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await assertAdmin(context.supabase, context.userId);
+
+    // 1) Find the connected user + organization
+    const me = await calendlyFetch("/users/me");
+    const userUri: string = me?.resource?.uri;
+    const orgUri: string = me?.resource?.current_organization;
+    if (!userUri || !orgUri) throw new Error("Could not resolve Calendly user");
+
+    // 2) List scheduled events (last 12 months → next 6 months)
+    const now = new Date();
+    const minStart = new Date(now.getTime() - 365 * 86400_000).toISOString();
+    const maxStart = new Date(now.getTime() + 180 * 86400_000).toISOString();
+
+    const events: any[] = [];
+    let nextParams: Record<string, string> | null = {
+      organization: orgUri,
+      count: "100",
+      min_start_time: minStart,
+      max_start_time: maxStart,
+      status: "active",
+    };
+    let guard = 0;
+    while (nextParams && guard < 10) {
+      const page = await calendlyFetch("/scheduled_events", nextParams);
+      for (const e of page?.collection ?? []) events.push(e);
+      const nextPage: string | null = page?.pagination?.next_page ?? null;
+      if (!nextPage) break;
+      const u = new URL(nextPage);
+      nextParams = Object.fromEntries(u.searchParams.entries());
+      guard++;
+    }
+
+    // 3) Fetch invitees for each event (parallel)
+    const results: CalendlyTour[] = [];
+    const inviteeLookups = events.map(async (ev) => {
+      const uuid = String(ev.uri ?? "").split("/").pop();
+      if (!uuid) return;
+      try {
+        const inv = await calendlyFetch(`/scheduled_events/${uuid}/invitees`);
+        for (const i of inv?.collection ?? []) {
+          results.push({
+            event_uri: ev.uri,
+            event_name: ev.name ?? "Tour",
+            start_time: ev.start_time,
+            status: i.status ?? ev.status ?? "active",
+            invitee_name: i.name ?? "",
+            invitee_email: (i.email ?? "").toLowerCase(),
+          });
+        }
+      } catch {
+        /* skip individual event failures */
+      }
+    });
+    await Promise.all(inviteeLookups);
+
+    return results;
+  });
