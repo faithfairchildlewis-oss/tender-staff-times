@@ -27,6 +27,7 @@ const TABS: Tab[] = [
   { to: "/enrollment/roster",      label: "Roster" },
   { to: "/enrollment/waitlist",    label: "Waitlist",    adminOnly: true },
   { to: "/enrollment/import",      label: "Import",      adminOnly: true },
+  { to: "/enrollment/jotform",     label: "Jotform",     adminOnly: true },
 ];
 
 function EnrollmentLayout() {
