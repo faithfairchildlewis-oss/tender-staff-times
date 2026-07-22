@@ -302,17 +302,23 @@ function mondayOnOrAfter(d: Date): Date {
 }
 
 function roomCensusOnDate(children: Child[], room: RoomCode, date: Date, campEnds: Date, today: Date): number {
-  return children.filter((c) => c.status === "Active" && roomOnDate(c, date, campEnds, today) === room).length;
+  const occupants = children.filter(
+    (c) => c.status === "Active" && roomOnDate(c, date, campEnds, today) === room,
+  );
+  return distinctSeats(occupants).length;
 }
 
 function sproutsBandCensusOnDate(
   children: Child[], date: Date, campEnds: Date, today: Date,
 ): { under2: number; twos: number } {
+  // Collapse share-seat pairs to one representative (oldest DOB wins, mirroring
+  // sproutsComposition) so a shared seat only occupies one under-2 or two-year-old slot.
+  const occupants = children.filter(
+    (c) => c.status === "Active" && c.dob && roomOnDate(c, date, campEnds, today) === "G/H",
+  );
   let under2 = 0, twos = 0;
-  for (const c of children) {
-    if (c.status !== "Active" || !c.dob) continue;
-    if (roomOnDate(c, date, campEnds, today) !== "G/H") continue;
-    if (ageInMonths(c.dob, date) < 24) under2++; else twos++;
+  for (const c of distinctSeats(occupants)) {
+    if (ageInMonths(c.dob!, date) < 24) under2++; else twos++;
   }
   return { under2, twos };
 }
