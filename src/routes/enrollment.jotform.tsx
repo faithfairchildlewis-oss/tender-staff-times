@@ -285,10 +285,19 @@ function JotformImportPage() {
       ) : (
         <div className="space-y-2">
           {filtered.map((s) => (
-            <Card key={s.id} className="p-4 flex flex-col sm:flex-row sm:items-center gap-3">
+            <Card
+              key={s.id}
+              className={`p-4 flex flex-col sm:flex-row sm:items-center gap-3 ${
+                s.dismissed
+                  ? "bg-muted/60 border-l-4 border-l-rose-500 opacity-70"
+                  : ""
+              }`}
+            >
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="font-medium">{s.child_name || "(no name)"}</span>
+                  <span className={`font-medium ${s.dismissed ? "line-through text-muted-foreground" : ""}`}>
+                    {s.child_name || "(no name)"}
+                  </span>
                   {s.age_group && <Badge variant="secondary">{s.age_group}</Badge>}
                   {s.already_imported && (
                     <Badge className="bg-green-600 text-white">
