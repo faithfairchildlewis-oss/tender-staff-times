@@ -24,6 +24,8 @@ export type JotformSubmission = {
   more_than_one: string;
   notes: string;
   already_imported: boolean;
+  dismissed: boolean;
+  dismissed_reason: string | null;
 };
 
 function pad(n: string | number): string {
@@ -94,6 +96,8 @@ function normalize(sub: any): JotformSubmission {
     more_than_one: get("56") ?? "",
     notes: get("45") ?? "",
     already_imported: false,
+    dismissed: false,
+    dismissed_reason: null,
   };
 }
 
@@ -139,6 +143,21 @@ export const listJotformSubmissions = createServerFn({ method: "GET" })
         }
       }
       for (const r of rows) r.already_imported = seen.has(r.id);
+
+      const { data: dismissed } = await context.supabase
+        .from("jotform_dismissed")
+        .select("submission_id, reason")
+        .in("submission_id", ids);
+      const dMap = new Map<string, string | null>();
+      for (const row of dismissed ?? []) {
+        dMap.set((row as any).submission_id, (row as any).reason ?? null);
+      }
+      for (const r of rows) {
+        if (dMap.has(r.id)) {
+          r.dismissed = true;
+          r.dismissed_reason = dMap.get(r.id) ?? null;
+        }
+      }
     }
 
     return rows;
@@ -183,4 +202,38 @@ export const importJotformSubmission = createServerFn({ method: "POST" })
       .single();
     if (error) throw error;
     return { id: inserted.id };
+  });
+
+const dismissSchema = z.object({
+  submissionId: z.string().min(1),
+  reason: z.string().max(500).nullable().optional(),
+});
+
+export const dismissJotformSubmission = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => dismissSchema.parse(input))
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context.supabase, context.userId);
+    const { error } = await context.supabase
+      .from("jotform_dismissed")
+      .upsert({
+        submission_id: data.submissionId,
+        reason: data.reason ?? null,
+        dismissed_by: context.userId,
+      }, { onConflict: "submission_id" });
+    if (error) throw error;
+    return { ok: true };
+  });
+
+export const undismissJotformSubmission = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => z.object({ submissionId: z.string().min(1) }).parse(input))
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context.supabase, context.userId);
+    const { error } = await context.supabase
+      .from("jotform_dismissed")
+      .delete()
+      .eq("submission_id", data.submissionId);
+    if (error) throw error;
+    return { ok: true };
   });

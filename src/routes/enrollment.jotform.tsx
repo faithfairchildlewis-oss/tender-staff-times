@@ -10,12 +10,14 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { RefreshCw, Download, CheckCircle2 } from "lucide-react";
+import { RefreshCw, Download, CheckCircle2, XCircle, Undo2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import {
   listJotformSubmissions,
   importJotformSubmission,
+  dismissJotformSubmission,
+  undismissJotformSubmission,
   type JotformSubmission,
 } from "@/lib/jotform.functions";
 
@@ -72,6 +74,8 @@ function buildDraft(sub: JotformSubmission): Draft {
 function JotformImportPage() {
   const fetchList = useServerFn(listJotformSubmissions);
   const doImport = useServerFn(importJotformSubmission);
+  const doDismiss = useServerFn(dismissJotformSubmission);
+  const doUndismiss = useServerFn(undismissJotformSubmission);
   const qc = useQueryClient();
 
   const { data: subs = [], isLoading, error, refetch, isFetching } = useQuery({
@@ -122,12 +126,17 @@ function JotformImportPage() {
   }, [roster, waitlist]);
 
   const [showImported, setShowImported] = useState(false);
+  const [showDeclined, setShowDeclined] = useState(false);
   const [selected, setSelected] = useState<JotformSubmission | null>(null);
   const [draft, setDraft] = useState<Draft | null>(null);
 
   const filtered = useMemo(() => {
-    return showImported ? subs : subs.filter((s) => !s.already_imported);
-  }, [subs, showImported]);
+    return subs.filter((s) => {
+      if (!showImported && s.already_imported) return false;
+      if (!showDeclined && s.dismissed) return false;
+      return true;
+    });
+  }, [subs, showImported, showDeclined]);
 
   const importMut = useMutation({
     mutationFn: async (input: { sub: JotformSubmission; draft: Draft }) => {
@@ -155,9 +164,36 @@ function JotformImportPage() {
     onError: (e: any) => toast.error(e?.message ?? "Import failed"),
   });
 
+  const dismissMut = useMutation({
+    mutationFn: async (input: { submissionId: string; reason?: string | null }) => {
+      return await doDismiss({ data: { submissionId: input.submissionId, reason: input.reason ?? null } });
+    },
+    onSuccess: () => {
+      toast.success("Marked as declined");
+      qc.invalidateQueries({ queryKey: ["jotform", "child-inquiry"] });
+    },
+    onError: (e: any) => toast.error(e?.message ?? "Failed to decline"),
+  });
+
+  const undismissMut = useMutation({
+    mutationFn: async (submissionId: string) => {
+      return await doUndismiss({ data: { submissionId } });
+    },
+    onSuccess: () => {
+      toast.success("Restored");
+      qc.invalidateQueries({ queryKey: ["jotform", "child-inquiry"] });
+    },
+    onError: (e: any) => toast.error(e?.message ?? "Failed to restore"),
+  });
+
   function openReview(sub: JotformSubmission) {
     setSelected(sub);
     setDraft(buildDraft(sub));
+  }
+
+  function handleDecline(sub: JotformSubmission) {
+    const reason = window.prompt("Reason for declining (optional):", "") ?? "";
+    dismissMut.mutate({ submissionId: sub.id, reason: reason.trim() || null });
   }
 
   return (
@@ -177,6 +213,14 @@ function JotformImportPage() {
               onChange={(e) => setShowImported(e.target.checked)}
             />
             Show already imported
+          </label>
+          <label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={showDeclined}
+              onChange={(e) => setShowDeclined(e.target.checked)}
+            />
+            Show declined
           </label>
           <Button variant="outline" size="sm" onClick={() => refetch()} disabled={isFetching}>
             <RefreshCw className={`h-4 w-4 mr-1 ${isFetching ? "animate-spin" : ""}`} /> Refresh
@@ -209,6 +253,11 @@ function JotformImportPage() {
                       <CheckCircle2 className="h-3 w-3 mr-1" /> Imported
                     </Badge>
                   )}
+                  {s.dismissed && (
+                    <Badge className="bg-slate-500 text-white">
+                      <XCircle className="h-3 w-3 mr-1" /> Declined
+                    </Badge>
+                  )}
                   {(() => {
                     const m = findMatch(s);
                     if (!m) return null;
@@ -231,15 +280,43 @@ function JotformImportPage() {
                   {s.parent_phone && <>• {s.parent_phone} </>}
                   {s.parent_email && <>• {s.parent_email}</>}
                 </div>
+                {s.dismissed && s.dismissed_reason && (
+                  <div className="text-xs text-muted-foreground mt-1 italic">
+                    Reason: {s.dismissed_reason}
+                  </div>
+                )}
               </div>
-              <Button
-                size="sm"
-                onClick={() => openReview(s)}
-                disabled={s.already_imported}
-              >
-                <Download className="h-4 w-4 mr-1" />
-                {s.already_imported ? "Imported" : "Review & Import"}
-              </Button>
+              <div className="flex items-center gap-2">
+                {s.dismissed ? (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => undismissMut.mutate(s.id)}
+                    disabled={undismissMut.isPending}
+                  >
+                    <Undo2 className="h-4 w-4 mr-1" /> Restore
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      size="sm"
+                      onClick={() => openReview(s)}
+                      disabled={s.already_imported}
+                    >
+                      <Download className="h-4 w-4 mr-1" />
+                      {s.already_imported ? "Imported" : "Review & Import"}
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleDecline(s)}
+                      disabled={dismissMut.isPending}
+                    >
+                      <XCircle className="h-4 w-4 mr-1" /> Decline
+                    </Button>
+                  </>
+                )}
+              </div>
             </Card>
           ))}
         </div>
