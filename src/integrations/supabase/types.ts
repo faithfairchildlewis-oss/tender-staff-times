@@ -152,6 +152,27 @@ export type Database = {
         }
         Relationships: []
       }
+      jotform_dismissed: {
+        Row: {
+          created_at: string
+          dismissed_by: string | null
+          reason: string | null
+          submission_id: string
+        }
+        Insert: {
+          created_at?: string
+          dismissed_by?: string | null
+          reason?: string | null
+          submission_id: string
+        }
+        Update: {
+          created_at?: string
+          dismissed_by?: string | null
+          reason?: string | null
+          submission_id?: string
+        }
+        Relationships: []
+      }
       payroll_rates: {
         Row: {
           created_at: string
