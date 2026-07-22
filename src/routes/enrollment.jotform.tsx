@@ -350,14 +350,28 @@ function JotformImportPage() {
                   </Button>
                 ) : (
                   <>
-                    <Button
-                      size="sm"
-                      onClick={() => openReview(s)}
-                      disabled={s.already_imported}
-                    >
-                      <Download className="h-4 w-4 mr-1" />
-                      {s.already_imported ? "Imported" : "Review & Import"}
-                    </Button>
+                    {(() => {
+                      const match = findMatch(s);
+                      const blocked = s.already_imported || !!match;
+                      const label = s.already_imported
+                        ? "Imported"
+                        : match?.where === "roster"
+                        ? "On roster"
+                        : match?.where === "waitlist"
+                        ? "On waitlist"
+                        : "Review & Import";
+                      return (
+                        <Button
+                          size="sm"
+                          onClick={() => openReview(s)}
+                          disabled={blocked}
+                          title={match ? `Already ${match.where}: ${match.name}` : undefined}
+                        >
+                          <Download className="h-4 w-4 mr-1" />
+                          {label}
+                        </Button>
+                      );
+                    })()}
                     <Button
                       size="sm"
                       variant="outline"
