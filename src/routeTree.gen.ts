@@ -26,6 +26,7 @@ import { Route as EnrollmentWaitlistRouteImport } from './routes/enrollment.wait
 import { Route as EnrollmentTransitionsRouteImport } from './routes/enrollment.transitions'
 import { Route as EnrollmentRosterRouteImport } from './routes/enrollment.roster'
 import { Route as EnrollmentProjectionsRouteImport } from './routes/enrollment.projections'
+import { Route as EnrollmentJotformRouteImport } from './routes/enrollment.jotform'
 import { Route as EnrollmentImportRouteImport } from './routes/enrollment.import'
 import { Route as EnrollmentChildrenRouteImport } from './routes/enrollment.children'
 import { Route as EnrollmentAskRouteImport } from './routes/enrollment.ask'
@@ -116,6 +117,11 @@ const EnrollmentProjectionsRoute = EnrollmentProjectionsRouteImport.update({
   path: '/projections',
   getParentRoute: () => EnrollmentRoute,
 } as any)
+const EnrollmentJotformRoute = EnrollmentJotformRouteImport.update({
+  id: '/jotform',
+  path: '/jotform',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
 const EnrollmentImportRoute = EnrollmentImportRouteImport.update({
   id: '/import',
   path: '/import',
@@ -150,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/enrollment/ask': typeof EnrollmentAskRoute
   '/enrollment/children': typeof EnrollmentChildrenRoute
   '/enrollment/import': typeof EnrollmentImportRoute
+  '/enrollment/jotform': typeof EnrollmentJotformRoute
   '/enrollment/projections': typeof EnrollmentProjectionsRoute
   '/enrollment/roster': typeof EnrollmentRosterRoute
   '/enrollment/transitions': typeof EnrollmentTransitionsRoute
@@ -172,6 +179,7 @@ export interface FileRoutesByTo {
   '/enrollment/ask': typeof EnrollmentAskRoute
   '/enrollment/children': typeof EnrollmentChildrenRoute
   '/enrollment/import': typeof EnrollmentImportRoute
+  '/enrollment/jotform': typeof EnrollmentJotformRoute
   '/enrollment/projections': typeof EnrollmentProjectionsRoute
   '/enrollment/roster': typeof EnrollmentRosterRoute
   '/enrollment/transitions': typeof EnrollmentTransitionsRoute
@@ -196,6 +204,7 @@ export interface FileRoutesById {
   '/enrollment/ask': typeof EnrollmentAskRoute
   '/enrollment/children': typeof EnrollmentChildrenRoute
   '/enrollment/import': typeof EnrollmentImportRoute
+  '/enrollment/jotform': typeof EnrollmentJotformRoute
   '/enrollment/projections': typeof EnrollmentProjectionsRoute
   '/enrollment/roster': typeof EnrollmentRosterRoute
   '/enrollment/transitions': typeof EnrollmentTransitionsRoute
@@ -221,6 +230,7 @@ export interface FileRouteTypes {
     | '/enrollment/ask'
     | '/enrollment/children'
     | '/enrollment/import'
+    | '/enrollment/jotform'
     | '/enrollment/projections'
     | '/enrollment/roster'
     | '/enrollment/transitions'
@@ -243,6 +253,7 @@ export interface FileRouteTypes {
     | '/enrollment/ask'
     | '/enrollment/children'
     | '/enrollment/import'
+    | '/enrollment/jotform'
     | '/enrollment/projections'
     | '/enrollment/roster'
     | '/enrollment/transitions'
@@ -266,6 +277,7 @@ export interface FileRouteTypes {
     | '/enrollment/ask'
     | '/enrollment/children'
     | '/enrollment/import'
+    | '/enrollment/jotform'
     | '/enrollment/projections'
     | '/enrollment/roster'
     | '/enrollment/transitions'
@@ -413,6 +425,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnrollmentProjectionsRouteImport
       parentRoute: typeof EnrollmentRoute
     }
+    '/enrollment/jotform': {
+      id: '/enrollment/jotform'
+      path: '/jotform'
+      fullPath: '/enrollment/jotform'
+      preLoaderRoute: typeof EnrollmentJotformRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
     '/enrollment/import': {
       id: '/enrollment/import'
       path: '/import'
@@ -448,6 +467,7 @@ interface EnrollmentRouteChildren {
   EnrollmentAskRoute: typeof EnrollmentAskRoute
   EnrollmentChildrenRoute: typeof EnrollmentChildrenRoute
   EnrollmentImportRoute: typeof EnrollmentImportRoute
+  EnrollmentJotformRoute: typeof EnrollmentJotformRoute
   EnrollmentProjectionsRoute: typeof EnrollmentProjectionsRoute
   EnrollmentRosterRoute: typeof EnrollmentRosterRoute
   EnrollmentTransitionsRoute: typeof EnrollmentTransitionsRoute
@@ -460,6 +480,7 @@ const EnrollmentRouteChildren: EnrollmentRouteChildren = {
   EnrollmentAskRoute: EnrollmentAskRoute,
   EnrollmentChildrenRoute: EnrollmentChildrenRoute,
   EnrollmentImportRoute: EnrollmentImportRoute,
+  EnrollmentJotformRoute: EnrollmentJotformRoute,
   EnrollmentProjectionsRoute: EnrollmentProjectionsRoute,
   EnrollmentRosterRoute: EnrollmentRosterRoute,
   EnrollmentTransitionsRoute: EnrollmentTransitionsRoute,
@@ -489,13 +510,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
