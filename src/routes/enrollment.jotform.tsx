@@ -108,6 +108,39 @@ function JotformImportPage() {
     },
   });
 
+  const { data: tours = [], error: toursError } = useQuery({
+    queryKey: ["calendly", "tours"],
+    queryFn: () => fetchTours(),
+    staleTime: 60_000,
+    retry: false,
+  });
+
+  const toursByEmail = useMemo(() => {
+    const m = new Map<string, CalendlyTour[]>();
+    for (const t of tours as CalendlyTour[]) {
+      if (!t.invitee_email) continue;
+      const arr = m.get(t.invitee_email) ?? [];
+      arr.push(t);
+      m.set(t.invitee_email, arr);
+    }
+    for (const arr of m.values()) arr.sort((a, b) => a.start_time.localeCompare(b.start_time));
+    return m;
+  }, [tours]);
+
+  function findTour(sub: JotformSubmission): CalendlyTour | null {
+    const email = (sub.parent_email || "").toLowerCase().trim();
+    if (!email) return null;
+    const arr = toursByEmail.get(email);
+    if (!arr || arr.length === 0) return null;
+    const active = arr.filter((t) => t.status !== "canceled");
+    return active[active.length - 1] ?? arr[arr.length - 1] ?? null;
+  }
+
+  function fmtTour(t: CalendlyTour): string {
+    const d = new Date(t.start_time);
+    return d.toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+  }
+
   const findMatch = useMemo(() => {
     const rosterByName = new Map<string, { name: string; dob: string | null; room: string | null; status: string | null }>();
     for (const r of roster as any[]) rosterByName.set(normName(r.name), r);
