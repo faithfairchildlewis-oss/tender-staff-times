@@ -289,7 +289,7 @@ function JotformImportPage() {
               key={s.id}
               className={`p-4 flex flex-col sm:flex-row sm:items-center gap-3 ${
                 s.dismissed
-                  ? "bg-muted/60 border-l-4 border-l-rose-500 opacity-70"
+                  ? "bg-yellow-100 dark:bg-yellow-950/40 border-l-4 border-l-rose-500 opacity-80"
                   : ""
               }`}
             >
