@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { RefreshCw, Download, CheckCircle2, XCircle, Undo2 } from "lucide-react";
+import { RefreshCw, Download, CheckCircle2, XCircle, Undo2, Calendar } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -18,7 +18,9 @@ import {
   importJotformSubmission,
   dismissJotformSubmission,
   undismissJotformSubmission,
+  listCalendlyTours,
   type JotformSubmission,
+  type CalendlyTour,
 } from "@/lib/jotform.functions";
 
 const STATUSES = ["Inquiry", "Touring", "Deposit paid", "Hold – deposit pending", "Enrolled", "Withdrawn"];
