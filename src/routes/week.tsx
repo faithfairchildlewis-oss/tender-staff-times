@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, Printer, FileDown } from "lucide-react";
+import { ArrowLeft, Printer, FileDown, Copy } from "lucide-react";
 import { useState, useMemo } from "react";
+import { toast } from "sonner";
 import { blocksForDay, staffNames, weeklyHours, DAYS, type ScheduleData } from "@/data/schedule";
 import { useCurrentSchedule, useAllSchedules } from "@/hooks/use-schedule";
 import { Button } from "@/components/ui/button";
@@ -63,6 +64,87 @@ function WeekPage() {
   }
 
   const names = staffNames(schedule).sort();
+
+  const buildOverviewText = () => {
+    const lines: string[] = [];
+    lines.push(`${schedule.center} — Weekly Overview`);
+    lines.push(`Week of ${schedule.week}`);
+    lines.push("");
+    lines.push("STAFF SCHEDULES");
+    lines.push("---------------");
+    for (const n of names) {
+      const total = weeklyHours(schedule, n);
+      lines.push(`${n} — ${total} h`);
+      for (const d of DAYS) {
+        const blocks = blocksForDay(schedule, n, d);
+        const dateLabel = dateForDay(schedule, d);
+        const dayLabel = `${d.slice(0, 3)}${dateLabel ? ` ${dateLabel}` : ""}`;
+        if (blocks.length === 0) {
+          lines.push(`  ${dayLabel}: OFF`);
+        } else {
+          const parts = blocks.map((b) => {
+            const rooms = b.rooms.length ? ` (${b.rooms.join(", ")})` : "";
+            return `${b.start}–${b.end}${rooms}`;
+          });
+          lines.push(`  ${dayLabel}: ${parts.join(", ")}`);
+        }
+      }
+      lines.push("");
+    }
+
+    lines.push("COVERAGE NOTES");
+    lines.push("--------------");
+    const notes: string[] = [];
+    for (const d of DAYS) {
+      const day = schedule.days?.find((x) => x.day === d);
+      if (!day) continue;
+      const gaps = new Map<string, Set<string>>();
+      for (const slot of day.slots) {
+        for (const room of slot.understaffed ?? []) {
+          if (!gaps.has(room)) gaps.set(room, new Set());
+          gaps.get(room)!.add(slot.time);
+        }
+      }
+      if (gaps.size === 0) continue;
+      const roomBits = Array.from(gaps.entries())
+        .map(([room, times]) => {
+          const sorted = Array.from(times);
+          return `${room} (${sorted[0]}${sorted.length > 1 ? `–${sorted[sorted.length - 1]}` : ""})`;
+        })
+        .join("; ");
+      notes.push(`  ${d}: ${roomBits}`);
+    }
+    if (notes.length === 0) {
+      lines.push("  All rooms covered.");
+    } else {
+      lines.push(...notes);
+    }
+    return lines.join("\n");
+  };
+
+  const copyOverview = async () => {
+    const text = buildOverviewText();
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success("Overview copied — ready to paste or text");
+    } catch {
+      toast.error("Could not copy. Long-press to select instead.");
+    }
+  };
+
+  const shareOverview = async () => {
+    const text = buildOverviewText();
+    const nav = navigator as Navigator & { share?: (d: { title?: string; text?: string }) => Promise<void> };
+    if (nav.share) {
+      try {
+        await nav.share({ title: `Weekly Overview — ${schedule.week}`, text });
+        return;
+      } catch {
+        // fall through to copy
+      }
+    }
+    await copyOverview();
+  };
 
   const exportPdf = async () => {
     const { jsPDF } = await import("jspdf");
@@ -137,6 +219,9 @@ function WeekPage() {
           <div className="flex items-center gap-2">
             <Button onClick={exportPdf} size="sm" variant="secondary">
               <FileDown className="w-4 h-4" /> Export PDF
+            </Button>
+            <Button onClick={shareOverview} size="sm" variant="secondary">
+              <Copy className="w-4 h-4" /> Copy Overview
             </Button>
             <Button onClick={() => window.print()} size="sm" variant="secondary" className="hidden sm:inline-flex">
               <Printer className="w-4 h-4" /> Print
