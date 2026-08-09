@@ -20,7 +20,7 @@ import {
   weeklyRate,
   type RoomCode,
 } from "@/lib/enrollment/enrollment-logic";
-import { ageYearsMonths, CAMP_ENDS, compareYoungestFirst, formatFull, ROOM_ORDER } from "@/lib/enrollment/mapping";
+import { ageYearsMonths, CAMP_ENDS, compareYoungestFirst, formatFull, hasStartedBy, ROOM_ORDER } from "@/lib/enrollment/mapping";
 import type { ChildRecord, WaitlistRecord } from "@/lib/enrollment/mapping";
 
 export const Route = createFileRoute("/enrollment/")({
@@ -28,11 +28,17 @@ export const Route = createFileRoute("/enrollment/")({
 });
 
 function SnapshotPage() {
-  const { data: children = [], isLoading: cLoad } = useChildren();
+  const { data: allChildren = [], isLoading: cLoad } = useChildren();
   const { data: waitlist = [] } = useWaitlist();
   const { data: rooms = [] } = useRooms();
   const [asOf] = useState<Date>(() => new Date());
   const [expandedRoom, setExpandedRoom] = useState<RoomCode | null>(null);
+
+  // Children with a future start date are not on the floor yet.
+  const children = useMemo(
+    () => allChildren.filter((c) => hasStartedBy(c, asOf)),
+    [allChildren, asOf],
+  );
 
   const roomsByCode = useMemo(
     () => Object.fromEntries(rooms.map((r) => [r.code, r])),
