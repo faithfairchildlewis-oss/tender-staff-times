@@ -7,6 +7,13 @@ type WaitlistRow = Database["public"]["Tables"]["enrollment_waitlist"]["Row"];
 export interface ChildRecord extends Child { id: string; notes: string | null; startDate: string | null; shareSeatGroup: string | null }
 export interface WaitlistRecord extends WaitlistEntry { id: string; dateInquired: string | null }
 
+/** True when a child has begun attending as of `date`. Children with a future
+ *  start date are enrolled on paper but must not count toward the census. */
+export function hasStartedBy(child: { startDate: string | null }, date: Date): boolean {
+  if (!child.startDate) return true;
+  return new Date(child.startDate + "T00:00:00") <= date;
+}
+
 export function rowToChild(r: ChildRow): ChildRecord {
   return {
     id: r.id,
