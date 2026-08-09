@@ -20,6 +20,7 @@ import {
   weeklyRate,
   type RoomCode,
 } from "@/lib/enrollment/enrollment-logic";
+import { assignedRoom } from "@/lib/enrollment/enrollment-logic";
 import { ageYearsMonths, CAMP_ENDS, compareYoungestFirst, formatFull, hasEndedBy, hasStartedBy, ROOM_ORDER } from "@/lib/enrollment/mapping";
 import type { ChildRecord, WaitlistRecord } from "@/lib/enrollment/mapping";
 
@@ -47,7 +48,7 @@ function SnapshotPage() {
 
   const perRoom = useMemo(() => {
     return ROOM_ORDER.map((code) => {
-      const roster = children.filter((c) => c.room === code && c.status === "Active");
+      const roster = children.filter((c) => assignedRoom(c, asOf) === code && c.status === "Active");
       const seats = distinctSeats(roster).length;
       const cap = roomsByCode[code]?.capacity ?? ROOMS[code].capacity;
       const held = heldSeats(waitlist, code);
@@ -259,7 +260,7 @@ function RoomRosterList({ code, children, waitlist, asOf, open }: {
   open: number;
 }) {
   const roster = children
-    .filter((c) => c.room === code && c.status === "Active")
+    .filter((c) => assignedRoom(c, asOf) === code && c.status === "Active")
     .sort((a, b) => compareYoungestFirst(a, b) || a.name.localeCompare(b.name));
   // Group shared-seat kids into a single line.
   type RosterItem =

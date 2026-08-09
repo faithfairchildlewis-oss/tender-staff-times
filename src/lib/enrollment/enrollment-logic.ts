@@ -23,6 +23,11 @@ export interface Child {
    *  on different days and share ONE seat: they count as 1 toward capacity,
    *  composition, and staffing (one child is present at a time). */
   shareSeatGroup?: string | null;
+  /** One-time manual override: the room this child moves into on
+   *  `pendingRoomDate`. Until that date they stay in `room`. Used when the
+   *  director holds a child back (or moves them early) regardless of age. */
+  pendingRoom?: string | null;
+  pendingRoomDate?: string | null;
 }
 
 export interface WaitlistEntry {
@@ -240,6 +245,19 @@ export function projectWeekly(
 }
 
 /** The room a child occupies on `date`, anchored at `today`.
+ */
+/** The child's assigned room on `date`, applying any one-time manual room
+ *  override (`pendingRoom` / `pendingRoomDate`). Before the override date the
+ *  child stays put; on/after it they occupy the pending room. */
+export function assignedRoom(c: Child, date: Date): RoomCode {
+  if (c.pendingRoom && c.pendingRoomDate) {
+    const when = new Date(c.pendingRoomDate + "T00:00:00");
+    if (date >= when) return c.pendingRoom as RoomCode;
+  }
+  return c.room;
+}
+
+/** (continued)
  *
  *  Guardrail: placement is the director's call. A child who is already past
  *  an eligibility date but still in their current room (early/late placement)
@@ -253,6 +271,8 @@ export function roomOnDate(c: Child, date: Date, campEnds: Date, today: Date = n
   const win = c as unknown as { startDate?: string | null; endDate?: string | null };
   if (win.startDate && date < new Date(win.startDate + "T00:00:00")) return null;
   if (win.endDate && date > new Date(win.endDate + "T00:00:00")) return null;
+  // One-time manual override takes precedence over age-based move-ups.
+  c = { ...c, room: assignedRoom(c, date) };
   if (!c.dob) return c.room === "SUMMER" && date > campEnds ? null : c.room;
   if (c.room === "SUMMER") return date <= campEnds ? "SUMMER" : null;
   if (c.room === "SAC") return "SAC";
@@ -263,6 +283,8 @@ export function roomOnDate(c: Child, date: Date, campEnds: Date, today: Date = n
   }
   // Walk forward through the room chain by eligibility — future moves only.
   let room: RoomCode = c.room;
+  // An active hold pins the child in place until the override date.
+  if (c.pendingRoom && c.pendingRoomDate && date < new Date(c.pendingRoomDate + "T00:00:00")) return room;
   let guard = 0;
   while (guard++ < 5) {
     const cfg = ROOMS[room] as { movesUpAt?: number; nextRoom?: RoomCode };

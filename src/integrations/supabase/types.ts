@@ -27,6 +27,8 @@ export type Database = {
           parent: string | null
           parent_email: string | null
           parent_phone: string | null
+          pending_room: string | null
+          pending_room_date: string | null
           room: string
           schedule: string
           share_seat_group: string | null
@@ -47,6 +49,8 @@ export type Database = {
           parent?: string | null
           parent_email?: string | null
           parent_phone?: string | null
+          pending_room?: string | null
+          pending_room_date?: string | null
           room: string
           schedule?: string
           share_seat_group?: string | null
@@ -67,6 +71,8 @@ export type Database = {
           parent?: string | null
           parent_email?: string | null
           parent_phone?: string | null
+          pending_room?: string | null
+          pending_room_date?: string | null
           room?: string
           schedule?: string
           share_seat_group?: string | null

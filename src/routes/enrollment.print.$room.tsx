@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo } from "react";
 import { useChildren } from "@/hooks/use-enrollment";
 import { ageYearsMonths, compareYoungestFirst, formatFull, hasEndedBy, hasStartedBy } from "@/lib/enrollment/mapping";
-import { nextTransition, ROOMS, type RoomCode } from "@/lib/enrollment/enrollment-logic";
+import { assignedRoom, nextTransition, ROOMS, type RoomCode } from "@/lib/enrollment/enrollment-logic";
 
 export const Route = createFileRoute("/enrollment/print/$room")({
   head: () => ({ meta: [{ title: "Roster print — Tender Years of Deale" }, { name: "robots", content: "noindex" }] }),
@@ -26,7 +26,7 @@ function PrintPage() {
   const roster = useMemo(
     () =>
       children
-        .filter((c) => c.room === room && c.status === "Active" && hasStartedBy(c, new Date()) && !hasEndedBy(c, new Date()))
+        .filter((c) => assignedRoom(c, new Date()) === room && c.status === "Active" && hasStartedBy(c, new Date()) && !hasEndedBy(c, new Date()))
         .sort((a, b) => compareYoungestFirst(a, b) || a.name.localeCompare(b.name)),
     [children, room],
   );
