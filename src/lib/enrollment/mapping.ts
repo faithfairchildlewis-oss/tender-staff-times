@@ -4,7 +4,7 @@ import type { Database } from "@/integrations/supabase/types";
 type ChildRow = Database["public"]["Tables"]["enrollment_children"]["Row"];
 type WaitlistRow = Database["public"]["Tables"]["enrollment_waitlist"]["Row"];
 
-export interface ChildRecord extends Child { id: string; notes: string | null; startDate: string | null; endDate: string | null; shareSeatGroup: string | null }
+export interface ChildRecord extends Child { id: string; notes: string | null; startDate: string | null; endDate: string | null; shareSeatGroup: string | null; pendingRoom: string | null; pendingRoomDate: string | null }
 export interface WaitlistRecord extends WaitlistEntry { id: string; dateInquired: string | null }
 
 /** True when a child has begun attending as of `date`. Children with a future
@@ -38,6 +38,8 @@ export function rowToChild(r: ChildRow): ChildRecord {
     weeklyRateOverride: r.weekly_rate_override ?? null,
     daysPerWeek: r.days_per_week ?? null,
     shareSeatGroup: r.share_seat_group ?? null,
+    pendingRoom: (r as unknown as { pending_room: string | null }).pending_room ?? null,
+    pendingRoomDate: (r as unknown as { pending_room_date: string | null }).pending_room_date ?? null,
   };
 }
 
