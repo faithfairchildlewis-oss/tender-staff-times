@@ -23,6 +23,11 @@ export interface Child {
    *  on different days and share ONE seat: they count as 1 toward capacity,
    *  composition, and staffing (one child is present at a time). */
   shareSeatGroup?: string | null;
+  /** One-time manual override: the room this child moves into on
+   *  `pendingRoomDate`. Until that date they stay in `room`. Used when the
+   *  director holds a child back (or moves them early) regardless of age. */
+  pendingRoom?: string | null;
+  pendingRoomDate?: string | null;
 }
 
 export interface WaitlistEntry {
