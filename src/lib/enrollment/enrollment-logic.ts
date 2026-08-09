@@ -283,6 +283,8 @@ export function roomOnDate(c: Child, date: Date, campEnds: Date, today: Date = n
   }
   // Walk forward through the room chain by eligibility — future moves only.
   let room: RoomCode = c.room;
+  // An active hold pins the child in place until the override date.
+  if (c.pendingRoom && c.pendingRoomDate && date < new Date(c.pendingRoomDate + "T00:00:00")) return room;
   let guard = 0;
   while (guard++ < 5) {
     const cfg = ROOMS[room] as { movesUpAt?: number; nextRoom?: RoomCode };
