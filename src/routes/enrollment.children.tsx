@@ -230,7 +230,22 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
           </div>
           <div className="grid grid-cols-2 gap-3">
             <Field label="Start date"><Input type="date" value={form.start_date} onChange={(e) => setForm({ ...form, start_date: e.target.value })} /></Field>
-            <Field label="End date (last day)"><Input type="date" value={form.end_date} onChange={(e) => setForm({ ...form, end_date: e.target.value })} /></Field>
+            <Field label="End date (last day)">
+              <div className="flex items-center gap-2">
+                <Input
+                  type="date"
+                  value={form.end_date}
+                  placeholder="No end date"
+                  onChange={(e) => setForm({ ...form, end_date: e.target.value })}
+                />
+                {form.end_date && (
+                  <Button type="button" variant="ghost" size="sm" onClick={() => setForm({ ...form, end_date: "" })}>
+                    Clear
+                  </Button>
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground">{form.end_date ? "Ends after this day" : "No end date"}</p>
+            </Field>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <Field label="Schedule">
