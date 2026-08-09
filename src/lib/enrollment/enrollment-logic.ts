@@ -258,6 +258,8 @@ export function roomOnDate(c: Child, date: Date, campEnds: Date, today: Date = n
   const win = c as unknown as { startDate?: string | null; endDate?: string | null };
   if (win.startDate && date < new Date(win.startDate + "T00:00:00")) return null;
   if (win.endDate && date > new Date(win.endDate + "T00:00:00")) return null;
+  // One-time manual override takes precedence over age-based move-ups.
+  c = { ...c, room: assignedRoom(c, date) };
   if (!c.dob) return c.room === "SUMMER" && date > campEnds ? null : c.room;
   if (c.room === "SUMMER") return date <= campEnds ? "SUMMER" : null;
   if (c.room === "SAC") return "SAC";
