@@ -248,6 +248,11 @@ export function projectWeekly(
  *  AFTER `today` are projected. The kindergarten departure is the exception:
  *  that exit is mandatory, so it always applies. */
 export function roomOnDate(c: Child, date: Date, campEnds: Date, today: Date = new Date()): RoomCode | null {
+  // Enrollment window: a child with a future start date, or one whose last day
+  // has passed, occupies no seat on `date`.
+  const win = c as unknown as { startDate?: string | null; endDate?: string | null };
+  if (win.startDate && date < new Date(win.startDate + "T00:00:00")) return null;
+  if (win.endDate && date > new Date(win.endDate + "T00:00:00")) return null;
   if (!c.dob) return c.room === "SUMMER" && date > campEnds ? null : c.room;
   if (c.room === "SUMMER") return date <= campEnds ? "SUMMER" : null;
   if (c.room === "SAC") return "SAC";
