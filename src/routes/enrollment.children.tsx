@@ -176,6 +176,7 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
     name: child?.name ?? "",
     dob: child?.dob ?? "",
     start_date: child?.startDate ?? "",
+    end_date: child?.endDate ?? "",
     room: (child?.room ?? "F") as RoomCode,
     schedule: (child?.schedule ?? "Standard") as "Standard" | "Extended",
     fall_plan: child?.fallPlan ?? "",
@@ -197,6 +198,7 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
       name: form.name.trim(),
       dob: form.dob || null,
       start_date: form.start_date || null,
+      end_date: form.end_date || null,
       room: form.room,
       schedule: form.schedule,
       status: "Active",
@@ -226,7 +228,10 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
               </Select>
             </Field>
           </div>
-          <Field label="Start date"><Input type="date" value={form.start_date} onChange={(e) => setForm({ ...form, start_date: e.target.value })} /></Field>
+          <div className="grid grid-cols-2 gap-3">
+            <Field label="Start date"><Input type="date" value={form.start_date} onChange={(e) => setForm({ ...form, start_date: e.target.value })} /></Field>
+            <Field label="End date (last day)"><Input type="date" value={form.end_date} onChange={(e) => setForm({ ...form, end_date: e.target.value })} /></Field>
+          </div>
           <div className="grid grid-cols-2 gap-3">
             <Field label="Schedule">
               <Select value={form.schedule} onValueChange={(v) => setForm({ ...form, schedule: v as "Standard" | "Extended" })}>

@@ -4,7 +4,7 @@ import type { Database } from "@/integrations/supabase/types";
 type ChildRow = Database["public"]["Tables"]["enrollment_children"]["Row"];
 type WaitlistRow = Database["public"]["Tables"]["enrollment_waitlist"]["Row"];
 
-export interface ChildRecord extends Child { id: string; notes: string | null; startDate: string | null; shareSeatGroup: string | null }
+export interface ChildRecord extends Child { id: string; notes: string | null; startDate: string | null; endDate: string | null; shareSeatGroup: string | null }
 export interface WaitlistRecord extends WaitlistEntry { id: string; dateInquired: string | null }
 
 /** True when a child has begun attending as of `date`. Children with a future
@@ -12,6 +12,12 @@ export interface WaitlistRecord extends WaitlistEntry { id: string; dateInquired
 export function hasStartedBy(child: { startDate: string | null }, date: Date): boolean {
   if (!child.startDate) return true;
   return new Date(child.startDate + "T00:00:00") <= date;
+}
+
+/** True when a child has left as of `date` (their last day has passed). */
+export function hasEndedBy(child: { endDate?: string | null }, date: Date): boolean {
+  if (!child.endDate) return false;
+  return new Date(child.endDate + "T00:00:00") < date;
 }
 
 export function rowToChild(r: ChildRow): ChildRecord {
@@ -28,6 +34,7 @@ export function rowToChild(r: ChildRow): ChildRecord {
     parentEmail: r.parent_email,
     notes: r.notes,
     startDate: (r as unknown as { start_date: string | null }).start_date ?? null,
+    endDate: (r as unknown as { end_date: string | null }).end_date ?? null,
     weeklyRateOverride: r.weekly_rate_override ?? null,
     daysPerWeek: r.days_per_week ?? null,
     shareSeatGroup: r.share_seat_group ?? null,

@@ -19,6 +19,7 @@ export type Database = {
           created_at: string
           days_per_week: number | null
           dob: string | null
+          end_date: string | null
           fall_plan: string | null
           id: string
           name: string
@@ -38,6 +39,7 @@ export type Database = {
           created_at?: string
           days_per_week?: number | null
           dob?: string | null
+          end_date?: string | null
           fall_plan?: string | null
           id?: string
           name: string
@@ -57,6 +59,7 @@ export type Database = {
           created_at?: string
           days_per_week?: number | null
           dob?: string | null
+          end_date?: string | null
           fall_plan?: string | null
           id?: string
           name?: string
