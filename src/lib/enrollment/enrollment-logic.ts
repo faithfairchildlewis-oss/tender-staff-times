@@ -245,6 +245,19 @@ export function projectWeekly(
 }
 
 /** The room a child occupies on `date`, anchored at `today`.
+ */
+/** The child's assigned room on `date`, applying any one-time manual room
+ *  override (`pendingRoom` / `pendingRoomDate`). Before the override date the
+ *  child stays put; on/after it they occupy the pending room. */
+export function assignedRoom(c: Child, date: Date): RoomCode {
+  if (c.pendingRoom && c.pendingRoomDate) {
+    const when = new Date(c.pendingRoomDate + "T00:00:00");
+    if (date >= when) return c.pendingRoom as RoomCode;
+  }
+  return c.room;
+}
+
+/** (continued)
  *
  *  Guardrail: placement is the director's call. A child who is already past
  *  an eligibility date but still in their current room (early/late placement)
