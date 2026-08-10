@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
 import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign, Eye, EyeOff, Users, Move, CalendarX2, Filter, PartyPopper, Ban } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth, useIsAdmin } from "@/hooks/use-auth";
@@ -716,7 +716,12 @@ function WeekEditor({
   schedules: ScheduleRow[];
   onSelect: (id: string) => void;
 }) {
-  const [data, setData] = useState<ScheduleData>(row.data);
+  const [data, setDataRaw] = useState<ScheduleData>(row.data);
+  const dirtyRef = useRef(false);
+  const setData: typeof setDataRaw = (v) => {
+    dirtyRef.current = true;
+    setDataRaw(v);
+  };
   const [dayIdx, setDayIdx] = useState(0);
   const [staffName, setStaffName] = useState<string>("");
   const [saving, setSaving] = useState(false);
@@ -725,17 +730,25 @@ function WeekEditor({
   const { data: rates } = usePayrollRates(row.id);
 
   useEffect(() => {
-    setData(row.data);
+    dirtyRef.current = false;
+    setDataRaw(row.data);
     const names = Object.keys(row.data.staff ?? {});
     setStaffName(names[0] ?? "");
   }, [row.id]);
+
+  // Pull in changes saved elsewhere (e.g. the drag-and-drop grid) whenever
+  // this editor has no unsaved local edits, so the two views stay in sync.
+  useEffect(() => {
+    if (dirtyRef.current) return;
+    setDataRaw(row.data);
+  }, [row.updated_at, row.data]);
 
   // Merge admin-only pay rates from the access-controlled table back into
   // the in-memory staff blob so the editor shows them. Saving them passes
   // back through the trigger that re-extracts and strips.
   useEffect(() => {
     if (!rates) return;
-    setData((d) => {
+    setDataRaw((d) => {
       const staff = { ...(d.staff ?? {}) };
       let changed = false;
       for (const name of Object.keys(staff)) {
@@ -889,6 +902,7 @@ function WeekEditor({
       .eq("id", row.id);
     setSaving(false);
     if (error) return alert(error.message);
+    dirtyRef.current = false;
     await onSaved();
     alert("Saved");
   }

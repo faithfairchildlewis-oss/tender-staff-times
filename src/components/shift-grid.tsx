@@ -36,6 +36,7 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
   const savingRef = useRef(false);
   const pendingRef = useRef(false);
   const rowIdRef = useRef(row.id);
+  const dirtyRef = useRef(false);
   const AUTOSAVE_MS = 800;
 
   useEffect(() => {
@@ -54,6 +55,13 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
     }
     pendingRef.current = false;
   }, [row.id]);
+
+  // Adopt fresh data saved elsewhere (e.g. the Edit Schedule tab) as long as
+  // this grid has no unsaved local edits, so views stay in sync.
+  useEffect(() => {
+    if (dirtyRef.current || savingRef.current || pendingRef.current) return;
+    setData(row.data);
+  }, [row.updated_at, row.data]);
 
   const day = DAY_NAMES[dayIdx];
   const rooms = data.rooms?.length ? data.rooms : DEFAULT_ROOMS;
@@ -89,6 +97,7 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
   }, [data, day, allStaff]);
 
   function update(mutate: (d: ScheduleData) => ScheduleData) {
+    dirtyRef.current = true;
     setData((d) => mutate(d));
     scheduleAutosave();
   }
@@ -225,6 +234,7 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
     }
     setLastSavedAt(new Date());
     setErrorMsg(null);
+    if (!pendingRef.current) dirtyRef.current = false;
     await qc.invalidateQueries({ queryKey: ["schedules"] });
     await qc.invalidateQueries({ queryKey: ["schedule"] });
     // If more edits landed mid-save, flush them now.
