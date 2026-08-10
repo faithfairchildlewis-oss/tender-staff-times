@@ -17,7 +17,9 @@ export function hasStartedBy(child: { startDate: string | null }, date: Date): b
 /** True when a child has left as of `date` (their last day has passed). */
 export function hasEndedBy(child: { endDate?: string | null }, date: Date): boolean {
   if (!child.endDate) return false;
-  return new Date(child.endDate + "T00:00:00") < date;
+  // endDate is the child's LAST attending day, so they only count as gone once
+  // the calendar day after endDate has begun. Compare against end-of-day.
+  return new Date(child.endDate + "T23:59:59.999") < date;
 }
 
 export function rowToChild(r: ChildRow): ChildRecord {
