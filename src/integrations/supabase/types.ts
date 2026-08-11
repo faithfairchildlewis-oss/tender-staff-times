@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       enrollment_children: {
         Row: {
+          address: string | null
           created_at: string
           days_per_week: number | null
           dob: string | null
@@ -38,6 +39,7 @@ export type Database = {
           weekly_rate_override: number | null
         }
         Insert: {
+          address?: string | null
           created_at?: string
           days_per_week?: number | null
           dob?: string | null
@@ -60,6 +62,7 @@ export type Database = {
           weekly_rate_override?: number | null
         }
         Update: {
+          address?: string | null
           created_at?: string
           days_per_week?: number | null
           dob?: string | null
