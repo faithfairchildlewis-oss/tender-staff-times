@@ -34,6 +34,7 @@ export function rowToChild(r: ChildRow): ChildRecord {
     parent: r.parent,
     parentPhone: r.parent_phone,
     parentEmail: r.parent_email,
+    address: r.address ?? null,
     notes: r.notes,
     startDate: (r as unknown as { start_date: string | null }).start_date ?? null,
     endDate: (r as unknown as { end_date: string | null }).end_date ?? null,

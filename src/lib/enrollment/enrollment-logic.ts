@@ -14,6 +14,7 @@ export interface Child {
   parent?: string | null;
   parentPhone?: string | null;
   parentEmail?: string | null;
+  address?: string | null;
   /** Optional weekly rate override — overrides the age-based RATES band
    *  when set (used for part-time / shared-seat arrangements). */
   weeklyRateOverride?: number | null;
