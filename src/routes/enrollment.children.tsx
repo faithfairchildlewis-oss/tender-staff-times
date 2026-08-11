@@ -113,6 +113,7 @@ function ChildrenPage() {
                   <td className="p-3 text-xs">
                     {c.parent ?? "—"}
                     {c.parentPhone && <div className="text-muted-foreground">{c.parentPhone}</div>}
+                    {c.address && <div className="text-muted-foreground">{c.address}</div>}
                   </td>
                   <td className="p-3 flex gap-1 justify-end">
                     <Button size="icon" variant="ghost" onClick={() => setEditing(c)}><Pencil className="h-4 w-4" /></Button>
@@ -183,6 +184,7 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
     parent: child?.parent ?? "",
     parent_phone: child?.parentPhone ?? "",
     parent_email: child?.parentEmail ?? "",
+    address: child?.address ?? "",
     notes: child?.notes ?? "",
     weekly_rate_override: child?.weeklyRateOverride != null ? String(child.weeklyRateOverride) : "",
     days_per_week: child?.daysPerWeek != null ? String(child.daysPerWeek) : "",
@@ -206,6 +208,7 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
       parent: form.parent || null,
       parent_phone: form.parent_phone || null,
       parent_email: form.parent_email || null,
+      address: form.address || null,
       notes: form.notes || null,
       weekly_rate_override: rateOverride,
       days_per_week: days,
@@ -267,6 +270,7 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
             </Field>
           </div>
           <Field label="Parent"><Input value={form.parent} onChange={(e) => setForm({ ...form, parent: e.target.value })} /></Field>
+          <Field label="Address"><Input value={form.address} placeholder="Street, city, state ZIP" onChange={(e) => setForm({ ...form, address: e.target.value })} /></Field>
           <div className="grid grid-cols-2 gap-3">
             <Field label="Parent phone"><Input value={form.parent_phone} onChange={(e) => setForm({ ...form, parent_phone: e.target.value })} /></Field>
             <Field label="Parent email"><Input value={form.parent_email} onChange={(e) => setForm({ ...form, parent_email: e.target.value })} /></Field>
