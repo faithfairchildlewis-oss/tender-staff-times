@@ -213,32 +213,30 @@ describe("checkAvailability", () => {
     expect(result.nextOpening!.date >= new Date(2026, 10, 1)).toBe(true);
   });
 
-  it("gates G/H on the under-2 sub-cap (3), not the room total (9)", () => {
-    // 3 children placed in G/H, all under 2 -> fill the under-2 band even though the room total (3) is well under 9.
+  it("gates G/H on the room total of 9, not the age split", () => {
+    // 3 under-2 children in G/H: the room total is what matters, so a 4th under-2 still fits.
     const children: Child[] = [
       child({ name: "U1", room: "G/H", dob: "2025-06-01" }),
       child({ name: "U2", room: "G/H", dob: "2025-07-01" }),
       child({ name: "U3", room: "G/H", dob: "2025-08-01" }),
     ];
-    // Born 2024-11-01 -> 20mo at desired start -> age-eligible for G/H (18-36mo), under-2 band (<24mo).
     const result = checkAvailability(children, [], "2024-11-01", today, CAMP_ENDS, 52, today);
     expect(result.room).toBe("G/H");
-    expect(result.gate).toBe("under-2 seat");
-    expect(result.capacity).toBe(3);
+    expect(result.gate).toBe("room");
+    expect(result.capacity).toBe(9);
     expect(result.census).toBe(3);
-    expect(result.available).toBe(false);
+    expect(result.available).toBe(true);
   });
 
-  it("does not gate a two-year-old on the under-2 sub-cap", () => {
+  it("does not gate a two-year-old on the age split", () => {
     const children: Child[] = [
       child({ name: "U1", room: "G/H", dob: "2025-06-01" }),
       child({ name: "U2", room: "G/H", dob: "2025-07-01" }),
       child({ name: "U3", room: "G/H", dob: "2025-08-01" }),
     ];
-    // Born 2024-01-01 -> ~30mo at desired start -> two-year-old band, plenty of room (0/6).
     const result = checkAvailability(children, [], "2024-01-01", today, CAMP_ENDS, 52, today);
-    expect(result.gate).toBe("two-year-old seat");
-    expect(result.capacity).toBe(6);
+    expect(result.gate).toBe("room");
+    expect(result.capacity).toBe(9);
     expect(result.available).toBe(true);
   });
 

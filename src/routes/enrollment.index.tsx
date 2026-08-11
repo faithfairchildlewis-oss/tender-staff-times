@@ -109,7 +109,7 @@ function SnapshotPage() {
       lines.push(`  ${cls} (${r.code}): ${seatLine} — ${r.open} open, ${r.held} held → ${r.availableAfterHolds} available. Staff req: ${r.staff}. $${r.revenue}/wk`);
     }
     lines.push("");
-    lines.push(`SPROUTS COMPOSITION: ${sprouts.under2}/3 under-2, ${sprouts.twos}/6 twos`);
+    lines.push(`SPROUTS COMPOSITION: ${sprouts.under2} under-2, ${sprouts.twos} twos (room cap 9)`);
     lines.push("");
     lines.push(`FALL SAC OUTLOOK: ${sacOutlook.projected}/${sacOutlook.sacCap} projected`);
     lines.push(`  Current SAC: ${sacOutlook.currentSac}. Fall plans in Oaks: SAC=${sacOutlook.groups.SAC ?? 0}, Inactive=${sacOutlook.groups.Inactive ?? 0}, TBD=${sacOutlook.groups.TBD ?? 0}, unspecified=${sacOutlook.groups.none ?? 0}. Waitlist deposits SAC-eligible: ${sacOutlook.sacWaitlist}`);
@@ -191,14 +191,12 @@ function SnapshotPage() {
           <CardHeader className="pb-2"><CardTitle className="text-base">Sprouts (G/H) composition</CardTitle></CardHeader>
           <CardContent className="text-sm space-y-2">
             <div>
-              <div className="flex justify-between"><span>Under-2 seats</span><span>{sprouts.under2} / 3</span></div>
-              <div className="h-2 bg-muted rounded mt-1 overflow-hidden"><div className="h-full bg-primary" style={{ width: `${Math.min(100, (sprouts.under2 / 3) * 100)}%` }} /></div>
+              <div className="flex justify-between"><span>Total seats</span><span>{sprouts.under2 + sprouts.twos} / 9</span></div>
+              <div className="h-2 bg-muted rounded mt-1 overflow-hidden"><div className="h-full bg-primary" style={{ width: `${Math.min(100, ((sprouts.under2 + sprouts.twos) / 9) * 100)}%` }} /></div>
             </div>
-            <div>
-              <div className="flex justify-between"><span>Two-year-old seats</span><span>{sprouts.twos} / 6</span></div>
-              <div className="h-2 bg-muted rounded mt-1 overflow-hidden"><div className="h-full bg-primary" style={{ width: `${Math.min(100, (sprouts.twos / 6) * 100)}%` }} /></div>
-            </div>
-            <p className="text-xs text-muted-foreground pt-1">Hard limit: 3 under-2 (1:3) + 6 twos (1:6). Children roll to a two-year-old seat on their 2nd birthday.</p>
+            <div className="flex justify-between text-muted-foreground"><span>Under-2 children</span><span>{sprouts.under2}</span></div>
+            <div className="flex justify-between text-muted-foreground"><span>Two-year-olds</span><span>{sprouts.twos}</span></div>
+            <p className="text-xs text-muted-foreground pt-1">Hard limit is the room total: 9 children. The age split only drives staffing (1:3 under-2, 1:6 twos), it never blocks a seat.</p>
           </CardContent>
         </Card>
 
