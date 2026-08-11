@@ -59,10 +59,9 @@ export const ROOMS = {
   },
   "G/H": {
     classroom: "The Sprouts",
-    // 18–36 months with a HARD composition rule: max 3 children under age 2
-    // (1:3) + max 6 two-year-olds (1:6). Capacity 9 = 3 + 6. A child moving
-    // up from Room I needs an open under-2 seat; children roll from an
-    // under-2 seat to a two-year-old seat on their 2nd birthday.
+    // 18–36 months. HARD limit is the room total: 9 children. The under-2 /
+    // two-year-old split is a STAFFING driver (1:3 for under-2s, 1:6 for
+    // twos), not a capacity cap — it never blocks a seat.
     ageMin: 18, movesUpAt: 36, nextRoom: "J/K" as RoomCode,
     capacity: 9, maxUnder2: 3, maxTwos: 6,
   },
@@ -372,17 +371,9 @@ function evaluateAvailability(
   const room = eligibleRoomAtAge(ageAtStartMonths);
   const classroom = ROOMS[room].classroom;
   let capacity: number, census: number, gate: AvailabilityCheck["gate"];
-  if (room === "G/H") {
-    const { under2, twos } = sproutsBandCensusOnDate(children, atDate, campEnds, today);
-    const under2Band = ageAtStartMonths < 24;
-    capacity = under2Band ? ROOMS["G/H"].maxUnder2 : ROOMS["G/H"].maxTwos;
-    census = under2Band ? under2 : twos;
-    gate = under2Band ? "under-2 seat" : "two-year-old seat";
-  } else {
-    capacity = ROOMS[room].capacity;
-    census = roomCensusOnDate(children, room, atDate, campEnds, today);
-    gate = "room";
-  }
+  capacity = ROOMS[room].capacity;
+  census = roomCensusOnDate(children, room, atDate, campEnds, today);
+  gate = "room";
   const open = Math.max(capacity - census, 0);
   const held = heldSeats(waitlist, room);
   const availableAfterHolds = Math.max(open - held, 0);
