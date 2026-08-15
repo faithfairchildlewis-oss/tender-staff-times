@@ -43,6 +43,7 @@ export function rowToChild(r: ChildRow): ChildRecord {
     shareSeatGroup: r.share_seat_group ?? null,
     pendingRoom: (r as unknown as { pending_room: string | null }).pending_room ?? null,
     pendingRoomDate: (r as unknown as { pending_room_date: string | null }).pending_room_date ?? null,
+    attendanceDays: r.attendance_days,
   };
 }
 
@@ -129,4 +130,12 @@ export function ageYearsMonths(dobISO: string, asOf: Date = new Date()): string 
   if (m < 0) { y -= 1; m += 12; }
   if (y <= 0) return `${y * 12 + m} mo`;
   return `${y}y ${m}m`;
+}
+
+const WEEKDAY_ORDER = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+
+/** "Every day" for a full-time child, else their attendance days in week order. */
+export function formatAttendanceDays(days: string[] | null | undefined): string {
+  if (!days || days.length === 0) return "Every day";
+  return [...days].sort((a, b) => WEEKDAY_ORDER.indexOf(a) - WEEKDAY_ORDER.indexOf(b)).join(", ");
 }
