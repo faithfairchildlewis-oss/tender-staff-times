@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo } from "react";
 import { useChildren } from "@/hooks/use-enrollment";
-import { ageYearsMonths, compareYoungestFirst, formatFull, hasEndedBy, hasStartedBy } from "@/lib/enrollment/mapping";
+import { ageYearsMonths, compareYoungestFirst, formatAttendanceDays, formatFull, hasEndedBy, hasStartedBy } from "@/lib/enrollment/mapping";
 import { assignedRoom, nextTransition, ROOMS, type RoomCode } from "@/lib/enrollment/enrollment-logic";
 
 export const Route = createFileRoute("/enrollment/print/$room")({
@@ -46,6 +46,7 @@ function PrintPage() {
             <th className="text-left p-2">Birthday</th>
             <th className="text-left p-2">Age</th>
             <th className="text-left p-2">Schedule</th>
+            <th className="text-left p-2">Days</th>
             <th className="text-left p-2">Next transition</th>
             <th className="text-left p-2">Parent</th>
           </tr>
@@ -59,6 +60,7 @@ function PrintPage() {
                 <td className="p-2">{c.dob ?? "—"}</td>
                 <td className="p-2">{c.dob ? ageYearsMonths(c.dob, now) : "—"}</td>
                 <td className="p-2">{c.schedule}</td>
+                <td className="p-2">{formatAttendanceDays(c.attendanceDays)}</td>
                 <td className="p-2">
                   {nt ? (nt.to === "K" ? `Last day ${formatFull(nt.date)}` : `${formatFull(nt.date)} → ${nt.to}${nt.estimate ? " (est)" : ""}`) : "—"}
                 </td>
