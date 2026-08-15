@@ -24,6 +24,11 @@ export interface Child {
    *  on different days and share ONE seat: they count as 1 toward capacity,
    *  composition, and staffing (one child is present at a time). */
   shareSeatGroup?: string | null;
+  // Weekday codes ("Mon".."Fri") this child actually attends — for a shared/split
+  // seat. null/undefined = every day the center is open. Display-only for now:
+  // census, capacity, and ratio math below still count every active child as a
+  // full seat regardless of this field.
+  attendanceDays?: string[] | null;
   /** One-time manual override: the room this child moves into on
    *  `pendingRoomDate`. Until that date they stay in `room`. Used when the
    *  director holds a child back (or moves them early) regardless of age. */
