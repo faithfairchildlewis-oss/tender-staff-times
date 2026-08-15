@@ -91,6 +91,9 @@ function RosterPage() {
               <tr key={row.key}>
                 <td className={cn("sticky left-0 z-10 bg-card border-r border-b px-2 py-1 font-medium min-w-[10rem]", row.kind === "waitlist" && "italic text-muted-foreground")}>
                   {row.name}
+                  {row.kind === "child" && row.child.attendanceDays && row.child.attendanceDays.length > 0 && (
+                    <div className="text-[10px] font-normal text-muted-foreground">{formatAttendanceDays(row.child.attendanceDays)} · shares seat</div>
+                  )}
                 </td>
                 <td className="sticky left-40 z-10 bg-card border-r border-b px-2 py-1 text-muted-foreground min-w-[6rem]">
                   {row.dob ?? "—"}
