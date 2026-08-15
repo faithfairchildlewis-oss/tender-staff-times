@@ -8,7 +8,7 @@ import { Link } from "@tanstack/react-router";
 import { Printer } from "lucide-react";
 import { useChildren, useWaitlist } from "@/hooks/use-enrollment";
 import { ageInMonths, eligibleRoomAtAge, holdsSeat, roomOnDate, type RoomCode } from "@/lib/enrollment/enrollment-logic";
-import { CAMP_ENDS, compareYoungestFirst, formatAttendanceDays, formatISO, formatShort, mondayOf, ROOM_COLORS, ROOM_ORDER } from "@/lib/enrollment/mapping";
+import { CAMP_ENDS, compareYoungestFirst, formatAttendanceDays, formatISO, formatShort, GH_SUBGROUP_COLORS, mondayOf, ROOM_COLORS, ROOM_ORDER } from "@/lib/enrollment/mapping";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/enrollment/roster")({
@@ -100,7 +100,10 @@ function RosterPage() {
                 </td>
                 {mondays.map((m) => {
                   const room = getRoomForRow(row, m);
-                  const style = room ? ROOM_COLORS[room] : null;
+                  let style = room ? ROOM_COLORS[room] : null;
+                  if (room === "G/H" && row.dob) {
+                    style = ageInMonths(row.dob, m) < 24 ? GH_SUBGROUP_COLORS.under2 : GH_SUBGROUP_COLORS.twos;
+                  }
                   return (
                     <td key={m.toISOString()} className={cn("border-b text-center px-0 py-0.5 min-w-[3.5rem]", style ? `${style.bg} ${style.text}` : "bg-muted/30")}>
                       {room ?? ""}
@@ -134,11 +137,22 @@ function getRoomForRow(row: { kind: "child"; child: import("@/lib/enrollment/map
 function Legend() {
   return (
     <div className="flex flex-wrap gap-2 text-xs">
-      {ROOM_ORDER.map((r) => (
-        <span key={r} className={cn("px-2 py-1 rounded border", ROOM_COLORS[r].bg, ROOM_COLORS[r].text, ROOM_COLORS[r].border)}>
-          {r} — {ROOM_COLORS[r].label}
-        </span>
-      ))}
+      {ROOM_ORDER.flatMap((r) =>
+        r === "G/H"
+          ? [
+              <span key="G/H-under2" className={cn("px-2 py-1 rounded border", GH_SUBGROUP_COLORS.under2.bg, GH_SUBGROUP_COLORS.under2.text, GH_SUBGROUP_COLORS.under2.border)}>
+                G/H — {GH_SUBGROUP_COLORS.under2.label}
+              </span>,
+              <span key="G/H-twos" className={cn("px-2 py-1 rounded border", GH_SUBGROUP_COLORS.twos.bg, GH_SUBGROUP_COLORS.twos.text, GH_SUBGROUP_COLORS.twos.border)}>
+                G/H — {GH_SUBGROUP_COLORS.twos.label}
+              </span>,
+            ]
+          : [
+              <span key={r} className={cn("px-2 py-1 rounded border", ROOM_COLORS[r].bg, ROOM_COLORS[r].text, ROOM_COLORS[r].border)}>
+                {r} — {ROOM_COLORS[r].label}
+              </span>,
+            ],
+      )}
     </div>
   );
 }

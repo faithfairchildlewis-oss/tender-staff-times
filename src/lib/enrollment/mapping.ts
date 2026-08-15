@@ -73,6 +73,15 @@ export const ROOM_COLORS: Record<RoomCode, { bg: string; text: string; border: s
   SUMMER:  { bg: "bg-neutral-200", text: "text-neutral-800", border: "border-neutral-400", label: "Summer" },
 };
 
+/** G/H (Sprouts) is one room, but staffing/composition is tracked as two
+ *  age sub-bands (under-2 vs twos) — see sproutsComposition(). These are
+ *  display colors for the roster grid so the split is visible at a glance;
+ *  they are NOT separate RoomCodes. */
+export const GH_SUBGROUP_COLORS = {
+  under2: { bg: "bg-lime-100", text: "text-lime-900", border: "border-lime-300", label: "Buds (under 2)" },
+  twos:   { bg: "bg-emerald-100", text: "text-emerald-900", border: "border-emerald-300", label: "Sprouts (twos)" },
+};
+
 /** Camp/school-year boundary. Summer camp ends Aug 21; SAC school year
  *  begins the following Monday (week of Aug 24). Update annually. */
 export const CAMP_ENDS = new Date(2026, 7, 21);
