@@ -11,7 +11,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Plus, Pencil, UserMinus, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 import { useChildren, useUpsertChild, useWithdrawChild } from "@/hooks/use-enrollment";
-import { ageYearsMonths, compareYoungestFirst, formatFull, ROOM_ORDER } from "@/lib/enrollment/mapping";
+import { ageYearsMonths, compareOldestFirst, formatFull, ROOM_ORDER } from "@/lib/enrollment/mapping";
 import { nextTransition, weeklyRate, type RoomCode } from "@/lib/enrollment/enrollment-logic";
 import type { ChildRecord } from "@/lib/enrollment/mapping";
 
@@ -36,8 +36,8 @@ function ChildrenPage() {
     if (sortBy === "name") {
       return [...list].sort((a, b) => a.name.localeCompare(b.name));
     }
-    // Default: youngest at the top, oldest at the bottom (director's preference).
-    return [...list].sort((a, b) => compareYoungestFirst(a, b) || a.name.localeCompare(b.name));
+    // Default: oldest at the top, youngest at the bottom (director's preference).
+    return [...list].sort((a, b) => compareOldestFirst(a, b) || a.name.localeCompare(b.name));
   }, [children, showWithdrawn, pendingOnly, sortBy]);
 
   return (

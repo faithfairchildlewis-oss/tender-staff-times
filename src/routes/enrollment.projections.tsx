@@ -129,7 +129,7 @@ function ProjectionsPage() {
                 <div className="text-xs text-muted-foreground">{total} total</div>
               </div>
               <ul className="space-y-3">
-                {ROOM_ORDER.map((code) => {
+                {[...ROOM_ORDER].reverse().map((code) => {
                   const cap = capacityByRoom[code];
                   const list = rooms[code];
                   const count = list.length;
