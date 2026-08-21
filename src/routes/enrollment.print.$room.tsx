@@ -42,6 +42,7 @@ function PrintPage() {
       <table className="w-full text-sm border-collapse">
         <thead>
           <tr className="border-b border-black">
+            <th className="text-left p-2">#</th>
             <th className="text-left p-2">Child</th>
             <th className="text-left p-2">Birthday</th>
             <th className="text-left p-2">Age</th>
@@ -52,10 +53,11 @@ function PrintPage() {
           </tr>
         </thead>
         <tbody>
-          {roster.map((c) => {
+          {roster.map((c, i) => {
             const nt = nextTransition(c, now);
             return (
               <tr key={c.id} className="border-b">
+                <td className="p-2 tabular-nums">{i + 1}</td>
                 <td className="p-2 font-medium">{c.name}</td>
                 <td className="p-2">{c.dob ?? "—"}</td>
                 <td className="p-2">{c.dob ? ageYearsMonths(c.dob, now) : "—"}</td>
