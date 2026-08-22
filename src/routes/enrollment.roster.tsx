@@ -94,6 +94,11 @@ function RosterPage() {
                   {row.kind === "child" && row.child.attendanceDays && row.child.attendanceDays.length > 0 && (
                     <div className="text-[10px] font-normal text-muted-foreground">{formatAttendanceDays(row.child.attendanceDays)} · shares seat</div>
                   )}
+                  {row.kind === "child" && row.child.alternateWeeks && row.child.attendanceAnchorDate && (
+                    <div className="text-[10px] font-normal text-muted-foreground">
+                      Alternates weeks (on {formatFull(new Date(row.child.attendanceAnchorDate + "T00:00:00"))})
+                    </div>
+                  )}
                 </td>
                 <td className="sticky left-40 z-10 bg-card border-r border-b px-2 py-1 text-muted-foreground min-w-[6rem]">
                   {row.dob ?? "—"}
