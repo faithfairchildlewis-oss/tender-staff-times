@@ -291,6 +291,21 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
                 onChange={(e) => setForm({ ...form, days_per_week: e.target.value })} />
             </Field>
           </div>
+          <div className="space-y-2 rounded-md border p-3">
+            <label className="flex items-center gap-2 text-sm">
+              <Checkbox
+                checked={form.alternate_weeks}
+                onCheckedChange={(v) => setForm({ ...form, alternate_weeks: v === true })}
+              />
+              Attends every other week
+            </label>
+            {form.alternate_weeks && (
+              <Field label="Anchor Monday (a week they DO attend)">
+                <Input type="date" value={form.attendance_anchor_date}
+                  onChange={(e) => setForm({ ...form, attendance_anchor_date: e.target.value })} />
+              </Field>
+            )}
+          </div>
           <Field label="Notes"><Input value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></Field>
         </div>
         <DialogFooter>
