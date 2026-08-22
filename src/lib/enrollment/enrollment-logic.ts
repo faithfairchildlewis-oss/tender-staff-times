@@ -29,6 +29,11 @@ export interface Child {
   // census, capacity, and ratio math below still count every active child as a
   // full seat regardless of this field.
   attendanceDays?: string[] | null;
+  /** True when the child attends every OTHER week. Combined with
+   *  `attendanceAnchorDate` (a Monday the child DOES attend), the child holds
+   *  no seat on the alternating "off" weeks. */
+  alternateWeeks?: boolean | null;
+  attendanceAnchorDate?: string | null;
   /** One-time manual override: the room this child moves into on
    *  `pendingRoomDate`. Until that date they stay in `room`. Used when the
    *  director holds a child back (or moves them early) regardless of age. */
