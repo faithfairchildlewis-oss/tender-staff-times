@@ -20,6 +20,7 @@ import {
   compareOldestFirst,
   formatShort,
   mondayOf,
+  addWeeks,
 } from "@/lib/enrollment/mapping";
 
 export const Route = createFileRoute("/enrollment/projections")({
@@ -67,7 +68,7 @@ function ProjectionsPage() {
     const heldWL = waitlist.filter((w) => holdsSeat(w.status));
     const out: { week: Date; rooms: Record<RoomCode, Occupant[]> }[] = [];
     for (let w = 0; w < weeks; w++) {
-      const wk = new Date(startMonday.getTime() + w * 7 * 86400000);
+      const wk = addWeeks(startMonday, w);
       const rooms = emptyRooms();
       for (const c of children) {
         if (c.status !== "Active") continue;

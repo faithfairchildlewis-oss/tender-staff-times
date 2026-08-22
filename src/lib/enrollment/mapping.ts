@@ -88,6 +88,13 @@ export const GH_SUBGROUP_COLORS = {
  *  begins the following Monday (week of Aug 24). Update annually. */
 export const CAMP_ENDS = new Date(2026, 7, 21);
 
+/** Adds `n` calendar weeks to `d`, DST-safe (never raw ms arithmetic). */
+export function addWeeks(d: Date, n: number): Date {
+  const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  x.setDate(x.getDate() + n * 7);
+  return x;
+}
+
 /** Returns the Monday of the ISO week containing `d` (local time). */
 export function mondayOf(d: Date): Date {
   const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());

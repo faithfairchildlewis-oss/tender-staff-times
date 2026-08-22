@@ -8,7 +8,7 @@ import { Link } from "@tanstack/react-router";
 import { Printer } from "lucide-react";
 import { useChildren, useWaitlist } from "@/hooks/use-enrollment";
 import { ageInMonths, eligibleRoomAtAge, holdsSeat, roomOnDate, type RoomCode } from "@/lib/enrollment/enrollment-logic";
-import { CAMP_ENDS, compareYoungestFirst, formatAttendanceDays, formatFull, formatISO, formatShort, GH_SUBGROUP_COLORS, mondayOf, ROOM_COLORS, ROOM_ORDER } from "@/lib/enrollment/mapping";
+import { CAMP_ENDS, compareYoungestFirst, formatAttendanceDays, formatFull, formatISO, formatShort, addWeeks, GH_SUBGROUP_COLORS, mondayOf, ROOM_COLORS, ROOM_ORDER } from "@/lib/enrollment/mapping";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/enrollment/roster")({
@@ -24,7 +24,7 @@ function RosterPage() {
 
   const mondays = useMemo(() => {
     const start = mondayOf(new Date(startISO + "T00:00:00"));
-    return Array.from({ length: weeks }, (_, i) => new Date(start.getTime() + i * 7 * 86400000));
+    return Array.from({ length: weeks }, (_, i) => addWeeks(start, i));
   }, [startISO, weeks]);
 
   const rows = useMemo(() => {
