@@ -234,7 +234,7 @@ export function projectWeekly(
 ): { week: Date; census: Record<RoomCode, number> }[] {
   const out: { week: Date; census: Record<RoomCode, number> }[] = [];
   for (let w = 0; w < weeks; w++) {
-    const wk = new Date(fromMonday.getTime() + w * 7 * 86400000);
+    const wk = addCalendarWeeks(fromMonday, w);
     const census: Record<RoomCode, number> = { F: 0, I: 0, "G/H": 0, "J/K": 0, SAC: 0, SUMMER: 0 };
     for (const c of children) {
       if (c.status !== "Active") continue;
@@ -283,13 +283,20 @@ function weekMonday(d: Date): Date {
   return m;
 }
 
+/** Adds `n` calendar weeks, DST-safe. */
+export function addCalendarWeeks(d: Date, n: number): Date {
+  const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  x.setDate(x.getDate() + n * 7);
+  return x;
+}
+
 /** True when `date` falls in an "off" week for an every-other-week child.
  *  Children without `alternateWeeks` + an anchor date are never off. */
 export function isAlternateOffWeek(c: Child, date: Date): boolean {
   if (!c.alternateWeeks || !c.attendanceAnchorDate) return false;
   const anchor = weekMonday(new Date(c.attendanceAnchorDate + "T00:00:00"));
   const wk = weekMonday(date);
-  const diff = Math.round((wk.getTime() - anchor.getTime()) / 86400000 / 7);
+  const diff = Math.round((wk.getTime() - anchor.getTime()) / 86400000 / 7); // Math.round absorbs DST hour drift
   return Math.abs(diff) % 2 === 1;
 }
 
@@ -410,7 +417,7 @@ export function checkAvailability(
 
   const startMonday = mondayOnOrAfter(desiredStart);
   for (let w = 1; w <= horizonWeeks; w++) {
-    const wk = new Date(startMonday.getTime() + w * 7 * 86400000);
+    const wk = addCalendarWeeks(startMonday, w);
     const r = evaluateAvailability(children, waitlist, dob, wk, campEnds, today);
     if (r.availableAfterHolds > 0) {
       result.nextOpening = { date: wk, availableAfterHolds: r.availableAfterHolds };
