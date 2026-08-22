@@ -284,6 +284,8 @@ export function roomOnDate(c: Child, date: Date, campEnds: Date, today: Date = n
   if (win.endDate && date > new Date(win.endDate + "T23:59:59.999")) return null;
   // One-time manual override takes precedence over age-based move-ups.
   c = { ...c, room: assignedRoom(c, date) };
+  // Every-other-week attendance: no seat on the "off" weeks.
+  if (isAlternateOffWeek(c, date)) return null;
   if (!c.dob) return c.room === "SUMMER" && date > campEnds ? null : c.room;
   if (c.room === "SUMMER") return date <= campEnds ? "SUMMER" : null;
   if (c.room === "SAC") return "SAC";
