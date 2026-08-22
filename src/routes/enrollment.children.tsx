@@ -188,6 +188,8 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
     notes: child?.notes ?? "",
     weekly_rate_override: child?.weeklyRateOverride != null ? String(child.weeklyRateOverride) : "",
     days_per_week: child?.daysPerWeek != null ? String(child.daysPerWeek) : "",
+    alternate_weeks: !!child?.alternateWeeks,
+    attendance_anchor_date: child?.attendanceAnchorDate ?? "",
   });
   const save = async () => {
     if (!form.name.trim()) { toast.error("Name is required"); return; }
