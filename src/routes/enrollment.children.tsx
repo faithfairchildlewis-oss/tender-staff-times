@@ -214,6 +214,8 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
       notes: form.notes || null,
       weekly_rate_override: rateOverride,
       days_per_week: days,
+      alternate_weeks: form.alternate_weeks,
+      attendance_anchor_date: form.alternate_weeks ? (form.attendance_anchor_date || null) : null,
     } as never);
     toast.success(child ? "Child updated" : "Child added");
     onClose();
