@@ -275,6 +275,24 @@ export function assignedRoom(c: Child, date: Date): RoomCode {
  *  we never silently "correct" it. Only moves whose eligibility date falls
  *  AFTER `today` are projected. The kindergarten departure is the exception:
  *  that exit is mandatory, so it always applies. */
+/** Monday (00:00 local) of the week containing `d`. */
+function weekMonday(d: Date): Date {
+  const m = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const shift = (m.getDay() + 6) % 7; // Mon=0
+  m.setDate(m.getDate() - shift);
+  return m;
+}
+
+/** True when `date` falls in an "off" week for an every-other-week child.
+ *  Children without `alternateWeeks` + an anchor date are never off. */
+export function isAlternateOffWeek(c: Child, date: Date): boolean {
+  if (!c.alternateWeeks || !c.attendanceAnchorDate) return false;
+  const anchor = weekMonday(new Date(c.attendanceAnchorDate + "T00:00:00"));
+  const wk = weekMonday(date);
+  const diff = Math.round((wk.getTime() - anchor.getTime()) / 86400000 / 7);
+  return Math.abs(diff) % 2 === 1;
+}
+
 export function roomOnDate(c: Child, date: Date, campEnds: Date, today: Date = new Date()): RoomCode | null {
   // Enrollment window: a child with a future start date, or one whose last day
   // has passed, occupies no seat on `date`.
