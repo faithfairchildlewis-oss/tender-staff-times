@@ -314,6 +314,12 @@ export function roomOnDate(c: Child, date: Date, campEnds: Date, today: Date = n
   if (!c.dob) return c.room === "SUMMER" && date > campEnds ? null : c.room;
   if (c.room === "SUMMER") return date <= campEnds ? "SUMMER" : null;
   if (c.room === "SAC") return "SAC";
+  // An active manual hold pins the child in place until the override date —
+  // this takes precedence over EVERYTHING, including the mandatory K departure,
+  // so the director can keep a K-bound child a few extra days.
+  const holdActive =
+    !!c.pendingRoom && !!c.pendingRoomDate && date < new Date(c.pendingRoomDate + "T00:00:00");
+  if (holdActive) return c.room;
   // K-bound check applies to whatever room they occupy on their K year
   const kLast = kindergartenLastDay(c.dob);
   if (date > kLast && ageInMonths(c.dob, date) >= 60) {
@@ -321,8 +327,6 @@ export function roomOnDate(c: Child, date: Date, campEnds: Date, today: Date = n
   }
   // Walk forward through the room chain by eligibility — future moves only.
   let room: RoomCode = c.room;
-  // An active hold pins the child in place until the override date.
-  if (c.pendingRoom && c.pendingRoomDate && date < new Date(c.pendingRoomDate + "T00:00:00")) return room;
   let guard = 0;
   while (guard++ < 5) {
     const cfg = ROOMS[room] as { movesUpAt?: number; nextRoom?: RoomCode };
