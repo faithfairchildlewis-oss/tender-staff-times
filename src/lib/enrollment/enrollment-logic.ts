@@ -29,6 +29,11 @@ export interface Child {
   // census, capacity, and ratio math below still count every active child as a
   // full seat regardless of this field.
   attendanceDays?: string[] | null;
+  /** True when the child attends every OTHER week. Combined with
+   *  `attendanceAnchorDate` (a Monday the child DOES attend), the child holds
+   *  no seat on the alternating "off" weeks. */
+  alternateWeeks?: boolean | null;
+  attendanceAnchorDate?: string | null;
   /** One-time manual override: the room this child moves into on
    *  `pendingRoomDate`. Until that date they stay in `room`. Used when the
    *  director holds a child back (or moves them early) regardless of age. */
@@ -270,6 +275,24 @@ export function assignedRoom(c: Child, date: Date): RoomCode {
  *  we never silently "correct" it. Only moves whose eligibility date falls
  *  AFTER `today` are projected. The kindergarten departure is the exception:
  *  that exit is mandatory, so it always applies. */
+/** Monday (00:00 local) of the week containing `d`. */
+function weekMonday(d: Date): Date {
+  const m = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const shift = (m.getDay() + 6) % 7; // Mon=0
+  m.setDate(m.getDate() - shift);
+  return m;
+}
+
+/** True when `date` falls in an "off" week for an every-other-week child.
+ *  Children without `alternateWeeks` + an anchor date are never off. */
+export function isAlternateOffWeek(c: Child, date: Date): boolean {
+  if (!c.alternateWeeks || !c.attendanceAnchorDate) return false;
+  const anchor = weekMonday(new Date(c.attendanceAnchorDate + "T00:00:00"));
+  const wk = weekMonday(date);
+  const diff = Math.round((wk.getTime() - anchor.getTime()) / 86400000 / 7);
+  return Math.abs(diff) % 2 === 1;
+}
+
 export function roomOnDate(c: Child, date: Date, campEnds: Date, today: Date = new Date()): RoomCode | null {
   // Enrollment window: a child with a future start date, or one whose last day
   // has passed, occupies no seat on `date`.
@@ -279,6 +302,8 @@ export function roomOnDate(c: Child, date: Date, campEnds: Date, today: Date = n
   if (win.endDate && date > new Date(win.endDate + "T23:59:59.999")) return null;
   // One-time manual override takes precedence over age-based move-ups.
   c = { ...c, room: assignedRoom(c, date) };
+  // Every-other-week attendance: no seat on the "off" weeks.
+  if (isAlternateOffWeek(c, date)) return null;
   if (!c.dob) return c.room === "SUMMER" && date > campEnds ? null : c.room;
   if (c.room === "SUMMER") return date <= campEnds ? "SUMMER" : null;
   if (c.room === "SAC") return "SAC";

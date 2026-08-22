@@ -8,7 +8,7 @@ import { Link } from "@tanstack/react-router";
 import { Printer } from "lucide-react";
 import { useChildren, useWaitlist } from "@/hooks/use-enrollment";
 import { ageInMonths, eligibleRoomAtAge, holdsSeat, roomOnDate, type RoomCode } from "@/lib/enrollment/enrollment-logic";
-import { CAMP_ENDS, compareYoungestFirst, formatAttendanceDays, formatISO, formatShort, GH_SUBGROUP_COLORS, mondayOf, ROOM_COLORS, ROOM_ORDER } from "@/lib/enrollment/mapping";
+import { CAMP_ENDS, compareYoungestFirst, formatAttendanceDays, formatFull, formatISO, formatShort, GH_SUBGROUP_COLORS, mondayOf, ROOM_COLORS, ROOM_ORDER } from "@/lib/enrollment/mapping";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/enrollment/roster")({
@@ -93,6 +93,11 @@ function RosterPage() {
                   {row.name}
                   {row.kind === "child" && row.child.attendanceDays && row.child.attendanceDays.length > 0 && (
                     <div className="text-[10px] font-normal text-muted-foreground">{formatAttendanceDays(row.child.attendanceDays)} · shares seat</div>
+                  )}
+                  {row.kind === "child" && row.child.alternateWeeks && row.child.attendanceAnchorDate && (
+                    <div className="text-[10px] font-normal text-muted-foreground">
+                      Alternates weeks (on {formatFull(new Date(row.child.attendanceAnchorDate + "T00:00:00"))})
+                    </div>
                   )}
                 </td>
                 <td className="sticky left-40 z-10 bg-card border-r border-b px-2 py-1 text-muted-foreground min-w-[6rem]">

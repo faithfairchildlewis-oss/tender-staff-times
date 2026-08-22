@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -188,6 +189,8 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
     notes: child?.notes ?? "",
     weekly_rate_override: child?.weeklyRateOverride != null ? String(child.weeklyRateOverride) : "",
     days_per_week: child?.daysPerWeek != null ? String(child.daysPerWeek) : "",
+    alternate_weeks: !!child?.alternateWeeks,
+    attendance_anchor_date: child?.attendanceAnchorDate ?? "",
   });
   const save = async () => {
     if (!form.name.trim()) { toast.error("Name is required"); return; }
@@ -212,6 +215,8 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
       notes: form.notes || null,
       weekly_rate_override: rateOverride,
       days_per_week: days,
+      alternate_weeks: form.alternate_weeks,
+      attendance_anchor_date: form.alternate_weeks ? (form.attendance_anchor_date || null) : null,
     } as never);
     toast.success(child ? "Child updated" : "Child added");
     onClose();
@@ -286,6 +291,21 @@ function ChildDialog({ child, onClose }: { child: ChildRecord | null; onClose: (
                 value={form.days_per_week}
                 onChange={(e) => setForm({ ...form, days_per_week: e.target.value })} />
             </Field>
+          </div>
+          <div className="space-y-2 rounded-md border p-3">
+            <label className="flex items-center gap-2 text-sm">
+              <Checkbox
+                checked={form.alternate_weeks}
+                onCheckedChange={(v) => setForm({ ...form, alternate_weeks: v === true })}
+              />
+              Attends every other week
+            </label>
+            {form.alternate_weeks && (
+              <Field label="Anchor Monday (a week they DO attend)">
+                <Input type="date" value={form.attendance_anchor_date}
+                  onChange={(e) => setForm({ ...form, attendance_anchor_date: e.target.value })} />
+              </Field>
+            )}
           </div>
           <Field label="Notes"><Input value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></Field>
         </div>

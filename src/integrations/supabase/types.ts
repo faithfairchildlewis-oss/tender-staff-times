@@ -17,6 +17,8 @@ export type Database = {
       enrollment_children: {
         Row: {
           address: string | null
+          alternate_weeks: boolean
+          attendance_anchor_date: string | null
           attendance_days: string[] | null
           created_at: string
           days_per_week: number | null
@@ -41,6 +43,8 @@ export type Database = {
         }
         Insert: {
           address?: string | null
+          alternate_weeks?: boolean
+          attendance_anchor_date?: string | null
           attendance_days?: string[] | null
           created_at?: string
           days_per_week?: number | null
@@ -65,6 +69,8 @@ export type Database = {
         }
         Update: {
           address?: string | null
+          alternate_weeks?: boolean
+          attendance_anchor_date?: string | null
           attendance_days?: string[] | null
           created_at?: string
           days_per_week?: number | null
