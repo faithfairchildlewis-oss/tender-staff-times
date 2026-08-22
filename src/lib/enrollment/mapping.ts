@@ -44,6 +44,8 @@ export function rowToChild(r: ChildRow): ChildRecord {
     pendingRoom: (r as unknown as { pending_room: string | null }).pending_room ?? null,
     pendingRoomDate: (r as unknown as { pending_room_date: string | null }).pending_room_date ?? null,
     attendanceDays: r.attendance_days,
+    alternateWeeks: (r as unknown as { alternate_weeks: boolean | null }).alternate_weeks ?? false,
+    attendanceAnchorDate: (r as unknown as { attendance_anchor_date: string | null }).attendance_anchor_date ?? null,
   };
 }
 
