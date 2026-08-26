@@ -43,6 +43,11 @@ export function minimumFor(
     // Active 2:30 PM through 5:30 PM inclusive.
     return m >= HM(14, 30) && m <= HM(17, 30) ? 1 : null;
   }
+  if (room === "Room F" || room === "Room I") {
+    // Rooms F and I close out at 4:00 PM — children combine into other rooms,
+    // so no staffing minimum from the 4:00 PM slot onward.
+    return m >= HM(16, 0) ? null : 1;
+  }
   if (room === "G/H") {
     // 2 staff 9:00 AM–12:00 PM and 3:00 PM–4:30 PM (inclusive), else 1.
     // 7:00–9:00 AM and 12:30 PM–2:30 PM only need 1 staff.
