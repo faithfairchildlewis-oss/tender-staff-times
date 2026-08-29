@@ -524,7 +524,7 @@ function RoomView({
   }
 
   const day = derivedDays[dayIdx];
-  const rooms = data!.rooms?.length ? data!.rooms : DEFAULT_ROOMS;
+  const rooms = canonicalRooms(data!.rooms);
   const closedReason = holidayForOffset(selected.start_date, dayIdx);
 
   const LILAC_ROOMS = new Set(["M.O.D.", "Room I", "J/K"]);
