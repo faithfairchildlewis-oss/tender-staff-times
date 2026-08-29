@@ -7,6 +7,7 @@ import type { ScheduleData } from "@/data/schedule";
 import {
   DAY_NAMES,
   DEFAULT_ROOMS,
+  canonicalRooms,
   DEFAULT_TIMES,
   deriveDays,
   minimumFor,
@@ -64,7 +65,7 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
   }, [row.updated_at, row.data]);
 
   const day = DAY_NAMES[dayIdx];
-  const rooms = data.rooms?.length ? data.rooms : DEFAULT_ROOMS;
+  const rooms = canonicalRooms(data.rooms);
   const allStaff = useMemo(() => Object.keys(data.staff ?? {}).sort(), [data.staff]);
   const closedReason = holidayForOffset(row.start_date, dayIdx);
 

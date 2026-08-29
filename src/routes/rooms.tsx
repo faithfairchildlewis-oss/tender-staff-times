@@ -3,7 +3,7 @@ import { Home, CalendarDays, TreePine, Nut, CalendarOff, PartyPopper } from "luc
 import { useState, useMemo, useRef, useEffect } from "react";
 import { PageBanner } from "@/components/page-banner";
 import { useLiveSchedules } from "@/hooks/use-schedule";
-import { deriveDays, DAY_NAMES, DEFAULT_ROOMS } from "@/lib/schedule-derive";
+import { deriveDays, DAY_NAMES, canonicalRooms } from "@/lib/schedule-derive";
 import { holidayForOffset } from "@/lib/holidays";
 import { monthDayFor, formatWeekRange } from "@/lib/format-date";
 
@@ -176,7 +176,7 @@ function RoomsPage() {
   const week = weeks[active.weekIdx];
   const day = week.days[active.dayIdx];
   const schedule = week.schedule;
-  const rooms = schedule.rooms?.length ? schedule.rooms : DEFAULT_ROOMS;
+  const rooms = canonicalRooms(schedule.rooms);
   const closedReason = holidayForOffset(schedule.start_date, active.dayIdx);
   return (
     <div className="min-h-dvh bg-background pb-6">
