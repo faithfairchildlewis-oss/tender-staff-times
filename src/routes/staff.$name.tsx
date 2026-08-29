@@ -191,7 +191,7 @@ function StaffPage() {
                       aria-label={`Closed for ${closedReason}`}
                       className="bg-closed text-closed-foreground text-xs font-bold px-3 py-1 rounded-full inline-flex items-center gap-1"
                     >
-                      <PartyPopper className="w-3 h-3" /> CLOSED
+                      <PartyPopper className="w-3 h-3" /> CENTER CLOSED
                     </span>
                   ) : off && (
                     <span
@@ -204,7 +204,7 @@ function StaffPage() {
                 </div>
                 {closedReason ? (
                   <div className="px-4 py-4 bg-closed/20 text-sm text-closed-foreground font-medium">
-                    Center closed — {closedReason}
+                    CENTER CLOSED — {closedReason}
                   </div>
                 ) : !off && (() => {
                   const showLunch = hrs >= 6;

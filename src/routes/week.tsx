@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DAY_NAMES } from "@/lib/schedule-derive";
+import { holidayForOffset } from "@/lib/holidays";
 
 export const Route = createFileRoute("/week")({
   ssr: false,
@@ -42,6 +43,12 @@ function dateForDay(schedule: WeekSchedule | null | undefined, dayName: string):
   const date = new Date(monday);
   date.setDate(monday.getDate() + idx);
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
+function closedFor(schedule: WeekSchedule | null | undefined, dayName: string): string | null {
+  const idx = DAY_NAMES.indexOf(dayName as typeof DAY_NAMES[number]);
+  if (idx < 0) return null;
+  return holidayForOffset(schedule?.start_date, idx);
 }
 
 function WeekPage() {
@@ -79,7 +86,10 @@ function WeekPage() {
         const blocks = blocksForDay(schedule, n, d);
         const dateLabel = dateForDay(schedule, d);
         const dayLabel = `${d.slice(0, 3)}${dateLabel ? ` ${dateLabel}` : ""}`;
-        if (blocks.length === 0) {
+        const closed = closedFor(schedule, d);
+        if (closed) {
+          lines.push(`  ${dayLabel}: CENTER CLOSED — ${closed}`);
+        } else if (blocks.length === 0) {
           lines.push(`  ${dayLabel}: OFF`);
         } else {
           const parts = blocks.map((b) => {
@@ -98,6 +108,7 @@ function WeekPage() {
     for (const d of DAYS) {
       const day = schedule.days?.find((x) => x.day === d);
       if (!day) continue;
+      if (closedFor(schedule, d)) continue;
       const gaps = new Map<string, Set<string>>();
       for (const slot of day.slots) {
         for (const room of slot.understaffed ?? []) {
@@ -188,7 +199,10 @@ function WeekPage() {
         ensureSpace(16);
         const blocks = blocksForDay(schedule, n, d);
         const label = `${d}, ${dateForDay(schedule, d)}`;
-        const value = blocks.length === 0
+        const closed = closedFor(schedule, d);
+        const value = closed
+          ? `CENTER CLOSED — ${closed}`
+          : blocks.length === 0
           ? "OFF"
           : blocks.map((b) => `${b.start}–${b.end}`).join(", ");
         doc.setFont("helvetica", "bold");
@@ -264,13 +278,16 @@ function WeekPage() {
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-1 gap-x-6 text-sm">
                 {DAYS.map((d) => {
                   const blocks = blocksForDay(schedule, n, d);
+                  const closed = closedFor(schedule, d);
                   return (
                     <li key={d} className="flex justify-between gap-3 border-b border-dashed last:border-b-0 sm:border-b-0 py-1">
                       <span className="font-medium">
                         {d.slice(0, 3)} <span className="text-muted-foreground font-normal">{dateForDay(schedule, d)}</span>
                       </span>
                       <span className="text-right">
-                        {blocks.length === 0 ? (
+                        {closed ? (
+                          <span className="text-closed-foreground font-semibold">CENTER CLOSED</span>
+                        ) : blocks.length === 0 ? (
                           <span className="text-muted-foreground">OFF</span>
                         ) : (
                           blocks
