@@ -506,7 +506,7 @@ function ClosedBanner({ reason }: { reason: string }) {
   return (
     <div className="bg-closed/30 border-2 border-dashed border-closed rounded-xl px-4 py-8 text-center space-y-2">
       <PartyPopper className="w-8 h-8 mx-auto text-closed-foreground" />
-      <div className="font-bold text-lg text-closed-foreground">Closed — {reason}</div>
+      <div className="font-bold text-lg text-closed-foreground">CENTER CLOSED — {reason}</div>
       <p className="text-xs text-muted-foreground">
         No shifts can be scheduled on this day.
       </p>
