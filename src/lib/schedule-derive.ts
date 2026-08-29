@@ -8,7 +8,19 @@ export const DEFAULT_TIMES: string[] = [
   "3:00 PM","3:30 PM","4:00 PM","4:30 PM","5:00 PM","5:30 PM",
 ];
 
-export const DEFAULT_ROOMS = ["Room F", "Room I", "G/H", "J/K", "M.O.D.", "SAC"];
+/** Canonical room display order — always used for grid/room views regardless
+ *  of the order rooms happen to appear in a week's stored `rooms` array. */
+export const DEFAULT_ROOMS = ["M.O.D.", "Room F", "Room I", "G/H", "J/K", "SAC"];
+
+/** Sort a rooms list into the canonical display order. Unknown rooms go last. */
+export function canonicalRooms(rooms: string[] | undefined | null): string[] {
+  const list = rooms?.length ? rooms : DEFAULT_ROOMS;
+  const rank = (r: string) => {
+    const i = DEFAULT_ROOMS.indexOf(r);
+    return i === -1 ? DEFAULT_ROOMS.length : i;
+  };
+  return [...list].sort((a, b) => rank(a) - rank(b));
+}
 
 export const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] as const;
 
