@@ -78,7 +78,7 @@ export function minimumFor(
 /** Rebuilds days[].slots from staff_daily + minimums so the room-grid view
  *  stays in sync with the per-staff schedule that admins edit. */
 export function deriveDays(s: ScheduleData, startDate?: string | null): Day[] {
-  const rooms = s.rooms?.length ? s.rooms : DEFAULT_ROOMS;
+  const rooms = canonicalRooms(s.rooms);
   return s.days.map((d) => {
     const times = d.slots?.length ? d.slots.map((sl) => sl.time) : DEFAULT_TIMES;
     const slots: Slot[] = times.map((time) => {
