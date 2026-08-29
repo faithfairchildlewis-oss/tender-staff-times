@@ -9,6 +9,7 @@ import { fallbackSchedule, type ScheduleData } from "@/data/schedule";
 import {
   DAY_NAMES,
   DEFAULT_ROOMS,
+  canonicalRooms,
   DEFAULT_TIMES,
   blankSchedule,
   deriveDays,

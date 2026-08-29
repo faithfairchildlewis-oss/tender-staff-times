@@ -7,6 +7,7 @@ import type { ScheduleData } from "@/data/schedule";
 import {
   DAY_NAMES,
   DEFAULT_ROOMS,
+  canonicalRooms,
   DEFAULT_TIMES,
   deriveDays,
   minimumFor,
