@@ -35,7 +35,7 @@ function parseTime(t: string): number {
 }
 
 /** Returns the minimum number of staff for a room at a given time slot.
- *  SAC is staffed only 7:00–7:30 AM and 2:30–5:30 PM (inclusive). */
+ *  SAC is staffed only 7:00–7:30 AM and 2:30–5:30 PM. */
 export function minimumFor(
   room: string,
   time: string,
@@ -44,8 +44,8 @@ export function minimumFor(
   const m = parseTime(time);
   const HM = (h: number, mn: number) => h * 60 + mn;
   if (room === "SAC") {
-    // Open 7:00–7:30 AM and 2:30–5:30 PM only.
-    if ((m >= HM(7, 0) && m <= HM(7, 30)) || (m >= HM(14, 30) && m <= HM(17, 30))) return 1;
+    // Open 7:00–7:30 AM (the 7:00 slot) and 2:30–5:30 PM (slots 2:30–5:00).
+    if (m === HM(7, 0) || (m >= HM(14, 30) && m < HM(17, 30))) return 1;
     return null;
   }
   if (room === "Room F" || room === "Room I") {
