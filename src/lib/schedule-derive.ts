@@ -34,12 +34,8 @@ function parseTime(t: string): number {
   return h * 60 + min;
 }
 
-/** Week (Monday ISO date) when SAC expands to a full-day room. */
-export const SAC_FULL_DAY_START = "2026-06-22";
-
 /** Returns the minimum number of staff for a room at a given time slot.
- *  When startDate (the schedule's Monday) is on/after SAC_FULL_DAY_START,
- *  SAC is staffed for the full 7:00 AM – 5:30 PM day. */
+ *  SAC is staffed only 7:00–7:30 AM and 2:30–5:30 PM (inclusive). */
 export function minimumFor(
   room: string,
   time: string,
@@ -48,12 +44,9 @@ export function minimumFor(
   const m = parseTime(time);
   const HM = (h: number, mn: number) => h * 60 + mn;
   if (room === "SAC") {
-    const fullDay = !!startDate && startDate >= SAC_FULL_DAY_START;
-    if (fullDay) {
-      return m >= HM(7, 0) && m <= HM(17, 30) ? 1 : null;
-    }
-    // Active 2:30 PM through 5:30 PM inclusive.
-    return m >= HM(14, 30) && m <= HM(17, 30) ? 1 : null;
+    // Open 7:00–7:30 AM and 2:30–5:30 PM only.
+    if ((m >= HM(7, 0) && m <= HM(7, 30)) || (m >= HM(14, 30) && m <= HM(17, 30))) return 1;
+    return null;
   }
   if (room === "Room F" || room === "Room I") {
     // Rooms F and I close out at 4:00 PM — children combine into other rooms,
