@@ -64,10 +64,10 @@ describe("ageInMonths", () => {
 describe("roomOnDate — placement is the director's call", () => {
   const today = new Date(2026, 6, 6); // Mon Jul 6, 2026
   it("projects a future eligible move", () => {
-    // Born Nov 2025 → 8 months now, F→I eligible Sept 2026 (10 mo)
+    // Born Nov 2025 → 8 months now, F→I eligible Nov 2026 (12 mo)
     const c = child({ dob: "2025-11-01", room: "F" });
-    expect(roomOnDate(c, new Date(2026, 7, 3), CAMP_ENDS, today)).toBe("F");
-    expect(roomOnDate(c, new Date(2026, 9, 5), CAMP_ENDS, today)).toBe("I");
+    expect(roomOnDate(c, new Date(2026, 9, 3), CAMP_ENDS, today)).toBe("F");
+    expect(roomOnDate(c, new Date(2026, 10, 5), CAMP_ENDS, today)).toBe("I");
   });
   it("does NOT auto-move a child already past their eligibility date", () => {
     // 20-month-old still placed in F: overdue for I and G/H, but the
@@ -255,8 +255,8 @@ describe("checkAvailability", () => {
 describe("eligibleRoomAtAge boundaries", () => {
   it("matches the room chain thresholds", () => {
     expect(eligibleRoomAtAge(0)).toBe("F");
-    expect(eligibleRoomAtAge(9)).toBe("F");
-    expect(eligibleRoomAtAge(10)).toBe("I");
+    expect(eligibleRoomAtAge(11)).toBe("F");
+    expect(eligibleRoomAtAge(12)).toBe("I");
     expect(eligibleRoomAtAge(17)).toBe("I");
     expect(eligibleRoomAtAge(18)).toBe("G/H");
     expect(eligibleRoomAtAge(35)).toBe("G/H");

@@ -57,15 +57,15 @@ export interface WaitlistEntry {
 export const ROOMS = {
   F: {
     classroom: "The Acorns",
-    // Small babies not yet pulling up / highly active. The 10-month move-up
+    // Small babies not yet pulling up / highly active. The 12-month move-up
     // is a PLANNING ESTIMATE — actual F→I moves are developmental readiness.
-    ageMin: 0, movesUpAt: 10, nextRoom: "I" as RoomCode,
+    ageMin: 0, movesUpAt: 12, nextRoom: "I" as RoomCode,
     capacity: 6, ratio: 3,
   },
   I: {
     classroom: "The Pine Cones",
-    // Holding room, ~10–18 months, until an under-2 seat opens in G/H.
-    ageMin: 10, movesUpAt: 18, nextRoom: "G/H" as RoomCode,
+    // Holding room, ~12–18 months, until an under-2 seat opens in G/H.
+    ageMin: 12, movesUpAt: 18, nextRoom: "G/H" as RoomCode,
     capacity: 3, ratio: 3,
   },
   "G/H": {
