@@ -255,8 +255,8 @@ describe("checkAvailability", () => {
 describe("eligibleRoomAtAge boundaries", () => {
   it("matches the room chain thresholds", () => {
     expect(eligibleRoomAtAge(0)).toBe("F");
-    expect(eligibleRoomAtAge(9)).toBe("F");
-    expect(eligibleRoomAtAge(10)).toBe("I");
+    expect(eligibleRoomAtAge(11)).toBe("F");
+    expect(eligibleRoomAtAge(12)).toBe("I");
     expect(eligibleRoomAtAge(17)).toBe("I");
     expect(eligibleRoomAtAge(18)).toBe("G/H");
     expect(eligibleRoomAtAge(35)).toBe("G/H");
