@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MessageSquare, Printer } from "lucide-react";
+import { BookOpen, MessageSquare, Printer } from "lucide-react";
 import { staffNames } from "@/data/schedule";
 import { useAllStaffNames, useCurrentSchedule } from "@/hooks/use-schedule";
 import { getDailyContent } from "@/data/daily-content";
@@ -136,6 +136,19 @@ function Index() {
             <div className="min-w-0">
               <div className="font-semibold text-sm leading-tight">Print Room View</div>
               <div className="text-xs opacity-90 mt-0.5">Daily room assignments</div>
+            </div>
+          </Link>
+          <Link
+            to="/handbook"
+            aria-label="Open staff handbook"
+            className="flex items-center gap-3 bg-primary text-primary-foreground rounded-2xl p-4 min-h-14 shadow-sm active:scale-[0.99] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            <div className="bg-primary-foreground/15 rounded-xl p-2.5" aria-hidden="true">
+              <BookOpen className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <div className="font-semibold text-sm leading-tight">Staff Handbook</div>
+              <div className="text-xs opacity-90 mt-0.5">Search policies & procedures</div>
             </div>
           </Link>
         </div>
