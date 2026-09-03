@@ -15,6 +15,7 @@ import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as RoomsRouteImport } from './routes/rooms'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as HandbookRouteImport } from './routes/handbook'
 import { Route as EnrollmentRouteImport } from './routes/enrollment'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -60,6 +61,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HandbookRoute = HandbookRouteImport.update({
+  id: '/handbook',
+  path: '/handbook',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnrollmentRoute = EnrollmentRouteImport.update({
@@ -147,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/enrollment': typeof EnrollmentRouteWithChildren
+  '/handbook': typeof HandbookRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
@@ -170,6 +177,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/handbook': typeof HandbookRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
@@ -195,6 +203,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/enrollment': typeof EnrollmentRouteWithChildren
+  '/handbook': typeof HandbookRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
@@ -221,6 +230,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/enrollment'
+    | '/handbook'
     | '/login'
     | '/reset-password'
     | '/rooms'
@@ -244,6 +254,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/admin'
+    | '/handbook'
     | '/login'
     | '/reset-password'
     | '/rooms'
@@ -268,6 +279,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/enrollment'
+    | '/handbook'
     | '/login'
     | '/reset-password'
     | '/rooms'
@@ -293,6 +305,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   EnrollmentRoute: typeof EnrollmentRouteWithChildren
+  HandbookRoute: typeof HandbookRoute
   LoginRoute: typeof LoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   RoomsRoute: typeof RoomsRoute
@@ -346,6 +359,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/handbook': {
+      id: '/handbook'
+      path: '/handbook'
+      fullPath: '/handbook'
+      preLoaderRoute: typeof HandbookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/enrollment': {
@@ -497,6 +517,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   EnrollmentRoute: EnrollmentRouteWithChildren,
+  HandbookRoute: HandbookRoute,
   LoginRoute: LoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   RoomsRoute: RoomsRoute,
