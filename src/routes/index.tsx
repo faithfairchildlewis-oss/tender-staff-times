@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MessageSquare, Printer } from "lucide-react";
+import { BookOpen, MessageSquare, Printer } from "lucide-react";
 import { staffNames } from "@/data/schedule";
 import { useAllStaffNames, useCurrentSchedule } from "@/hooks/use-schedule";
 import { getDailyContent } from "@/data/daily-content";
