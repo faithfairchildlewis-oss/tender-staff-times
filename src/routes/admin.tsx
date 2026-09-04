@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
-import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign, Eye, EyeOff, Users, Move, CalendarX2, Filter, PartyPopper, Ban } from "lucide-react";
+import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign, Eye, EyeOff, Users, Move, CalendarX2, Filter, PartyPopper, Ban, Clock } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/select";
 import { ShiftGrid } from "@/components/shift-grid";
 import { TimeOffView } from "@/components/time-off-view";
+import { TimesheetsView } from "@/components/timesheets-view";
 import { holidayForOffset } from "@/lib/holidays";
 
 export const Route = createFileRoute("/admin")({
@@ -91,7 +92,7 @@ function AdminEditor() {
   const qc = useQueryClient();
   const { data: schedules, isLoading } = useAllSchedules();
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [view, setView] = useState<"edit" | "grid" | "rooms" | "payroll" | "timeoff">("edit");
+  const [view, setView] = useState<"edit" | "grid" | "rooms" | "payroll" | "timeoff" | "timesheets">("edit");
 
   useEffect(() => {
     if (!selectedId && schedules?.length) {
@@ -328,6 +329,16 @@ function AdminEditor() {
           >
             <CalendarX2 className="w-4 h-4" /> Time Off
           </button>
+          <button
+            onClick={() => setView("timesheets")}
+            className={`flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 ${
+              view === "timesheets"
+                ? "bg-primary text-primary-foreground"
+                : "bg-primary-foreground/15 text-primary-foreground"
+            }`}
+          >
+            <Clock className="w-4 h-4" /> Timesheets
+          </button>
         </div>
       </header>
 
@@ -446,6 +457,8 @@ function AdminEditor() {
           <RoomView schedules={schedules ?? []} selectedId={selectedId} onSelect={setSelectedId} />
         ) : view === "timeoff" ? (
           <TimeOffView />
+        ) : view === "timesheets" ? (
+          <TimesheetsView />
         ) : (
           <PayrollView schedules={schedules ?? []} selectedId={selectedId} onSelect={setSelectedId} />
         )}
