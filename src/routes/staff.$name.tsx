@@ -8,6 +8,7 @@ import { PageBanner } from "@/components/page-banner";
 import { holidayForOffset } from "@/lib/holidays";
 import { buildDayItems } from "@/lib/day-items";
 import { getDailyContent } from "@/data/daily-content";
+import { ClockInCard } from "@/components/clock-in-card";
 
 export const Route = createFileRoute("/staff/$name")({
   head: ({ params }) => ({
@@ -137,6 +138,8 @@ function StaffPage() {
             </div>
           </div>
         </div>
+
+        <ClockInCard name={name} />
 
         <h2 className="text-base font-semibold text-foreground mt-6 mb-3 px-1">
           Shifts, Classes &amp; Lunch
