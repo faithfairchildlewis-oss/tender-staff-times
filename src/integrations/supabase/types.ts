@@ -399,9 +399,17 @@ export type Database = {
         Returns: boolean
       }
       is_admin: { Args: never; Returns: boolean }
+      set_staff_pin: {
+        Args: { _pin: string; _staff_name: string }
+        Returns: boolean
+      }
       staff_hours_in_range: {
         Args: { _end: string; _name: string; _start: string }
         Returns: number
+      }
+      verify_staff_pin: {
+        Args: { _pin: string; _staff_name: string }
+        Returns: boolean
       }
     }
     Enums: {
