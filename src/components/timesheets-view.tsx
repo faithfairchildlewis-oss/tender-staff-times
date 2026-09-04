@@ -3,8 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Clock } from "lucide-react";
 import { getTimeClockEntries } from "@/lib/time-clock.functions";
-import { useLiveSchedules } from "@/hooks/use-schedule";
-import { DAYS, dayHours, type ScheduleData } from "@/data/schedule";
+import { useAllSchedules, type ScheduleRow } from "@/hooks/use-schedule";
+import { DAYS, dayHours } from "@/data/schedule";
 
 function fmtDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", {
