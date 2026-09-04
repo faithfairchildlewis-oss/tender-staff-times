@@ -37,7 +37,7 @@ function dayOffset(start: string, dateKey: string): number | null {
 }
 
 function scheduledHoursFor(
-  schedules: (ScheduleData & { start_date?: string | null })[] | undefined,
+  schedules: ScheduleRow[] | undefined,
   name: string,
   clockIn: string,
 ): number | null {
@@ -47,14 +47,15 @@ function scheduledHoursFor(
     if (!sched.start_date) continue;
     const off = dayOffset(sched.start_date, key);
     if (off === null) continue;
-    if (!sched.staff || !(name in sched.staff)) return null;
-    return dayHours(sched, name, DAYS[off]);
+    const data = sched.data;
+    if (!data.staff || !(name in data.staff)) return null;
+    return dayHours(data, name, DAYS[off]);
   }
   return null;
 }
 
 export function TimesheetsView() {
-  const { data: schedules } = useLiveSchedules();
+  const { data: schedules } = useAllSchedules();
   const fetchEntries = useServerFn(getTimeClockEntries);
   const { data: entries, isLoading } = useQuery({
     queryKey: ["time_clock_entries"],
