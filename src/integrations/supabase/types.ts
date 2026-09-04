@@ -280,6 +280,48 @@ export type Database = {
         }
         Relationships: []
       }
+      staff_pins: {
+        Row: {
+          pin_hash: string
+          staff_name: string
+          updated_at: string
+        }
+        Insert: {
+          pin_hash: string
+          staff_name: string
+          updated_at?: string
+        }
+        Update: {
+          pin_hash?: string
+          staff_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      time_clock_entries: {
+        Row: {
+          clock_in: string
+          clock_out: string | null
+          created_at: string
+          id: string
+          staff_name: string
+        }
+        Insert: {
+          clock_in: string
+          clock_out?: string | null
+          created_at?: string
+          id?: string
+          staff_name: string
+        }
+        Update: {
+          clock_in?: string
+          clock_out?: string | null
+          created_at?: string
+          id?: string
+          staff_name?: string
+        }
+        Relationships: []
+      }
       time_off_requests: {
         Row: {
           created_at: string | null
