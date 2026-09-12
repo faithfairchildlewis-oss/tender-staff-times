@@ -14,6 +14,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as RoomsRouteImport } from './routes/rooms'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as LunchRouteImport } from './routes/lunch'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HandbookRouteImport } from './routes/handbook'
 import { Route as EnrollmentRouteImport } from './routes/enrollment'
@@ -56,6 +57,11 @@ const RoomsRoute = RoomsRouteImport.update({
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LunchRoute = LunchRouteImport.update({
+  id: '/lunch',
+  path: '/lunch',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -155,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/enrollment': typeof EnrollmentRouteWithChildren
   '/handbook': typeof HandbookRoute
   '/login': typeof LoginRoute
+  '/lunch': typeof LunchRoute
   '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
@@ -179,6 +186,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/handbook': typeof HandbookRoute
   '/login': typeof LoginRoute
+  '/lunch': typeof LunchRoute
   '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
@@ -205,6 +213,7 @@ export interface FileRoutesById {
   '/enrollment': typeof EnrollmentRouteWithChildren
   '/handbook': typeof HandbookRoute
   '/login': typeof LoginRoute
+  '/lunch': typeof LunchRoute
   '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
@@ -232,6 +241,7 @@ export interface FileRouteTypes {
     | '/enrollment'
     | '/handbook'
     | '/login'
+    | '/lunch'
     | '/reset-password'
     | '/rooms'
     | '/schedule'
@@ -256,6 +266,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/handbook'
     | '/login'
+    | '/lunch'
     | '/reset-password'
     | '/rooms'
     | '/schedule'
@@ -281,6 +292,7 @@ export interface FileRouteTypes {
     | '/enrollment'
     | '/handbook'
     | '/login'
+    | '/lunch'
     | '/reset-password'
     | '/rooms'
     | '/schedule'
@@ -307,6 +319,7 @@ export interface RootRouteChildren {
   EnrollmentRoute: typeof EnrollmentRouteWithChildren
   HandbookRoute: typeof HandbookRoute
   LoginRoute: typeof LoginRoute
+  LunchRoute: typeof LunchRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   RoomsRoute: typeof RoomsRoute
   ScheduleRoute: typeof ScheduleRoute
@@ -352,6 +365,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lunch': {
+      id: '/lunch'
+      path: '/lunch'
+      fullPath: '/lunch'
+      preLoaderRoute: typeof LunchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -519,6 +539,7 @@ const rootRouteChildren: RootRouteChildren = {
   EnrollmentRoute: EnrollmentRouteWithChildren,
   HandbookRoute: HandbookRoute,
   LoginRoute: LoginRoute,
+  LunchRoute: LunchRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   RoomsRoute: RoomsRoute,
   ScheduleRoute: ScheduleRoute,
