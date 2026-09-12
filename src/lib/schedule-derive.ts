@@ -54,8 +54,9 @@ export function minimumFor(
     return m >= HM(16, 0) ? null : 1;
   }
   if (room === "G/H") {
+    // Closed 12:30–2:30 PM for nap — children combine into J/K.
+    if (m >= HM(12, 30) && m < HM(14, 30)) return null;
     // 2 staff 9:00 AM–12:00 PM and 3:00 PM–4:30 PM (inclusive), else 1.
-    // 7:00–9:00 AM and 12:30 PM–2:30 PM only need 1 staff.
     if ((m >= HM(9, 0) && m <= HM(12, 0)) || (m >= HM(15, 0) && m <= HM(16, 30))) return 2;
     return 1;
   }
