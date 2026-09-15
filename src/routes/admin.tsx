@@ -732,6 +732,9 @@ function WeekEditor({
 }) {
   const [data, setDataRaw] = useState<ScheduleData>(row.data);
   const dirtyRef = useRef(false);
+  const originalStaffKeysRef = useRef<Set<string>>(
+    new Set(Object.keys(row.data.staff ?? {})),
+  );
   const setData: typeof setDataRaw = (v) => {
     dirtyRef.current = true;
     setDataRaw(v);
@@ -748,6 +751,7 @@ function WeekEditor({
     setDataRaw(row.data);
     const names = Object.keys(row.data.staff ?? {});
     setStaffName(names[0] ?? "");
+    originalStaffKeysRef.current = new Set(names);
   }, [row.id]);
 
   // Pull in changes saved elsewhere (e.g. the drag-and-drop grid) whenever
@@ -897,11 +901,10 @@ function WeekEditor({
     const remoteDaily = remote.staff_daily ?? {};
     const mergedStaff = { ...next.staff };
     const mergedDaily = { ...(next.staff_daily ?? {}) };
-    const localKeys = new Set(Object.keys(data.staff ?? {}));
     for (const name of Object.keys(remoteStaff)) {
       // Only add back names that were never in this editor's local copy.
       // Names the user deleted in this session stay deleted.
-      if (!localKeys.has(name) && !(name in mergedStaff)) {
+      if (!originalStaffKeysRef.current.has(name) && !(name in mergedStaff)) {
         mergedStaff[name] = remoteStaff[name];
         if (remoteDaily[name]) mergedDaily[name] = remoteDaily[name];
       }
