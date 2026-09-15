@@ -751,6 +751,7 @@ function WeekEditor({
     setDataRaw(row.data);
     const names = Object.keys(row.data.staff ?? {});
     setStaffName(names[0] ?? "");
+    originalStaffKeysRef.current = new Set(names);
   }, [row.id]);
 
   // Pull in changes saved elsewhere (e.g. the drag-and-drop grid) whenever
