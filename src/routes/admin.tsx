@@ -732,6 +732,9 @@ function WeekEditor({
 }) {
   const [data, setDataRaw] = useState<ScheduleData>(row.data);
   const dirtyRef = useRef(false);
+  const originalStaffKeysRef = useRef<Set<string>>(
+    new Set(Object.keys(row.data.staff ?? {})),
+  );
   const setData: typeof setDataRaw = (v) => {
     dirtyRef.current = true;
     setDataRaw(v);
