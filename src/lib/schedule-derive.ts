@@ -89,7 +89,8 @@ export function minimumFor(
  *  stays in sync with the per-staff schedule that admins edit. */
 export function deriveDays(s: ScheduleData, startDate?: string | null): Day[] {
   const rooms = canonicalRooms(s.rooms);
-  return s.days.map((d) => {
+  return s.days.map((d, di) => {
+    const dayDate = startDate ? dayIso(startDate, di) : null;
     const times = d.slots?.length ? d.slots.map((sl) => sl.time) : DEFAULT_TIMES;
     const slots: Slot[] = times.map((time) => {
       const assignments: Record<string, string[] | null> = {};
