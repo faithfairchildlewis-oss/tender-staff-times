@@ -97,7 +97,7 @@ export function deriveDays(s: ScheduleData, startDate?: string | null): Day[] {
       const minimums: Record<string, number> = {};
       const understaffed: string[] = [];
       for (const r of rooms) {
-        const min = minimumFor(r, time, startDate);
+        const min = minimumFor(r, time, startDate, dayDate);
         if (min === null) {
           assignments[r] = null;
           continue;
