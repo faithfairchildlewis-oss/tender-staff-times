@@ -24,6 +24,19 @@ export function canonicalRooms(rooms: string[] | undefined | null): string[] {
 
 export const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] as const;
 
+/** Dates (ISO YYYY-MM-DD) when SAC operates all day instead of its usual
+ *  7:00–8:30 AM / 2:30–5:30 PM windows. */
+export const SAC_ALL_DAY_DATES = new Set<string>(["2026-09-21"]);
+
+/** ISO date for a day of the week, derived from the week's start date.
+ *  Uses UTC math so DST transitions can't shift the calendar date. */
+function dayIso(startDate: string, dayIndex: number): string | null {
+  const m = startDate.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return null;
+  const d = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3] + dayIndex));
+  return d.toISOString().slice(0, 10);
+}
+
 function parseTime(t: string): number {
   const m = t.match(/(\d+):(\d+)\s*(AM|PM)/i);
   if (!m) return 0;
@@ -40,12 +53,15 @@ export function minimumFor(
   room: string,
   time: string,
   startDate?: string | null,
+  dayDate?: string | null,
 ): number | null {
   const m = parseTime(time);
   const HM = (h: number, mn: number) => h * 60 + mn;
   if (room === "SAC") {
     // Open 7:00–8:30 AM (slots 7:00, 7:30, 8:00) and 2:30–5:30 PM (slots 2:30–5:00).
     if ((m >= HM(7, 0) && m < HM(8, 30)) || (m >= HM(14, 30) && m < HM(17, 30))) return 1;
+    // One-off: SAC open all day on specific dates.
+    if (dayDate && SAC_ALL_DAY_DATES.has(dayDate) && m >= HM(7, 0) && m < HM(17, 30)) return 1;
     return null;
   }
   if (room === "Room F" || room === "Room I") {
@@ -73,14 +89,15 @@ export function minimumFor(
  *  stays in sync with the per-staff schedule that admins edit. */
 export function deriveDays(s: ScheduleData, startDate?: string | null): Day[] {
   const rooms = canonicalRooms(s.rooms);
-  return s.days.map((d) => {
+  return s.days.map((d, di) => {
+    const dayDate = startDate ? dayIso(startDate, di) : null;
     const times = d.slots?.length ? d.slots.map((sl) => sl.time) : DEFAULT_TIMES;
     const slots: Slot[] = times.map((time) => {
       const assignments: Record<string, string[] | null> = {};
       const minimums: Record<string, number> = {};
       const understaffed: string[] = [];
       for (const r of rooms) {
-        const min = minimumFor(r, time, startDate);
+        const min = minimumFor(r, time, startDate, dayDate);
         if (min === null) {
           assignments[r] = null;
           continue;
