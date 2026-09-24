@@ -71,7 +71,10 @@ export function minimumFor(
   }
   if (room === "G/H") {
     // Closed 12:30–2:30 PM for nap — children combine into J/K.
-    if (m >= HM(12, 30) && m < HM(14, 30)) return null;
+    // The nap closure ended the week of 2026-09-21: from that week on G/H
+    // stays open 12:30–2:30 PM with the normal 1-staff minimum.
+    const napClosureActive = !startDate || startDate < "2026-09-21";
+    if (napClosureActive && m >= HM(12, 30) && m < HM(14, 30)) return null;
     // 2 staff 9:00 AM–12:00 PM and 3:00 PM–4:30 PM (inclusive), else 1.
     if ((m >= HM(9, 0) && m <= HM(12, 0)) || (m >= HM(15, 0) && m <= HM(16, 30))) return 2;
     return 1;
