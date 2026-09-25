@@ -75,6 +75,19 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  beforeLoad: async ({ location }) => {
+    // Skip the gate for the unlock page itself, sitemap, and password reset.
+    if (
+      location.pathname === "/unlock" ||
+      location.pathname === "/sitemap.xml" ||
+      location.pathname === "/reset-password"
+    ) {
+      return {};
+    }
+    const { unlocked } = await checkGate();
+    if (!unlocked) throw redirect({ to: "/unlock" });
+    return {};
+  },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
