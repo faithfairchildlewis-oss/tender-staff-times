@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 import { DAYS } from "@/data/schedule";
 import { monthDayFor } from "@/lib/format-date";
+import { deriveDays } from "@/lib/schedule-derive";
 
 export const Route = createFileRoute("/lunch")({
   head: () => ({
@@ -57,7 +58,7 @@ function LunchPage() {
 
     if (covered) {
       const dayName = DAYS[todayIdx];
-      const daySlots = schedule.days.find((d) => d.day === dayName)?.slots ?? [];
+      const daySlots = deriveDays(schedule, schedule.start_date).find((d) => d.day === dayName)?.slots ?? [];
 
       for (const name of Object.keys(schedule.staff_daily ?? {})) {
         const slots = schedule.staff_daily[name]?.[dayName] ?? [];
