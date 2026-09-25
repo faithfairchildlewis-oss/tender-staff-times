@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WeekRouteImport } from './routes/week'
+import { Route as UnlockRouteImport } from './routes/unlock'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as RoomsRouteImport } from './routes/rooms'
@@ -37,6 +38,11 @@ import { Route as EnrollmentPrintRoomRouteImport } from './routes/enrollment.pri
 const WeekRoute = WeekRouteImport.update({
   id: '/week',
   path: '/week',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UnlockRoute = UnlockRouteImport.update({
+  id: '/unlock',
+  path: '/unlock',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -166,6 +172,7 @@ export interface FileRoutesByFullPath {
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/unlock': typeof UnlockRoute
   '/week': typeof WeekRoute
   '/enrollment/ask': typeof EnrollmentAskRoute
   '/enrollment/children': typeof EnrollmentChildrenRoute
@@ -191,6 +198,7 @@ export interface FileRoutesByTo {
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/unlock': typeof UnlockRoute
   '/week': typeof WeekRoute
   '/enrollment/ask': typeof EnrollmentAskRoute
   '/enrollment/children': typeof EnrollmentChildrenRoute
@@ -218,6 +226,7 @@ export interface FileRoutesById {
   '/rooms': typeof RoomsRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/unlock': typeof UnlockRoute
   '/week': typeof WeekRoute
   '/enrollment/ask': typeof EnrollmentAskRoute
   '/enrollment/children': typeof EnrollmentChildrenRoute
@@ -246,6 +255,7 @@ export interface FileRouteTypes {
     | '/rooms'
     | '/schedule'
     | '/sitemap.xml'
+    | '/unlock'
     | '/week'
     | '/enrollment/ask'
     | '/enrollment/children'
@@ -271,6 +281,7 @@ export interface FileRouteTypes {
     | '/rooms'
     | '/schedule'
     | '/sitemap.xml'
+    | '/unlock'
     | '/week'
     | '/enrollment/ask'
     | '/enrollment/children'
@@ -297,6 +308,7 @@ export interface FileRouteTypes {
     | '/rooms'
     | '/schedule'
     | '/sitemap.xml'
+    | '/unlock'
     | '/week'
     | '/enrollment/ask'
     | '/enrollment/children'
@@ -324,6 +336,7 @@ export interface RootRouteChildren {
   RoomsRoute: typeof RoomsRoute
   ScheduleRoute: typeof ScheduleRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  UnlockRoute: typeof UnlockRoute
   WeekRoute: typeof WeekRoute
   PrintRoomsRoute: typeof PrintRoomsRoute
   PrintStaffRoute: typeof PrintStaffRoute
@@ -337,6 +350,13 @@ declare module '@tanstack/react-router' {
       path: '/week'
       fullPath: '/week'
       preLoaderRoute: typeof WeekRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/unlock': {
+      id: '/unlock'
+      path: '/unlock'
+      fullPath: '/unlock'
+      preLoaderRoute: typeof UnlockRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -544,6 +564,7 @@ const rootRouteChildren: RootRouteChildren = {
   RoomsRoute: RoomsRoute,
   ScheduleRoute: ScheduleRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  UnlockRoute: UnlockRoute,
   WeekRoute: WeekRoute,
   PrintRoomsRoute: PrintRoomsRoute,
   PrintStaffRoute: PrintStaffRoute,
