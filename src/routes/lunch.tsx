@@ -63,37 +63,35 @@ function LunchPage() {
         const slots = schedule.staff_daily[name]?.[dayName] ?? [];
         if (slots.length === 0) continue;
 
-        // Mid-shift runs of empty rooms = lunch/break windows
-        let runStart = -1;
-        for (let i = 0; i <= slots.length; i++) {
-          const empty = i < slots.length && slots[i].rooms.length === 0;
-          if (empty && runStart === -1) runStart = i;
-          const ends = runStart !== -1 && (!empty || i === slots.length);
-          if (!ends) continue;
-
-          const before = runStart > 0 ? slots[runStart - 1] : null;
-          const after = i < slots.length ? slots[i] : null;
-          // Skip leading/trailing empties (not a real break)
-          if (before && after) {
-            const roomsBefore = before.rooms;
-            const gapTimes = new Set(slots.slice(runStart, i).map((s) => s.time));
-            const cover = new Set<string>();
-            for (const ds of daySlots) {
-              if (!gapTimes.has(ds.time)) continue;
-              for (const room of roomsBefore) {
-                for (const person of ds.assignments?.[room] ?? []) {
-                  if (person !== name) cover.add(person);
-                }
+        // Breaks = gaps between consecutive worked slots (non-contiguous times)
+        const toMin = (t: string) => {
+          const mm = /(\d+):(\d+)\s*(AM|PM)/i.exec(t);
+          if (!mm) return 0;
+          let h = Number(mm[1]) % 12;
+          if (mm[3].toUpperCase() === "PM") h += 12;
+          return h * 60 + Number(mm[2]);
+        };
+        const fmt = (m: number) => {
+          const h = Math.floor(m / 60), mi = m % 60;
+          return `${h % 12 || 12}:${String(mi).padStart(2, "0")} ${h >= 12 ? "PM" : "AM"}`;
+        };
+        const sorted = [...slots].sort((a, b) => toMin(a.time) - toMin(b.time));
+        for (let i = 1; i < sorted.length; i++) {
+          const prevEnd = toMin(sorted[i - 1].time) + 30;
+          const next = toMin(sorted[i].time);
+          if (next <= prevEnd) continue;
+          const gapTimes = new Set<string>();
+          for (let t = prevEnd; t < next; t += 30) gapTimes.add(fmt(t));
+          const cover = new Set<string>();
+          for (const ds of daySlots) {
+            if (!gapTimes.has(ds.time)) continue;
+            for (const room of sorted[i - 1].rooms) {
+              for (const person of ds.assignments?.[room] ?? []) {
+                if (person !== name) cover.add(person);
               }
             }
-            rows.push({
-              name,
-              start: slots[runStart].time,
-              end: after.time,
-              cover: Array.from(cover).sort(),
-            });
           }
-          runStart = -1;
+          rows.push({ name, start: fmt(prevEnd), end: sorted[i].time, cover: Array.from(cover).sort() });
         }
       }
       rows.sort((a, b) => a.name.localeCompare(b.name));

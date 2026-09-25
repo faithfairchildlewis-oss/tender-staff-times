@@ -759,6 +759,7 @@ function WeekEditor({
   useEffect(() => {
     if (dirtyRef.current) return;
     setDataRaw(row.data);
+    originalStaffKeysRef.current = new Set(Object.keys(row.data.staff ?? {}));
   }, [row.updated_at, row.data]);
 
   // Merge admin-only pay rates from the access-controlled table back into
@@ -920,6 +921,7 @@ function WeekEditor({
     setSaving(false);
     if (error) return alert(error.message);
     dirtyRef.current = false;
+    originalStaffKeysRef.current = new Set(Object.keys(next.staff ?? {}));
     await onSaved();
     alert("Saved");
   }
