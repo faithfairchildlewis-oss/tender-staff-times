@@ -3,7 +3,6 @@ import { ArrowLeft } from "lucide-react";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 import { DAYS } from "@/data/schedule";
 import { monthDayFor } from "@/lib/format-date";
-import { deriveDays } from "@/lib/schedule-derive";
 
 export const Route = createFileRoute("/lunch")({
   head: () => ({
@@ -58,7 +57,6 @@ function LunchPage() {
 
     if (covered) {
       const dayName = DAYS[todayIdx];
-      const daySlots = deriveDays(schedule, schedule.start_date).find((d) => d.day === dayName)?.slots ?? [];
 
       for (const name of Object.keys(schedule.staff_daily ?? {})) {
         const slots = schedule.staff_daily[name]?.[dayName] ?? [];
@@ -84,12 +82,10 @@ function LunchPage() {
           const gapTimes = new Set<string>();
           for (let t = prevEnd; t < next; t += 30) gapTimes.add(fmt(t));
           const cover = new Set<string>();
-          for (const ds of daySlots) {
-            if (!gapTimes.has(ds.time)) continue;
-            for (const room of sorted[i - 1].rooms) {
-              for (const person of ds.assignments?.[room] ?? []) {
-                if (person !== name) cover.add(person);
-              }
+          for (const [other, byDay] of Object.entries(schedule.staff_daily ?? {})) {
+            if (other === name) continue;
+            for (const b of byDay?.[dayName] ?? []) {
+              if (gapTimes.has(b.time) && b.rooms.some((r) => sorted[i - 1].rooms.includes(r))) cover.add(other);
             }
           }
           rows.push({ name, start: fmt(prevEnd), end: sorted[i].time, cover: Array.from(cover).sort() });
