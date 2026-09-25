@@ -401,7 +401,7 @@ export function ShiftGrid({ row }: { row: ScheduleRow }) {
                     {time}
                   </td>
                   {rooms.map((r) => {
-                    const min = minimumFor(r, time, row.start_date);
+                    const min = minimumFor(r, time, row.start_date, dayIsoFor(row.start_date, dayIdx));
                     const cellId = `${time}|${r}`;
                     const names = [...(byRoom.get(r) ?? [])];
                     if (min === null) {
@@ -709,4 +709,9 @@ function StaffPalette({
       </div>
     </div>
   );
+}
+function dayIsoFor(startDate: string | null | undefined, i: number): string | null {
+  const m = startDate?.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return null;
+  return new Date(Date.UTC(+m[1], +m[2] - 1, +m[3] + i)).toISOString().slice(0, 10);
 }
