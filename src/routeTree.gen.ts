@@ -9,80 +9,35 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AdminRouteImport } from './routes/admin'
-import { Route as EnrollmentRouteImport } from './routes/enrollment'
-import { Route as HandbookRouteImport } from './routes/handbook'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as LunchRouteImport } from './routes/lunch'
-import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as RoomsRouteImport } from './routes/rooms'
-import { Route as ScheduleRouteImport } from './routes/schedule'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as UnlockRouteImport } from './routes/unlock'
 import { Route as WeekRouteImport } from './routes/week'
+import { Route as UnlockRouteImport } from './routes/unlock'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ScheduleRouteImport } from './routes/schedule'
+import { Route as RoomsRouteImport } from './routes/rooms'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as LunchRouteImport } from './routes/lunch'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as HandbookRouteImport } from './routes/handbook'
+import { Route as EnrollmentRouteImport } from './routes/enrollment'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as EnrollmentIndexRouteImport } from './routes/enrollment.index'
-import { Route as EnrollmentAskRouteImport } from './routes/enrollment.ask'
-import { Route as EnrollmentChildrenRouteImport } from './routes/enrollment.children'
-import { Route as EnrollmentImportRouteImport } from './routes/enrollment.import'
-import { Route as EnrollmentJotformRouteImport } from './routes/enrollment.jotform'
-import { Route as EnrollmentProjectionsRouteImport } from './routes/enrollment.projections'
-import { Route as EnrollmentRosterRouteImport } from './routes/enrollment.roster'
-import { Route as EnrollmentTransitionsRouteImport } from './routes/enrollment.transitions'
-import { Route as EnrollmentWaitlistRouteImport } from './routes/enrollment.waitlist'
-import { Route as PrintRoomsRouteImport } from './routes/print.rooms'
-import { Route as PrintStaffRouteImport } from './routes/print.staff'
 import { Route as StaffNameRouteImport } from './routes/staff.$name'
+import { Route as PrintStaffRouteImport } from './routes/print.staff'
+import { Route as PrintRoomsRouteImport } from './routes/print.rooms'
+import { Route as EnrollmentWaitlistRouteImport } from './routes/enrollment.waitlist'
+import { Route as EnrollmentTransitionsRouteImport } from './routes/enrollment.transitions'
+import { Route as EnrollmentRosterRouteImport } from './routes/enrollment.roster'
+import { Route as EnrollmentProjectionsRouteImport } from './routes/enrollment.projections'
+import { Route as EnrollmentJotformRouteImport } from './routes/enrollment.jotform'
+import { Route as EnrollmentImportRouteImport } from './routes/enrollment.import'
+import { Route as EnrollmentChildrenRouteImport } from './routes/enrollment.children'
+import { Route as EnrollmentAskRouteImport } from './routes/enrollment.ask'
 import { Route as EnrollmentPrintRoomRouteImport } from './routes/enrollment.print.$room'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EnrollmentRoute = EnrollmentRouteImport.update({
-  id: '/enrollment',
-  path: '/enrollment',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HandbookRoute = HandbookRouteImport.update({
-  id: '/handbook',
-  path: '/handbook',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LunchRoute = LunchRouteImport.update({
-  id: '/lunch',
-  path: '/lunch',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RoomsRoute = RoomsRouteImport.update({
-  id: '/rooms',
-  path: '/rooms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ScheduleRoute = ScheduleRouteImport.update({
-  id: '/schedule',
-  path: '/schedule',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
+const WeekRoute = WeekRouteImport.update({
+  id: '/week',
+  path: '/week',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UnlockRoute = UnlockRouteImport.update({
@@ -90,9 +45,54 @@ const UnlockRoute = UnlockRouteImport.update({
   path: '/unlock',
   getParentRoute: () => rootRouteImport,
 } as any)
-const WeekRoute = WeekRouteImport.update({
-  id: '/week',
-  path: '/week',
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScheduleRoute = ScheduleRouteImport.update({
+  id: '/schedule',
+  path: '/schedule',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoomsRoute = RoomsRouteImport.update({
+  id: '/rooms',
+  path: '/rooms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LunchRoute = LunchRouteImport.update({
+  id: '/lunch',
+  path: '/lunch',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HandbookRoute = HandbookRouteImport.update({
+  id: '/handbook',
+  path: '/handbook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnrollmentRoute = EnrollmentRouteImport.update({
+  id: '/enrollment',
+  path: '/enrollment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnrollmentIndexRoute = EnrollmentIndexRouteImport.update({
@@ -100,49 +100,9 @@ const EnrollmentIndexRoute = EnrollmentIndexRouteImport.update({
   path: '/',
   getParentRoute: () => EnrollmentRoute,
 } as any)
-const EnrollmentAskRoute = EnrollmentAskRouteImport.update({
-  id: '/ask',
-  path: '/ask',
-  getParentRoute: () => EnrollmentRoute,
-} as any)
-const EnrollmentChildrenRoute = EnrollmentChildrenRouteImport.update({
-  id: '/children',
-  path: '/children',
-  getParentRoute: () => EnrollmentRoute,
-} as any)
-const EnrollmentImportRoute = EnrollmentImportRouteImport.update({
-  id: '/import',
-  path: '/import',
-  getParentRoute: () => EnrollmentRoute,
-} as any)
-const EnrollmentJotformRoute = EnrollmentJotformRouteImport.update({
-  id: '/jotform',
-  path: '/jotform',
-  getParentRoute: () => EnrollmentRoute,
-} as any)
-const EnrollmentProjectionsRoute = EnrollmentProjectionsRouteImport.update({
-  id: '/projections',
-  path: '/projections',
-  getParentRoute: () => EnrollmentRoute,
-} as any)
-const EnrollmentRosterRoute = EnrollmentRosterRouteImport.update({
-  id: '/roster',
-  path: '/roster',
-  getParentRoute: () => EnrollmentRoute,
-} as any)
-const EnrollmentTransitionsRoute = EnrollmentTransitionsRouteImport.update({
-  id: '/transitions',
-  path: '/transitions',
-  getParentRoute: () => EnrollmentRoute,
-} as any)
-const EnrollmentWaitlistRoute = EnrollmentWaitlistRouteImport.update({
-  id: '/waitlist',
-  path: '/waitlist',
-  getParentRoute: () => EnrollmentRoute,
-} as any)
-const PrintRoomsRoute = PrintRoomsRouteImport.update({
-  id: '/print/rooms',
-  path: '/print/rooms',
+const StaffNameRoute = StaffNameRouteImport.update({
+  id: '/staff/$name',
+  path: '/staff/$name',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrintStaffRoute = PrintStaffRouteImport.update({
@@ -150,10 +110,50 @@ const PrintStaffRoute = PrintStaffRouteImport.update({
   path: '/print/staff',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StaffNameRoute = StaffNameRouteImport.update({
-  id: '/staff/$name',
-  path: '/staff/$name',
+const PrintRoomsRoute = PrintRoomsRouteImport.update({
+  id: '/print/rooms',
+  path: '/print/rooms',
   getParentRoute: () => rootRouteImport,
+} as any)
+const EnrollmentWaitlistRoute = EnrollmentWaitlistRouteImport.update({
+  id: '/waitlist',
+  path: '/waitlist',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
+const EnrollmentTransitionsRoute = EnrollmentTransitionsRouteImport.update({
+  id: '/transitions',
+  path: '/transitions',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
+const EnrollmentRosterRoute = EnrollmentRosterRouteImport.update({
+  id: '/roster',
+  path: '/roster',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
+const EnrollmentProjectionsRoute = EnrollmentProjectionsRouteImport.update({
+  id: '/projections',
+  path: '/projections',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
+const EnrollmentJotformRoute = EnrollmentJotformRouteImport.update({
+  id: '/jotform',
+  path: '/jotform',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
+const EnrollmentImportRoute = EnrollmentImportRouteImport.update({
+  id: '/import',
+  path: '/import',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
+const EnrollmentChildrenRoute = EnrollmentChildrenRouteImport.update({
+  id: '/children',
+  path: '/children',
+  getParentRoute: () => EnrollmentRoute,
+} as any)
+const EnrollmentAskRoute = EnrollmentAskRouteImport.update({
+  id: '/ask',
+  path: '/ask',
+  getParentRoute: () => EnrollmentRoute,
 } as any)
 const EnrollmentPrintRoomRoute = EnrollmentPrintRoomRouteImport.update({
   id: '/print/$room',
@@ -345,74 +345,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/enrollment': {
-      id: '/enrollment'
-      path: '/enrollment'
-      fullPath: '/enrollment'
-      preLoaderRoute: typeof EnrollmentRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/handbook': {
-      id: '/handbook'
-      path: '/handbook'
-      fullPath: '/handbook'
-      preLoaderRoute: typeof HandbookRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/lunch': {
-      id: '/lunch'
-      path: '/lunch'
-      fullPath: '/lunch'
-      preLoaderRoute: typeof LunchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/rooms': {
-      id: '/rooms'
-      path: '/rooms'
-      fullPath: '/rooms'
-      preLoaderRoute: typeof RoomsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/schedule': {
-      id: '/schedule'
-      path: '/schedule'
-      fullPath: '/schedule'
-      preLoaderRoute: typeof ScheduleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
+    '/week': {
+      id: '/week'
+      path: '/week'
+      fullPath: '/week'
+      preLoaderRoute: typeof WeekRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/unlock': {
@@ -422,11 +359,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnlockRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/week': {
-      id: '/week'
-      path: '/week'
-      fullPath: '/week'
-      preLoaderRoute: typeof WeekRouteImport
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/schedule': {
+      id: '/schedule'
+      path: '/schedule'
+      fullPath: '/schedule'
+      preLoaderRoute: typeof ScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rooms': {
+      id: '/rooms'
+      path: '/rooms'
+      fullPath: '/rooms'
+      preLoaderRoute: typeof RoomsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lunch': {
+      id: '/lunch'
+      path: '/lunch'
+      fullPath: '/lunch'
+      preLoaderRoute: typeof LunchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/handbook': {
+      id: '/handbook'
+      path: '/handbook'
+      fullPath: '/handbook'
+      preLoaderRoute: typeof HandbookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enrollment': {
+      id: '/enrollment'
+      path: '/enrollment'
+      fullPath: '/enrollment'
+      preLoaderRoute: typeof EnrollmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/enrollment/': {
@@ -436,67 +436,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnrollmentIndexRouteImport
       parentRoute: typeof EnrollmentRoute
     }
-    '/enrollment/ask': {
-      id: '/enrollment/ask'
-      path: '/ask'
-      fullPath: '/enrollment/ask'
-      preLoaderRoute: typeof EnrollmentAskRouteImport
-      parentRoute: typeof EnrollmentRoute
-    }
-    '/enrollment/children': {
-      id: '/enrollment/children'
-      path: '/children'
-      fullPath: '/enrollment/children'
-      preLoaderRoute: typeof EnrollmentChildrenRouteImport
-      parentRoute: typeof EnrollmentRoute
-    }
-    '/enrollment/import': {
-      id: '/enrollment/import'
-      path: '/import'
-      fullPath: '/enrollment/import'
-      preLoaderRoute: typeof EnrollmentImportRouteImport
-      parentRoute: typeof EnrollmentRoute
-    }
-    '/enrollment/jotform': {
-      id: '/enrollment/jotform'
-      path: '/jotform'
-      fullPath: '/enrollment/jotform'
-      preLoaderRoute: typeof EnrollmentJotformRouteImport
-      parentRoute: typeof EnrollmentRoute
-    }
-    '/enrollment/projections': {
-      id: '/enrollment/projections'
-      path: '/projections'
-      fullPath: '/enrollment/projections'
-      preLoaderRoute: typeof EnrollmentProjectionsRouteImport
-      parentRoute: typeof EnrollmentRoute
-    }
-    '/enrollment/roster': {
-      id: '/enrollment/roster'
-      path: '/roster'
-      fullPath: '/enrollment/roster'
-      preLoaderRoute: typeof EnrollmentRosterRouteImport
-      parentRoute: typeof EnrollmentRoute
-    }
-    '/enrollment/transitions': {
-      id: '/enrollment/transitions'
-      path: '/transitions'
-      fullPath: '/enrollment/transitions'
-      preLoaderRoute: typeof EnrollmentTransitionsRouteImport
-      parentRoute: typeof EnrollmentRoute
-    }
-    '/enrollment/waitlist': {
-      id: '/enrollment/waitlist'
-      path: '/waitlist'
-      fullPath: '/enrollment/waitlist'
-      preLoaderRoute: typeof EnrollmentWaitlistRouteImport
-      parentRoute: typeof EnrollmentRoute
-    }
-    '/print/rooms': {
-      id: '/print/rooms'
-      path: '/print/rooms'
-      fullPath: '/print/rooms'
-      preLoaderRoute: typeof PrintRoomsRouteImport
+    '/staff/$name': {
+      id: '/staff/$name'
+      path: '/staff/$name'
+      fullPath: '/staff/$name'
+      preLoaderRoute: typeof StaffNameRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/print/staff': {
@@ -506,12 +450,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrintStaffRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/staff/$name': {
-      id: '/staff/$name'
-      path: '/staff/$name'
-      fullPath: '/staff/$name'
-      preLoaderRoute: typeof StaffNameRouteImport
+    '/print/rooms': {
+      id: '/print/rooms'
+      path: '/print/rooms'
+      fullPath: '/print/rooms'
+      preLoaderRoute: typeof PrintRoomsRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/enrollment/waitlist': {
+      id: '/enrollment/waitlist'
+      path: '/waitlist'
+      fullPath: '/enrollment/waitlist'
+      preLoaderRoute: typeof EnrollmentWaitlistRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
+    '/enrollment/transitions': {
+      id: '/enrollment/transitions'
+      path: '/transitions'
+      fullPath: '/enrollment/transitions'
+      preLoaderRoute: typeof EnrollmentTransitionsRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
+    '/enrollment/roster': {
+      id: '/enrollment/roster'
+      path: '/roster'
+      fullPath: '/enrollment/roster'
+      preLoaderRoute: typeof EnrollmentRosterRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
+    '/enrollment/projections': {
+      id: '/enrollment/projections'
+      path: '/projections'
+      fullPath: '/enrollment/projections'
+      preLoaderRoute: typeof EnrollmentProjectionsRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
+    '/enrollment/jotform': {
+      id: '/enrollment/jotform'
+      path: '/jotform'
+      fullPath: '/enrollment/jotform'
+      preLoaderRoute: typeof EnrollmentJotformRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
+    '/enrollment/import': {
+      id: '/enrollment/import'
+      path: '/import'
+      fullPath: '/enrollment/import'
+      preLoaderRoute: typeof EnrollmentImportRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
+    '/enrollment/children': {
+      id: '/enrollment/children'
+      path: '/children'
+      fullPath: '/enrollment/children'
+      preLoaderRoute: typeof EnrollmentChildrenRouteImport
+      parentRoute: typeof EnrollmentRoute
+    }
+    '/enrollment/ask': {
+      id: '/enrollment/ask'
+      path: '/ask'
+      fullPath: '/enrollment/ask'
+      preLoaderRoute: typeof EnrollmentAskRouteImport
+      parentRoute: typeof EnrollmentRoute
     }
     '/enrollment/print/$room': {
       id: '/enrollment/print/$room'
