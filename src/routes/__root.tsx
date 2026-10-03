@@ -9,6 +9,7 @@ import {
   redirect,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import type { ErrorComponentProps } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -36,7 +37,7 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
@@ -82,11 +83,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       location.pathname === "/sitemap.xml" ||
       location.pathname === "/reset-password"
     ) {
-      return {};
+      return;
     }
     const { unlocked } = await checkGate();
     if (!unlocked) throw redirect({ to: "/unlock" });
-    return {};
   },
   head: () => ({
     meta: [
