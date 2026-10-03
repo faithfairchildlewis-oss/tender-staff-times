@@ -25,7 +25,7 @@ export const Route = createFileRoute("/week")({
   }),
   component: WeekPage,
   errorComponent: ({ error }) => (
-    <div className="p-8 text-center text-destructive" role="alert">{error.message}</div>
+    <div className="p-8 text-center text-destructive" role="alert">{(error as Error).message}</div>
   ),
   notFoundComponent: () => <div className="p-8 text-center">Schedule not found.</div>,
 });
