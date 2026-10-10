@@ -28,6 +28,14 @@ export const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
  *  7:00–8:30 AM / 2:30–5:30 PM windows. */
 export const SAC_ALL_DAY_DATES = new Set<string>(["2026-09-21"]);
 
+/** Extra SAC open windows on specific dates, as [startMin, endMin) minutes past
+ *  midnight — used when a staff member is scheduled into SAC outside the usual
+ *  windows, so the room still counts as open in the grid and room views. */
+export const SAC_EXTRA_WINDOWS: Record<string, [number, number][]> = {
+  // McKenzie arrives 1:00 PM on Monday, Oct 12 and stays to close.
+  "2026-10-12": [[13 * 60, 17 * 60 + 30]],
+};
+
 /** ISO date for a day of the week, derived from the week's start date.
  *  Uses UTC math so DST transitions can't shift the calendar date. */
 function dayIso(startDate: string, dayIndex: number): string | null {
@@ -62,6 +70,9 @@ export function minimumFor(
     if ((m >= HM(7, 0) && m < HM(8, 30)) || (m >= HM(14, 30) && m < HM(17, 30))) return 1;
     // One-off: SAC open all day on specific dates.
     if (dayDate && SAC_ALL_DAY_DATES.has(dayDate) && m >= HM(7, 0) && m < HM(17, 30)) return 1;
+    // One-off: extra open windows on specific dates.
+    const extra = dayDate ? SAC_EXTRA_WINDOWS[dayDate] : undefined;
+    if (extra?.some(([s, e]) => m >= s && m < e)) return 1;
     return null;
   }
   if (room === "Room F" || room === "Room I") {
