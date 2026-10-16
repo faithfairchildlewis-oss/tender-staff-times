@@ -63,78 +63,94 @@ function WaitlistPage() {
         <Button onClick={() => setCreating(true)} className="gap-2"><Plus className="h-4 w-4" /> Add inquiry</Button>
       </div>
 
-      <Card className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead className="bg-muted/50 text-xs uppercase text-muted-foreground">
-            <tr>
-              <th className="text-left p-3">Name</th>
-              <th className="text-left p-3">DOB / due</th>
-              <th className="text-left p-3">Desired start</th>
-              <th className="text-left p-3">Eligible</th>
-              <th className="text-left p-3">Status</th>
-              <th className="text-left p-3">Match</th>
-              <th className="text-left p-3">Parent</th>
-              <th className="p-3"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading ? (
-              <tr><td colSpan={8} className="p-4 text-center text-muted-foreground">Loading…</td></tr>
-            ) : waitlist.length === 0 ? (
-              <tr><td colSpan={8} className="p-4 text-center text-muted-foreground">No waitlist entries</td></tr>
-            ) : waitlist.map((w) => {
-              const m = match(w);
-              return (
-                <tr key={w.id}>
-                  <td className="p-3 font-medium">{w.name}</td>
-                  <td className="p-3">{w.dobOrDueDate}</td>
-                  <td className="p-3">{w.desiredStart}</td>
-                  <td className="p-3"><Badge variant="secondary">{m.targetRoom}</Badge></td>
-                  <td className="p-3"><Badge variant={/deposit/i.test(w.status) ? "default" : "outline"}>{w.status}</Badge></td>
-                  <td className="p-3 text-xs">
-                    {m.fit ? (
-                      <span className="text-emerald-700">Fits: {m.fit.child} leaves {m.fit.from} on {formatFull(m.fit.date)}</span>
-                    ) : (
-                      <span className="text-muted-foreground">No projected opening ≤ start</span>
-                    )}
-                  </td>
-                  <td className="p-3 text-xs">
-                    {w.parent ?? "—"}
-                    {w.phone && <div className="text-muted-foreground">{w.phone}</div>}
-                  </td>
-                  <td className="p-3 flex gap-1 justify-end">
-                    <Button size="icon" variant="ghost" title="Convert to enrolled child"
-                      onClick={async () => {
-                        await convert.mutateAsync({
-                          waitlist: w,
-                          child: {
-                            name: w.name,
-                            dob: w.dobOrDueDate,
-                            room: m.targetRoom,
-                            schedule: /extended/i.test(w.notes ?? "") ? "Extended" : "Standard",
-                            status: "Active",
-                            parent: w.parent,
-                            parent_phone: w.phone,
-                            parent_email: w.email,
-                            notes: w.notes,
-                          },
-                        });
-                        toast.success(`${w.name} converted to enrolled child`);
-                      }}>
-                      <ArrowRightCircle className="h-4 w-4" />
-                    </Button>
-                    <Button size="icon" variant="ghost" onClick={() => setEditing(w)}><Pencil className="h-4 w-4" /></Button>
-                    <Button size="icon" variant="ghost" onClick={async () => {
-                      if (!confirm(`Delete ${w.name} from the waitlist?`)) return;
-                      await del.mutateAsync(w.id); toast.success("Deleted");
-                    }}><Trash2 className="h-4 w-4" /></Button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </Card>
+      {isLoading ? (
+        <Card>
+          <p className="p-4 text-center text-sm text-muted-foreground">Loading…</p>
+        </Card>
+      ) : waitlist.length === 0 ? (
+        <Card>
+          <p className="p-4 text-center text-sm text-muted-foreground">No waitlist entries</p>
+        </Card>
+      ) : (
+        AGE_GROUPS.map((g) => {
+          const entries = waitlist
+            .map((w) => ({ w, m: match(w) }))
+            .filter((e) => e.m.targetRoom === g.room)
+            .sort((a, b) => a.w.desiredStart.localeCompare(b.w.desiredStart));
+          if (entries.length === 0) return null;
+          return (
+            <Card key={g.room} className="overflow-x-auto">
+              <div className="flex items-center justify-between gap-2 border-b bg-muted/50 px-3 py-2">
+                <h3 className="font-semibold">{g.title}</h3>
+                <span className="text-xs text-muted-foreground">
+                  {g.band} · {entries.length} {entries.length === 1 ? "entry" : "entries"}
+                </span>
+              </div>
+              <table className="w-full text-sm">
+                <thead className="text-xs uppercase text-muted-foreground">
+                  <tr>
+                    <th className="text-left p-3">Name</th>
+                    <th className="text-left p-3">DOB / due</th>
+                    <th className="text-left p-3">Desired start</th>
+                    <th className="text-left p-3">Status</th>
+                    <th className="text-left p-3">Match</th>
+                    <th className="text-left p-3">Parent</th>
+                    <th className="p-3"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {entries.map(({ w, m }) => (
+                    <tr key={w.id}>
+                      <td className="p-3 font-medium">{w.name}</td>
+                      <td className="p-3">{w.dobOrDueDate}</td>
+                      <td className="p-3">{w.desiredStart}</td>
+                      <td className="p-3"><Badge variant={/deposit/i.test(w.status) ? "default" : "outline"}>{w.status}</Badge></td>
+                      <td className="p-3 text-xs">
+                        {m.fit ? (
+                          <span className="text-emerald-700">Fits: {m.fit.child} leaves {m.fit.from} on {formatFull(m.fit.date)}</span>
+                        ) : (
+                          <span className="text-muted-foreground">No projected opening ≤ start</span>
+                        )}
+                      </td>
+                      <td className="p-3 text-xs">
+                        {w.parent ?? "—"}
+                        {w.phone && <div className="text-muted-foreground">{w.phone}</div>}
+                      </td>
+                      <td className="p-3 flex gap-1 justify-end">
+                        <Button size="icon" variant="ghost" title="Convert to enrolled child"
+                          onClick={async () => {
+                            await convert.mutateAsync({
+                              waitlist: w,
+                              child: {
+                                name: w.name,
+                                dob: w.dobOrDueDate,
+                                room: m.targetRoom,
+                                schedule: /extended/i.test(w.notes ?? "") ? "Extended" : "Standard",
+                                status: "Active",
+                                parent: w.parent,
+                                parent_phone: w.phone,
+                                parent_email: w.email,
+                                notes: w.notes,
+                              },
+                            });
+                            toast.success(`${w.name} converted to enrolled child`);
+                          }}>
+                          <ArrowRightCircle className="h-4 w-4" />
+                        </Button>
+                        <Button size="icon" variant="ghost" onClick={() => setEditing(w)}><Pencil className="h-4 w-4" /></Button>
+                        <Button size="icon" variant="ghost" onClick={async () => {
+                          if (!confirm(`Delete ${w.name} from the waitlist?`)) return;
+                          await del.mutateAsync(w.id); toast.success("Deleted");
+                        }}><Trash2 className="h-4 w-4" /></Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </Card>
+          );
+        })
+      )}
 
       {(editing || creating) && (
         <WaitlistDialog entry={editing} onClose={() => { setEditing(null); setCreating(false); }} />
