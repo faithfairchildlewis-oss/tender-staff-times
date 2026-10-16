@@ -16,6 +16,16 @@ import type { WaitlistRecord } from "@/lib/enrollment/mapping";
 
 const STATUSES = ["Inquiry", "Touring", "Deposit paid", "Hold – deposit pending", "Enrolled", "Withdrawn"];
 
+/** Waitlist sections, in canonical room order. Each entry is grouped by the
+ *  room it would be age-eligible for at its desired start date. */
+const AGE_GROUPS: { room: RoomCode; title: string; band: string }[] = [
+  { room: "F", title: "The Acorns (Infants)", band: "Babies up to 12 months" },
+  { room: "I", title: "The Pine Cones (Toddlers)", band: "12–18 months" },
+  { room: "G/H", title: "The Sprouts (Twos)", band: "18 months – 3 years" },
+  { room: "J/K", title: "Mighty Oaks (Threes + Fours)", band: "3 years to kindergarten" },
+  { room: "SAC", title: "Mighty Cedars (School Age)", band: "Kindergarten and up" },
+];
+
 export const Route = createFileRoute("/enrollment/waitlist")({
   component: WaitlistPage,
 });
