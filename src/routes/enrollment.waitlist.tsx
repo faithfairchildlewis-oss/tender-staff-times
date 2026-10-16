@@ -76,7 +76,11 @@ function WaitlistPage() {
           const entries = waitlist
             .map((w) => ({ w, m: match(w) }))
             .filter((e) => e.m.targetRoom === g.room)
-            .sort((a, b) => a.w.desiredStart.localeCompare(b.w.desiredStart));
+            .sort(
+              (a, b) =>
+                a.w.dobOrDueDate.localeCompare(b.w.dobOrDueDate) ||
+                a.w.desiredStart.localeCompare(b.w.desiredStart),
+            );
           if (entries.length === 0) return null;
           return (
             <Card key={g.room} className="overflow-x-auto">
