@@ -9,7 +9,9 @@ const sessionConfig = () => ({
   cookie: {
     httpOnly: true,
     secure: true,
-    sameSite: "lax" as const,
+    // "none" so the unlock cookie also works inside the editor's preview frame.
+    sameSite: "none" as const,
+    partitioned: true,
     path: "/",
   },
 });
