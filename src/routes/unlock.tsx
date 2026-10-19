@@ -3,12 +3,17 @@ import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { Lock } from "lucide-react";
 import { unlockSite } from "@/lib/gate.functions";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/unlock")({
   head: () => ({
     meta: [
       { title: "Enter Password — Tender Years of Deale" },
       { name: "description", content: "Enter the staff password to view the schedule." },
+      { property: "og:title", content: "Enter Password — Tender Years of Deale" },
+      { property: "og:description", content: "Enter the staff password to view the schedule." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex,nofollow" },
     ],
   }),
@@ -19,18 +24,23 @@ function UnlockPage() {
   const router = useRouter();
   const unlock = useServerFn(unlockSite);
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setError(false);
+    setError(null);
     setBusy(true);
-    const { ok } = await unlock({ data: { password } });
-    if (ok) {
-      await router.navigate({ to: "/" });
-    } else {
-      setError(true);
+    try {
+      const { ok } = await unlock({ data: { password } });
+      if (ok) {
+        await router.navigate({ to: "/" });
+      } else {
+        setError("Incorrect password — please try again.");
+      }
+    } catch {
+      setError("Unable to unlock right now — please try again.");
+    } finally {
       setBusy(false);
     }
   }
@@ -63,17 +73,17 @@ function UnlockPage() {
               placeholder="Password"
             />
             {error && (
-              <p className="text-center text-sm text-destructive">
-                Incorrect password — please try again.
+              <p role="alert" className="text-center text-sm text-destructive">
+                {error}
               </p>
             )}
-            <button
+            <Button
               type="submit"
               disabled={busy || !password}
               className="w-full rounded-lg bg-primary px-4 py-3 font-medium text-primary-foreground transition hover:bg-primary/90 disabled:opacity-50"
             >
               {busy ? "Checking…" : "Enter"}
-            </button>
+            </Button>
           </form>
         </div>
         <p className="mt-4 text-center text-xs text-muted-foreground">
