@@ -41,6 +41,7 @@ export const SAC_EXTRA_WINDOWS: Record<string, [number, number][]> = {
 export const CLOSED_ROOMS_DATES: Record<string, string[]> = {
   // Room I closed Wednesday, Oct 21 — children combine into other rooms.
   "2026-10-21": ["Room I"],
+  "2026-10-22": ["Room I"],
 };
 
 /** ISO date for a day of the week, derived from the week's start date.

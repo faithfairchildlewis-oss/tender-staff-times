@@ -44,7 +44,14 @@ describe("minimumFor — whole-day room closures", () => {
 
   it("does not close Room I on other days that week", () => {
     expect(minimumFor("Room I", "9:00 AM", "2026-10-19", "2026-10-19")).toBe(1);
-    expect(minimumFor("Room I", "9:00 AM", "2026-10-19", "2026-10-22")).toBe(1);
+    expect(minimumFor("Room I", "9:00 AM", "2026-10-19", "2026-10-23")).toBe(1);
+  });
+
+  it("closes Room I all day on Thursday, Oct 22", () => {
+    for (const time of ["7:00 AM", "9:00 AM", "12:00 PM", "3:30 PM"]) {
+      expect(minimumFor("Room I", time, "2026-10-19", "2026-10-22")).toBeNull();
+    }
+    expect(minimumFor("Room F", "9:00 AM", "2026-10-19", "2026-10-22")).toBe(1);
   });
 
   it("does not close other rooms on Oct 21", () => {
