@@ -36,6 +36,13 @@ export const SAC_EXTRA_WINDOWS: Record<string, [number, number][]> = {
   "2026-10-12": [[13 * 60, 17 * 60 + 30]],
 };
 
+/** Rooms closed for the whole day on specific dates (ISO YYYY-MM-DD → rooms).
+ *  A closed room has no staffing minimum and shows as closed in the grid. */
+export const CLOSED_ROOMS_DATES: Record<string, string[]> = {
+  // Room I closed Wednesday, Oct 21 — children combine into other rooms.
+  "2026-10-21": ["Room I"],
+};
+
 /** ISO date for a day of the week, derived from the week's start date.
  *  Uses UTC math so DST transitions can't shift the calendar date. */
 function dayIso(startDate: string, dayIndex: number): string | null {
@@ -65,6 +72,8 @@ export function minimumFor(
 ): number | null {
   const m = parseTime(time);
   const HM = (h: number, mn: number) => h * 60 + mn;
+  // One-off: room closed for the whole day on specific dates.
+  if (dayDate && CLOSED_ROOMS_DATES[dayDate]?.includes(room)) return null;
   if (room === "SAC") {
     // Open 7:00–8:30 AM (slots 7:00, 7:30, 8:00) and 2:30–5:30 PM (slots 2:30–5:00).
     if ((m >= HM(7, 0) && m < HM(8, 30)) || (m >= HM(14, 30) && m < HM(17, 30))) return 1;

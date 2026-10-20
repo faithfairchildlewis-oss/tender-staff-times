@@ -34,3 +34,25 @@ describe("minimumFor — SAC open windows", () => {
     expect(minimumFor("SAC", "12:30 PM", "2026-09-21", "2026-09-21")).toBe(1);
   });
 });
+
+describe("minimumFor — whole-day room closures", () => {
+  it("closes Room I all day on Wednesday, Oct 21", () => {
+    expect(minimumFor("Room I", "7:00 AM", "2026-10-19", "2026-10-21")).toBeNull();
+    expect(minimumFor("Room I", "12:00 PM", "2026-10-19", "2026-10-21")).toBeNull();
+    expect(minimumFor("Room I", "3:30 PM", "2026-10-19", "2026-10-21")).toBeNull();
+  });
+
+  it("does not close Room I on other days that week", () => {
+    expect(minimumFor("Room I", "9:00 AM", "2026-10-19", "2026-10-19")).toBe(1);
+    expect(minimumFor("Room I", "9:00 AM", "2026-10-19", "2026-10-22")).toBe(1);
+  });
+
+  it("does not close other rooms on Oct 21", () => {
+    expect(minimumFor("Room F", "9:00 AM", "2026-10-19", "2026-10-21")).toBe(1);
+    expect(minimumFor("J/K", "9:00 AM", "2026-10-19", "2026-10-21")).toBe(2);
+  });
+
+  it("cannot close a room without a day date", () => {
+    expect(minimumFor("Room I", "9:00 AM", "2026-10-19")).toBe(1);
+  });
+});
