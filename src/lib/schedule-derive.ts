@@ -34,6 +34,7 @@ export const SAC_ALL_DAY_DATES = new Set<string>(["2026-09-21"]);
 export const SAC_EXTRA_WINDOWS: Record<string, [number, number][]> = {
   // McKenzie arrives 1:00 PM on Monday, Oct 12 and stays to close.
   "2026-10-12": [[13 * 60, 17 * 60 + 30]],
+  "2026-10-21": [[7 * 60, 10 * 60]],
 };
 
 /** Rooms closed for the whole day on specific dates (ISO YYYY-MM-DD → rooms).
@@ -41,7 +42,6 @@ export const SAC_EXTRA_WINDOWS: Record<string, [number, number][]> = {
 export const CLOSED_ROOMS_DATES: Record<string, string[]> = {
   // Room I closed Wednesday, Oct 21 — children combine into other rooms.
   "2026-10-21": ["Room I"],
-  "2026-10-22": ["Room I"],
 };
 
 /** ISO date for a day of the week, derived from the week's start date.
