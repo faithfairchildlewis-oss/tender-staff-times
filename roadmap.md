@@ -1,2 +1,3 @@
 - [x] Record Vinnie absent due to sickness October 19–21.
 - [x] Add Vinnie in J/K October 22–23, 7 AM–5 PM, and verify coverage and hours.
+- [ ] Close Room I October 22; move Leola to F, Ashley to J/K, Laurel to G/H; verify Thursday grid.
