@@ -1,0 +1,2 @@
+- [x] Record Vinnie absent due to sickness October 19–21.
+- [ ] Add Vinnie in J/K October 22–23, 7 AM–5 PM, and verify coverage and hours.
