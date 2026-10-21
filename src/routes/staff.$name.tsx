@@ -212,7 +212,7 @@ function StaffPage() {
                 ) : !off && (() => {
                   const showLunch = hrs >= 6;
                   const lunchTime =
-                    showLunch && sInfo.lunch.type === "fixed" && typeof sInfo.lunch.time === "string"
+                    showLunch && sInfo?.lunch?.type === "fixed" && typeof sInfo.lunch.time === "string"
                       ? sInfo.lunch.time
                       : null;
                   const items = buildDayItems(
