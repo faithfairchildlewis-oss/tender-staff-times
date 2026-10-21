@@ -46,8 +46,13 @@ export const SAC_CLOSED_WINDOWS: Record<string, [number, number][]> = {
 /** Rooms closed for the whole day on specific dates (ISO YYYY-MM-DD → rooms).
  *  A closed room has no staffing minimum and shows as closed in the grid. */
 export const CLOSED_ROOMS_DATES: Record<string, string[]> = {
-  // Room I closed Wednesday, Oct 21 — children combine into other rooms.
-  "2026-10-21": ["Room I"],
+};
+
+/** Rooms closed for part of a day on specific dates, as [startMin, endMin)
+ *  minutes past midnight. */
+export const ROOM_CLOSED_WINDOWS: Record<string, Record<string, [number, number][]>> = {
+  // Wed Oct 21: Room I open 7:00 AM–12:30 PM only.
+  "2026-10-21": { "Room I": [[12 * 60 + 30, 24 * 60]] },
 };
 
 /** ISO date for a day of the week, derived from the week's start date.
@@ -81,6 +86,7 @@ export function minimumFor(
   const HM = (h: number, mn: number) => h * 60 + mn;
   // One-off: room closed for the whole day on specific dates.
   if (dayDate && CLOSED_ROOMS_DATES[dayDate]?.includes(room)) return null;
+  if (dayDate && ROOM_CLOSED_WINDOWS[dayDate]?.[room]?.some(([s, e]) => m >= s && m < e)) return null;
   if (room === "SAC") {
     if (dayDate && SAC_CLOSED_WINDOWS[dayDate]?.some(([s, e]) => m >= s && m < e)) return null;
     // Open 7:00–8:30 AM (slots 7:00, 7:30, 8:00) and 2:30–5:30 PM (slots 2:30–5:00).
