@@ -54,12 +54,13 @@ describe("minimumFor — whole-day room closures", () => {
     expect(minimumFor("Room F", "9:00 AM", "2026-10-19", "2026-10-22")).toBe(1);
   });
 
-  it("keeps SAC open for Zoe Wednesday October 21 from 7 to 10 AM", () => {
-    for (const time of ["7:00 AM", "8:30 AM", "9:00 AM", "9:30 AM"]) {
-      expect(minimumFor("SAC", time, "2026-10-19", "2026-10-21")).toBe(1);
+  it("closes SAC 7:30 AM to 2:30 PM on Wednesday October 21", () => {
+    expect(minimumFor("SAC", "7:00 AM", "2026-10-19", "2026-10-21")).toBe(1);
+    for (const time of ["7:30 AM", "8:00 AM", "9:00 AM", "2:00 PM"]) {
+      expect(minimumFor("SAC", time, "2026-10-19", "2026-10-21")).toBeNull();
     }
-    expect(minimumFor("SAC", "10:00 AM", "2026-10-19", "2026-10-21")).toBeNull();
-    expect(minimumFor("SAC", "9:00 AM", "2026-10-19", "2026-10-22")).toBeNull();
+    expect(minimumFor("SAC", "2:30 PM", "2026-10-19", "2026-10-21")).toBe(1);
+    expect(minimumFor("SAC", "8:00 AM", "2026-10-19", "2026-10-22")).toBe(1);
   });
 
   it("does not close other rooms on Oct 21", () => {

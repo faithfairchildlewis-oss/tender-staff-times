@@ -34,7 +34,13 @@ export const SAC_ALL_DAY_DATES = new Set<string>(["2026-09-21"]);
 export const SAC_EXTRA_WINDOWS: Record<string, [number, number][]> = {
   // McKenzie arrives 1:00 PM on Monday, Oct 12 and stays to close.
   "2026-10-12": [[13 * 60, 17 * 60 + 30]],
-  "2026-10-21": [[7 * 60, 10 * 60]],
+};
+
+/** SAC closed windows on specific dates, as [startMin, endMin) minutes past
+ *  midnight — overrides the usual open windows. */
+export const SAC_CLOSED_WINDOWS: Record<string, [number, number][]> = {
+  // Wed Oct 21: SAC closes at 7:30 AM, reopens 2:30 PM.
+  "2026-10-21": [[7 * 60 + 30, 8 * 60 + 30]],
 };
 
 /** Rooms closed for the whole day on specific dates (ISO YYYY-MM-DD → rooms).
@@ -76,6 +82,7 @@ export function minimumFor(
   // One-off: room closed for the whole day on specific dates.
   if (dayDate && CLOSED_ROOMS_DATES[dayDate]?.includes(room)) return null;
   if (room === "SAC") {
+    if (dayDate && SAC_CLOSED_WINDOWS[dayDate]?.some(([s, e]) => m >= s && m < e)) return null;
     // Open 7:00–8:30 AM (slots 7:00, 7:30, 8:00) and 2:30–5:30 PM (slots 2:30–5:00).
     if ((m >= HM(7, 0) && m < HM(8, 30)) || (m >= HM(14, 30) && m < HM(17, 30))) return 1;
     // One-off: SAC open all day on specific dates.
