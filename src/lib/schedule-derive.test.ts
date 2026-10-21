@@ -36,9 +36,10 @@ describe("minimumFor — SAC open windows", () => {
 });
 
 describe("minimumFor — whole-day room closures", () => {
-  it("opens Room I 7:00 AM–12:30 PM only on Wednesday, Oct 21", () => {
+  it("opens Room I 7:00 AM–12:00 PM only on Wednesday, Oct 21", () => {
     expect(minimumFor("Room I", "7:00 AM", "2026-10-19", "2026-10-21")).toBe(1);
-    expect(minimumFor("Room I", "12:00 PM", "2026-10-19", "2026-10-21")).toBe(1);
+    expect(minimumFor("Room I", "11:30 AM", "2026-10-19", "2026-10-21")).toBe(1);
+    expect(minimumFor("Room I", "12:00 PM", "2026-10-19", "2026-10-21")).toBeNull();
     expect(minimumFor("Room I", "12:30 PM", "2026-10-19", "2026-10-21")).toBeNull();
     expect(minimumFor("Room I", "3:30 PM", "2026-10-19", "2026-10-21")).toBeNull();
   });
