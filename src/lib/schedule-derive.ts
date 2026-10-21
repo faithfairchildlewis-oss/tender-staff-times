@@ -51,8 +51,8 @@ export const CLOSED_ROOMS_DATES: Record<string, string[]> = {
 /** Rooms closed for part of a day on specific dates, as [startMin, endMin)
  *  minutes past midnight. */
 export const ROOM_CLOSED_WINDOWS: Record<string, Record<string, [number, number][]>> = {
-  // Wed Oct 21: Room I open 7:00 AM–12:30 PM only.
-  "2026-10-21": { "Room I": [[12 * 60 + 30, 24 * 60]] },
+  // Wed Oct 21: Room I open 7:00 AM–12:00 PM only.
+  "2026-10-21": { "Room I": [[12 * 60, 24 * 60]] },
 };
 
 /** ISO date for a day of the week, derived from the week's start date.
