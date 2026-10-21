@@ -26,7 +26,7 @@ export const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
 
 /** Dates (ISO YYYY-MM-DD) when SAC operates all day instead of its usual
  *  7:00–8:30 AM / 2:30–5:30 PM windows. */
-export const SAC_ALL_DAY_DATES = new Set<string>(["2026-09-21"]);
+export const SAC_ALL_DAY_DATES = new Set<string>(["2026-09-21", "2026-10-26"]);
 
 /** Extra SAC open windows on specific dates, as [startMin, endMin) minutes past
  *  midnight — used when a staff member is scheduled into SAC outside the usual
