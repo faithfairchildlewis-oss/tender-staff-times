@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { requireAdmin } from "@/lib/require-admin";
 import { useMemo, useState } from "react";
 import { Printer, ArrowLeft } from "lucide-react";
 import { DAYS } from "@/data/schedule";
@@ -8,6 +9,7 @@ import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/print/rooms")({
   ssr: false,
+  beforeLoad: requireAdmin,
   head: () => ({
     meta: [{ title: "Print Room View — Tender Years of Deale" }],
   }),

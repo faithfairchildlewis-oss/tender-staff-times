@@ -1,10 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { requireAdmin } from "@/lib/require-admin";
 import { ArrowLeft } from "lucide-react";
 import { useCurrentSchedule } from "@/hooks/use-schedule";
 import { DAYS } from "@/data/schedule";
 import { monthDayFor } from "@/lib/format-date";
 
 export const Route = createFileRoute("/lunch")({
+  ssr: false,
+  beforeLoad: requireAdmin,
   head: () => ({
     meta: [
       { title: "Today's Lunch Schedule — Tender Years of Deale" },
