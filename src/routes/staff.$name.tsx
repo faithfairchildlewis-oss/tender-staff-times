@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, MessageSquare, Utensils, PartyPopper } from "lucide-react";
 
-import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
+import { blocksForDay, dayHours, normalizeStaffInfo, weeklyHours } from "@/data/schedule";
 import { useCurrentSchedule, useLiveSchedules, useStaffHoursInRange } from "@/hooks/use-schedule";
 import { formatWeekRange, mmddFor } from "@/lib/format-date";
 import { PageBanner } from "@/components/page-banner";
@@ -43,10 +43,13 @@ function StaffPage() {
   if (isLoading || !schedule) {
     return <div className="min-h-dvh bg-background p-6 text-muted-foreground">Loading…</div>;
   }
-  const info = schedule.staff[name];
-  const infoFromLive = info
-    ? info
-    : (liveSchedules ?? []).map((s) => s.staff?.[name]).find(Boolean);
+  const rawInfo = schedule.staff[name];
+  const info = rawInfo != null ? normalizeStaffInfo(rawInfo) : null;
+  const infoFromLive =
+    info ??
+    (liveSchedules ?? [])
+      .map((s) => (s.staff?.[name] != null ? normalizeStaffInfo(s.staff?.[name]) : null))
+      .find(Boolean);
   if (!infoFromLive) {
     return (
       <div className="min-h-dvh bg-background p-6">
@@ -151,7 +154,7 @@ function StaffPage() {
               const weekLabel = sched.start_date
                 ? formatWeekRange(sched.start_date)
                 : sched.week ?? "—";
-              const sInfo = sched.staff[name] ?? infoFromLive;
+              const sInfo = normalizeStaffInfo(sched.staff[name] ?? infoFromLive);
               return (
                 <div key={sched.start_date ?? weekLabel}>
                   {showDividers && (
