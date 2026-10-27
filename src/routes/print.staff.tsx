@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { requireAdmin } from "@/lib/require-admin";
 import { useMemo, useState } from "react";
 import { Printer, ArrowLeft } from "lucide-react";
 import { blocksForDay, staffNames, weeklyHours, DAYS } from "@/data/schedule";
@@ -8,6 +9,7 @@ import { DAY_NAMES } from "@/lib/schedule-derive";
 
 export const Route = createFileRoute("/print/staff")({
   ssr: false,
+  beforeLoad: requireAdmin,
   head: () => ({
     meta: [{ title: "Print Staff Schedule — Tender Years of Deale" }],
   }),
