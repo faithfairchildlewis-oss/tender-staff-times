@@ -14,9 +14,9 @@ export const Route = createFileRoute("/staff/$name")({
   head: ({ params }) => ({
     meta: [
       { title: `Hi, ${params.name} — Tender Years of Deale` },
-      { name: "description", content: `Weekly shift schedule, room assignments, and lunch times for ${params.name} at Tender Years of Deale.` },
+      { name: "description", content: `Weekly shift schedule and lunch times for ${params.name} at Tender Years of Deale.` },
       { property: "og:title", content: `Hi, ${params.name} — Tender Years of Deale` },
-      { property: "og:description", content: `Weekly shift schedule, room assignments, and lunch times for ${params.name} at Tender Years of Deale.` },
+      { property: "og:description", content: `Weekly shift schedule and lunch times for ${params.name} at Tender Years of Deale.` },
       { property: "og:url", content: `/staff/${params.name}` },
     ],
     links: [{ rel: "canonical", href: `/staff/${params.name}` }],
