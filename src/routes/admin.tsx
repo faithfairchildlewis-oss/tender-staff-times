@@ -15,7 +15,7 @@ import {
   deriveDays,
   expandBlocks,
 } from "@/lib/schedule-derive";
-import { blocksForDay } from "@/data/schedule";
+import { blocksForDay, normalizeStaffInfo } from "@/data/schedule";
 import { formatMDY, formatWeekRange, mmddFor, monthDayFor, parseMDYToIso } from "@/lib/format-date";
 import {
   Select,
@@ -844,12 +844,19 @@ function WeekEditor({
     const sd = { ...(data.staff_daily ?? {}) };
     // Copy roster info (rate, lunch, daily_breaks) and per-day shift assignments
     // for just this one person. Hours recompute on save from the new slots.
+    const normalizedSrc = normalizeStaffInfo(srcEntry);
     staff[staffName] = {
       ...staff[staffName],
       rate: srcEntry.rate ?? staff[staffName]?.rate ?? 0,
       hours: 0,
-      lunch: srcEntry.lunch ?? staff[staffName]?.lunch ?? { type: "varies" },
-      daily_breaks: srcEntry.daily_breaks ?? staff[staffName]?.daily_breaks ?? {},
+      lunch:
+        srcEntry.lunch && typeof srcEntry.lunch === "object"
+          ? normalizedSrc.lunch
+          : staff[staffName]?.lunch ?? { type: "varies" },
+      daily_breaks:
+        srcEntry.daily_breaks && typeof srcEntry.daily_breaks === "object"
+          ? normalizedSrc.daily_breaks
+          : staff[staffName]?.daily_breaks ?? {},
     };
     const byDay: Record<string, { time: string; rooms: string[] }[]> = {};
     for (const d of DAY_NAMES) {
@@ -926,7 +933,10 @@ function WeekEditor({
     alert("Saved");
   }
 
-  const info = staffName ? data.staff[staffName] : null;
+  const info =
+    staffName && data.staff[staffName]
+      ? normalizeStaffInfo(data.staff[staffName])
+      : null;
 
   return (
     <section className="bg-card rounded-2xl shadow-sm p-4 space-y-4">
