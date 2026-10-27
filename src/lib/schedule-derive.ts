@@ -26,7 +26,14 @@ export const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
 
 /** Dates (ISO YYYY-MM-DD) when SAC operates all day instead of its usual
  *  7:00–8:30 AM / 2:30–5:30 PM windows. */
-export const SAC_ALL_DAY_DATES = new Set<string>(["2026-09-21", "2026-10-26"]);
+export const SAC_ALL_DAY_DATES = new Set<string>(["2026-09-21"]);
+
+/** Dates (ISO YYYY-MM-DD) when J/K needs only 1 staff at every open slot
+ *  (no 2-staff windows). */
+export const J_K_SINGLE_STAFF_DATES = new Set<string>([
+  // Week of Oct 26–30, 2026: smaller group that week.
+  "2026-10-26","2026-10-27","2026-10-28","2026-10-29","2026-10-30",
+]);
 
 /** Extra SAC open windows on specific dates, as [startMin, endMin) minutes past
  *  midnight — used when a staff member is scheduled into SAC outside the usual
@@ -41,6 +48,12 @@ export const SAC_EXTRA_WINDOWS: Record<string, [number, number][]> = {
 export const SAC_CLOSED_WINDOWS: Record<string, [number, number][]> = {
   // Wed Oct 21: SAC closes at 7:30 AM, reopens 2:30 PM.
   "2026-10-21": [[7 * 60 + 30, 8 * 60 + 30]],
+  // Week of Oct 26–30, 2026: SAC opens at 7:30 AM instead of the usual 7:00 AM.
+  "2026-10-26": [[7 * 60 + 30, 8 * 60 + 30]],
+  "2026-10-27": [[7 * 60 + 30, 8 * 60 + 30]],
+  "2026-10-28": [[7 * 60 + 30, 8 * 60 + 30]],
+  "2026-10-29": [[7 * 60 + 30, 8 * 60 + 30]],
+  "2026-10-30": [[7 * 60 + 30, 8 * 60 + 30]],
 };
 
 /** Rooms closed for the whole day on specific dates (ISO YYYY-MM-DD → rooms).
@@ -114,6 +127,8 @@ export function minimumFor(
     return 1;
   }
   if (room === "J/K") {
+    // One-off: only 1 staff needed all day on specific dates.
+    if (dayDate && J_K_SINGLE_STAFF_DATES.has(dayDate)) return 1;
     // 2 staff 9:00 AM–12:00 PM and 3:00 PM–4:30 PM (inclusive), else 1.
     // 7:00–9:00 AM and 12:30 PM–2:30 PM only need 1 staff.
     if ((m >= HM(9, 0) && m <= HM(12, 0)) || (m >= HM(15, 0) && m <= HM(16, 30))) return 2;
