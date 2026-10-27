@@ -74,3 +74,34 @@ describe("minimumFor — whole-day room closures", () => {
     expect(minimumFor("Room I", "9:00 AM", "2026-10-19")).toBe(1);
   });
 });
+
+describe("minimumFor — week of Oct 26–30, 2026", () => {
+  it("needs only 1 staff in J/K all week, with no 2-staff windows", () => {
+    for (const d of ["2026-10-26", "2026-10-27", "2026-10-28", "2026-10-29", "2026-10-30"]) {
+      expect(minimumFor("J/K", "9:00 AM", "2026-10-26", d)).toBe(1);
+      expect(minimumFor("J/K", "3:00 PM", "2026-10-26", d)).toBe(1);
+      expect(minimumFor("J/K", "7:00 AM", "2026-10-26", d)).toBe(1);
+    }
+  });
+
+  it("keeps the usual 2-staff J/K windows on other weeks", () => {
+    expect(minimumFor("J/K", "9:00 AM", "2026-11-02", "2026-11-02")).toBe(2);
+    expect(minimumFor("J/K", "3:00 PM", "2026-10-19", "2026-10-19")).toBe(2);
+  });
+
+  it("opens SAC only 7:00–7:30 AM and 2:30–5:30 PM that week", () => {
+    for (const d of ["2026-10-26", "2026-10-27", "2026-10-28", "2026-10-29", "2026-10-30"]) {
+      expect(minimumFor("SAC", "7:00 AM", "2026-10-26", d)).toBe(1);
+      expect(minimumFor("SAC", "7:30 AM", "2026-10-26", d)).toBeNull();
+      expect(minimumFor("SAC", "8:00 AM", "2026-10-26", d)).toBeNull();
+      expect(minimumFor("SAC", "12:30 PM", "2026-10-26", d)).toBeNull();
+      expect(minimumFor("SAC", "2:30 PM", "2026-10-26", d)).toBe(1);
+      expect(minimumFor("SAC", "5:00 PM", "2026-10-26", d)).toBe(1);
+    }
+  });
+
+  it("does not shorten the SAC morning on other weeks", () => {
+    expect(minimumFor("SAC", "8:00 AM", "2026-11-02", "2026-11-02")).toBe(1);
+    expect(minimumFor("SAC", "12:00 PM", "2026-09-21", "2026-09-21")).toBe(1);
+  });
+});
