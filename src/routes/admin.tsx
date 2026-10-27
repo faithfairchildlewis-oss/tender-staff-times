@@ -197,13 +197,20 @@ function AdminEditor() {
       return;
     }
     const label = formatWeekRange(date);
-    // Deep clone so the new row gets its own copy of staff, staff_daily
-    // (room assignments) and days — editing it later must not mutate the
-    // source week.
+    // Deep clone so the new row gets its own copy of staff and days — editing
+    // it later must not mutate the source week.
     const cloned: ScheduleData = JSON.parse(JSON.stringify(src.data));
     cloned.week = label;
-    // Rebuild days[].slots from the duplicated staff_daily so the room
-    // grid is in sync with the copied per-staff assignments.
+    // Keep the roster (names, rate, lunch) but carry over NO shifts: clear
+    // everyone's staff_daily, reset breaks and hours to 0, then rebuild days
+    // so the room grid is empty with the correct minimums for the new date.
+    for (const entry of Object.values(cloned.staff ?? {})) {
+      if (entry && typeof entry === "object") {
+        entry.daily_breaks = {};
+        entry.hours = 0;
+      }
+    }
+    cloned.staff_daily = {};
     cloned.days = deriveDays(cloned, date);
     const { data: row, error } = await supabase
       .from("schedules")
@@ -432,7 +439,7 @@ function AdminEditor() {
                         </button>
                         <button
                           onClick={() => duplicate(s)}
-                          title="Duplicate"
+                          title="New week from this roster (no shifts)"
                           className="p-2 min-h-11 min-w-11 rounded-lg text-muted-foreground"
                         >
                           <Copy className="w-5 h-5" />
