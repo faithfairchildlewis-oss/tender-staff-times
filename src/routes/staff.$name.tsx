@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CalendarDays, TreePine, MessageSquare, Utensils, PartyPopper } from "lucide-react";
+import { CalendarDays, MessageSquare, Utensils, PartyPopper } from "lucide-react";
 
 import { blocksForDay, dayHours, weeklyHours } from "@/data/schedule";
 import { useCurrentSchedule, useLiveSchedules, useStaffHoursInRange } from "@/hooks/use-schedule";
@@ -90,13 +90,6 @@ function StaffPage() {
             className="flex-1 min-h-11 px-2 rounded-lg text-xs font-semibold inline-flex items-center justify-center gap-1 bg-primary-foreground text-primary"
           >
             <CalendarDays className="w-4 h-4" /> My Week
-          </Link>
-          <Link
-            to="/rooms"
-            search={{ from: name }}
-            className="flex-1 min-h-11 px-2 rounded-lg text-xs font-semibold inline-flex items-center justify-center gap-1 bg-primary-foreground/15 text-primary-foreground"
-          >
-            <TreePine className="w-4 h-4" /> Our Rooms
           </Link>
           <a
             href={`sms:+14104744156,+12404167395?&body=${encodeURIComponent(
@@ -228,19 +221,6 @@ function StaffPage() {
                             <div className="text-base text-foreground">
                               {it.start} – {it.end}
                             </div>
-                            <div
-                              className="flex flex-wrap gap-1 justify-end"
-                              aria-label={`Classes: ${it.rooms.map(roomToClass).join(", ")}`}
-                            >
-                              {it.rooms.map((r) => (
-                                <span
-                                  key={r}
-                                  className="bg-primary text-primary-foreground text-xs font-semibold px-2.5 py-1 rounded-full"
-                                >
-                                  {roomToClass(r)}
-                                </span>
-                              ))}
-                            </div>
                           </li>
                         ) : (
                           <li key={i} className="flex items-center gap-3 px-4 py-3 bg-secondary/50">
@@ -278,9 +258,4 @@ function StaffPage() {
       <div className="h-6" aria-hidden="true" />
     </div>
   );
-}
-
-/** Replace the word "Room" in a room/class label with "Class". */
-function roomToClass(label: string): string {
-  return label.replace(/\bRoom\b/gi, "Class");
 }
