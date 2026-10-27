@@ -42,6 +42,25 @@ export function staffNames(s: ScheduleData): string[] {
   return Object.keys(s.staff);
 }
 
+/** Coerces a staff entry that may be missing or malformed (e.g. { hours: 10.5 }
+ *  or lunch: "") into a well-formed StaffInfo so pages never crash reading
+ *  lunch.type / daily_breaks. Missing or non-object lunch becomes
+ *  { type: "varies" }; missing daily_breaks becomes {}; missing rate/hours 0. */
+export function normalizeStaffInfo(raw: unknown): StaffInfo {
+  const r = (raw && typeof raw === "object" ? raw : {}) as Partial<StaffInfo>;
+  const lunchRaw = (r.lunch && typeof r.lunch === "object" ? r.lunch : {}) as Partial<StaffInfo["lunch"]>;
+  const lunch: StaffInfo["lunch"] =
+    lunchRaw.type === "fixed"
+      ? { type: "fixed", time: typeof lunchRaw.time === "string" ? lunchRaw.time : undefined }
+      : { type: "varies" };
+  return {
+    rate: typeof r.rate === "number" ? r.rate : 0,
+    hours: typeof r.hours === "number" ? r.hours : 0,
+    lunch,
+    daily_breaks: r.daily_breaks && typeof r.daily_breaks === "object" ? r.daily_breaks : {},
+  };
+}
+
 /** Compress consecutive 30-min blocks into time ranges with rooms. */
 export function blocksForDay(s: ScheduleData, name: string, day: string) {
   const slots = s.staff_daily?.[name]?.[day] ?? [];
