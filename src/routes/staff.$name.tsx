@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CalendarDays, MessageSquare, Utensils, PartyPopper } from "lucide-react";
+import { CalendarDays, CalendarHeart, MessageSquare, Utensils, PartyPopper } from "lucide-react";
 
 import { blocksForDay, dayHours, normalizeStaffInfo, weeklyHours } from "@/data/schedule";
 import { useCurrentSchedule, useLiveSchedules, useStaffHoursInRange } from "@/hooks/use-schedule";
@@ -150,6 +150,31 @@ function StaffPage() {
                   )
                 : [schedule];
             const showDividers = !!(liveSchedules && liveSchedules.length > 0);
+            const totalShifts = weeks.reduce(
+              (sum, sched) =>
+                sum +
+                sched.days.reduce(
+                  (n, d) => n + blocksForDay(sched, name, d.day).length,
+                  0,
+                ),
+              0,
+            );
+            if (totalShifts === 0) {
+              return (
+                <div className="bg-card rounded-2xl shadow-sm px-6 py-10 text-center">
+                  <div className="mx-auto w-16 h-16 rounded-full bg-lilac/60 flex items-center justify-center mb-4">
+                    <CalendarHeart className="w-8 h-8 text-primary" aria-hidden="true" />
+                  </div>
+                  <div className="text-lg font-bold text-foreground">
+                    No Hours Scheduled Yet
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Nothing on the calendar for now — check back soon, or ask
+                    your director about upcoming shifts.
+                  </p>
+                </div>
+              );
+            }
             return weeks.map((sched) => {
               const weekLabel = sched.start_date
                 ? formatWeekRange(sched.start_date)
