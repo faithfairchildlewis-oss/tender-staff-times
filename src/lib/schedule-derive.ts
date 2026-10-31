@@ -30,6 +30,8 @@ export const SAC_ALL_DAY_DATES = new Set<string>([
   "2026-09-21",
   // Mon Nov 2 & Tue Nov 3, 2026: SAC open all day
   "2026-11-02", "2026-11-03",
+  // Mon–Wed Nov 23–25, 2026: SAC open all day
+  "2026-11-23", "2026-11-24", "2026-11-25",
 ]);
 
 /** Dates (ISO YYYY-MM-DD) when J/K needs only 1 staff at every open slot
