@@ -26,7 +26,11 @@ export const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
 
 /** Dates (ISO YYYY-MM-DD) when SAC operates all day instead of its usual
  *  7:00–8:30 AM / 2:30–5:30 PM windows. */
-export const SAC_ALL_DAY_DATES = new Set<string>(["2026-09-21"]);
+export const SAC_ALL_DAY_DATES = new Set<string>([
+  "2026-09-21",
+  // Mon Nov 2 & Tue Nov 3, 2026: SAC open all day
+  "2026-11-02", "2026-11-03",
+]);
 
 /** Dates (ISO YYYY-MM-DD) when J/K needs only 1 staff at every open slot
  *  (no 2-staff windows). */
