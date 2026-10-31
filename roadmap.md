@@ -4,4 +4,4 @@
 - [x] Add Zoe October 21 SAC 7–10 AM and October 22 Room I 7 AM–3 PM; reopen Room I and verify both grids.
 - [x] Add Mac October 22 Room F 7 AM–4 PM; move Leola to M.O.D. without changing hours; verify Thursday assignments and grid.
 - [x] Update October 22 lunches and relief coverage; leave Sam/Mac lunch times TBD; verify breaks, hours, and Thursday grid.
-- [ ] Remove Marbie from all schedules, staff records, and bundled roster; verify no remaining references.
+- [x] Remove Marbie from all schedules, staff records, and bundled roster; verify no remaining references.
