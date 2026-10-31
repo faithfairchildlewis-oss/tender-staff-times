@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
-import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign, Eye, EyeOff, Users, Move, CalendarX2, Filter, PartyPopper, Ban, Clock } from "lucide-react";
+import { LogOut, Plus, Trash2, Copy, Check, Home, DollarSign, Eye, EyeOff, Users, Move, CalendarX2, Filter, PartyPopper, Ban, Clock, UtensilsCrossed, Printer, LayoutGrid } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -346,6 +346,26 @@ function AdminEditor() {
           >
             <Clock className="w-4 h-4" /> Timesheets
           </button>
+        </div>
+        <div className="flex gap-2 mt-2">
+          <Link
+            to="/lunch"
+            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
+          >
+            <UtensilsCrossed className="w-4 h-4" /> Lunch
+          </Link>
+          <Link
+            to="/print/staff"
+            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
+          >
+            <Printer className="w-4 h-4" /> Print Staff
+          </Link>
+          <Link
+            to="/print/rooms"
+            className="flex-1 min-h-11 px-3 rounded-lg text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-primary-foreground/15 text-primary-foreground"
+          >
+            <LayoutGrid className="w-4 h-4" /> Print Rooms
+          </Link>
         </div>
       </header>
 
