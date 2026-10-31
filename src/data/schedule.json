@@ -128,8 +128,7 @@
               "Adriana"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -141,7 +140,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "9:00 AM",
@@ -161,8 +162,7 @@
               "Adriana"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -174,7 +174,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "9:30 AM",
@@ -194,8 +196,7 @@
               "Adriana"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -207,7 +208,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "10:00 AM",
@@ -227,8 +230,7 @@
               "Adriana"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -240,7 +242,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "10:30 AM",
@@ -260,8 +264,7 @@
               "Adriana"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -273,7 +276,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "11:00 AM",
@@ -292,8 +297,7 @@
               "Adriana"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -305,7 +309,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "11:30 AM",
@@ -324,8 +330,7 @@
               "Adriana"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -337,7 +342,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "12:00 PM",
@@ -356,8 +363,7 @@
               "Adriana"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -369,7 +375,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "12:30 PM",
@@ -384,9 +392,7 @@
             "G/H": [
               "Adriana"
             ],
-            "J/K": [
-              "Marbie"
-            ],
+            "J/K": [],
             "SAC": null
           },
           "minimums": {
@@ -416,9 +422,7 @@
             "G/H": [
               "Adriana"
             ],
-            "J/K": [
-              "Marbie"
-            ],
+            "J/K": [],
             "SAC": null
           },
           "minimums": {
@@ -430,7 +434,8 @@
             "SAC": 0
           },
           "understaffed": [
-            "M.O.D."
+            "M.O.D.",
+            "J/K"
           ]
         },
         {
@@ -834,8 +839,7 @@
               "Adriana"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -847,7 +851,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "9:00 AM",
@@ -867,8 +873,7 @@
               "Adriana"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -880,7 +885,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "9:30 AM",
@@ -900,8 +907,7 @@
               "Adriana"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -913,7 +919,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "10:00 AM",
@@ -933,8 +941,7 @@
               "Adriana"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -946,7 +953,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "10:30 AM",
@@ -966,8 +975,7 @@
               "Adriana"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -979,7 +987,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "11:00 AM",
@@ -998,8 +1008,7 @@
               "Adriana"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -1011,7 +1020,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "11:30 AM",
@@ -1030,8 +1041,7 @@
               "Adriana"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -1043,7 +1053,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "12:00 PM",
@@ -1061,8 +1073,7 @@
               "Mitzi"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -1075,7 +1086,8 @@
             "SAC": 0
           },
           "understaffed": [
-            "G/H"
+            "G/H",
+            "J/K"
           ]
         },
         {
@@ -1091,9 +1103,7 @@
             "G/H": [
               "Lily"
             ],
-            "J/K": [
-              "Marbie"
-            ],
+            "J/K": [],
             "SAC": null
           },
           "minimums": {
@@ -1124,9 +1134,7 @@
               "Lily",
               "Adriana"
             ],
-            "J/K": [
-              "Marbie"
-            ],
+            "J/K": [],
             "SAC": null
           },
           "minimums": {
@@ -1138,7 +1146,8 @@
             "SAC": 0
           },
           "understaffed": [
-            "M.O.D."
+            "M.O.D.",
+            "J/K"
           ]
         },
         {
@@ -1544,8 +1553,7 @@
               "Mitzi"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -1558,7 +1566,8 @@
             "SAC": 0
           },
           "understaffed": [
-            "G/H"
+            "G/H",
+            "J/K"
           ]
         },
         {
@@ -1579,8 +1588,7 @@
               "Lily"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -1592,7 +1600,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "9:30 AM",
@@ -1612,8 +1622,7 @@
               "Lily"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -1625,7 +1634,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "10:00 AM",
@@ -1645,8 +1656,7 @@
               "Lily"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -1658,7 +1668,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "10:30 AM",
@@ -1678,8 +1690,7 @@
               "Lily"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -1691,7 +1702,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "11:00 AM",
@@ -1711,8 +1724,7 @@
               "Michelle"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -1724,7 +1736,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "11:30 AM",
@@ -1744,8 +1758,7 @@
               "Michelle"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -1757,7 +1770,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "12:00 PM",
@@ -1777,8 +1792,7 @@
               "Michelle"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -1790,7 +1804,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "12:30 PM",
@@ -1805,9 +1821,7 @@
             "G/H": [
               "Lily"
             ],
-            "J/K": [
-              "Marbie"
-            ],
+            "J/K": [],
             "SAC": null
           },
           "minimums": {
@@ -1837,9 +1851,7 @@
             "G/H": [
               "Lily"
             ],
-            "J/K": [
-              "Marbie"
-            ],
+            "J/K": [],
             "SAC": null
           },
           "minimums": {
@@ -1851,7 +1863,8 @@
             "SAC": 0
           },
           "understaffed": [
-            "M.O.D."
+            "M.O.D.",
+            "J/K"
           ]
         },
         {
@@ -2253,8 +2266,7 @@
               "Mitzi"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -2267,7 +2279,8 @@
             "SAC": 0
           },
           "understaffed": [
-            "G/H"
+            "G/H",
+            "J/K"
           ]
         },
         {
@@ -2287,8 +2300,7 @@
               "Lily"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -2300,7 +2312,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "9:30 AM",
@@ -2319,8 +2333,7 @@
               "Lily"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -2332,7 +2345,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "10:00 AM",
@@ -2351,8 +2366,7 @@
               "Lily"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -2364,7 +2378,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "10:30 AM",
@@ -2383,8 +2399,7 @@
               "Lily"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -2396,7 +2411,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "11:00 AM",
@@ -2414,8 +2431,7 @@
               "Mitzi"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -2428,7 +2444,8 @@
             "SAC": 0
           },
           "understaffed": [
-            "G/H"
+            "G/H",
+            "J/K"
           ]
         },
         {
@@ -2447,8 +2464,7 @@
               "Mitzi"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -2461,7 +2477,8 @@
             "SAC": 0
           },
           "understaffed": [
-            "G/H"
+            "G/H",
+            "J/K"
           ]
         },
         {
@@ -2482,8 +2499,7 @@
               "Lily"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -2495,7 +2511,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "12:30 PM",
@@ -2510,9 +2528,7 @@
             "G/H": [
               "Lily"
             ],
-            "J/K": [
-              "Marbie"
-            ],
+            "J/K": [],
             "SAC": null
           },
           "minimums": {
@@ -2541,9 +2557,7 @@
               "Baylee"
             ],
             "G/H": [],
-            "J/K": [
-              "Marbie"
-            ],
+            "J/K": [],
             "SAC": null
           },
           "minimums": {
@@ -2556,7 +2570,8 @@
           },
           "understaffed": [
             "M.O.D.",
-            "G/H"
+            "G/H",
+            "J/K"
           ]
         },
         {
@@ -2966,8 +2981,7 @@
               "Lily"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -2979,7 +2993,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "9:00 AM",
@@ -2999,8 +3015,7 @@
               "Lily"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -3012,7 +3027,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "9:30 AM",
@@ -3032,8 +3049,7 @@
               "Lily"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -3045,7 +3061,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "10:00 AM",
@@ -3065,8 +3083,7 @@
               "Lily"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -3078,7 +3095,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "10:30 AM",
@@ -3098,8 +3117,7 @@
               "Lily"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -3111,7 +3129,9 @@
             "J/K": 2,
             "SAC": 0
           },
-          "understaffed": []
+          "understaffed": [
+            "J/K"
+          ]
         },
         {
           "time": "11:00 AM",
@@ -3129,8 +3149,7 @@
               "Mitzi"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -3143,7 +3162,8 @@
             "SAC": 0
           },
           "understaffed": [
-            "G/H"
+            "G/H",
+            "J/K"
           ]
         },
         {
@@ -3162,8 +3182,7 @@
               "Mitzi"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -3176,7 +3195,8 @@
             "SAC": 0
           },
           "understaffed": [
-            "G/H"
+            "G/H",
+            "J/K"
           ]
         },
         {
@@ -3197,8 +3217,7 @@
               "Mitzi"
             ],
             "J/K": [
-              "Melissa",
-              "Marbie"
+              "Melissa"
             ],
             "SAC": null
           },
@@ -3211,7 +3230,8 @@
             "SAC": 0
           },
           "understaffed": [
-            "G/H"
+            "G/H",
+            "J/K"
           ]
         },
         {
@@ -3229,9 +3249,7 @@
               "Lily",
               "Tori"
             ],
-            "J/K": [
-              "Marbie"
-            ],
+            "J/K": [],
             "SAC": null
           },
           "minimums": {
@@ -3262,9 +3280,7 @@
               "Lily",
               "Tori"
             ],
-            "J/K": [
-              "Marbie"
-            ],
+            "J/K": [],
             "SAC": null
           },
           "minimums": {
@@ -3276,7 +3292,8 @@
             "SAC": 0
           },
           "understaffed": [
-            "M.O.D."
+            "M.O.D.",
+            "J/K"
           ]
         },
         {
@@ -3746,20 +3763,6 @@
     "Samantha": {
       "rate": 19.0,
       "hours": 27.5,
-      "lunch": {
-        "type": "varies"
-      },
-      "daily_breaks": {
-        "Monday": null,
-        "Tuesday": null,
-        "Wednesday": null,
-        "Thursday": null,
-        "Friday": null
-      }
-    },
-    "Marbie": {
-      "rate": 19.0,
-      "hours": 25.0,
       "lunch": {
         "type": "varies"
       },
@@ -6690,318 +6693,6 @@
           "time": "2:00 PM",
           "rooms": [
             "Room F"
-          ]
-        }
-      ]
-    },
-    "Marbie": {
-      "Monday": [
-        {
-          "time": "8:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "9:00 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "9:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "10:00 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "10:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "11:00 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "11:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "12:00 PM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "12:30 PM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "1:00 PM",
-          "rooms": [
-            "J/K"
-          ]
-        }
-      ],
-      "Tuesday": [
-        {
-          "time": "8:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "9:00 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "9:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "10:00 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "10:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "11:00 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "11:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "12:00 PM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "12:30 PM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "1:00 PM",
-          "rooms": [
-            "J/K"
-          ]
-        }
-      ],
-      "Wednesday": [
-        {
-          "time": "8:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "9:00 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "9:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "10:00 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "10:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "11:00 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "11:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "12:00 PM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "12:30 PM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "1:00 PM",
-          "rooms": [
-            "J/K"
-          ]
-        }
-      ],
-      "Thursday": [
-        {
-          "time": "8:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "9:00 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "9:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "10:00 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "10:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "11:00 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "11:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "12:00 PM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "12:30 PM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "1:00 PM",
-          "rooms": [
-            "J/K"
-          ]
-        }
-      ],
-      "Friday": [
-        {
-          "time": "8:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "9:00 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "9:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "10:00 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "10:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "11:00 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "11:30 AM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "12:00 PM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "12:30 PM",
-          "rooms": [
-            "J/K"
-          ]
-        },
-        {
-          "time": "1:00 PM",
-          "rooms": [
-            "J/K"
           ]
         }
       ]
