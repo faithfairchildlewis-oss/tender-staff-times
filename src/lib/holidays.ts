@@ -8,6 +8,8 @@ export const CLOSED_DATES: Record<string, string> = {
   // Labor Day 2026 falls on Monday, Sept 7. User asked for "Sept 6 for
   // Labor Day"; Sept 6 is a Sunday so we close Sept 7 instead.
   "2026-09-07": "Labor Day",
+  "2026-11-26": "Thanksgiving",
+  "2026-11-27": "Thanksgiving Break",
 };
 
 /** Compute ISO date for a given day offset within a week starting at
