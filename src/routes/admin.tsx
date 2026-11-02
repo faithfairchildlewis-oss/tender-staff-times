@@ -1289,7 +1289,7 @@ function PayrollView({
   }
 
   const data: ScheduleData = selected.data;
-  const names = Object.keys(data.staff ?? {});
+  const names = Object.keys(data.staff ?? {}).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
 
   const { data: rates } = usePayrollRates(selected.id);
   const { data: defaultRates } = useDefaultRates();
