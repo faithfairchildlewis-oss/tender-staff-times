@@ -41,6 +41,12 @@ export const J_K_SINGLE_STAFF_DATES = new Set<string>([
   "2026-10-26","2026-10-27","2026-10-28","2026-10-29","2026-10-30",
 ]);
 
+/** Dates (ISO YYYY-MM-DD) when J/K needs only 1 staff from 1:00 PM onward. */
+export const J_K_SINGLE_STAFF_AFTERNOON_DATES = new Set<string>([
+  // Week of Nov 16–20, 2026
+  "2026-11-16","2026-11-17","2026-11-18","2026-11-19","2026-11-20",
+]);
+
 /** Extra SAC open windows on specific dates, as [startMin, endMin) minutes past
  *  midnight — used when a staff member is scheduled into SAC outside the usual
  *  windows, so the room still counts as open in the grid and room views. */
@@ -135,6 +141,7 @@ export function minimumFor(
   if (room === "J/K") {
     // One-off: only 1 staff needed all day on specific dates.
     if (dayDate && J_K_SINGLE_STAFF_DATES.has(dayDate)) return 1;
+    if (dayDate && J_K_SINGLE_STAFF_AFTERNOON_DATES.has(dayDate) && m >= HM(13, 0)) return 1;
     // 2 staff 9:00 AM–12:00 PM and 3:00 PM–4:30 PM (inclusive), else 1.
     // 7:00–9:00 AM and 12:30 PM–2:30 PM only need 1 staff.
     if ((m >= HM(9, 0) && m <= HM(12, 0)) || (m >= HM(15, 0) && m <= HM(16, 30))) return 2;
