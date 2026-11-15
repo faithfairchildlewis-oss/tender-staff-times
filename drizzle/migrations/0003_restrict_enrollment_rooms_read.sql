@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "staff can read rooms" ON public.enrollment_rooms;
