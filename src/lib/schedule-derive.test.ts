@@ -105,3 +105,17 @@ describe("minimumFor — week of Oct 26–30, 2026", () => {
     expect(minimumFor("SAC", "12:00 PM", "2026-09-21", "2026-09-21")).toBe(1);
   });
 });
+
+describe("minimumFor — center closes at 5:30 PM", () => {
+  it("needs no staff in any room from the 5:30 PM slot onward", () => {
+    for (const room of ["G/H", "J/K", "M.O.D."]) {
+      expect(minimumFor(room, "5:30 PM", "2026-11-16", "2026-11-16")).toBeNull();
+    }
+  });
+
+  it("still staffs the 5:00 PM slot", () => {
+    expect(minimumFor("G/H", "5:00 PM", "2026-11-16", "2026-11-16")).toBe(1);
+    expect(minimumFor("J/K", "5:00 PM", "2026-11-16", "2026-11-16")).toBe(1);
+    expect(minimumFor("M.O.D.", "5:00 PM", "2026-11-16", "2026-11-16")).toBe(1);
+  });
+});

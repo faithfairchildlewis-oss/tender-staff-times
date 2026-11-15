@@ -115,6 +115,8 @@ export function minimumFor(
 ): number | null {
   const m = parseTime(time);
   const HM = (h: number, mn: number) => h * 60 + mn;
+  // Center closes at 5:30 PM — no room is staffed from the 5:30 PM slot onward.
+  if (m >= HM(17, 30)) return null;
   // One-off: room closed for the whole day on specific dates.
   if (dayDate && CLOSED_ROOMS_DATES[dayDate]?.includes(room)) return null;
   if (dayDate && ROOM_CLOSED_WINDOWS[dayDate]?.[room]?.some(([s, e]) => m >= s && m < e)) return null;
