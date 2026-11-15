@@ -6,7 +6,7 @@ describe("minimumFor — SAC open windows", () => {
     expect(minimumFor("SAC", "7:00 AM", "2026-10-12", "2026-10-12")).toBe(1);
     expect(minimumFor("SAC", "8:00 AM", "2026-10-12", "2026-10-12")).toBe(1);
     expect(minimumFor("SAC", "2:30 PM", "2026-10-12", "2026-10-12")).toBe(1);
-    expect(minimumFor("SAC", "5:00 PM", "2026-10-12", "2026-10-12")).toBe(1);
+    expect(minimumFor("SAC", "5:00 PM", "2026-10-12", "2026-10-12")).toBe(2);
   });
 
   it("is closed midday by default", () => {
@@ -96,7 +96,7 @@ describe("minimumFor — week of Oct 26–30, 2026", () => {
       expect(minimumFor("SAC", "8:00 AM", "2026-10-26", d)).toBeNull();
       expect(minimumFor("SAC", "12:30 PM", "2026-10-26", d)).toBeNull();
       expect(minimumFor("SAC", "2:30 PM", "2026-10-26", d)).toBe(1);
-      expect(minimumFor("SAC", "5:00 PM", "2026-10-26", d)).toBe(1);
+      expect(minimumFor("SAC", "5:00 PM", "2026-10-26", d)).toBe(2);
     }
   });
 
@@ -113,9 +113,38 @@ describe("minimumFor — center closes at 5:30 PM", () => {
     }
   });
 
-  it("still staffs the 5:00 PM slot", () => {
-    expect(minimumFor("G/H", "5:00 PM", "2026-11-16", "2026-11-16")).toBe(1);
-    expect(minimumFor("J/K", "5:00 PM", "2026-11-16", "2026-11-16")).toBe(1);
-    expect(minimumFor("M.O.D.", "5:00 PM", "2026-11-16", "2026-11-16")).toBe(1);
+  it("still staffs the 4:00 PM slot", () => {
+    // A week with no one-off J/K rules, so the usual 2-staff 3:00–4:30 window applies.
+    expect(minimumFor("G/H", "4:00 PM", "2026-12-07", "2026-12-07")).toBe(2);
+    expect(minimumFor("J/K", "4:00 PM", "2026-12-07", "2026-12-07")).toBe(2);
+    expect(minimumFor("M.O.D.", "4:00 PM", "2026-12-07", "2026-12-07")).toBe(1);
+    expect(minimumFor("SAC", "4:00 PM", "2026-12-07", "2026-12-07")).toBe(1);
+  });
+});
+
+describe("minimumFor — 4:30 PM combine into SAC", () => {
+  it("closes every other room from 4:30 PM onward", () => {
+    for (const room of ["G/H", "J/K", "M.O.D.", "Room F", "Room I"]) {
+      for (const time of ["4:30 PM", "5:00 PM"]) {
+        expect(minimumFor(room, time, "2026-11-16", "2026-11-16")).toBeNull();
+      }
+    }
+  });
+
+  it("needs 2 staff in SAC from 4:30 PM until close", () => {
+    expect(minimumFor("SAC", "4:30 PM", "2026-11-16", "2026-11-16")).toBe(2);
+    expect(minimumFor("SAC", "5:00 PM", "2026-11-16", "2026-11-16")).toBe(2);
+    expect(minimumFor("SAC", "5:30 PM", "2026-11-16", "2026-11-16")).toBeNull();
+  });
+
+  it("applies on SAC all-day dates too", () => {
+    expect(minimumFor("SAC", "4:30 PM", "2026-11-02", "2026-11-02")).toBe(2);
+    expect(minimumFor("Room I", "4:30 PM", "2026-11-02", "2026-11-02")).toBeNull();
+  });
+
+  it("keeps a room closed for the day as closed at 4:30 PM", () => {
+    // Room I is closed from 12:00 PM on Wed Oct 21 — still closed at 4:30 PM.
+    expect(minimumFor("Room I", "4:30 PM", "2026-10-19", "2026-10-21")).toBeNull();
+    expect(minimumFor("G/H", "4:00 PM", "2026-10-19", "2026-10-21")).toBe(2);
   });
 });
