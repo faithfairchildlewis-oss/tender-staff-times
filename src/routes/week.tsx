@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { requireAdmin } from "@/lib/require-admin";
 import { ArrowLeft, Printer, FileDown, Copy } from "lucide-react";
 import { useState, useMemo } from "react";
 import { toast } from "sonner";
@@ -17,6 +18,7 @@ import { holidayForOffset } from "@/lib/holidays";
 
 export const Route = createFileRoute("/week")({
   ssr: false,
+  beforeLoad: requireAdmin,
   head: () => ({
     meta: [
       { title: "This Week's Schedule — Tender Years of Deale" },
