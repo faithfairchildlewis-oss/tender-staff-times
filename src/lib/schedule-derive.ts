@@ -53,6 +53,8 @@ export const SAC_TWO_STAFF_DATES = new Set<string>([
 export const J_K_SINGLE_STAFF_DATES = new Set<string>([
   // Week of Oct 26–30, 2026: smaller group that week.
   "2026-10-26","2026-10-27","2026-10-28","2026-10-29","2026-10-30",
+  // Mon–Wed Nov 23–25, 2026
+  "2026-11-23","2026-11-24","2026-11-25",
 ]);
 
 /** Dates (ISO YYYY-MM-DD) when J/K needs only 1 staff from 1:00 PM onward. */
