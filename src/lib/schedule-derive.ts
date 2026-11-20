@@ -34,6 +34,13 @@ export const SAC_ALL_DAY_DATES = new Set<string>([
   "2026-11-23", "2026-11-24", "2026-11-25",
 ]);
 
+/** Dates (ISO YYYY-MM-DD) when SAC closes early, as minutes past midnight —
+ *  no staffing minimum from that time onward. */
+export const SAC_EARLY_CLOSE_MINUTES: Record<string, number> = {
+  // Wed Nov 25, 2026: SAC closes at 4:30 PM.
+  "2026-11-25": 16 * 60 + 30,
+};
+
 /** Dates (ISO YYYY-MM-DD) when SAC needs 2 staff at every open slot that day
  *  (instead of the usual 1). */
 export const SAC_TWO_STAFF_DATES = new Set<string>([
@@ -124,6 +131,9 @@ export function minimumFor(
   const HM = (h: number, mn: number) => h * 60 + mn;
   // Center closes at 5:30 PM — no room is staffed from the 5:30 PM slot onward.
   if (m >= HM(17, 30)) return null;
+  // One-off: SAC closes early on specific dates — no staffing minimum from
+  // that time onward (checked before the 4:30 PM combine-into-SAC rule).
+  if (room === "SAC" && dayDate && SAC_EARLY_CLOSE_MINUTES[dayDate] !== undefined && m >= SAC_EARLY_CLOSE_MINUTES[dayDate]) return null;
   // 4:30 PM: all remaining children combine into SAC. Every other room closes,
   // and SAC needs 2 staff until the 5:30 PM close.
   if (m >= HM(16, 30)) return room === "SAC" ? 2 : null;
