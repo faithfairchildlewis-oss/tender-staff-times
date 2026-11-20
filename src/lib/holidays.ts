@@ -10,6 +10,10 @@ export const CLOSED_DATES: Record<string, string> = {
   "2026-09-07": "Labor Day",
   "2026-11-26": "Thanksgiving",
   "2026-11-27": "Thanksgiving Break",
+  "2026-12-24": "Christmas Eve",
+  "2026-12-25": "Christmas Day",
+  "2026-12-31": "New Year's Eve",
+  "2027-01-01": "New Year's Day",
 };
 
 /** Compute ISO date for a given day offset within a week starting at
