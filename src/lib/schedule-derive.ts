@@ -144,7 +144,9 @@ export function minimumFor(
   if (dayDate && ROOM_CLOSED_WINDOWS[dayDate]?.[room]?.some(([s, e]) => m >= s && m < e)) return null;
   if (room === "SAC") {
     if (dayDate && SAC_CLOSED_WINDOWS[dayDate]?.some(([s, e]) => m >= s && m < e)) return null;
-    // One-off: SAC needs 2 staff all day on specific dates.
+    // One-off: SAC needs 2 staff all day on specific dates, except the early
+    // morning open (7:00, 7:30, 8:00) which still needs just 1.
+    if (dayDate && SAC_TWO_STAFF_DATES.has(dayDate) && m >= HM(7, 0) && m < HM(8, 30)) return 1;
     if (dayDate && SAC_TWO_STAFF_DATES.has(dayDate) && m >= HM(7, 0) && m < HM(17, 30)) return 2;
     // Open 7:00–8:30 AM (slots 7:00, 7:30, 8:00) and 2:30–5:30 PM (slots 2:30–5:00).
     if ((m >= HM(7, 0) && m < HM(8, 30)) || (m >= HM(14, 30) && m < HM(17, 30))) return 1;
